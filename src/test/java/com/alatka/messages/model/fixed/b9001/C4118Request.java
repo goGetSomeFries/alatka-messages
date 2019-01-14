@@ -6,7 +6,7 @@ import com.alatka.messages.annotation.MessageMeta;
 import static com.alatka.messages.context.MessageDefinition.Kind.request;
 import static com.alatka.messages.context.MessageDefinition.Type.fixed;
 
-@MessageMeta(type = fixed, group = "9001", code = "4118", kind = request, remark = "客户以及账户标签内容交易")
+@MessageMeta(type = fixed, group = "9001", code = "4118", kind = request, remark = "内容交易")
 public class C4118Request extends Header {
 
     @FixedFieldMeta(domainNo = 8, length = 8, remark = "标志位")
