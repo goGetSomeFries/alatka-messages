@@ -1,0 +1,22 @@
+alatka.messages:
+  remark: 0305固定格式模板
+  type: fixed
+  group: 0305
+  code: template
+  message:
+    request:
+      - { "domainNo": 1, "name": "trxType", "length": 4, "remark": "交易代码", "clazz": "java.lang.String" }
+      - { "domainNo": 2, "name": "retCode", "length": 6, "remark": "响应码", "clazz": "java.lang.String" }
+      - { "domainNo": 3, "name": "bnkNbr", "length": 4, "remark": "银行代号", "clazz": "java.lang.String" }
+      - { "domainNo": 4, "name": "source", "length": 2, "remark": "交易来源", "clazz": "java.lang.String" }
+      - { "domainNo": 5, "name": "brnNo", "length": 6, "remark": "网点代号", "clazz": "java.lang.String" }
+      - { "domainNo": 6, "name": "opeNo", "length": 6, "remark": "操作员号", "clazz": "java.lang.String" }
+      - { "domainNo": 7, "name": "seqNo", "length": 6, "remark": "流水号", "clazz": "java.lang.Integer" }
+    response:
+      - { "domainNo": 1, "name": "trxType", "length": 4, "remark": "交易代码", "clazz": "java.lang.String" }
+      - { "domainNo": 2, "name": "retCode", "length": 6, "remark": "响应码", "clazz": "java.lang.String" }
+      - { "domainNo": 3, "name": "bnkNbr", "length": 4, "remark": "银行代号", "clazz": "java.lang.String" }
+      - { "domainNo": 4, "name": "source", "length": 2, "remark": "交易来源", "clazz": "java.lang.String" }
+      - { "domainNo": 5, "name": "brnNo", "length": 6, "remark": "网点代号", "clazz": "java.lang.String" }
+      - { "domainNo": 6, "name": "opeNo", "length": 6, "remark": "操作员号", "clazz": "java.lang.String" }
+      - { "domainNo": 7, "name": "seqNo", "length": 6, "remark": "流水号", "clazz": "java.lang.Integer" }

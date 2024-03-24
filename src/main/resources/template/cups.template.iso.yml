@@ -1,0 +1,17 @@
+alatka.messages:
+  holder: com.alatka.messages.holder.MessageHolder
+  charset: GBK
+  remark:
+  message:
+    header:
+      - { "index": 0, "domainNo": 1, "name": "headerLength", "fixed": true, "length": 1, "maxLength": 1, "remark": "报文头长度", "clazz": "java.lang.String", "parsed": true, "status": 1 }
+    payload:
+      - { "index": 0, "domainNo": 0, "name": "messageType", "fixed": true, "length": 4, "maxLength": 4, "remark": "报文类型", "clazz": "java.lang.String", "parsed": true, "status": 1 }
+      - { "index": 1, "domainNo": 1, "name": "bitMap", "fixed": true, "length": 16, "maxLength": 16, "remark": "位图", "clazz": "java.util.HashMap", "parsed": true, "status": 1 }
+      - { "index": 2, "domainNo": 2, "name": "priAcctNum", "fixed": false, "length": 2, "maxLength": 19, "remark": "主账号", "clazz": "java.lang.String", "parsed": true, "status": 1 }
+      - { "index": 3, "domainNo": 3, "name": "processingCode", "fixed": true, "length": 6, "maxLength": 6, "remark": "交易处理码", "clazz": "java.lang.String", "parsed": true, "status": 1 }
+      - { "index": 4, "domainNo": 4, "name": "transAmt", "fixed": true, "length": 12, "maxLength": 12, "remark": "交易金额", "clazz": "java.lang.Long", "parsed": true, "status": 1 }
+      - { "index": 5, "domainNo": 5, "name": "settlementAmt", "fixed": true, "length": 12, "maxLength": 12, "remark": "清算金额", "clazz": "java.lang.Long", "parsed": true, "status": 1 }
+      - { "index": 6, "domainNo": 6, "name": "billingAmt", "fixed": true, "length": 12, "maxLength": 12, "remark": "持卡人扣账金额", "clazz": "java.lang.Long", "parsed": true, "status": 1 }
+      - { "index": 7, "domainNo": 7, "name": "transmissionDateTime", "fixed": true, "length": 10, "maxLength": 10, "remark": "交易传输时间", "clazz": "java.time.LocalDateTime", "pattern": "MMddhhmmss", "parsed": true, "status": 1 }
+      - { "index": 8, "domainNo": 9, "name": "settlementConversionRate", "fixed": true, "length": 8, "maxLength": 8, "remark": "清算汇率", "clazz": "java.lang.Integer", "parsed": true, "status": 1 }

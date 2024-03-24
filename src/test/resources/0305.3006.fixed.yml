@@ -1,0 +1,60 @@
+alatka.messages:
+  remark: 信用卡账单明细查询
+  type: fixed
+  group: "0305"
+  code: 3006
+  message:
+    request:
+      - { "domainNo": 1, "name": "trxType", "length": 4, "remark": "交易代码", "clazz": "java.lang.String" }
+      - { "domainNo": 2, "name": "retCode", "length": 6, "remark": "响应码", "clazz": "java.lang.String" }
+      - { "domainNo": 3, "name": "bnkNbr", "length": 4, "remark": "银行代号", "clazz": "java.lang.String" }
+      - { "domainNo": 4, "name": "source", "length": 2, "remark": "交易来源", "clazz": "java.lang.String" }
+      - { "domainNo": 5, "name": "brnNo", "length": 6, "remark": "网点代号", "clazz": "java.lang.String" }
+      - { "domainNo": 6, "name": "opeNo", "length": 6, "remark": "操作员号", "clazz": "java.lang.String" }
+      - { "domainNo": 7, "name": "seqNo", "length": 6, "remark": "流水号", "clazz": "java.lang.Integer" }
+      - { "domainNo": 8, "name": "cardNbr", "length": 19, "remark": "卡号", "clazz": "java.lang.String" }
+      - { "domainNo": 9, "name": "tranYM", "length": 4, "remark": "账单年月", "clazz": "java.time.YearMonth", "pattern": "yyMM" }
+      - { "domainNo": 10, "name": "option", "length": 1, "remark": "币种选项", "clazz": "java.lang.String" }
+      - { "domainNo": 11, "name": "rtnInd", "length": 1, "remark": "翻页标志", "clazz": "java.lang.String" }
+      - { "domainNo": 12, "name": "valDate", "length": 8, "remark": "入账日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
+      - { "domainNo": 13, "name": "purDate", "length": 8, "remark": "记录日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
+      - { "domainNo": 14, "name": "purTime", "length": 8, "remark": "消费时间", "clazz": "java.time.LocalTime", "pattern": "HHmmssSS" }
+      - { "domainNo": 15, "name": "tranNo", "length": 6, "remark": "交易流水号", "clazz": "java.lang.Integer" }
+      - { "domainNo": 16, "name": "pinFlag", "length": 1, "remark": "是否检查密码标志", "clazz": "java.lang.String" }
+      - { "domainNo": 17, "name": "pin", "length": 8, "remark": "密码", "clazz": "[B" }
+      - { "domainNo": 18, "name": "enqFlag", "length": 1, "remark": "查询条件", "clazz": "java.lang.String" }
+      - { "domainNo": 19, "name": "orderFlag", "length": 1, "remark": "显示顺序标志", "clazz": "java.lang.String" }
+    response:
+      - { "domainNo": 1, "name": "trxType", "length": 4, "remark": "交易代码", "clazz": "java.lang.String" }
+      - { "domainNo": 2, "name": "retCode", "length": 6, "remark": "响应码", "clazz": "java.lang.String" }
+      - { "domainNo": 3, "name": "bnkNbr", "length": 4, "remark": "银行代号", "clazz": "java.lang.String" }
+      - { "domainNo": 4, "name": "source", "length": 2, "remark": "交易来源", "clazz": "java.lang.String" }
+      - { "domainNo": 5, "name": "brnNo", "length": 6, "remark": "网点代号", "clazz": "java.lang.String" }
+      - { "domainNo": 6, "name": "opeNo", "length": 6, "remark": "操作员号", "clazz": "java.lang.String" }
+      - { "domainNo": 7, "name": "seqNo", "length": 6, "remark": "流水号", "clazz": "java.lang.Integer" }
+      - { "domainNo": 8, "name": "cardNbr", "length": 19, "remark": "卡号", "clazz": "java.lang.String" }
+      - { "domainNo": 9, "name": "tranYM", "length": 4, "remark": "账单年月", "clazz": "java.time.YearMonth", "pattern": "yyMM" }
+      - { "domainNo": 10, "name": "option", "length": 1, "remark": "币种选项", "clazz": "java.lang.String" }
+      - { "domainNo": 11, "name": "counts", "length": 2, "remark": "本次返回交易条数", "clazz": "java.lang.Integer" }
+      - { "domainNo": 12, "name": "rtnInd", "length": 1, "remark": "翻页标志", "clazz": "java.lang.String" }
+      - { "domainNo": 13, "name": "elements", "fixed": false, "length": 141, "remark": "集合", "clazz": "java.util.ArrayList", "pageSizeName": "counts", "existSubdomain": true, "subdomainType": "LIST" }
+    subPayload:
+      F13:
+        - { "domainNo": 1, "name": "monthNbr", "length": 3, "remark": "月份序号", "clazz": "java.lang.Integer" }
+        - { "domainNo": 2, "name": "valDate", "length": 8, "remark": "入账日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
+        - { "domainNo": 3, "name": "purDate", "length": 8, "remark": "记录日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
+        - { "domainNo": 4, "name": "purTime", "length": 8, "remark": "消费时间", "clazz": "java.time.LocalTime", "pattern": "HHmmssSS" }
+        - { "domainNo": 5, "name": "tranNo", "length": 6, "remark": "交易流水号", "clazz": "java.lang.Integer" }
+        - { "domainNo": 6, "name": "tranType", "length": 4, "remark": "交易类型", "clazz": "java.lang.String" }
+        - { "domainNo": 7, "name": "amount", "length": 12, "remark": "交易金额", "clazz": "java.math.BigDecimal" }
+        - { "domainNo": 8, "name": "amountFl", "length": 1, "remark": "交易金额符号", "clazz": "java.lang.String" }
+        - { "domainNo": 9, "name": "authCode", "length": 6, "remark": "授权代码", "clazz": "java.lang.String" }
+        - { "domainNo": 10, "name": "desline1", "length": 42, "remark": "交易描述1", "clazz": "java.lang.String" }
+        - { "domainNo": 11, "name": "desline2", "length": 25, "remark": "交易描述2", "clazz": "java.lang.String" }
+        - { "domainNo": 12, "name": "cardEnd", "length": 4, "remark": "卡号后四位", "clazz": "java.lang.String" }
+        - { "domainNo": 13, "name": "currNum", "length": 3, "remark": "货币代码", "clazz": "java.lang.String" }
+        - { "domainNo": 14, "name": "mpFlag", "length": 1, "remark": "保留字段1", "clazz": "java.lang.String" }
+        - { "domainNo": 15, "name": "purDate1", "length": 4, "remark": "消费日期", "clazz": "java.time.MonthDay", "pattern": "MMdd" }
+        - { "domainNo": 16, "name": "revInd", "length": 1, "remark": "撤销冲正标志", "clazz": "java.lang.String" }
+        - { "domainNo": 17, "name": "mcc", "length": 4, "remark": "商户类别", "clazz": "java.lang.String" }
+        - { "domainNo": 18, "name": "facePayFlag", "length": 1, "remark": "人脸支付标志", "clazz": "java.lang.String" }
