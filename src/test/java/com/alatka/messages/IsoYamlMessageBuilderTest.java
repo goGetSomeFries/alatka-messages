@@ -13,10 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.time.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class IsoYamlMessageBuilderTest {
 
@@ -300,6 +297,7 @@ public class IsoYamlMessageBuilderTest {
         System.out.println((BytesUtil.fromBCD(BytesUtil.hexToBytes("68"))));
         System.out.println(BytesUtil.toBytes(BytesUtil.toString(BytesUtil.hexToBytes("F1F0"))).length);
         System.out.println(Arrays.toString(BytesUtil.hexToBytes("F1F0")));
+        System.out.println(Base64.getEncoder().encodeToString("91F0F1F0F0".getBytes()));
     }
 
     @Test
