@@ -61,6 +61,10 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
      */
     private String charset;
     /**
+     * length解析类型
+     */
+    private LenParseType lenParseType;
+    /**
      * 报文描述
      */
     private String remark;
@@ -95,6 +99,10 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
          * 其他
          */
         none
+    }
+
+    public enum LenParseType {
+        ASCII, BINARY
     }
 
     public enum DomainType {
@@ -179,6 +187,14 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
 
     public void setCharset(String charset) {
         this.charset = charset;
+    }
+
+    public LenParseType getLenParseType() {
+        return lenParseType;
+    }
+
+    public void setLenParseType(LenParseType lenParseType) {
+        this.lenParseType = lenParseType;
     }
 
     public String getRemark() {

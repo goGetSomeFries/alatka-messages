@@ -71,6 +71,11 @@ public @interface MessageMeta {
     String charset() default "GB18030";
 
     /**
+     * {@link MessageDefinition.LenParseType}
+     */
+    MessageDefinition.LenParseType lenParseType() default MessageDefinition.LenParseType.ASCII;
+
+    /**
      * {@link MessageDefinition#setRemark(String)}
      */
     String remark() default "";

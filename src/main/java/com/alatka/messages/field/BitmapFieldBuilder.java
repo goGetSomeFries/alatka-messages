@@ -1,12 +1,13 @@
 package com.alatka.messages.field;
 
-import com.alatka.messages.util.BytesUtil;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
 import com.alatka.messages.holder.MessageHolderAware;
 import com.alatka.messages.holder.MessageHolderUtil;
+import com.alatka.messages.util.BytesUtil;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,10 +53,17 @@ public class BitmapFieldBuilder extends AbstractFieldBuilder<Map<Integer, Boolea
                             FieldDefinition::getDomainNo,
                             definition -> MessageHolderUtil.getByName(messageHolder, definition.getName()) != null));
 
+            int length = fieldDefinition.getFixed() ? fieldDefinition.getLength() :
+                    (list.stream()
+                            .sorted(Comparator.comparing(FieldDefinition::getDomainNo))
+                            .filter(definition -> MessageHolderUtil.getByName(messageHolder, definition.getName()) != null)
+                            .map(FieldDefinition::getDomainNo)
+                            .findFirst()
+                            .orElseThrow(() -> new RuntimeException("bitmap is 0")) <= 64 ? 8 : 16);
             // 1域
-            bitmap.put(1, fieldDefinition.getLength() == 16);
+            bitmap.put(1, length == 16);
             // 2-64/128域
-            IntStream.range(2, fieldDefinition.getLength() * 8 + 1)
+            IntStream.range(2, length * 8 + 1)
                     .boxed()
                     .filter(i -> !bitmap.containsKey(i))
                     .forEach(i -> bitmap.put(i, false));

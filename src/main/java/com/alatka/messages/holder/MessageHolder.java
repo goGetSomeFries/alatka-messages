@@ -3,6 +3,7 @@ package com.alatka.messages.holder;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
+import com.alatka.messages.util.BytesUtil;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -71,7 +72,11 @@ public class MessageHolder {
     public String toString() {
         return messageDefinition + valueMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey(Comparator.comparingInt(FieldDefinition::getIndex)))
-                .map(Map.Entry::toString)
+                .peek(entry -> {
+                    if (entry.getValue() != null && entry.getValue() instanceof byte[]) {
+                        entry.setValue(BytesUtil.bytesToHex((byte[]) entry.getValue()));
+                    }
+                }).map(Map.Entry::toString)
                 .collect(Collectors.joining("\n\t", "\n\t", ""));
     }
 

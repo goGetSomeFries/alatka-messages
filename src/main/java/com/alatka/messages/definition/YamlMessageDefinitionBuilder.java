@@ -132,6 +132,8 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
         definition.setCode(yaml.get("code").toString());
         definition.setKind(kind);
         definition.setCharset(yaml.get("charset") == null ? "GB18030" : yaml.get("charset").toString());
+        definition.setLenParseType(yaml.get("lenParseType") == null ?
+                MessageDefinition.LenParseType.ASCII : MessageDefinition.LenParseType.valueOf(yaml.get("lenParseType").toString()));
         definition.setRemark(yaml.get("remark") == null ? "" : yaml.get("remark").toString());
 
         if (identity != null) {

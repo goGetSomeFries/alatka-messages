@@ -24,6 +24,12 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
     }
 
     @Override
+    protected byte[] fromObjectToBcd(String value, FieldDefinition definition) {
+        byte[] bytes = value.getBytes();
+        return BytesUtil.toBCD(bytes);
+    }
+
+    @Override
     protected String toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
         String result = new String(bytes, messageDefinition.getCharset()).trim();
         return result.isEmpty() ? null : result;
@@ -32,6 +38,11 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
     @Override
     protected String toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
         return BytesUtil.toString(bytes);
+    }
+
+    @Override
+    protected String toObjectWithBcd(byte[] bytes, FieldDefinition definition) {
+        return BytesUtil.fromBCD(bytes);
     }
 
     @Override

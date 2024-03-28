@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @see AbstractDomainParsed
  * @see DomainParsed
  */
-public class LVDomainParsed extends AbstractDomainParsed {
+public abstract class LVDomainParsed extends AbstractDomainParsed {
 
     @Override
     public int getOrder() {
@@ -29,11 +29,7 @@ public class LVDomainParsed extends AbstractDomainParsed {
 
     @Override
     public byte[] pack(byte[] bytes, FieldDefinition fieldDefinition) {
-        byte[] lengthBytes = this.padding(
-                String.valueOf(bytes.length).getBytes(),
-                fieldDefinition.getLength(),
-                FieldDefinition.FieldType.NUMBER,
-                fieldDefinition);
+        byte[] lengthBytes = this.intToBytes(bytes.length, fieldDefinition);
         return BytesUtil.concat(lengthBytes, bytes);
     }
 
@@ -41,10 +37,14 @@ public class LVDomainParsed extends AbstractDomainParsed {
     public byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter) {
         Integer length = fieldDefinition.getLength();
         byte[] lengthBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(length));
-        byte[] valueBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(Integer.parseInt(new String(lengthBytes))));
+        byte[] valueBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(this.bytesToInt(lengthBytes)));
         if (valueBytes.length > ((IsoFieldDefinition) fieldDefinition).getMaxLength()) {
             throw new RuntimeException("fieldDefinition: " + fieldDefinition + ", actually length: " + valueBytes.length);
         }
         return valueBytes;
     }
+
+    protected abstract byte[] intToBytes(int length, FieldDefinition fieldDefinition);
+
+    protected abstract int bytesToInt(byte[] lengthBytes);
 }

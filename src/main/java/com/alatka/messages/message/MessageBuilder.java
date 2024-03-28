@@ -53,7 +53,7 @@ public abstract class MessageBuilder {
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
         List<FieldDefinition> fieldDefinitions = context.fieldDefinitions(definition);
 
-        return fieldDefinitions.stream()
+        byte[] result = fieldDefinitions.stream()
                 .filter(this::filter)
                 .map(fieldDefinition -> {
                     FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
@@ -63,6 +63,8 @@ public abstract class MessageBuilder {
                 .peek(wrapper -> this.postProcess(wrapper.fieldDefinition, instance, wrapper.value))
                 .map(wrapper -> (byte[]) wrapper.value)
                 .reduce(new byte[0], BytesUtil::concat);
+        this.postProcess();
+        return result;
     }
 
     public <T> T unpack(String hexStr) {
@@ -87,10 +89,12 @@ public abstract class MessageBuilder {
                     if (outOfBounds && counter.get() >= bytes.length) {
                         throw new RuntimeException("字节长度超出范围");
                     }
-                    Object value = !outOfBounds && counter.get() >= bytes.length ? null : fieldBuilder.deserialize(bytes, fieldDefinition, instance, counter);
+                    Object value = !outOfBounds && counter.get() >= bytes.length ?
+                            null : fieldBuilder.deserialize(bytes, fieldDefinition, instance, counter);
                     return new Wrapper(value, fieldDefinition);
                 })
                 .forEach(wrapper -> this.postProcess(wrapper.fieldDefinition, instance, wrapper.value));
+        this.postProcess();
         return (T) instance;
     }
 
@@ -115,6 +119,9 @@ public abstract class MessageBuilder {
      * @param value
      */
     protected abstract void postProcess(FieldDefinition fieldDefinition, Object instance, Object value);
+
+    protected void postProcess() {
+    }
 
     private class Wrapper {
         private final Object value;

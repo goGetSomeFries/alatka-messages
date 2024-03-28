@@ -18,11 +18,13 @@ public class DomainParsedFactory {
 
     static {
         init(new UnfixedDomainParsed());
-        init(new LVDomainParsed());
+        init(new AsciiLVDomainParsed());
+        init(new BinaryLVDomainParsed());
         init(new TLVDomainParsed());
         init(new TVDomainParsed());
         init(new FixedDomainParsed());
         init(new PageDomainParsed());
+        init(new BitmapDomainParsed());
     }
 
     public static void init(DomainParsed domainParsed) {

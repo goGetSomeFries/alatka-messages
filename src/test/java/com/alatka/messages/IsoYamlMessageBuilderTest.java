@@ -4,6 +4,7 @@ import com.alatka.messages.holder.UsageSubdomain;
 import com.alatka.messages.definition.IsoYamlMessageDefinitionBuilder;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.message.MessageBuilder;
+import com.alatka.messages.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -289,10 +290,16 @@ public class IsoYamlMessageBuilderTest {
 
 
     @Test
+    public void test98() {
+        String s = BytesUtil.fromBCD(BytesUtil.toBytes("10"));
+        System.out.println(s);
+    }
+
+    @Test
     public void test99() {
         String hex = "30343230E23A448188E00010000000401000008131363432313836393030303030323634393038393030303030383238313430353230333435313531313430353139303832383038323836343030303132303030383030303439393939303830303034393939333430353139333435313531383031303830323039393939393939393939393939393939C9EDB7DDD1E9D6A4C4ACC8CFC9CCBBA720202020202020202020202020202020202020202020202030323734333631303030303037303030393130303030303430323730303230313030333435313531303832383134303531393030303030303439393939303030303030343939393330383033303530303031303433353120523535303030383233353033303530303031202020303030303030303030303030303042423030303131413242363635";
-        MessageHolder holder = MessageBuilder.init("iso:cups:all:payload").unpack(hex);
-//        byte[] pack = MessageBuilder.init("iso:cups:all:payload").pack(holder);
+        MessageHolder holder = MessageBuilder.init("iso:cups:common:payload").unpack(hex);
+//        byte[] pack = MessageBuilder.init("iso:cups:common:payload").pack(holder);
 //        Assertions.assertEquals(hex, BytesUtil.bytesToHex(pack));
         System.out.println(holder);
     }
