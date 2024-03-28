@@ -11,8 +11,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -291,14 +293,19 @@ public class IsoYamlMessageBuilderTest {
 
     @Test
     public void test98() {
-        String s = BytesUtil.fromBCD(BytesUtil.toBytes("10"));
-        System.out.println(s);
+        System.out.println(BytesUtil.toInt(BytesUtil.hexToBytes("00EB")));
+        System.out.println(Charset.availableCharsets().keySet());
+        System.out.println(Arrays.toString(BytesUtil.toBCD("A".getBytes())));
+        System.out.println(new String(BytesUtil.hexToBytes("91F0F1F0F0"), Charset.forName("IBM-500")));
+        System.out.println((BytesUtil.fromBCD(BytesUtil.hexToBytes("68"))));
+        System.out.println(BytesUtil.toBytes(BytesUtil.toString(BytesUtil.hexToBytes("F1F0"))).length);
+        System.out.println(Arrays.toString(BytesUtil.hexToBytes("F1F0")));
     }
 
     @Test
     public void test99() {
-        String hex = "30343230E23A448188E00010000000401000008131363432313836393030303030323634393038393030303030383238313430353230333435313531313430353139303832383038323836343030303132303030383030303439393939303830303034393939333430353139333435313531383031303830323039393939393939393939393939393939C9EDB7DDD1E9D6A4C4ACC8CFC9CCBBA720202020202020202020202020202020202020202020202030323734333631303030303037303030393130303030303430323730303230313030333435313531303832383134303531393030303030303439393939303030303030343939393330383033303530303031303433353120523535303030383233353033303530303031202020303030303030303030303030303042423030303131413242363635";
-        MessageHolder holder = MessageBuilder.init("iso:cups:common:payload").unpack(hex);
+        String hex = "00eb0000";
+        MessageHolder holder = MessageBuilder.init("iso:jcb:common:header").unpack(hex);
 //        byte[] pack = MessageBuilder.init("iso:cups:common:payload").pack(holder);
 //        Assertions.assertEquals(hex, BytesUtil.bytesToHex(pack));
         System.out.println(holder);

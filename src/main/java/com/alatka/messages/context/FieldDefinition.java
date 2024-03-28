@@ -83,7 +83,7 @@ public class FieldDefinition {
     private Map<String, MessageDefinition> messageDefinitionMap;
 
     public enum ParseType {
-        ASCII, BCD, BINARY, NONE
+        ASCII, EBCDIC, BCD, BINARY, NONE
     }
 
     public enum FieldType {

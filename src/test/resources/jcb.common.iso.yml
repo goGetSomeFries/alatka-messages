@@ -5,6 +5,9 @@ alatka.messages:
   group: jcb
   code: common
   message:
+    header:
+      - { "domainNo": 1, "name": "messageLength", "fixed": true, "length": 2, "remark": "报文长度", "clazz": "java.lang.Integer", "parseType": "BINARY" }
+      - { "domainNo": 2, "name": "reserved", "fixed": true, "length": 2, "remark": "保留使用", "clazz": "[B" }
     payload:
       - { "domainNo": 0, "name": "messageType", "fixed": true, "length": 4, "remark": "报文类型", "clazz": "java.lang.String" }
       - { "domainNo": 1, "name": "bitMap", "fixed": false, "length": 16, "remark": "位图", "clazz": "java.util.HashMap", "parseType": "BINARY" }
