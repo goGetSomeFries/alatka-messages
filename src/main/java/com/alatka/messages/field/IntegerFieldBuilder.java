@@ -21,7 +21,7 @@ public class IntegerFieldBuilder extends NumberFieldBuilder<Integer> {
 
     @Override
     protected Integer toObjectWithBinary(byte[] bytes, FieldDefinition definition) {
-        String binaryStr = BytesUtil.toString(bytes);
+        String binaryStr = BytesUtil.bytesToBinary(bytes);
         return Integer.parseInt(binaryStr, 2);
     }
 
@@ -38,7 +38,7 @@ public class IntegerFieldBuilder extends NumberFieldBuilder<Integer> {
     @Override
     protected byte[] fromObjectToBinary(Integer value, FieldDefinition definition) {
         String str = Integer.toBinaryString(value);
-        return BytesUtil.toBytes(str);
+        return BytesUtil.binaryToBytes(str);
     }
 
     @Override

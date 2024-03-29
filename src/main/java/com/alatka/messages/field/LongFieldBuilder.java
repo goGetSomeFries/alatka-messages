@@ -21,7 +21,7 @@ public class LongFieldBuilder extends NumberFieldBuilder<Long> {
 
     @Override
     protected Long toObjectWithBinary(byte[] bytes, FieldDefinition definition) {
-        String binaryStr = BytesUtil.toString(bytes);
+        String binaryStr = BytesUtil.bytesToBinary(bytes);
         return Long.parseLong(binaryStr, 2);
     }
 
@@ -38,7 +38,7 @@ public class LongFieldBuilder extends NumberFieldBuilder<Long> {
     @Override
     protected byte[] fromObjectToBinary(Long value, FieldDefinition definition) {
         String str = Long.toBinaryString(value);
-        return BytesUtil.toBytes(str);
+        return BytesUtil.binaryToBytes(str);
     }
 
     @Override

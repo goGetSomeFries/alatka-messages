@@ -63,6 +63,7 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
     /**
      * length解析类型
      */
+    @Deprecated
     private LenParseType lenParseType;
     /**
      * 报文描述
@@ -101,6 +102,7 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
         none
     }
 
+    @Deprecated
     public enum LenParseType {
         ASCII, BINARY
     }
@@ -189,10 +191,12 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
         this.charset = charset;
     }
 
+    @Deprecated
     public LenParseType getLenParseType() {
         return lenParseType;
     }
 
+    @Deprecated
     public void setLenParseType(LenParseType lenParseType) {
         this.lenParseType = lenParseType;
     }

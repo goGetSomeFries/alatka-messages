@@ -29,9 +29,9 @@ public class TLVDomainParsed extends AbstractDomainParsed {
 
     @Override
     public byte[] pack(byte[] bytes, FieldDefinition fieldDefinition) {
-        byte[] tagBytes = BytesUtil.toBytes(fieldDefinition.getDomainNo());
+        byte[] tagBytes = BytesUtil.intToBytes(fieldDefinition.getDomainNo());
         int valueLength = bytes.length;
-        byte[] tempLenBytes = BytesUtil.toBytes(valueLength);
+        byte[] tempLenBytes = BytesUtil.intToBytes(valueLength);
         byte[] lenBytes = valueLength < 128 ? tempLenBytes :
                 BytesUtil.concat(new byte[]{(byte) (tempLenBytes.length | 128)}, tempLenBytes);
         return BytesUtil.concat(tagBytes, lenBytes, bytes);
@@ -47,7 +47,7 @@ public class TLVDomainParsed extends AbstractDomainParsed {
                 Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(1)) :
                 Arrays.copyOfRange(bytes, counter.addAndGet(1), counter.addAndGet(flagByte & 127));
 
-        int valueLength = BytesUtil.toInt(lenBytes);
+        int valueLength = BytesUtil.bytesToInt(lenBytes);
         return valueLength == 0 ? new byte[0] : Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(valueLength));
     }
 

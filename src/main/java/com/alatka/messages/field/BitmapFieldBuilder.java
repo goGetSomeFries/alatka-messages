@@ -27,7 +27,7 @@ public class BitmapFieldBuilder extends AbstractFieldBuilder<Map<Integer, Boolea
 
     public static Map<Integer, Boolean> generate(byte[] bytes) {
         int length = bytes.length * 8;
-        String bitmapStr = BytesUtil.toString(bytes);
+        String bitmapStr = BytesUtil.bytesToBinary(bytes);
         Map<Integer, Boolean> bitmap = new HashMap<>(length);
         IntStream.range(0, length).forEach(i -> bitmap.put(i + 1, bitmapStr.charAt(i) == '1'));
         return bitmap;
@@ -75,7 +75,7 @@ public class BitmapFieldBuilder extends AbstractFieldBuilder<Map<Integer, Boolea
                 .map(Map.Entry::getValue)
                 .map(flag -> flag ? "1" : "0")
                 .collect(Collectors.joining(""));
-        return BytesUtil.toBytes(str);
+        return BytesUtil.binaryToBytes(str);
     }
 
     @Override

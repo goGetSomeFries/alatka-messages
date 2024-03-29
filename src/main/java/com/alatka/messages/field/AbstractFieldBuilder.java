@@ -34,6 +34,11 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
         return null;
     }
 
+    protected byte[] fromObjectToEbcdic(T value, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
     protected byte[] fromObjectToNone(T value, FieldDefinition fieldDefinition) {
         this.throwException(fieldDefinition);
         return null;
@@ -50,6 +55,11 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
     }
 
     protected T toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected T toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
         this.throwException(fieldDefinition);
         return null;
     }
@@ -106,6 +116,9 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 case BCD:
                     bytes = this.fromObjectToBcd(value, fieldDefinition);
                     break;
+                case EBCDIC:
+                    bytes = this.fromObjectToEbcdic(value, fieldDefinition);
+                    break;
                 case NONE:
                     bytes = this.fromObjectToNone(value, fieldDefinition);
                     break;
@@ -113,7 +126,7 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                     throwException(fieldDefinition);
             }
         } catch (Exception e) {
-            throw new RuntimeException(fieldDefinition + "解析报错" , e);
+            throw new RuntimeException(fieldDefinition + "解析报错", e);
         }
         return bytes;
     }
@@ -141,6 +154,9 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 case BCD:
                     instance = this.toObjectWithBcd(bytes, fieldDefinition);
                     break;
+                case EBCDIC:
+                    instance = this.toObjectWithEbcdic(bytes, fieldDefinition);
+                    break;
                 case NONE:
                     instance = this.toObjectWithNone(bytes, fieldDefinition);
                     break;
@@ -148,7 +164,7 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                     throwException(fieldDefinition);
             }
         } catch (Exception e) {
-            throw new RuntimeException(fieldDefinition + "解析报错" , e);
+            throw new RuntimeException(fieldDefinition + "解析报错", e);
         }
         return instance;
     }

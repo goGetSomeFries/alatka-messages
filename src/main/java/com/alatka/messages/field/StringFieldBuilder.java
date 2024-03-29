@@ -20,13 +20,19 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected byte[] fromObjectToBinary(String value, FieldDefinition fieldDefinition) {
-        return BytesUtil.toBytes(value);
+        return BytesUtil.binaryToBytes(value);
     }
 
     @Override
     protected byte[] fromObjectToBcd(String value, FieldDefinition definition) {
         byte[] bytes = value.getBytes();
         return BytesUtil.toBCD(bytes);
+    }
+
+    @Override
+    protected byte[] fromObjectToEbcdic(String value, FieldDefinition definition) {
+        byte[] bytes = value.getBytes();
+        return BytesUtil.toEBCDIC(bytes);
     }
 
     @Override
@@ -37,12 +43,17 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected String toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
-        return BytesUtil.toString(bytes);
+        return BytesUtil.bytesToBinary(bytes);
     }
 
     @Override
     protected String toObjectWithBcd(byte[] bytes, FieldDefinition definition) {
         return BytesUtil.fromBCD(bytes);
+    }
+
+    @Override
+    protected String toObjectWithEbcdic(byte[] bytes, FieldDefinition definition) {
+        return BytesUtil.fromEBCDIC(bytes);
     }
 
     @Override

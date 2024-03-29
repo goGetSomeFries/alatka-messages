@@ -46,7 +46,7 @@ class IsoTLVMessageBuilder extends MessageBuilder {
         while (counter.get() < bytes.length) {
             int tagLength = (bytes[counter.get()] & 0x1F) == 0x1F ? 2 : 1;
             byte[] tagBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(tagLength));
-            int tag = BytesUtil.toInt(tagBytes);
+            int tag = BytesUtil.bytesToInt(tagBytes);
             list.add(tag);
 
             byte flagByte = bytes[counter.get()];
@@ -54,7 +54,7 @@ class IsoTLVMessageBuilder extends MessageBuilder {
                     Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(1)) :
                     Arrays.copyOfRange(bytes, counter.addAndGet(1), counter.addAndGet(flagByte & 127));
 
-            int valueLength = BytesUtil.toInt(lenBytes);
+            int valueLength = BytesUtil.bytesToInt(lenBytes);
             counter.addAndGet(valueLength);
         }
 

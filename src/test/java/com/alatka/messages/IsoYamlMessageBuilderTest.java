@@ -1,8 +1,8 @@
 package com.alatka.messages;
 
-import com.alatka.messages.holder.UsageSubdomain;
 import com.alatka.messages.definition.IsoYamlMessageDefinitionBuilder;
 import com.alatka.messages.holder.MessageHolder;
+import com.alatka.messages.holder.UsageSubdomain;
 import com.alatka.messages.message.MessageBuilder;
 import com.alatka.messages.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
@@ -11,9 +11,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.time.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class IsoYamlMessageBuilderTest {
 
@@ -290,20 +293,16 @@ public class IsoYamlMessageBuilderTest {
 
     @Test
     public void test98() {
-        System.out.println(BytesUtil.toInt(BytesUtil.hexToBytes("00EB")));
-        System.out.println(Charset.availableCharsets().keySet());
-        System.out.println(Arrays.toString(BytesUtil.toBCD("A".getBytes())));
+        System.out.println(BytesUtil.bytesToInt(BytesUtil.hexToBytes("00EB")));
+        System.out.println(BytesUtil.fromEBCDIC(BytesUtil.hexToBytes("91F0F1F0F0")));
         System.out.println(new String(BytesUtil.hexToBytes("91F0F1F0F0"), Charset.forName("IBM-500")));
         System.out.println((BytesUtil.fromBCD(BytesUtil.hexToBytes("68"))));
-        System.out.println(BytesUtil.toBytes(BytesUtil.toString(BytesUtil.hexToBytes("F1F0"))).length);
-        System.out.println(Arrays.toString(BytesUtil.hexToBytes("F1F0")));
-        System.out.println(Base64.getEncoder().encodeToString("91F0F1F0F0".getBytes()));
     }
 
     @Test
     public void test99() {
-        String hex = "00eb0000";
-        MessageHolder holder = MessageBuilder.init("iso:jcb:common:header").unpack(hex);
+        String hex = "f0f1f0f0767d448188e1a008103568560090000176000000000000000176000000000176122913412700000001000172134127122925041229639981000008885280000888518000f0f0f0f1f7f2f1f2f1f3f2f7f3f9f4f5f3f34040f3f2f5f6f2f2f0f340404040404040d1c3c240e3c5e2e340d4c5d9c3c8c1d5e3404040404040e3c5e2e340c3c9e3e84040404040d1d7d54af0f2f4f71122334455667788990011223344556677889900000201094725454745445395202545900000000006404040404040f0f3f1f4f9f6f5f8f7f4404040f1f4404040f0f4f0f1f0f8f4f0f8f4f006f2f2f2f3f9f2";
+        MessageHolder holder = MessageBuilder.init("iso:jcb:common:payload").unpack(hex);
 //        byte[] pack = MessageBuilder.init("iso:cups:common:payload").pack(holder);
 //        Assertions.assertEquals(hex, BytesUtil.bytesToHex(pack));
         System.out.println(holder);

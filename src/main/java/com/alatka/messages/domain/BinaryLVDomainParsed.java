@@ -26,11 +26,11 @@ public class BinaryLVDomainParsed extends LVDomainParsed {
 
     @Override
     protected byte[] intToBytes(int length, FieldDefinition fieldDefinition) {
-        return BytesUtil.toBytes(length);
+        return BytesUtil.intToBytes(length);
     }
 
     @Override
     protected int bytesToInt(byte[] lengthBytes) {
-        return BytesUtil.toInt(lengthBytes);
+        return BytesUtil.bytesToInt(lengthBytes);
     }
 }

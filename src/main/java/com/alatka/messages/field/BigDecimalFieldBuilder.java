@@ -25,7 +25,7 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
     @Override
     protected byte[] fromObjectToBinary(BigDecimal value, FieldDefinition fieldDefinition) {
         String str = Long.toBinaryString(value.longValue());
-        return BytesUtil.toBytes(str);
+        return BytesUtil.binaryToBytes(str);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
 
     @Override
     protected BigDecimal toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
-        String binaryStr = BytesUtil.toString(bytes);
+        String binaryStr = BytesUtil.bytesToBinary(bytes);
         return new BigDecimal(Long.parseLong(binaryStr, 2));
     }
 

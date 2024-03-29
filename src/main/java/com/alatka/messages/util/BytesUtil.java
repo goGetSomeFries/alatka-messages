@@ -2,8 +2,8 @@ package com.alatka.messages.util;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -16,47 +16,40 @@ public class BytesUtil {
         return byteBuffer.array();
     }
 
-    public static String toString(byte[] bytes) {
+    public static byte[] binaryToBytes(String binaryStr) {
+        return toBytes(binaryStr, 2);
+    }
+
+    public static String bytesToBinary(byte[] bytes) {
         String binaryStr = new BigInteger(1, bytes).toString(2);
         // 左补0
         return padding(binaryStr);
     }
 
-    public static byte[] toBytes(String binaryStr) {
-        String result = padding(binaryStr);
-        List<Byte> list = IntStream.range(0, result.length() / 8)
-                .mapToObj(i -> result.substring(i * 8, (i + 1) * 8))
-                .mapToInt(s -> Integer.parseInt(s, 2))
-                // int强转byte，解决无符号byte问题
-                .mapToObj(i -> (byte) i)
-                .collect(Collectors.toList());
-        byte[] bytes = new byte[list.size()];
-        IntStream.range(0, list.size()).forEach(i -> bytes[i] = list.get(i));
-        return bytes;
-    }
-
     public static byte[] hexToBytes(String hexStr) {
-        return new BigInteger(hexStr, 16).toByteArray();
+        return toBytes(hexStr, 16);
     }
 
     public static String bytesToHex(byte[] bytes) {
-        String str = new BigInteger(bytes).toString(16);
+        String str = new BigInteger(1, bytes).toString(16);
         return str.toUpperCase();
     }
 
-    public static byte[] toBytes(int i) {
+    public static byte[] intToBytes(int i) {
         String s = Integer.toBinaryString(i);
-        return toBytes(s);
+        return binaryToBytes(s);
     }
 
-    public static int toInt(byte[] bytes) {
-        return Integer.parseInt(BytesUtil.toString(bytes), 2);
+    public static int bytesToInt(byte[] bytes) {
+        return new BigInteger(1, bytes).intValueExact();
     }
 
-    private static String padding(String str) {
-        int count = str.length() % 8;
-        return count == 0 ? str :
-                IntStream.range(0, 8 - count).mapToObj(i -> "0").collect(Collectors.joining("")).concat(str);
+    public static byte[] toEBCDIC(byte[] bytes) {
+        return new String(bytes).getBytes(Charset.forName("IBM-500"));
+    }
+
+    public static String fromEBCDIC(byte[] bytes) {
+        return new String(bytes, Charset.forName("IBM-500"));
     }
 
     public static byte[] toBCD(byte[] bytes) {
@@ -75,4 +68,17 @@ public class BytesUtil {
         return sb.toString();
     }
 
+    private static String padding(String str) {
+        int count = str.length() % 8;
+        return count == 0 ? str :
+                IntStream.range(0, 8 - count).mapToObj(i -> "0").collect(Collectors.joining("")).concat(str);
+    }
+
+    private static byte[] toBytes(String str, int radix) {
+        byte[] bytes = new BigInteger(str, radix).toByteArray();
+        if (bytes.length > 1 && bytes[0] == 0 && (bytes[1] & 0x80) == 0x80) {
+            return Arrays.copyOfRange(bytes, 1, bytes.length);
+        }
+        return bytes;
+    }
 }

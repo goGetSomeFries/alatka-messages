@@ -18,7 +18,7 @@ alatka.messages:
     payload:
       - { "domainNo": 0, "name": "messageType", "fixed": true, "length": 4, "remark": "报文类型", "clazz": "java.lang.String" }
       - { "domainNo": 1, "name": "bitMap", "fixed": false, "length": 16, "remark": "位图", "clazz": "java.util.HashMap", "parseType": "BINARY" }
-      - { "domainNo": 2, "name": "primaryAcctNum", "fixed": false, "length": 2, "maxLength": 19, "remark": "主账号", "clazz": "java.lang.String" }
+      - { "domainNo": 2, "name": "pan", "fixed": false, "length": 2, "maxLength": 19, "remark": "主账号", "clazz": "java.lang.String" }
       - { "domainNo": 3, "name": "processingCode", "fixed": true, "length": 6, "remark": "交易处理码", "clazz": "java.lang.String" }
       - { "domainNo": 4, "name": "amtTrans", "fixed": true, "length": 12, "remark": "交易金额", "clazz": "java.math.BigDecimal" }
       - { "domainNo": 5, "name": "amtSettlmt", "fixed": true, "length": 12, "remark": "清算金额", "clazz": "java.math.BigDecimal" }
