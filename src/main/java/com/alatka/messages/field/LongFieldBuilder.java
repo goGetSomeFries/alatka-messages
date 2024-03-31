@@ -43,8 +43,7 @@ public class LongFieldBuilder extends NumberFieldBuilder<Long> {
 
     @Override
     protected byte[] fromObjectToBcd(Long value, FieldDefinition definition) {
-        byte[] bytes = String.valueOf(value).getBytes();
-        return BytesUtil.toBCD(bytes);
+        return BytesUtil.toBCD(String.valueOf(value));
     }
 
     @Override

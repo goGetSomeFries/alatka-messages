@@ -46,7 +46,7 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
     @Override
     protected byte[] fromObjectToBcd(T value, FieldDefinition fieldDefinition) {
         String datetime = this.formatter(fieldDefinition.getPattern(), true).format((TemporalAccessor) value);
-        return BytesUtil.toBCD(datetime.getBytes());
+        return BytesUtil.toBCD(datetime);
     }
 
     protected DateTimeFormatter formatter(String pattern, boolean serialized) {

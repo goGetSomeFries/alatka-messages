@@ -61,11 +61,6 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
      */
     private String charset;
     /**
-     * length解析类型
-     */
-    @Deprecated
-    private LenParseType lenParseType;
-    /**
      * 报文描述
      */
     private String remark;
@@ -102,13 +97,8 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
         none
     }
 
-    @Deprecated
-    public enum LenParseType {
-        ASCII, BINARY
-    }
-
     public enum DomainType {
-        TLV, TV, ULV, UV, UVAS, LIST, DEFAULT, NONE
+        TLV, TV, ULV, ULV_2, UV, UVAS, LIST, DEFAULT, NONE
     }
 
     public Type getType() {
@@ -189,16 +179,6 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
 
     public void setCharset(String charset) {
         this.charset = charset;
-    }
-
-    @Deprecated
-    public LenParseType getLenParseType() {
-        return lenParseType;
-    }
-
-    @Deprecated
-    public void setLenParseType(LenParseType lenParseType) {
-        this.lenParseType = lenParseType;
     }
 
     public String getRemark() {

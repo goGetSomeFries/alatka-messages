@@ -1,5 +1,4 @@
 alatka.messages:
-  lenParseType: BINARY
   remark: jcb 8583报文
   type: iso
   group: jcb
@@ -17,24 +16,21 @@ alatka.messages:
       - { "domainNo": 5, "name": "amtSettlmt", "fixed": true, "length": 6, "remark": "清算金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
       - { "domainNo": 6, "name": "amtCdhldrBil", "fixed": true, "length": 6,  "remark": "持卡人扣账金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
       - { "domainNo": 7, "name": "transmsnDateTime", "fixed": true, "length": 5, "remark": "交易传输时间", "clazz": "java.time.LocalDateTime", "pattern": "MMddHHmmss", "parseType": "BCD" }
-      - { "domainNo": 8, "name": "amtCdhldrBilFee", "fixed": true, "length": 4,  "remark": "持卡人扣账金额费用", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
       - { "domainNo": 9, "name": "convRateSettlmt", "fixed": true, "length": 4, "remark": "清算汇率", "clazz": "java.lang.Integer", "parseType": "BCD" }
       - { "domainNo": 10, "name": "convRateCdhldrBil", "fixed": true, "length": 4, "remark": "持卡人扣账汇率", "clazz": "java.lang.Integer", "parseType": "BCD" }
-      - { "domainNo": 11, "name": "sysTraceAuditNum", "fixed": true, "length": 3, "remark": "系统跟踪号", "clazz": "java.lang.Integer", "parseType": "BCD" }
+      - { "domainNo": 11, "name": "sysTraceAuditNum", "fixed": true, "length": 3, "remark": "系统跟踪号", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 12, "name": "timeLocalTrans", "fixed": true, "length": 3, "remark": "受卡方所在地时间", "clazz": "java.time.LocalTime", "pattern": "HHmmss", "parseType": "BCD" }
       - { "domainNo": 13, "name": "dateLocalTrans", "fixed": true, "length": 2, "remark": "受卡方所在地日期", "clazz": "java.time.MonthDay", "pattern": "MMdd", "parseType": "BCD" }
       - { "domainNo": 14, "name": "dateExpr", "fixed": true, "length": 2, "remark": "卡有效期", "clazz": "java.time.YearMonth", "pattern": "yyMM", "parseType": "BCD" }
-      - { "domainNo": 15, "name": "dateSettlmt", "fixed": true, "length": 2, "remark": "清算日期", "clazz": "java.time.MonthDay", "pattern": "MMdd", "parseType": "BCD" }
       - { "domainNo": 16, "name": "dateConv", "fixed": true, "length": 2, "remark": "兑换日期", "clazz": "java.time.MonthDay", "pattern": "MMdd", "parseType": "BCD" }
       - { "domainNo": 18, "name": "mchntType", "fixed": true, "length": 2, "remark": "商户类型", "clazz": "java.lang.String", "parseType": "BCD" }
-      - { "domainNo": 19, "name": "mchntCntryCode", "fixed": true, "length": 2, "remark": "商户国家代码", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 22, "name": "posEntryModeCode", "fixed": true, "length": 2, "remark": "服务点输入方式码", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 23, "name": "cardSeqId", "fixed": true, "length": 2, "remark": "卡序列号", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 25, "name": "posCondCode", "fixed": true, "length": 1, "remark": "服务点条件码", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 26, "name": "posPinCaptrCode", "fixed": true, "length": 1, "remark": "服务点PIN获取码", "clazz": "java.lang.String", "parseType": "BCD" }
-      - { "domainNo": 28, "name": "amtTransFee", "fixed": true, "length": 9, "remark": "交易费", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      - { "domainNo": 28, "name": "amtTransFee", "fixed": true, "length": 9, "remark": "交易费", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 32, "name": "acqInstIdCode", "fixed": false, "length": 1, "maxLength": 6, "remark": "代理机构标识码", "clazz": "java.lang.String", "parseType": "BCD" }
-      - { "domainNo": 33, "name": "fwdInstIdCode", "fixed": false, "length": 1, "maxLength": 11, "remark": "发送机构标识码", "clazz": "java.lang.String", "parseType": "BCD" }
+      - { "domainNo": 33, "name": "fwdInstIdCode", "fixed": false, "length": 1, "maxLength": 6, "remark": "发送机构标识码", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 35, "name": "tracK2Data", "fixed": false, "length": 1, "maxLength": 20, "remark": "第二磁道数据", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 36, "name": "tracK3Data", "fixed": false, "length": 1, "maxLength": 54,  "remark": "第三磁道数据", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 37, "name": "retrivlRefNum", "fixed": true, "length": 12, "remark": "检索参考号", "clazz": "java.lang.String", "parseType": "EBCDIC" }
@@ -42,29 +38,130 @@ alatka.messages:
       - { "domainNo": 39, "name": "respCode", "fixed": true, "length": 2, "remark": "应答码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 41, "name": "cardAccptrTermnlId", "fixed": true, "length": 8, "remark": "受卡机终端标识码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 42, "name": "cardAccptrId", "fixed": true, "length": 15, "remark": "受卡方标识码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
-      - { "domainNo": 43, "name": "cardAccptrNameLoc", "fixed": true, "length": 40, "remark": "受卡方名称地址", "clazz": "java.lang.String", "parseType": "EBCDIC" }
-      - { "domainNo": 44, "name": "addtnlRespCode", "fixed": false, "length": 1, "maxLength": 99, "remark": "附加响应数据", "clazz": "java.lang.String", "parseType": "EBCDIC" }
-      - { "domainNo": 45, "name": "tracK1Data", "fixed": false, "length": 1, "maxLength": 76, "remark": "第一磁道数据", "clazz": "java.lang.String", "parseType": "BINARY" }
-      - { "domainNo": 48, "name": "addtnlDataPrivate", "fixed": false, "length": 1, "maxLength": 255, "remark": "附加数据——私有", "existSubdomain": true, "subdomainType": "UVAS" }
+      - { "domainNo": 43, "name": "cardAccptrNameLoc", "fixed": true, "length": 40, "remark": "受卡方名称地址", "existSubdomain": true, "subdomainType": "DEFAULT", "parseType": "NONE_LEN_BIN" }
+      - { "domainNo": 44, "name": "addtnlRespCode", "fixed": false, "length": 1, "maxLength": 99, "remark": "附加响应数据", "existSubdomain": true, "subdomainType": "DEFAULT", "parseType": "NONE_LEN_BIN" }
+      - { "domainNo": 45, "name": "tracK1Data", "fixed": false, "length": 1, "maxLength": 76, "remark": "第一磁道数据", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      - { "domainNo": 48, "name": "addtnlDataPrivate", "fixed": false, "length": 1, "maxLength": 255, "remark": "附加数据——私有", "existSubdomain": true, "subdomainType": "ULV_2", "parseType": "NONE_LEN_BIN" }
       - { "domainNo": 49, "name": "currcyCodeTrans", "fixed": true, "length": 3, "remark": "交易货币代码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 50, "name": "currcyCodeSettlmt", "fixed": true, "length": 3, "remark": "清算货币代码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 51, "name": "currcyCodeCdhldrBil", "fixed": true, "length": 3, "remark": "持卡人帐户货币代码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 52, "name": "pinData", "fixed": true, "length": 8, "remark": "个人标识码数据", "clazz": "[B" }
       - { "domainNo": 53, "name": "secRelatdCtrlInfo", "fixed": true, "length": 8, "remark": "安全控制信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
-      - { "domainNo": 54, "name": "addtnlAmt", "fixed": false, "length": 1, "maxLength": 120, "remark": "实际余额", "existSubdomain": true, "subdomainType": "DEFAULT" }
-      - { "domainNo": 55, "name": "iccData", "fixed": false, "length": 2, "maxLength": 255, "remark": "IC卡数据域", "existSubdomain": true, "subdomainType": "TLV" }
-      - { "domainNo": 60, "name": "reserved", "fixed": false, "length": 1, "maxLength": 255, "remark": "自定义域", "existSubdomain": true, "subdomainType": "DEFAULT" }
-      - { "domainNo": 61, "name": "chAuthInfo", "fixed": false, "length": 1, "maxLength": 255, "remark": "持卡人身份认证信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
-      - { "domainNo": 63, "name": "finaclNetData", "fixed": false, "length": 3, "maxLength": 512, "remark": "金融网络数据", "existSubdomain": true, "subdomainType": "ULV" }
+      - { "domainNo": 54, "name": "addtnlAmt", "fixed": false, "length": 1, "maxLength": 120, "remark": "实际余额", "existSubdomain": true, "subdomainType": "DEFAULT", "parseType": "NONE_LEN_BIN" }
+      - { "domainNo": 55, "name": "iccData", "fixed": false, "length": 2, "maxLength": 255, "remark": "IC卡数据域", "existSubdomain": true, "subdomainType": "TLV", "parseType": "NONE_LEN_BIN" }
+      - { "domainNo": 60, "name": "stipRelInfo", "fixed": false, "length": 1, "maxLength": 255, "remark": "STIP related information", "existSubdomain": true, "subdomainType": "ULV_2", "parseType": "NONE_LEN_BIN" }
+      - { "domainNo": 61, "name": "ponitOfServiceInfo", "fixed": false, "length": 1, "maxLength": 255, "remark": "point of service information", "existSubdomain": true, "subdomainType": "DEFAULT", "parseType": "NONE_LEN_BIN" }
+      - { "domainNo": 63, "name": "finaclNetData", "fixed": false, "length": 1, "maxLength": 255, "remark": "transaction code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 70, "name": "netwkMgmtInfoCode", "fixed": true, "length": 2, "remark": "网络管理信息码", "clazz": "java.lang.String", "parseType": "BCD" }
-      - { "domainNo": 90, "name": "origDataElemts", "fixed": true, "length": 21, "remark": "原始数据元", "existSubdomain": true, "subdomainType": "DEFAULT" }
-      - { "domainNo": 95, "name": "replacementAmt", "fixed": true, "length": 42, "remark": "报文安全码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      #- { "domainNo": 90, "name": "origDataElemts", "fixed": true, "length": 21, "remark": "原始数据元", "existSubdomain": true, "subdomainType": "DEFAULT" }
+      - { "domainNo": 95, "name": "replacementAmt", "fixed": true, "length": 42, "remark": "replacement amounts", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 96, "name": "msgSecurityCode", "fixed": true, "length": 8, "remark": "报文安全码", "clazz": "[B" }
       - { "domainNo": 100, "name": "rcvgInstIdCode", "fixed": false, "length": 1, "maxLength": 6, "remark": "接收机构标识码", "clazz": "java.lang.String", "parseType": "BCD" }
       - { "domainNo": 101, "name": "fileName", "fixed": false, "length": 1, "maxLength": 17, "remark": "file name", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 105, "name": "msgSecurityCodeForTriDes", "fixed": true, "length": 16, "remark": "message security code for triple DES", "clazz": "[B" }
-      - { "domainNo": 120, "name": "recordData", "fixed": false, "length": 2, "maxLength": 30, "remark": "record data", "existSubdomain": true, "subdomainType": "ULV" }
-      - { "domainNo": 127, "name": "negDataAccessCode", "fixed": false, "length": 2, "maxLength": 6, "remark": "negative data access code", "clazz": "java.lang.String" }
+      - { "domainNo": 120, "name": "recordData", "fixed": false, "length": 2, "maxLength": 30, "remark": "record data", "existSubdomain": true, "subdomainType": "DEFAULT", "parseType": "NONE_LEN_BIN" }
+      - { "domainNo": 127, "name": "negDataAccessCode", "fixed": false, "length": 2, "maxLength": 6, "remark": "negative data access code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
     subPayload:
-      F48@AA:
-        - { "domainNo": 1, "name": "acqInstAddtnlInfo", "fixed": false, "length": -1, "maxLength": 510, "remark": "受理方附加交易信息", "clazz": "java.lang.String" }
+      F28:
+        - { "domainNo": 1, "name": "f28f1", "fixed": true, "length": 1, "remark": "credit or debit", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "f28f2", "fixed": true, "length": 8, "remark": "fee amount in the currency", "clazz": "java.math.BigDecimal", "parseType": "EBCDIC" }
+      F43:
+        - { "domainNo": 1, "name": "f43f1", "fixed": true, "length": 22, "remark": "Merchant Name", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "f43f2", "fixed": true, "length": 1, "remark": "space", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 3, "name": "f43f3", "fixed": true, "length": 13, "remark": "Merchant or ATM Location City", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 4, "name": "f43f4", "fixed": true, "length": 1, "remark": "space", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 5, "name": "f43f5", "fixed": true, "length": 3, "remark": "Country Code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F44:
+        - { "domainNo": 1, "name": "f44f1", "fixed": true, "length": 1, "remark": "CAV2 Result Code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "f44f2", "fixed": true, "length": 1, "remark": "AVS Result Code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F48@01:
+        - { "domainNo": 1, "name": "cav2", "fixed": true, "length": 3, "remark": "cav2", "clazz": "java.lang.String", "parseType": "BCD" }
+      F48@02:
+        - { "domainNo": 1, "name": "xid", "fixed": true, "length": 20, "remark": "xid", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 2, "name": "cavv", "fixed": true, "length": 20, "remark": "cavv", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 3, "name": "eci", "fixed": true, "length": 1, "remark": "eci", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 4, "name": "reserved", "fixed": true, "length": 6, "remark": "reserved", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F48@03:
+        - { "domainNo": 1, "name": "postalCode", "fixed": true, "length": 9, "remark": "postal code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "streetAddress", "fixed": true, "length": 5, "remark": "street address", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F48@04:
+        - { "domainNo": 1, "name": "posData", "fixed": true, "length": 1, "remark": "pos data extended condition code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F48@20:
+        - { "domainNo": 1, "name": "transitFlag", "fixed": true, "length": 2, "remark": "Transit Flag", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F48@21:
+        - { "domainNo": 1, "name": "f48f1", "fixed": true, "length": 19, "remark": "Associated PAN", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "f48f2", "fixed": true, "length": 4, "remark": "Associated PAN Expiration Date", "clazz": "java.time.MonthDay", "pattern": "MMdd", "parseType": "EBCDIC" }
+      F48@30:
+        - { "domainNo": 1, "name": "f48f1", "fixed": true, "length": 8, "remark": "Original Transaction ID", "clazz": "java.lang.String", "parseType": "BCD" }
+      F48@31:
+        - { "domainNo": 1, "name": "f48f1", "fixed": true, "length": 8, "remark": "Transaction ID", "clazz": "java.lang.String", "parseType": "BCD" }
+      F53:
+        - { "domainNo": 1, "name": "f53f1", "fixed": true, "length": 1, "remark": "Key Type", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 2, "name": "f53f2", "fixed": true, "length": 1, "remark": "PIN Encryption Algorithm", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 3, "name": "f53f3", "fixed": true, "length": 1, "remark": "PIN Block Format", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 4, "name": "f53f4", "fixed": true, "length": 1, "remark": "Key Index", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 5, "name": "f53f5", "fixed": true, "length": 1, "remark": "MAC Index", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 6, "name": "f53f6", "fixed": true, "length": 2, "remark": "Check Digits", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 7, "name": "f53f7", "fixed": true, "length": 1, "remark": "reserved", "clazz": "java.lang.String", "parseType": "BCD" }
+      F54:
+        - { "domainNo": 1, "name": "f54f1", "fixed": true, "length": 1, "remark": "Account Type", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "f54f2", "fixed": true, "length": 1, "remark": "Amount Type", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 3, "name": "f54f3", "fixed": true, "length": 1, "remark": "Currency Code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 4, "name": "f54f4", "fixed": true, "length": 1, "remark": "Credit or Debit Sign", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 5, "name": "f54f5", "fixed": true, "length": 1, "remark": "Amount", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F55$TLV:
+        - { "domainNo": 0x9F26, "name": "crypt", "fixed": false, "remark": "应用密文", "clazz": "[B" }
+        - { "domainNo": 0x9F27, "name": "cryptInfoData", "fixed": false, "remark": "密文信息数据", "clazz": "[B" }
+        - { "domainNo": 0x9F10, "name": "issuerAppData", "fixed": false, "remark": "发卡行应用数据", "clazz": "[B" }
+        - { "domainNo": 0x9F37, "name": "unpredictableNumber", "fixed": false, "remark": "不可预知数", "clazz": "[B" }
+        - { "domainNo": 0x9F36, "name": "appTransCounter", "fixed": false, "remark": "应用交易计数器", "clazz": "[B" }
+        - { "domainNo": 0x95, "name": "termVerificationResult", "fixed": false, "remark": "终端验证结果", "clazz": "[B" }
+        - { "domainNo": 0x9A, "name": "transDate", "fixed": false, "remark": "交易日期", "clazz": "java.time.LocalDate", "pattern": "yyMMdd", "parseType": "BCD" }
+        - { "domainNo": 0x9C, "name": "transType", "fixed": false, "remark": "交易类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x9F02, "name": "transAmt", "fixed": false, "remark": "授权金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
+        - { "domainNo": 0x5F2A, "name": "transCurrencyCode", "fixed": false, "remark": "交易货币代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x82, "name": "appInterchangeProfile", "fixed": false, "remark": "应用交互特征", "clazz": "[B" }
+        - { "domainNo": 0x9F1A, "name": "termCountryCode", "fixed": false, "remark": "终端国家代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x9F03, "name": "otherAmt", "fixed": false, "remark": "其它金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
+        - { "domainNo": 0x9F33, "name": "termCap", "fixed": false, "remark": "终端性能", "clazz": "[B" }
+        - { "domainNo": 0x9F34, "name": "cardholderVerificationMethodResults", "fixed": false, "remark": "持卡人验证方法结果", "clazz": "[B" }
+        - { "domainNo": 0x9F35, "name": "termType", "fixed": false, "remark": "终端类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x9F1E, "name": "interfaceDeviceSerialNumber", "fixed": false, "remark": "接口设备序列号", "clazz": "java.lang.String" }
+        - { "domainNo": 0x84, "name": "dedicatedFileName", "fixed": false, "remark": "专用文件名称", "clazz": "[B" }
+        - { "domainNo": 0x9F09, "name": "termAppVersionNumber", "fixed": false, "remark": "应用版本号", "clazz": "[B" }
+        - { "domainNo": 0x9F41, "name": "transSequenceCounter", "fixed": false, "remark": "交易序列计数器", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x91, "name": "issuerAuthenticationData", "fixed": false, "remark": "发卡行认证数据", "clazz": "[B" }
+        - { "domainNo": 0x71, "name": "issuerScriptTemplate1", "fixed": false, "remark": "发卡行脚本1", "clazz": "[B" }
+        - { "domainNo": 0x72, "name": "issuerScriptTemplate2", "fixed": false, "remark": "发卡行脚本2", "clazz": "[B" }
+        - { "domainNo": 0xDF31, "name": "issuerScriptResults", "fixed": false, "remark": "发卡方脚本结果", "clazz": "[B" }
+        - { "domainNo": 0x9F74, "name": "issuerAuthorizationCode", "fixed": false, "remark": "电子现金发卡行授权码", "clazz": "java.lang.String" }
+        - { "domainNo": 0x9F63, "name": "cardProductIdentification", "fixed": false, "remark": "卡产品标识信息", "clazz": "[B" }
+        - { "domainNo": 0x8A, "name": "authorizationResponseCode", "fixed": false, "remark": "授权响应码", "clazz": "java.lang.String" }
+      F60@01:
+        - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 1, "remark": "STIP Institution", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F60@02:
+        - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 1, "remark": "STIP Reason", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F60@03:
+        - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 2, "remark": "STIP Rejected Reason", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F61:
+        - { "domainNo": 1, "name": "f61f1", "fixed": true, "length": 1, "remark": "Mail/Telephone Order Transaction Sign", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "f61f2", "fixed": true, "length": 1, "remark": "Recurring Transaction Sign", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 3, "name": "f61f3", "fixed": true, "length": 1, "remark": "Pre-Authorization Sign", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 4, "name": "f61f4", "fixed": true, "length": 3, "remark": "Terminal Located Country Code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 5, "name": "f61f5", "fixed": true, "length": 1, "remark": "Reserved for future use", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 6, "name": "f61f6", "fixed": true, "length": 1, "remark": "Transaction Initiator Sign", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F95:
+        - { "domainNo": 1, "name": "f95f1", "fixed": true, "length": 12, "remark": "actual transaction amount", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "f95f2", "fixed": true, "length": 12, "remark": "Actual Amount, reconciliation", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 3, "name": "f95f3", "fixed": true, "length": 12, "remark": "Actual Amount, cardholder billing", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 4, "name": "f95f4", "fixed": true, "length": 6, "remark": "reserved", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+      F120:
+        - { "domainNo": 1, "name": "f120f1", "fixed": true, "length": 1, "remark": "Transaction Type", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 2, "name": "f120f2", "fixed": true, "length": 16, "remark": "JCB Card Number", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 3, "name": "f120f3", "fixed": true, "length": 2, "remark": "Authorization Action Code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 4, "name": "f120f4", "fixed": true, "length": 6, "remark": "Purge Date", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 5, "name": "f120f5", "fixed": true, "length": 1, "remark": "Stop Region Sign Japan", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 6, "name": "f120f6", "fixed": true, "length": 1, "remark": "Asia", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 7, "name": "f120f7", "fixed": true, "length": 1, "remark": "USA", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 8, "name": "f120f8", "fixed": true, "length": 1, "remark": "Europe", "clazz": "java.lang.String", "parseType": "EBCDIC" }
+        - { "domainNo": 9, "name": "f120f9", "fixed": true, "length": 1, "remark": "Local", "clazz": "java.lang.String", "parseType": "EBCDIC" }

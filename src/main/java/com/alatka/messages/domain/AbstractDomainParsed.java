@@ -4,8 +4,6 @@ import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -27,31 +25,35 @@ public abstract class AbstractDomainParsed implements DomainParsed {
      * 报文域补字符
      *
      * @param bytes      报文域字节数组
-     * @param length     报文域长度
-     * @param fieldType  {@link FieldDefinition.FieldType}
      * @param definition
      * @return 结果字节数组
      */
-    protected byte[] padding(byte[] bytes, int length, FieldDefinition.FieldType fieldType, FieldDefinition definition) {
-        int paddingLength = length - bytes.length;
+    protected byte[] padding(byte[] bytes, FieldDefinition definition) {
+        int paddingLength = definition.getLength() - bytes.length;
         if (paddingLength < 0) {
-            throw new RuntimeException(messageDefinition + " -> " + definition + " actual length: " + bytes.length + ", expected length: " + length);
+            throw new RuntimeException(definition + " actual length: " + bytes.length + ", expected length: " + definition.getLength());
         }
         if (paddingLength == 0) {
             return bytes;
         }
-        String padding = IntStream.range(0, paddingLength)
-                .mapToObj(i -> fieldType.getFillChar())
-                .map(fillChar -> Optional.ofNullable(fillChar).orElse(""))
-                .collect(Collectors.joining(""));
+        byte[] padding = IntStream.range(0, paddingLength)
+                .mapToObj(i -> this.fillBytes(definition))
+                .reduce(new byte[0], BytesUtil::concat);
 
-        if (FieldDefinition.FieldType.DIRECTION_L.equals(fieldType.getDirection())) {
-            return BytesUtil.concat(padding.getBytes(), bytes);
-        } else if (FieldDefinition.FieldType.DIRECTION_R.equals(fieldType.getDirection())) {
-            return BytesUtil.concat(bytes, padding.getBytes());
-        } else {
-            return bytes;
+        return definition.getFieldType() == FieldDefinition.FieldType.NUMBER ?
+                BytesUtil.concat(padding, bytes) : BytesUtil.concat(bytes, padding);
+    }
+
+    private byte[] fillBytes(FieldDefinition definition) {
+        if (definition.getFieldType() == FieldDefinition.FieldType.NUMBER) {
+            return this.isEbcdic(definition.getParseType()) ? BytesUtil.toEBCDIC("0".getBytes()) : "0".getBytes();
+
         }
+        return this.isEbcdic(definition.getParseType()) ? BytesUtil.toEBCDIC(" ".getBytes()) : " ".getBytes();
+    }
+
+    private boolean isEbcdic(FieldDefinition.ParseType parseType) {
+        return parseType == FieldDefinition.ParseType.BCD || parseType == FieldDefinition.ParseType.EBCDIC;
     }
 
 }

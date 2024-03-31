@@ -38,7 +38,7 @@ public class IsoFieldDefinition extends FieldDefinition {
 
     @Override
     public String toString() {
-        return "IsoFieldDefinition{" + String.join(":",
+        return "{" + String.join(":",
                 "F" + getDomainNo(),
                 getName(),
                 getLength().toString(),

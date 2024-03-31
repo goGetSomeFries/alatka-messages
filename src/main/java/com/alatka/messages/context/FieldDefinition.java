@@ -83,38 +83,26 @@ public class FieldDefinition {
     private Map<String, MessageDefinition> messageDefinitionMap;
 
     public enum ParseType {
-        ASCII, EBCDIC, BCD, BINARY, NONE
+        ASCII(LPT.A), EBCDIC(LPT.B), BCD(LPT.B), BINARY(LPT.A), NONE(LPT.A), NONE_LEN_BIN(LPT.B);
+
+        private LPT lenParseType;
+
+        ParseType(LPT lenParseType) {
+            this.lenParseType = lenParseType;
+        }
+
+        public LPT getLenParseType() {
+            return lenParseType;
+        }
+
+        public enum LPT {
+            /* ASCII */ A,
+            /* BINARY */ B
+        }
     }
 
     public enum FieldType {
-        STRING(" ", FieldType.DIRECTION_R, null),
-        NUMBER("0", FieldType.DIRECTION_L, null),
-        NONE(null, null, null);
-
-        public static final String DIRECTION_R = "R";
-        public static final String DIRECTION_L = "L";
-
-        private final String fillChar;
-        private final String direction;
-        private final String specialChar;
-
-        FieldType(String fillChar, String direction, String specialChar) {
-            this.fillChar = fillChar;
-            this.direction = direction;
-            this.specialChar = specialChar;
-        }
-
-        public String getFillChar() {
-            return fillChar;
-        }
-
-        public String getDirection() {
-            return direction;
-        }
-
-        public String getSpecialChar() {
-            return specialChar;
-        }
+        STRING, NUMBER, NONE
     }
 
     public Integer getIndex() {

@@ -71,26 +71,34 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
 
     @Override
     public byte[] serialize(Object instance, FieldDefinition fieldDefinition) {
-        // 1.获取instance属性值
-        T value = this.getValue(instance, fieldDefinition);
-        // 2.属性值转换为字节数组
-        byte[] bytes = this.fromObject(value, fieldDefinition);
-        // 3.字节数组包装成定义格式报文域
-        return DomainParsedFactory.getInstance(instance, this.messageDefinition, fieldDefinition)
-                .pack(bytes, fieldDefinition);
+        try {
+            // 1.获取instance属性值
+            T value = this.getValue(instance, fieldDefinition);
+            // 2.属性值转换为字节数组
+            byte[] bytes = this.fromObject(value, fieldDefinition);
+            // 3.字节数组包装成定义格式报文域
+            return DomainParsedFactory.getInstance(instance, this.messageDefinition, fieldDefinition)
+                    .pack(bytes, fieldDefinition);
+        } catch (Exception e) {
+            throw new RuntimeException(messageDefinition + " -> " + fieldDefinition + "解析报错", e);
+        }
     }
 
     @Override
     public Object deserialize(byte[] bytes, FieldDefinition fieldDefinition, Object instance, AtomicInteger counter) {
-        // 1.解析报文域字节数组
-        byte[] valueBytes = DomainParsedFactory.getInstance(instance, this.messageDefinition, fieldDefinition)
-                .unpack(bytes, fieldDefinition, counter);
-        // 2.报文域类型转换
-        T value = this.toObject(valueBytes, fieldDefinition);
-        // 3.属性赋值
-        this.setValue(instance, fieldDefinition, value);
+        try {
+            // 1.解析报文域字节数组
+            byte[] valueBytes = DomainParsedFactory.getInstance(instance, this.messageDefinition, fieldDefinition)
+                    .unpack(bytes, fieldDefinition, counter);
+            // 2.报文域类型转换
+            T value = this.toObject(valueBytes, fieldDefinition);
+            // 3.属性赋值
+            this.setValue(instance, fieldDefinition, value);
 
-        return value;
+            return value;
+        } catch (Exception e) {
+            throw new RuntimeException(messageDefinition + " -> " + fieldDefinition + "解析报错", e);
+        }
     }
 
     /**
@@ -105,28 +113,25 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
         if (value == null && returnIfNull()) {
             return bytes;
         }
-        try {
-            switch (fieldDefinition.getParseType()) {
-                case ASCII:
-                    bytes = this.fromObjectToAscii(value, fieldDefinition);
-                    break;
-                case BINARY:
-                    bytes = this.fromObjectToBinary(value, fieldDefinition);
-                    break;
-                case BCD:
-                    bytes = this.fromObjectToBcd(value, fieldDefinition);
-                    break;
-                case EBCDIC:
-                    bytes = this.fromObjectToEbcdic(value, fieldDefinition);
-                    break;
-                case NONE:
-                    bytes = this.fromObjectToNone(value, fieldDefinition);
-                    break;
-                default:
-                    throwException(fieldDefinition);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(fieldDefinition + "解析报错", e);
+        switch (fieldDefinition.getParseType()) {
+            case ASCII:
+                bytes = this.fromObjectToAscii(value, fieldDefinition);
+                break;
+            case BINARY:
+                bytes = this.fromObjectToBinary(value, fieldDefinition);
+                break;
+            case BCD:
+                bytes = this.fromObjectToBcd(value, fieldDefinition);
+                break;
+            case EBCDIC:
+                bytes = this.fromObjectToEbcdic(value, fieldDefinition);
+                break;
+            case NONE:
+            case NONE_LEN_BIN:
+                bytes = this.fromObjectToNone(value, fieldDefinition);
+                break;
+            default:
+                throwException(fieldDefinition);
         }
         return bytes;
     }
@@ -143,28 +148,25 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
             return null;
         }
         T instance = null;
-        try {
-            switch (fieldDefinition.getParseType()) {
-                case ASCII:
-                    instance = this.toObjectWithAscii(bytes, fieldDefinition);
-                    break;
-                case BINARY:
-                    instance = this.toObjectWithBinary(bytes, fieldDefinition);
-                    break;
-                case BCD:
-                    instance = this.toObjectWithBcd(bytes, fieldDefinition);
-                    break;
-                case EBCDIC:
-                    instance = this.toObjectWithEbcdic(bytes, fieldDefinition);
-                    break;
-                case NONE:
-                    instance = this.toObjectWithNone(bytes, fieldDefinition);
-                    break;
-                default:
-                    throwException(fieldDefinition);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(fieldDefinition + "解析报错", e);
+        switch (fieldDefinition.getParseType()) {
+            case ASCII:
+                instance = this.toObjectWithAscii(bytes, fieldDefinition);
+                break;
+            case BINARY:
+                instance = this.toObjectWithBinary(bytes, fieldDefinition);
+                break;
+            case BCD:
+                instance = this.toObjectWithBcd(bytes, fieldDefinition);
+                break;
+            case EBCDIC:
+                instance = this.toObjectWithEbcdic(bytes, fieldDefinition);
+                break;
+            case NONE:
+            case NONE_LEN_BIN:
+                instance = this.toObjectWithNone(bytes, fieldDefinition);
+                break;
+            default:
+                throwException(fieldDefinition);
         }
         return instance;
     }

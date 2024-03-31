@@ -30,8 +30,7 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
 
     @Override
     protected byte[] fromObjectToBcd(BigDecimal value, FieldDefinition fieldDefinition) {
-        byte[] bytes = value.toString().getBytes();
-        return BytesUtil.toBCD(bytes);
+        return BytesUtil.toBCD(value.toString());
     }
 
     @Override

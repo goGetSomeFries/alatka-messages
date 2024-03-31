@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -293,10 +294,12 @@ public class IsoYamlMessageBuilderTest {
 
     @Test
     public void test98() {
-        System.out.println(BytesUtil.bytesToInt(BytesUtil.hexToBytes("00EB")));
-        System.out.println(BytesUtil.fromEBCDIC(BytesUtil.hexToBytes("91F0F1F0F0")));
-        System.out.println(new String(BytesUtil.hexToBytes("91F0F1F0F0"), Charset.forName("IBM-500")));
-        System.out.println((BytesUtil.fromBCD(BytesUtil.hexToBytes("68"))));
+        String hex = "30323030E23A44C1A8E098120000000010000081313636323531383830303030303531363838333030303030303832353131323430303836333734333131323430303038323530383235363031313032313032303630383932323530303030303839323235303030303334363235313838303030303035313638383D3238303535303130303030303030303931303030303030303231363830313233343536373831323334353637383930313233343543484E32393030304348494E4120554E494F4E5041592053494D554C41544F522020202020202020313536000000000000000032343030303030303030303030303030303237303030303035303030313030303030303030303034303231303032303231534D303136E069374A9BC6AB9A659912BE707F824330383033303530303031303433353131533030303030303032353033303530303031202020303030303030303030303030303041413030303044363132303134";
+        MessageHolder holder = MessageBuilder.init("iso:cups:common:payload").unpack(hex);
+//        byte[] pack = MessageBuilder.init("iso:cups:common:payload").pack(holder);
+//        Assertions.assertEquals(hex, BytesUtil.bytesToHex(pack));
+        System.out.println(holder);
+        System.out.println(Arrays.toString("0".getBytes()));
     }
 
     @Test

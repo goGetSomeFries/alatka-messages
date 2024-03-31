@@ -27,7 +27,7 @@ public class FixedDomainParsed extends AbstractDomainParsed {
 
     @Override
     public byte[] pack(byte[] bytes, FieldDefinition fieldDefinition) {
-        return this.padding(bytes, fieldDefinition.getLength(), fieldDefinition.getFieldType(), fieldDefinition);
+        return this.padding(bytes, fieldDefinition);
     }
 
     @Override

@@ -25,8 +25,7 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected byte[] fromObjectToBcd(String value, FieldDefinition definition) {
-        byte[] bytes = value.getBytes();
-        return BytesUtil.toBCD(bytes);
+        return BytesUtil.toBCD(value);
     }
 
     @Override
@@ -37,23 +36,31 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected String toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
-        String result = new String(bytes, messageDefinition.getCharset()).trim();
-        return result.isEmpty() ? null : result;
+        String result = new String(bytes, messageDefinition.getCharset());
+        return this.postProcess(result);
     }
 
     @Override
     protected String toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
-        return BytesUtil.bytesToBinary(bytes);
+        String result = BytesUtil.bytesToBinary(bytes);
+        return this.postProcess(result);
     }
 
     @Override
     protected String toObjectWithBcd(byte[] bytes, FieldDefinition definition) {
-        return BytesUtil.fromBCD(bytes);
+        String result = BytesUtil.fromBCD(bytes);
+        return this.postProcess(result);
     }
 
     @Override
     protected String toObjectWithEbcdic(byte[] bytes, FieldDefinition definition) {
-        return BytesUtil.fromEBCDIC(bytes);
+        String result = BytesUtil.fromEBCDIC(bytes);
+        return this.postProcess(result);
+    }
+
+    private String postProcess(String result) {
+        result = result.trim();
+        return result.isEmpty() ? null : result;
     }
 
     @Override

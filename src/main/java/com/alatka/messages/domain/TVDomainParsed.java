@@ -34,7 +34,7 @@ public class TVDomainParsed extends AbstractDomainParsed {
     @Override
     public byte[] pack(byte[] bytes, FieldDefinition fieldDefinition) {
         byte[] tagBytes = ((IsoFieldDefinition) fieldDefinition).getAliasName().getBytes();
-        byte[] valueBytes = this.padding(bytes, fieldDefinition.getLength(), fieldDefinition.getFieldType(), fieldDefinition);
+        byte[] valueBytes = this.padding(bytes, fieldDefinition);
         return BytesUtil.concat(tagBytes, valueBytes);
     }
 

@@ -43,8 +43,7 @@ public class IntegerFieldBuilder extends NumberFieldBuilder<Integer> {
 
     @Override
     protected byte[] fromObjectToBcd(Integer value, FieldDefinition definition) {
-        byte[] bytes = String.valueOf(value).getBytes();
-        return BytesUtil.toBCD(bytes);
+        return BytesUtil.toBCD(String.valueOf(value));
     }
 
     @Override

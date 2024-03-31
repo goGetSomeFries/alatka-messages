@@ -9,7 +9,7 @@ public class FixedFieldDefinition extends FieldDefinition {
 
     @Override
     public String toString() {
-        return "FixedFieldDefinition{" + String.join(":",
+        return "{" + String.join(":",
                 "F" + getDomainNo(),
                 getName(),
                 getLength().toString(),

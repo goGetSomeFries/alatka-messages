@@ -52,7 +52,9 @@ public class BytesUtil {
         return new String(bytes, Charset.forName("IBM-500"));
     }
 
-    public static byte[] toBCD(byte[] bytes) {
+    public static byte[] toBCD(String decimalStr) {
+        decimalStr = decimalStr.length() % 2 == 0 ? decimalStr : "0".concat(decimalStr);
+        byte[] bytes = decimalStr.getBytes();
         byte[] bcdBytes = new byte[bytes.length / 2];
         for (int i = 0; i < bcdBytes.length; i++) {
             bcdBytes[i] = (byte) (bytes[2 * i] << 4 | (bytes[2 * i + 1] & 0xf));

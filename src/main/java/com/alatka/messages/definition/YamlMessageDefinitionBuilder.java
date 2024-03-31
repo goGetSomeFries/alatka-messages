@@ -37,7 +37,7 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
      * 子域key Pattern<br>
      * e.g. F61@SM$TLV F59@SM_F3 F60$TLV
      */
-    private static final Pattern PATTERN = Pattern.compile("^([@\\w]+?)(@[A-Z]{2})?(\\$\\w+)?$");
+    private static final Pattern PATTERN = Pattern.compile("^([@\\w]+?)(@[0-9A-Z]{2})?(\\$\\w+)?$");
 
     private final String classpath;
 
@@ -132,8 +132,6 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
         definition.setCode(yaml.get("code").toString());
         definition.setKind(kind);
         definition.setCharset(yaml.get("charset") == null ? "GB18030" : yaml.get("charset").toString());
-        definition.setLenParseType(yaml.get("lenParseType") == null ?
-                MessageDefinition.LenParseType.ASCII : MessageDefinition.LenParseType.valueOf(yaml.get("lenParseType").toString()));
         definition.setRemark(yaml.get("remark") == null ? "" : yaml.get("remark").toString());
 
         if (identity != null) {

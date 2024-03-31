@@ -22,7 +22,7 @@ class IsoMessageBuilder extends MessageBuilder {
     @Override
     protected boolean filter(FieldDefinition fieldDefinition) {
         return MessageDefinition.Kind.payload == definition.getKind() && fieldDefinition.getDomainNo() > 1 ?
-                this.bitmap.get().get(fieldDefinition.getDomainNo()) : true;
+                this.bitmap.get().getOrDefault(fieldDefinition.getDomainNo(), false) : true;
     }
 
     @Override

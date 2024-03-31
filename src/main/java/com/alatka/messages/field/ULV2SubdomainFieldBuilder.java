@@ -2,6 +2,7 @@ package com.alatka.messages.field;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
+import com.alatka.messages.util.BytesUtil;
 
 /**
  * 子域类型报文域解析器
@@ -10,7 +11,7 @@ import com.alatka.messages.context.MessageDefinition;
  * @see AbstractFieldBuilder
  * @see FieldBuilder
  */
-public class ULVSubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder {
+public class ULV2SubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder {
 
 
     @Override
@@ -20,27 +21,27 @@ public class ULVSubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder {
 
     @Override
     protected int usageLenLength() {
-        return 3;
+        return 2;
     }
 
     @Override
     protected String usageId(byte[] bytes) {
-        return new String(bytes);
+        return BytesUtil.fromEBCDIC(bytes);
     }
 
     @Override
     protected int usageLen(byte[] bytes) {
-        return Integer.parseInt(new String(bytes));
+        return Integer.parseInt(BytesUtil.fromEBCDIC(bytes));
     }
 
     @Override
     protected byte[] usageId(String id) {
-        return id.getBytes();
+        return BytesUtil.toEBCDIC(id.getBytes());
     }
 
     @Override
     protected byte[] usageLen(int length) {
-        return String.format("%0" + this.usageLenLength() + "d", length).getBytes();
+        return BytesUtil.toEBCDIC(String.valueOf(length).getBytes());
     }
 
     @Override
@@ -50,6 +51,6 @@ public class ULVSubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return super.matched(messageDefinition, definition) && definition.getSubdomainType() == MessageDefinition.DomainType.ULV;
+        return super.matched(messageDefinition, definition) && definition.getSubdomainType() == MessageDefinition.DomainType.ULV_2;
     }
 }

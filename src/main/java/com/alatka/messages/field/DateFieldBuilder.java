@@ -31,7 +31,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder<Date> {
     @Override
     protected byte[] fromObjectToBcd(Date value, FieldDefinition fieldDefinition) {
         String datetime = this.formatter(fieldDefinition).format(value);
-        return BytesUtil.toBCD(datetime.getBytes());
+        return BytesUtil.toBCD(datetime);
     }
 
     @Override
