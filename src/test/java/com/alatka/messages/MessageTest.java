@@ -36,18 +36,19 @@ public class MessageTest {
     @DisplayName("jcb-2")
     public void test02() {
         String key = "iso:jcb:common:payload";
-        String hex = "F0F1F0F0723C4481A8C180081035601234567890120000000000000261190923072729468214151228092398125399022004088802000008880200002503560123456789012D98121010000033300000F9F4F0F9F2F3F4F6F8F2F1F47B94F2F386F891F4F1F1F7F5F1F8404040404040404040C1C3D8E4C9D9C5D940D5C1D4C540404040404040404040C3C9E3E840D5C1D4C54040404040E4E2C107F0F1F0F3F1F2F3F3F4F406F2F2F2F3F4F4";
+        String hex = "F0F1F0F0723C4481A8E180081035601234567890120000000000000261190923072729468214151228092398125399022004088802000008880200002503560123456789012D98121010000033300000F9F4F0F9F2F3F4F6F8F2F1F47B94F2F386F891F4F1F1F7F5F1F8404040404040404040C1C3D8E4C9D9C5D940D5C1D4C540404040404040404040C3C9E3E840D5C1D4C54040404040E4E2C107F0F1F0F3F1F2F3F3F4F406F2F2F2F3F4F4";
         MessageHolder holder = MessageBuilder.init(key).unpack(hex);
         System.out.println(holder);
         byte[] pack = MessageBuilder.init(key).pack(holder);
         MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
-        Assertions.assertEquals(holder, holder1);
         Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
+        Assertions.assertEquals(holder, holder1);
     }
 
 
     @Test
     public void test99() {
-        System.out.println(BytesUtil.bytesToBinary(BytesUtil.hexToBytes("723C4481A8C18008")));
+        System.out.println(BytesUtil.bytesToBinary(BytesUtil.hexToBytes("723C4481A8D18008")));
+        System.out.println(BytesUtil.fromBCD(BytesUtil.hexToBytes("03560123456789012D98121010000033300000")));
     }
 }

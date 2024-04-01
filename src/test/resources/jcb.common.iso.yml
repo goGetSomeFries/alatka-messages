@@ -75,7 +75,7 @@ alatka.messages:
         - { "domainNo": 1, "name": "f44f1", "fixed": true, "length": 1, "remark": "CAV2 Result Code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
         - { "domainNo": 2, "name": "f44f2", "fixed": true, "length": 1, "remark": "AVS Result Code", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       F48@01:
-        - { "domainNo": 1, "name": "cav2", "fixed": true, "length": 3, "remark": "cav2", "clazz": "java.lang.String", "parseType": "BCD" }
+        - { "domainNo": 1, "name": "cav2", "fixed": true, "length": 3, "remark": "cav2", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       F48@02:
         - { "domainNo": 1, "name": "xid", "fixed": true, "length": 20, "remark": "xid", "clazz": "java.lang.String", "parseType": "BCD" }
         - { "domainNo": 2, "name": "cavv", "fixed": true, "length": 20, "remark": "cavv", "clazz": "java.lang.String", "parseType": "BCD" }
