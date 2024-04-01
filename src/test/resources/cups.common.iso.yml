@@ -268,8 +268,8 @@ alatka.messages:
         - { "domainNo": 1, "name": "messageType", "fixed": true, "length": 4, "remark": "原始交易的报文类型", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "sysTraceAuditNum", "fixed": true, "length": 6, "remark": "原始系统跟踪号", "clazz": "java.lang.Integer" }
         - { "domainNo": 3, "name": "transmsnDateTime", "fixed": true, "length": 10, "remark": "原始交易传输时间", "clazz": "java.time.LocalDateTime", "pattern": "MMddHHmmss" }
-        - { "domainNo": 4, "name": "acqInstIdCode", "fixed": true, "length": 11, "remark": "代理机构标识码", "clazz": "java.lang.String", "fieldType": "NUMBER" }
-        - { "domainNo": 5, "name": "fwdInstIdCode", "fixed": true, "length": 11, "remark": "发送机构标识码", "clazz": "java.lang.String", "fieldType": "NUMBER" }
+        - { "domainNo": 4, "name": "acqInstIdCode", "fixed": true, "length": 11, "remark": "代理机构标识码", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "fwdInstIdCode", "fixed": true, "length": 11, "remark": "发送机构标识码", "clazz": "java.lang.String" }
       F121:
         - { "domainNo": 1, "name": "f121f1", "fixed": true, "length": 1, "remark": "应答原因码", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "f121f2", "fixed": true, "length": 1, "remark": "单/双或双/单转换码", "clazz": "java.lang.String" }

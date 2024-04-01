@@ -55,7 +55,7 @@ public class BitmapFieldBuilder extends AbstractFieldBuilder<Map<Integer, Boolea
 
             int length = fieldDefinition.getFixed() ? fieldDefinition.getLength() :
                     (list.stream()
-                            .sorted(Comparator.comparing(FieldDefinition::getDomainNo))
+                            .sorted(Comparator.comparing(FieldDefinition::getDomainNo).reversed())
                             .filter(definition -> MessageHolderUtil.getByName(messageHolder, definition.getName()) != null)
                             .map(FieldDefinition::getDomainNo)
                             .findFirst()
@@ -63,6 +63,9 @@ public class BitmapFieldBuilder extends AbstractFieldBuilder<Map<Integer, Boolea
             // 1域
             bitmap.put(1, length == 16);
             // 2-64/128域
+            if (length == 8) {
+               bitmap.keySet().removeIf(key -> key > 64);
+            }
             IntStream.range(2, length * 8 + 1)
                     .boxed()
                     .filter(i -> !bitmap.containsKey(i))

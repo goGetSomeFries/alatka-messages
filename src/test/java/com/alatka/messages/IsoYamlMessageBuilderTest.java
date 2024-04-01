@@ -11,8 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,54 +27,45 @@ public class IsoYamlMessageBuilderTest {
     @Test
     @DisplayName("消息头")
     public void test01() {
-        String key = "iso:cups:test:header";
-        MessageHolder instance = MessageHolder.newInstance(key);
-        instance.put(1, 46);
-        instance.put(2, "10000001");
-        instance.put(3, 1024);
-        instance.put(4, "wroieqruei");
-        instance.put(5, "dajfkdlsja");
-        instance.put(6, "");
-        instance.put(7, "00000000");
-        instance.put(8, "qazwsxed");
-        instance.put(9, "00000000");
-        instance.put(10, "00000");
+        String key = "iso:cups:common:header";
+        String actualHex = "2E023034303730333035303030312020203030303130303030202020414139013030303030303030003030303030";
+        MessageHolder actualObj = MessageBuilder.init(key).unpack(actualHex);
+        byte[] expectedBytes = MessageBuilder.init(key).pack(actualObj);
+        MessageHolder expectedObj = MessageBuilder.init(key).unpack(expectedBytes);
 
-        byte[] expected = MessageBuilder.init(key).pack(instance);
-        MessageHolder object = MessageBuilder.init(key).unpack(expected);
-        byte[] actual = MessageBuilder.init(key).pack(object);
-
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertEquals(BytesUtil.bytesToHex(expectedBytes), actualHex);
+        Assertions.assertArrayEquals(expectedBytes, BytesUtil.hexToBytes(actualHex));
+        Assertions.assertEquals(expectedObj, actualObj);
     }
 
     @Test
     @DisplayName("各类型域")
     public void test02() {
-        String key = "iso:cups:test:payload";
-        MessageHolder instance = MessageHolder.newInstance(key);
-        instance.put(0, "0100");
-        instance.put(2, "6225880155238798");
-        instance.put(3, "000000");
-        instance.put(4, new BigDecimal("10000012"));
-        instance.put(7, LocalDateTime.now());
-        instance.put(9, null); // TODO
-        instance.put(11, new Random().nextInt(1000000));
-        instance.put(12, LocalTime.now());
-        instance.put(13, MonthDay.now());
-        instance.put(14, YearMonth.now());
-        instance.put(25, "83");
-        instance.put(28, null); // TODO
-        instance.put(32, "220881");
-        instance.put(35, null); // TODO
-        instance.put(36, null); // TODO
-        instance.put(45, null); // TODO
+        String key = "iso:cups:common:payload";
+        MessageHolder expectedObj = MessageHolder.newInstance(key);
+        expectedObj.put(0, "0100");
+        expectedObj.put(2, "6225880155238798");
+        expectedObj.put(3, "000000");
+        expectedObj.put(4, new BigDecimal("10000012"));
+        expectedObj.put(7, LocalDateTime.now());
+        expectedObj.put(9, 100);
+        expectedObj.put(11, new Random().nextInt(1000000));
+        expectedObj.put(12, LocalTime.now());
+        expectedObj.put(13, MonthDay.now());
+        expectedObj.put(14, YearMonth.now());
+        expectedObj.put(25, "83");
+        expectedObj.put(28, null); // TODO
+        expectedObj.put(32, "220881");
+        expectedObj.put(35, null); // TODO
+        expectedObj.put(36, null); // TODO
+        expectedObj.put(45, null); // TODO
 
-        byte[] expected = MessageBuilder.init(key).pack(instance);
-        MessageHolder object = MessageBuilder.init(key).unpack(expected);
-        byte[] actual = MessageBuilder.init(key).pack(object);
+        byte[] expectedBytes = MessageBuilder.init(key).pack(expectedObj);
+        MessageHolder actualObj = MessageBuilder.init(key).unpack(expectedBytes);
+        byte[] actualBytes = MessageBuilder.init(key).pack(actualObj);
 
-        Assertions.assertArrayEquals(expected, actual);
-
+        Assertions.assertArrayEquals(expectedBytes, actualBytes);
+//        Assertions.assertEquals(expectedObj, actualObj);
     }
 
     @Test
@@ -304,11 +293,12 @@ public class IsoYamlMessageBuilderTest {
 
     @Test
     public void test99() {
+        String key = "iso:jcb:common:payload";
         String hex = "f0f1f0f0767d448188e1a008103568560090000176000000000000000176000000000176122913412700000001000172134127122925041229639981000008885280000888518000f0f0f0f1f7f2f1f2f1f3f2f7f3f9f4f5f3f34040f3f2f5f6f2f2f0f340404040404040d1c3c240e3c5e2e340d4c5d9c3c8c1d5e3404040404040e3c5e2e340c3c9e3e84040404040d1d7d54af0f2f4f71122334455667788990011223344556677889900000201094725454745445395202545900000000006404040404040f0f3f1f4f9f6f5f8f7f4404040f1f4404040f0f4f0f1f0f8f4f0f8f4f006f2f2f2f3f9f2";
-        MessageHolder holder = MessageBuilder.init("iso:jcb:common:payload").unpack(hex);
-//        byte[] pack = MessageBuilder.init("iso:cups:common:payload").pack(holder);
-//        Assertions.assertEquals(hex, BytesUtil.bytesToHex(pack));
+        MessageHolder holder = MessageBuilder.init(key).unpack(hex);
         System.out.println(holder);
+        byte[] pack = MessageBuilder.init(key).pack(holder);
+        Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
     }
 
 }

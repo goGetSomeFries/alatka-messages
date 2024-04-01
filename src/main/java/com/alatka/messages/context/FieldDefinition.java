@@ -63,12 +63,6 @@ public class FieldDefinition {
      */
     private ParseType parseType;
     /**
-     * 域类型
-     *
-     * @see FieldType
-     */
-    private FieldType fieldType;
-    /**
      * 是否是子域
      */
     private Boolean existSubdomain = Boolean.FALSE;
@@ -83,7 +77,7 @@ public class FieldDefinition {
     private Map<String, MessageDefinition> messageDefinitionMap;
 
     public enum ParseType {
-        ASCII(LPT.A), EBCDIC(LPT.B), BCD(LPT.B), BINARY(LPT.A), NONE(LPT.A), NONE_LEN_BIN(LPT.B);
+        ASCII(LPT.A), EBCDIC(LPT.B), BCD(LPT.B), BINARY(LPT.A), NONE(LPT.A), NONE_V2(LPT.B);
 
         private LPT lenParseType;
 
@@ -99,10 +93,6 @@ public class FieldDefinition {
             /* ASCII */ A,
             /* BINARY */ B
         }
-    }
-
-    public enum FieldType {
-        STRING, NUMBER, NONE
     }
 
     public Integer getIndex() {
@@ -187,14 +177,6 @@ public class FieldDefinition {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public FieldType getFieldType() {
-        return fieldType;
-    }
-
-    public void setFieldType(FieldType fieldType) {
-        this.fieldType = fieldType;
     }
 
     public String getPageSizeName() {

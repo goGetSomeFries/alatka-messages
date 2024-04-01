@@ -1,12 +1,12 @@
 package com.alatka.messages.definition;
 
-import com.alatka.messages.holder.MessageHolder;
-import com.alatka.messages.util.JsonUtil;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
+import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.util.ClassUtil;
 import com.alatka.messages.util.FileUtil;
+import com.alatka.messages.util.JsonUtil;
 import com.alatka.messages.util.YamlUtil;
 
 import java.nio.file.Path;
@@ -78,6 +78,12 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
         }
         if (fieldDefinition.getFixed() == null) {
             fieldDefinition.setFixed(Boolean.TRUE);
+        }
+        if (fieldDefinition.getParseType() == null) {
+            FieldDefinition.ParseType parseType =
+                    fieldDefinition.getExistSubdomain() || fieldDefinition.getClazz() == byte[].class ?
+                            FieldDefinition.ParseType.NONE : FieldDefinition.ParseType.ASCII;
+            fieldDefinition.setParseType(parseType);
         }
         if (fieldDefinition.getExistSubdomain()) {
             if (fieldDefinition.getClazz() == null) {

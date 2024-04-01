@@ -4,6 +4,8 @@ import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.stream.IntStream;
 
 /**
@@ -40,20 +42,31 @@ public abstract class AbstractDomainParsed implements DomainParsed {
                 .mapToObj(i -> this.fillBytes(definition))
                 .reduce(new byte[0], BytesUtil::concat);
 
-        return definition.getFieldType() == FieldDefinition.FieldType.NUMBER ?
+        return isNumberType(definition.getClazz()) ?
                 BytesUtil.concat(padding, bytes) : BytesUtil.concat(bytes, padding);
     }
 
     private byte[] fillBytes(FieldDefinition definition) {
-        if (definition.getFieldType() == FieldDefinition.FieldType.NUMBER) {
-            return this.isEbcdic(definition.getParseType()) ? BytesUtil.toEBCDIC("0".getBytes()) : "0".getBytes();
-
+        switch (definition.getParseType()) {
+            case EBCDIC:
+                return isNumberType(definition.getClazz()) ? BytesUtil.toEBCDIC("0".getBytes()) : BytesUtil.toEBCDIC(" ".getBytes());
+            case BCD:
+                return BytesUtil.intToBytes(0);
+            default:
+                return isNumberType(definition.getClazz()) ? "0".getBytes() : " ".getBytes();
         }
-        return this.isEbcdic(definition.getParseType()) ? BytesUtil.toEBCDIC(" ".getBytes()) : " ".getBytes();
     }
 
-    private boolean isEbcdic(FieldDefinition.ParseType parseType) {
-        return parseType == FieldDefinition.ParseType.BCD || parseType == FieldDefinition.ParseType.EBCDIC;
+    /**
+     * 数值类型
+     *
+     * @param clazz {@link FieldDefinition#getClazz()}
+     * @return 是否数值类型
+     */
+    private boolean isNumberType(Class<?> clazz) {
+        return Number.class.isAssignableFrom(clazz)
+                || Date.class.isAssignableFrom(clazz)
+                || TemporalAccessor.class.isAssignableFrom(clazz);
     }
 
 }

@@ -41,7 +41,8 @@ public class ULV2SubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder 
 
     @Override
     protected byte[] usageLen(int length) {
-        return BytesUtil.toEBCDIC(String.valueOf(length).getBytes());
+        String str = String.format("%0" + this.usageLenLength() + "d", length);
+        return BytesUtil.toEBCDIC(str.getBytes());
     }
 
     @Override
@@ -51,6 +52,6 @@ public class ULV2SubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder 
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return super.matched(messageDefinition, definition) && definition.getSubdomainType() == MessageDefinition.DomainType.ULV_2;
+        return super.matched(messageDefinition, definition) && definition.getSubdomainType() == MessageDefinition.DomainType.ULV_V2;
     }
 }

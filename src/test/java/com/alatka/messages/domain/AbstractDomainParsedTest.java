@@ -10,7 +10,7 @@ class AbstractDomainParsedTest {
     void padding() {
         byte[] bytes = ClassUtil.invoke(AbstractDomainParsed.class,
                 "padding",
-                new Class[]{byte[].class, int.class, FieldDefinition.FieldType.class, FieldDefinition.class},
+                new Class[]{byte[].class, FieldDefinition.class},
                 new Object[]{});
     }
 

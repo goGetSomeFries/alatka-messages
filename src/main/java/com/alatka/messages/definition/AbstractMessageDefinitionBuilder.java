@@ -6,8 +6,10 @@ import com.alatka.messages.context.MessageDefinitionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.temporal.TemporalAccessor;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -128,39 +130,9 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
         if (definition.getClazz().isPrimitive()) {
             throw new IllegalArgumentException("fieldDefinition: " + definition + "不支持原始类型");
         }
-
         if (definition.getStatus() == null) {
             definition.setStatus(1);
         }
-        if (definition.getFieldType() == null) {
-            FieldDefinition.FieldType fieldType = null;
-            if (this.isNumberType(definition.getClazz())) {
-                fieldType = FieldDefinition.FieldType.NUMBER;
-            } else if (String.class == definition.getClazz()) {
-                fieldType = FieldDefinition.FieldType.STRING;
-            } else {
-                fieldType = FieldDefinition.FieldType.NONE;
-            }
-            definition.setFieldType(fieldType);
-        }
-        if (definition.getParseType() == null) {
-            FieldDefinition.ParseType parseType = definition.getFieldType() == FieldDefinition.FieldType.NUMBER
-                    || definition.getFieldType() == FieldDefinition.FieldType.STRING ?
-                    FieldDefinition.ParseType.ASCII : FieldDefinition.ParseType.NONE;
-            definition.setParseType(parseType);
-        }
-    }
-
-    /**
-     * 数值类型
-     *
-     * @param clazz {@link FieldDefinition#getClazz()}
-     * @return 是否数值类型
-     */
-    private boolean isNumberType(Class<?> clazz) {
-        return Number.class.isAssignableFrom(clazz)
-                || Date.class.isAssignableFrom(clazz)
-                || TemporalAccessor.class.isAssignableFrom(clazz);
     }
 
     /**

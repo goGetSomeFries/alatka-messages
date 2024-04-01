@@ -77,8 +77,9 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
             // 2.属性值转换为字节数组
             byte[] bytes = this.fromObject(value, fieldDefinition);
             // 3.字节数组包装成定义格式报文域
-            return DomainParsedFactory.getInstance(instance, this.messageDefinition, fieldDefinition)
+            byte[] result = DomainParsedFactory.getInstance(instance, this.messageDefinition, fieldDefinition)
                     .pack(bytes, fieldDefinition);
+            return result;
         } catch (Exception e) {
             throw new RuntimeException(messageDefinition + " -> " + fieldDefinition + "解析报错", e);
         }
@@ -127,7 +128,7 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 bytes = this.fromObjectToEbcdic(value, fieldDefinition);
                 break;
             case NONE:
-            case NONE_LEN_BIN:
+            case NONE_V2:
                 bytes = this.fromObjectToNone(value, fieldDefinition);
                 break;
             default:
@@ -162,7 +163,7 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 instance = this.toObjectWithEbcdic(bytes, fieldDefinition);
                 break;
             case NONE:
-            case NONE_LEN_BIN:
+            case NONE_V2:
                 instance = this.toObjectWithNone(bytes, fieldDefinition);
                 break;
             default:
