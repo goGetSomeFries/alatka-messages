@@ -87,6 +87,7 @@ public class MessageHolder {
         }
         MessageHolder that = (MessageHolder) o;
         return Objects.equals(messageDefinition, that.messageDefinition)
+                // TODO byte[]
                 && Objects.equals(valueMap, that.valueMap);
     }
 
