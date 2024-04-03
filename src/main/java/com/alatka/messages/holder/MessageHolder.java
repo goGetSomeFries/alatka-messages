@@ -72,11 +72,8 @@ public class MessageHolder {
     public String toString() {
         return messageDefinition + valueMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey(Comparator.comparingInt(FieldDefinition::getIndex)))
-                .peek(entry -> {
-                    if (entry.getValue() != null && entry.getValue() instanceof byte[]) {
-                        entry.setValue(BytesUtil.bytesToHex((byte[]) entry.getValue()));
-                    }
-                }).map(Map.Entry::toString)
+                .map(entry -> entry.getValue() != null && entry.getValue() instanceof byte[] ?
+                        entry.getKey() + "=" + BytesUtil.bytesToHex((byte[]) entry.getValue()) : entry.toString())
                 .collect(Collectors.joining("\n\t", "\n\t", ""));
     }
 

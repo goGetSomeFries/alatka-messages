@@ -1,8 +1,8 @@
 package com.alatka.messages.domain;
 
 import com.alatka.messages.context.FieldDefinition;
-import com.alatka.messages.util.BytesUtil;
 import com.alatka.messages.context.MessageDefinition;
+import com.alatka.messages.util.BytesUtil;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,12 +29,19 @@ public class TLVDomainParsed extends AbstractDomainParsed {
 
     @Override
     public byte[] pack(byte[] bytes, FieldDefinition fieldDefinition) {
+        if (bytes.length == 0) {
+            return bytes;
+        }
         byte[] tagBytes = BytesUtil.intToBytes(fieldDefinition.getDomainNo());
-        int valueLength = bytes.length;
+
+        byte[] valueBytes = fieldDefinition.getFixed() ? this.padding(bytes, fieldDefinition) : bytes;
+
+        int valueLength = valueBytes.length;
         byte[] tempLenBytes = BytesUtil.intToBytes(valueLength);
         byte[] lenBytes = valueLength < 128 ? tempLenBytes :
                 BytesUtil.concat(new byte[]{(byte) (tempLenBytes.length | 128)}, tempLenBytes);
-        return BytesUtil.concat(tagBytes, lenBytes, bytes);
+
+        return BytesUtil.concat(tagBytes, lenBytes, valueBytes);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class IsoFieldDefinition extends FieldDefinition {
         return "{" + String.join(":",
                 "F" + getDomainNo(),
                 getName(),
-                getLength().toString(),
+                getFixed() ? getLength().toString() : getLength() + "~" + getMaxLength(),
                 getRemark())
                 + "}";
     }

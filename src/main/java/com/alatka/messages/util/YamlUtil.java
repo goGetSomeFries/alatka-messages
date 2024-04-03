@@ -32,7 +32,7 @@ public class YamlUtil {
         try {
             return OBJECT_MAPPER.readerForMapOf(clazz).withRootName(rootName).readValue(file);
         } catch (IOException e) {
-            throw new RuntimeException("获取yaml文件错误", e);
+            throw new RuntimeException("获取yaml文件错误: " + file.getName(), e);
         }
     }
 }

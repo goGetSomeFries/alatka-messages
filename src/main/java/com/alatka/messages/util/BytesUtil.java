@@ -32,7 +32,7 @@ public class BytesUtil {
 
     public static String bytesToHex(byte[] bytes) {
         String str = new BigInteger(1, bytes).toString(16);
-        return str.toUpperCase();
+        return str.length() % 2 == 0 ? str.toUpperCase() : "0".concat(str.toUpperCase());
     }
 
     public static byte[] intToBytes(int i) {
