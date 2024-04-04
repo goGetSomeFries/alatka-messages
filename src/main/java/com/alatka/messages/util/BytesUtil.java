@@ -65,9 +65,13 @@ public class BytesUtil {
     public static String fromBCD(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
-            sb.append(b >> 4 & 0xf).append(b & 0xf);
+            sb.append(intToHexString(b >> 4 & 0xf)).append(intToHexString(b & 0xf));
         }
         return sb.toString();
+    }
+
+    private static String intToHexString(int i) {
+        return Integer.toHexString(i).toUpperCase();
     }
 
     private static String padding(String str) {
