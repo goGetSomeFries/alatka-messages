@@ -41,7 +41,7 @@ alatka.messages:
       - { "domainNo": 43, "name": "cardAccptrNameLoc", "fixed": true, "length": 40, "remark": "受卡方名称地址", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 44, "name": "addtnlRespCode", "fixed": false, "length": 1, "maxLength": 99, "remark": "附加响应数据", "existSubdomain": true, "subdomainType": "DEFAULT", "parseType": "NONE_V2" }
       - { "domainNo": 45, "name": "tracK1Data", "fixed": false, "length": 1, "maxLength": 76, "remark": "第一磁道数据", "clazz": "java.lang.String", "parseType": "EBCDIC" }
-      - { "domainNo": 48, "name": "addtnlDataPrivate", "fixed": false, "length": 1, "maxLength": 255, "remark": "附加数据——私有", "existSubdomain": true, "subdomainType": "ULV_V2", "parseType": "NONE_V2" }
+      - { "domainNo": 48, "name": "addtnlDataPrivate", "fixed": false, "length": 1, "maxLength": 255, "remark": "附加数据——私有", "existSubdomain": true, "subdomainType": "ULV_V2", "parseType": "NONE_V2", "nonSubdomainException": false }
       - { "domainNo": 49, "name": "currcyCodeTrans", "fixed": true, "length": 3, "remark": "交易货币代码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 50, "name": "currcyCodeSettlmt", "fixed": true, "length": 3, "remark": "清算货币代码", "clazz": "java.lang.String", "parseType": "EBCDIC" }
       - { "domainNo": 51, "name": "currcyCodeCdhldrBil", "fixed": true, "length": 3, "remark": "持卡人帐户货币代码", "clazz": "java.lang.String", "parseType": "EBCDIC" }

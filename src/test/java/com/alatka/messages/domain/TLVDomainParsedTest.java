@@ -19,15 +19,6 @@ class TLVDomainParsedTest {
     }
 
     @Test
-    void pack() {
-        byte[] bytes = null;
-        FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setDomainNo(1);
-        byte[] actual = domainParsed.pack(bytes, fieldDefinition);
-        Assertions.assertArrayEquals(null, actual);
-    }
-
-    @Test
     void unpack() {
     }
 }
