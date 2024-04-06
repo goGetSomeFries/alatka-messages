@@ -23,8 +23,6 @@ public class ListFieldBuilder extends SubdomainFieldBuilder<List<?>> {
 
     @Override
     protected List<?> unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
-        super.validate(fieldDefinition, FieldDefinition.SUBFIELD_KEY_DEFAULT);
-
         AtomicInteger counter = new AtomicInteger(0);
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
         return IntStream.range(0, bytes.length / fieldDefinition.getLength())

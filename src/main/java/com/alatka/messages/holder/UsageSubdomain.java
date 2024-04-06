@@ -1,10 +1,13 @@
 package com.alatka.messages.holder;
 
 import com.alatka.messages.annotation.MessageMeta;
+import com.alatka.messages.util.BytesUtil;
+import com.alatka.messages.util.ObjectUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author ybliu
@@ -33,7 +36,10 @@ public class UsageSubdomain<T> {
 
     @Override
     public String toString() {
-        return holder.toString();
+        return holder.entrySet().stream()
+                .map(entry -> entry.getValue() != null && entry.getValue() instanceof byte[] ?
+                        entry.getKey() + "=" + BytesUtil.bytesToHex((byte[]) entry.getValue()) : entry.toString())
+                .collect(Collectors.joining("\n\t", "\n\t", ""));
     }
 
     @Override
@@ -44,8 +50,8 @@ public class UsageSubdomain<T> {
         if (!(o instanceof UsageSubdomain)) {
             return false;
         }
-        UsageSubdomain<?> that = (UsageSubdomain<?>) o;
-        return Objects.equals(holder, that.holder);
+        UsageSubdomain<T> that = (UsageSubdomain<T>) o;
+        return ObjectUtil.equals(holder, that.holder);
     }
 
     @Override

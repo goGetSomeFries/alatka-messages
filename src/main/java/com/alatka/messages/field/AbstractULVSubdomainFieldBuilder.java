@@ -25,7 +25,9 @@ public abstract class AbstractULVSubdomainFieldBuilder extends SubdomainFieldBui
         return holder.entrySet().stream()
                 .map(entry -> {
                     byte[] usageBytes = this.usageId(entry.getKey());
-                    byte[] valueBytes = MessageBuilder.init(usageMap.get(entry.getKey())).pack(entry.getValue());
+                    byte[] valueBytes = super.validate(fieldDefinition, entry.getKey()) ?
+                            MessageBuilder.init(usageMap.get(entry.getKey())).pack(entry.getValue()) :
+                            (byte[]) entry.getValue();
                     byte[] lenBytes = this.usageLen(valueBytes.length);
                     return BytesUtil.concat(usageBytes, lenBytes, valueBytes);
                 }).reduce(new byte[0], BytesUtil::concat);
@@ -42,10 +44,13 @@ public abstract class AbstractULVSubdomainFieldBuilder extends SubdomainFieldBui
 
             String usageId = this.usageId(usageIdBytes);
 
-            super.validate(fieldDefinition, usageId);
-
-            MessageDefinition definition = usageMap.get(usageId);
-            Object value = MessageBuilder.init(definition).unpack(usageValueBytes);
+            Object value = null;
+            if (super.validate(fieldDefinition, usageId)) {
+                MessageDefinition definition = usageMap.get(usageId);
+                value = MessageBuilder.init(definition).unpack(usageValueBytes);
+            } else {
+                value = usageValueBytes;
+            }
             usageSubdomain.put(usageId, value);
         }
         return usageSubdomain;

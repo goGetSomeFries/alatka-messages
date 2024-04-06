@@ -1,6 +1,7 @@
 package com.alatka.messages.field;
 
 import com.alatka.messages.context.FieldDefinition;
+import com.alatka.messages.context.IsoFieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 
 import java.util.Map;
@@ -25,7 +26,11 @@ public abstract class SubdomainFieldBuilder<T> extends AbstractFieldBuilder<T> {
 
     @Override
     protected T toObjectWithNone(byte[] bytes, FieldDefinition fieldDefinition) {
-        return this.unpack(bytes, fieldDefinition, fieldDefinition.getMessageDefinitionMap());
+        Map<String, MessageDefinition> map = fieldDefinition.getMessageDefinitionMap();
+        if (map.isEmpty()) {
+            throw new RuntimeException(fieldDefinition + "未配置子域");
+        }
+        return this.unpack(bytes, fieldDefinition, map);
     }
 
     @Override
@@ -58,13 +63,14 @@ public abstract class SubdomainFieldBuilder<T> extends AbstractFieldBuilder<T> {
         return definition.getExistSubdomain();
     }
 
-    protected void validate(FieldDefinition fieldDefinition, String usageId) {
+    protected boolean validate(FieldDefinition fieldDefinition, String usageId) {
         Map<String, MessageDefinition> map = fieldDefinition.getMessageDefinitionMap();
-        if (map.isEmpty()) {
-            throw new RuntimeException(fieldDefinition + "未配置子域");
+        if (map.containsKey(usageId)) {
+            return true;
         }
-        if (!map.containsKey(usageId)) {
+        if (((IsoFieldDefinition) fieldDefinition).getNonSubdomainException()) {
             throw new RuntimeException(fieldDefinition + "未配置子域usage: " + usageId);
         }
+        return false;
     }
 }

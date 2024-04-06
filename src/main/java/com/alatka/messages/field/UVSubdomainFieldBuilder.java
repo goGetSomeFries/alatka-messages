@@ -1,10 +1,10 @@
 package com.alatka.messages.field;
 
+import com.alatka.messages.context.FieldDefinition;
+import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.UsageSubdomain;
 import com.alatka.messages.message.MessageBuilder;
 import com.alatka.messages.util.BytesUtil;
-import com.alatka.messages.context.FieldDefinition;
-import com.alatka.messages.context.MessageDefinition;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -26,7 +26,9 @@ public class UVSubdomainFieldBuilder extends SubdomainFieldBuilder<UsageSubdomai
         return holder.entrySet().stream()
                 .map(entry -> {
                     byte[] usageBytes = entry.getKey().getBytes();
-                    byte[] valueBytes = MessageBuilder.init(usageMap.get(entry.getKey())).pack(entry.getValue());
+                    byte[] valueBytes = super.validate(fieldDefinition, entry.getKey()) ?
+                            MessageBuilder.init(usageMap.get(entry.getKey())).pack(entry.getValue()) :
+                            (byte[]) entry.getValue();
                     return BytesUtil.concat(usageBytes, valueBytes);
                 }).reduce(new byte[0], BytesUtil::concat);
     }
@@ -37,10 +39,13 @@ public class UVSubdomainFieldBuilder extends SubdomainFieldBuilder<UsageSubdomai
         String usageId = new String(usageIdBytes);
         byte[] usageValueBytes = Arrays.copyOfRange(bytes, USAGE_ID_LENGTH, bytes.length);
 
-        super.validate(fieldDefinition, usageId);
-
-        MessageDefinition definition = usageMap.get(usageId);
-        Object value = MessageBuilder.init(definition).unpack(usageValueBytes);
+        Object value = null;
+        if (super.validate(fieldDefinition, usageId)) {
+            MessageDefinition definition = usageMap.get(usageId);
+            value = MessageBuilder.init(definition).unpack(usageValueBytes);
+        } else {
+            value = usageValueBytes;
+        }
         UsageSubdomain<Object> usageSubdomain = new UsageSubdomain<>();
         usageSubdomain.put(usageId, value);
         return usageSubdomain;

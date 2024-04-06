@@ -39,6 +39,8 @@ public class MessageTest {
         byte[] pack = MessageBuilder.init(key).pack(holder);
         MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
         Assertions.assertEquals(holder, holder1);
+        System.out.println(hex.toUpperCase());
+        System.out.println(BytesUtil.bytesToHex(pack));
         Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
     }
 
@@ -163,7 +165,7 @@ public class MessageTest {
     @DisplayName("jcb12")
     public void test12() {
         String key = "iso:jcb:common:payload";
-        String hex = "F0F6F2F00220000000010000092311312021869628F0F8F0F0822000008000000004000000100000000905211558218372088802000099990888502000";
+        String hex = "F0F6F2F00220000000010000092311312021869628F0F8F3F6822000008000000004000000100000000905211558218372088802000099990888502000";
         MessageHolder holder = MessageBuilder.init(key).unpack(hex);
         System.out.println(holder);
         byte[] pack = MessageBuilder.init(key).pack(holder);
@@ -217,7 +219,6 @@ public class MessageTest {
         System.out.println("03560123456789012D98121010000033300000".length());
         System.out.println(BytesUtil.fromBCD(BytesUtil.hexToBytes("2D")));
         System.out.println(BytesUtil.bytesToHex(BytesUtil.toBCD("21")));
-        System.out.println(Integer.toBinaryString(49));
-        System.out.println(Integer.toBinaryString(58));
+        System.out.println(0x28);
     }
 }

@@ -60,6 +60,11 @@ public @interface IsoFieldMeta {
     MessageDefinition.DomainType subdomainType() default MessageDefinition.DomainType.NONE;
 
     /**
+     * ${@link IsoFieldDefinition#setNonSubdomainException(Boolean)}
+     */
+    boolean nonSubdomainException() default true;
+
+    /**
      * {@link IsoFieldDefinition#setParseType(FieldDefinition.ParseType)}
      */
     FieldDefinition.ParseType parseType() default FieldDefinition.ParseType.ASCII;

@@ -12,14 +12,4 @@ class FixedMessageBuilder extends MessageBuilder {
     protected FixedMessageBuilder() {
     }
 
-    @Override
-    protected boolean filter(FieldDefinition fieldDefinition) {
-        return true;
-    }
-
-    @Override
-    protected void postProcess(FieldDefinition fieldDefinition, Object instance, Object value) {
-        // do nothing
-    }
-
 }

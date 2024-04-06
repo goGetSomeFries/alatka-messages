@@ -19,6 +19,10 @@ public class IsoFieldDefinition extends FieldDefinition {
      * {@link IsoFieldDefinition#getFixed()} = false：数据最大长度
      */
     private Integer maxLength;
+    /**
+     * 未配置子域异常
+     */
+    private Boolean nonSubdomainException = Boolean.TRUE;
 
     public String getAliasName() {
         return aliasName;
@@ -34,6 +38,14 @@ public class IsoFieldDefinition extends FieldDefinition {
 
     public void setMaxLength(Integer maxLength) {
         this.maxLength = maxLength;
+    }
+
+    public Boolean getNonSubdomainException() {
+        return nonSubdomainException;
+    }
+
+    public void setNonSubdomainException(Boolean nonSubdomainException) {
+        this.nonSubdomainException = nonSubdomainException;
     }
 
     @Override

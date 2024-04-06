@@ -26,14 +26,12 @@ class IsoMessageBuilder extends MessageBuilder {
     }
 
     @Override
-    protected void postProcess(FieldDefinition fieldDefinition, Object instance, Object value) {
+    protected void postProcess(FieldDefinition fieldDefinition, Object instance, Object value, boolean packed) {
         if (MessageDefinition.Kind.payload == definition.getKind() && fieldDefinition.getDomainNo() == 1) {
-            if (value instanceof Map) {
-                this.bitmap.set(MessageHolderUtil.getByDomainNo(definition, instance, 1));
-            } else if (value instanceof byte[]) {
+            if (packed) {
                 this.bitmap.set(BitmapFieldBuilder.generate((byte[]) value));
             } else {
-                throw new IllegalArgumentException("error type: " + value.getClass());
+                this.bitmap.set(MessageHolderUtil.getByDomainNo(definition, instance, 1));
             }
         }
     }

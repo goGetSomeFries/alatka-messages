@@ -2,7 +2,6 @@ package com.alatka.messages.field;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
-import com.alatka.messages.domain.DomainParsedFactory;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.util.ClassUtil;
 
@@ -71,35 +70,22 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
 
     @Override
     public byte[] serialize(Object instance, FieldDefinition fieldDefinition) {
-        try {
-            // 1.获取instance属性值
-            T value = this.getValue(instance, fieldDefinition);
-            // 2.属性值转换为字节数组
-            byte[] bytes = this.fromObject(value, fieldDefinition);
-            // 3.字节数组包装成定义格式报文域
-            byte[] result = DomainParsedFactory.getInstance(instance, this.messageDefinition, fieldDefinition)
-                    .pack(bytes, fieldDefinition);
-            return result;
-        } catch (Exception e) {
-            throw new RuntimeException(messageDefinition + " -> " + fieldDefinition + "解析报错", e);
-        }
+        // 1.获取instance属性值
+        T value = this.getValue(instance, fieldDefinition);
+        // 2.属性值转换为字节数组
+        byte[] bytes = this.fromObject(value, fieldDefinition);
+
+        return bytes;
     }
 
     @Override
     public Object deserialize(byte[] bytes, FieldDefinition fieldDefinition, Object instance, AtomicInteger counter) {
-        try {
-            // 1.解析报文域字节数组
-            byte[] valueBytes = DomainParsedFactory.getInstance(instance, this.messageDefinition, fieldDefinition)
-                    .unpack(bytes, fieldDefinition, counter);
-            // 2.报文域类型转换
-            T value = this.toObject(valueBytes, fieldDefinition);
-            // 3.属性赋值
-            this.setValue(instance, fieldDefinition, value);
+        // 1.报文域类型转换
+        T value = this.toObject(bytes, fieldDefinition);
+        // 2.属性赋值
+        this.setValue(instance, fieldDefinition, value);
 
-            return value;
-        } catch (Exception e) {
-            throw new RuntimeException(messageDefinition + " -> " + fieldDefinition + "解析报错", e);
-        }
+        return value;
     }
 
     /**

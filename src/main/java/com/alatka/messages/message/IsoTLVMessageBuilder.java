@@ -2,6 +2,7 @@ package com.alatka.messages.message;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.IsoFieldDefinition;
+import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 
 import java.util.ArrayList;
@@ -17,19 +18,10 @@ import java.util.stream.Collectors;
  *
  * @author ybliu
  */
-class IsoTLVMessageBuilder extends MessageBuilder {
+public class IsoTLVMessageBuilder extends MessageBuilder {
 
-    protected IsoTLVMessageBuilder() {
-    }
-
-    @Override
-    protected boolean filter(FieldDefinition fieldDefinition) {
-        return true;
-    }
-
-    @Override
-    protected void postProcess(FieldDefinition fieldDefinition, Object instance, Object value) {
-        // do nothing
+    public IsoTLVMessageBuilder(MessageDefinition definition) {
+        super.definition = definition;
     }
 
     @Override
