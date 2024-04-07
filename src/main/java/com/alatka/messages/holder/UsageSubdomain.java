@@ -1,17 +1,19 @@
 package com.alatka.messages.holder;
 
 import com.alatka.messages.annotation.MessageMeta;
-import com.alatka.messages.util.BytesUtil;
+import com.alatka.messages.util.CustomJsonSerializer;
+import com.alatka.messages.util.JsonUtil;
 import com.alatka.messages.util.ObjectUtil;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author ybliu
  */
+@JsonSerialize(using = CustomJsonSerializer.class)
 public class UsageSubdomain<T> {
 
     private final Map<String, T> holder = new HashMap<>();
@@ -36,10 +38,13 @@ public class UsageSubdomain<T> {
 
     @Override
     public String toString() {
+        return JsonUtil.format(holder);
+/*
         return holder.entrySet().stream()
                 .map(entry -> entry.getValue() != null && entry.getValue() instanceof byte[] ?
                         entry.getKey() + "=" + BytesUtil.bytesToHex((byte[]) entry.getValue()) : entry.toString())
                 .collect(Collectors.joining("\n\t", "\n\t", ""));
+*/
     }
 
     @Override

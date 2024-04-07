@@ -4,6 +4,8 @@ import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 
+import java.util.Arrays;
+
 /**
  * {@link String}类型报文域解析器
  *
@@ -25,7 +27,12 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected byte[] fromObjectToBcd(String value, FieldDefinition definition) {
-        return BytesUtil.toBCD(value);
+        if (definition.getFixed()) {
+            return BytesUtil.toBCD(value);
+        }
+        byte[] lenBytes = BytesUtil.intToBytes(value.length());
+        byte[] valueBytes = BytesUtil.toBCD(value);
+        return BytesUtil.concat(new byte[definition.getLength() - lenBytes.length], lenBytes, valueBytes);
     }
 
     @Override
@@ -48,7 +55,15 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected String toObjectWithBcd(byte[] bytes, FieldDefinition definition) {
-        String result = BytesUtil.fromBCD(bytes);
+        if (definition.getFixed()) {
+            String result = BytesUtil.fromBCD(bytes);
+            return this.postProcess(result);
+        }
+
+        Integer lenLength = definition.getLength();
+        int length = BytesUtil.bytesToInt(Arrays.copyOfRange(bytes, 0, lenLength));
+        String value = BytesUtil.fromBCD(Arrays.copyOfRange(bytes, lenLength, bytes.length));
+        String result = length == value.length() ? value : value.substring(value.length() - length);
         return this.postProcess(result);
     }
 

@@ -34,9 +34,6 @@ public class BinaryLVDomainParsed extends LVDomainParsed {
         }
 
         byte[] fillBytes = new byte[fieldDefinition.getLength() - lenBytes.length];
-        for (byte b : fillBytes) {
-            b =  0b0;
-        }
         return BytesUtil.concat(fillBytes, lenBytes);
     }
 

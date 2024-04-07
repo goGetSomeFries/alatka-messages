@@ -25,6 +25,7 @@ public class DomainParsedFactory {
         init(new FixedDomainParsed());
         init(new PageDomainParsed());
         init(new BitmapDomainParsed());
+        init(new RawDomainParsed());
     }
 
     public static void init(DomainParsed domainParsed) {

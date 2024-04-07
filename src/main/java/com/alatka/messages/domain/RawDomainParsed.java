@@ -9,35 +9,37 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * LV（length-value）域解析器
+ * 不处理域解析器
  *
  * @author ybliu
  * @see AbstractDomainParsed
  * @see DomainParsed
  */
-public abstract class LVDomainParsed extends AbstractDomainParsed {
+public class RawDomainParsed extends AbstractDomainParsed {
+
+    private AbstractDomainParsed fixedDomainParsed = new FixedDomainParsed();
 
     @Override
     public int getOrder() {
-        return 20;
+        return 70;
     }
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
-        return !fieldDefinition.getFixed() && MessageDefinition.Type.iso == messageDefinition.getType();
+        return fieldDefinition.getClazz() == byte[].class;
     }
 
     @Override
     public byte[] pack(byte[] bytes, FieldDefinition fieldDefinition) {
-        if (this.isBCD(fieldDefinition)) {
-            return bytes;
-        }
-        byte[] lengthBytes = this.intToBytes(bytes.length, fieldDefinition);
-        return BytesUtil.concat(lengthBytes, bytes);
+        return bytes;
     }
 
     @Override
     public byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter) {
+        if (fieldDefinition.getFixed()) {
+            return fixedDomainParsed.unpack(bytes, fieldDefinition, counter);
+        }
+
         Integer length = fieldDefinition.getLength();
         byte[] lengthBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(length));
         byte[] valueBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(this.bytesToInt(lengthBytes, fieldDefinition)));
@@ -46,15 +48,17 @@ public abstract class LVDomainParsed extends AbstractDomainParsed {
             throw new RuntimeException("fieldDefinition: " + fieldDefinition
                     + " max length: " + ((IsoFieldDefinition) fieldDefinition).getMaxLength() + ", actually length: " + valueBytes.length);
         }
-        return isBCD(fieldDefinition) ? BytesUtil.concat(lengthBytes, valueBytes) : valueBytes;
+        return BytesUtil.concat(lengthBytes, valueBytes);
     }
 
-    private boolean isBCD(FieldDefinition fieldDefinition) {
-        return fieldDefinition.getParseType() == FieldDefinition.ParseType.BCD
-                && fieldDefinition.getClazz() == String.class;
+    private int bytesToInt(byte[] lengthBytes, FieldDefinition fieldDefinition) {
+        if (fieldDefinition.getParseType().getLenParseType() == FieldDefinition.ParseType.LPT.A) {
+            return Integer.parseInt(new String(lengthBytes));
+
+        }
+        int length = BytesUtil.bytesToInt(lengthBytes);
+        return fieldDefinition.getParseType() != FieldDefinition.ParseType.BCD ?
+                length :
+                length % 2 == 0 ? length / 2 : length / 2 + 1;
     }
-
-    protected abstract byte[] intToBytes(int length, FieldDefinition fieldDefinition);
-
-    protected abstract int bytesToInt(byte[] lengthBytes, FieldDefinition fieldDefinition);
 }

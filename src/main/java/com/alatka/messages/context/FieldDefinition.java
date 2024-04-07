@@ -12,7 +12,7 @@ import java.util.Objects;
  * @see IsoFieldDefinition
  * @see FixedFieldDefinition
  */
-public class FieldDefinition {
+public class FieldDefinition implements Comparable<FieldDefinition> {
 
     public static final String SUBFIELD_KEY_DEFAULT = "default";
 
@@ -228,5 +228,10 @@ public class FieldDefinition {
     @Override
     public int hashCode() {
         return Objects.hash(index, domainNo, name);
+    }
+
+    @Override
+    public int compareTo(FieldDefinition o) {
+        return this.getIndex() - o.getIndex();
     }
 }

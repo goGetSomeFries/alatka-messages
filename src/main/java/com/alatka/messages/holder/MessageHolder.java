@@ -3,20 +3,21 @@ package com.alatka.messages.holder;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
-import com.alatka.messages.util.BytesUtil;
+import com.alatka.messages.util.CustomJsonSerializer;
+import com.alatka.messages.util.JsonUtil;
 import com.alatka.messages.util.ObjectUtil;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * 消息报文容器
  *
  * @author ybliu
  */
+@JsonSerialize(using = CustomJsonSerializer.class)
 public class MessageHolder {
 
     private final Map<FieldDefinition, Object> valueMap = new HashMap<>();
@@ -71,11 +72,14 @@ public class MessageHolder {
 
     @Override
     public String toString() {
+        return JsonUtil.format(valueMap);
+/*
         return messageDefinition + valueMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey(Comparator.comparingInt(FieldDefinition::getIndex)))
                 .map(entry -> entry.getValue() != null && entry.getValue() instanceof byte[] ?
                         entry.getKey() + "=" + BytesUtil.bytesToHex((byte[]) entry.getValue()) : entry.toString())
                 .collect(Collectors.joining("\n\t", "\n\t", ""));
+*/
     }
 
     @Override

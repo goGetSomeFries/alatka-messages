@@ -9,7 +9,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class JcbMessageTest {
+import java.util.Arrays;
+
+public class MessageJcbTest {
 
     @BeforeAll
     public static void beforeAll() {
@@ -37,8 +39,6 @@ public class JcbMessageTest {
         byte[] pack = MessageBuilder.init(key).pack(holder);
         MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
         Assertions.assertEquals(holder, holder1);
-        System.out.println(hex.toUpperCase());
-        System.out.println(BytesUtil.bytesToHex(pack));
         Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
     }
 
@@ -63,8 +63,6 @@ public class JcbMessageTest {
         byte[] pack = MessageBuilder.init(key).pack(holder);
         MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
         Assertions.assertEquals(holder, holder1);
-        System.out.println(hex.toUpperCase());
-        System.out.println(BytesUtil.bytesToHex(pack));
         Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
     }
 
@@ -203,9 +201,12 @@ public class JcbMessageTest {
     @Test
     public void test99() {
         System.out.println(BytesUtil.bytesToBinary(BytesUtil.hexToBytes("F23804818E4080000000004200000000")));
-        System.out.println("03560123456789012D98121010000033300000".length());
-        System.out.println(BytesUtil.fromBCD(BytesUtil.hexToBytes("2D")));
-        System.out.println(BytesUtil.bytesToHex(BytesUtil.toBCD("21")));
-        System.out.println(0x28);
+        System.out.println(BytesUtil.bytesToHex(BytesUtil.toBCD("121")));
+        System.out.println(Arrays.toString(BytesUtil.toBCD("121")));
+        System.out.println(BytesUtil.fromBCD(BytesUtil.hexToBytes("213")));
+        System.out.println((Arrays.toString(BytesUtil.hexToBytes("213"))));
+        System.out.println(BytesUtil.fromEBCDIC(BytesUtil.hexToBytes("7E")));
+        byte[] bytes = new byte[2];
+        System.out.println(Arrays.toString(bytes));
     }
 }

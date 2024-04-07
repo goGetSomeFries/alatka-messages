@@ -13,6 +13,16 @@ import com.alatka.messages.context.MessageDefinition;
 public class BytesFieldBuilder extends AbstractFieldBuilder<byte[]> {
 
     @Override
+    protected byte[] fromObjectToBcd(byte[] value, FieldDefinition fieldDefinition) {
+        return this.fromObjectToNone(value, fieldDefinition);
+    }
+
+    @Override
+    protected byte[] toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
+        return this.toObjectWithNone(bytes, fieldDefinition);
+    }
+
+    @Override
     protected byte[] fromObjectToNone(byte[] value, FieldDefinition fieldDefinition) {
         return value;
     }
