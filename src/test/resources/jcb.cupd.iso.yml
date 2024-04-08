@@ -21,14 +21,14 @@ alatka.messages:
       - { "domainNo": 14, "name": "dateExpr", "fixed": true, "length": 4, "remark": "卡有效期", "clazz": "java.time.YearMonth", "pattern": "yyMM" }
       - { "domainNo": 16, "name": "dateConv", "fixed": true, "length": 4, "remark": "兑换日期", "clazz": "java.time.MonthDay", "pattern": "MMdd" }
       - { "domainNo": 18, "name": "mchntType", "fixed": true, "length": 4, "remark": "商户类型", "clazz": "java.lang.String" }
-      - { "domainNo": 22, "name": "posEntryModeCode", "fixed": true, "length": 3, "remark": "服务点输入方式码", "clazz": "java.lang.String" }
+      - { "domainNo": 22, "name": "posEntryModeCode", "fixed": true, "length": 4, "remark": "服务点输入方式码", "clazz": "java.lang.String" }
       - { "domainNo": 23, "name": "cardSeqId", "fixed": true, "length": 3, "remark": "卡序列号", "clazz": "java.lang.String" }
       - { "domainNo": 25, "name": "posCondCode", "fixed": true, "length": 2, "remark": "服务点条件码", "clazz": "java.lang.String" }
       - { "domainNo": 26, "name": "posPinCaptrCode", "fixed": true, "length": 2, "remark": "服务点PIN获取码", "clazz": "java.lang.String" }
       - { "domainNo": 28, "name": "amtTransFee", "fixed": true, "length": 9, "remark": "交易费", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 32, "name": "acqInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "代理机构标识码", "clazz": "java.lang.String" }
       - { "domainNo": 33, "name": "fwdInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "发送机构标识码", "clazz": "java.lang.String" }
-      - { "domainNo": 35, "name": "tracK2Data", "fixed": false, "length": 2, "maxLength": 37, "remark": "第二磁道数据", "clazz": "[B" }
+      - { "domainNo": 35, "name": "tracK2Data", "fixed": false, "length": 2, "maxLength": 37, "remark": "第二磁道数据", "clazz": "[B", "parseType": "BCD", "status": "NO_PARSE" }
       - { "domainNo": 36, "name": "tracK3Data", "fixed": false, "length": 3, "maxLength": 104,  "remark": "第三磁道数据", "clazz": "[B" }
       - { "domainNo": 37, "name": "retrivlRefNum", "fixed": true, "length": 12, "remark": "检索参考号", "clazz": "java.lang.String" }
       - { "domainNo": 38, "name": "authrIdResp", "fixed": true, "length": 6, "remark": "授权标识应答码", "clazz": "java.lang.String" }
@@ -49,7 +49,7 @@ alatka.messages:
       - { "domainNo": 60, "name": "stipRelInfo", "fixed": false, "length": 3, "maxLength": 255, "remark": "STIP related information", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 61, "name": "ponitOfServiceInfo", "fixed": false, "length": 3, "maxLength": 255, "remark": "point of service information", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 63, "name": "finaclNetData", "fixed": false, "length": 3, "maxLength": 255, "remark": "transaction code", "clazz": "java.lang.String" }
-      - { "domainNo": 70, "name": "netwkMgmtInfoCode", "fixed": true, "length": 3, "remark": "网络管理信息码", "clazz": "java.lang.String" }
+      - { "domainNo": 70, "name": "netwkMgmtInfoCode", "fixed": true, "length": 4, "remark": "网络管理信息码", "clazz": "java.lang.String" }
       - { "domainNo": 90, "name": "origDataElemts", "fixed": true, "length": 42, "remark": "原始数据元", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 95, "name": "replacementAmt", "fixed": true, "length": 42, "remark": "replacement amounts", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 96, "name": "msgSecurityCode", "fixed": true, "length": 8, "remark": "报文安全码", "clazz": "[B" }

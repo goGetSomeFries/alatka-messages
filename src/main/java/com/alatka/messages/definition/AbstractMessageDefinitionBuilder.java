@@ -86,6 +86,7 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
 
         // 如果模板对象存在，使用该对象，减少FieldDefinition对象创建
         return this.buildFieldDefinitions(definition, source).stream()
+                .filter(fieldDefinition -> fieldDefinition.getStatus() != FieldDefinition.Status.CLOSE)
                 .peek(this::postBuildFieldDefinition)
                 .map(fieldDefinition -> map.getOrDefault(fieldDefinition, (S) fieldDefinition))
                 .collect(Collectors.toList());
@@ -129,9 +130,6 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
     protected void postBuildFieldDefinition(FieldDefinition definition) {
         if (definition.getClazz().isPrimitive()) {
             throw new IllegalArgumentException("fieldDefinition: " + definition + "不支持原始类型");
-        }
-        if (definition.getStatus() == null) {
-            definition.setStatus(1);
         }
     }
 

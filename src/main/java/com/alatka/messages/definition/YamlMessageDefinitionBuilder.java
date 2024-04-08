@@ -79,6 +79,9 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
         if (fieldDefinition.getFixed() == null) {
             fieldDefinition.setFixed(Boolean.TRUE);
         }
+        if (fieldDefinition.getStatus() == null) {
+            fieldDefinition.setStatus(FieldDefinition.Status.OPEN);
+        }
         if (fieldDefinition.getParseType() == null) {
             FieldDefinition.ParseType parseType =
                     fieldDefinition.getExistSubdomain() || fieldDefinition.getClazz() == byte[].class ?

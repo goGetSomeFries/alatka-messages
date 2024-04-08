@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * 消息报文容器
@@ -42,18 +41,11 @@ public class MessageHolder {
     }
 
     public MessageHolder copyOf(String key) {
-        MessageDefinitionContext context = MessageDefinitionContext.getInstance();
-        MessageDefinition messageDefinition = context.messageDefinition(key);
-        if (messageDefinition == null) {
-            throw new IllegalArgumentException("key [" + key + "] not exist");
-        }
-
-        MessageHolder copy = new MessageHolder();
-        copy.messageDefinition = messageDefinition;
-        // TODO
-        Map<FieldDefinition, Object> map = this.valueMap.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        copy.valueMap.putAll(map);
+        MessageHolder copy = newInstance(key);
+        // TODO validate
+        Map<FieldDefinition, Object> copyMap = this.valueMap.entrySet().stream()
+                .collect(HashMap::new, (map, item) -> map.put(item.getKey(), item.getValue()), HashMap::putAll);
+        copy.valueMap.putAll(copyMap);
         return copy;
     }
 

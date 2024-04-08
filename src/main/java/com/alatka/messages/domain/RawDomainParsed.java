@@ -21,12 +21,12 @@ public class RawDomainParsed extends AbstractDomainParsed {
 
     @Override
     public int getOrder() {
-        return 70;
+        return 1000;
     }
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
-        return fieldDefinition.getClazz() == byte[].class;
+        return fieldDefinition.getStatus() == FieldDefinition.Status.NO_PARSE;
     }
 
     @Override

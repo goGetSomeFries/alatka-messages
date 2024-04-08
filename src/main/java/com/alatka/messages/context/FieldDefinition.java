@@ -53,7 +53,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
     /**
      * 状态
      */
-    private Integer status;
+    private Status status;
     /**
      * 分页记录数字段名称
      */
@@ -75,6 +75,10 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
      * 使用标识映射{@link MessageDefinition}
      */
     private Map<String, MessageDefinition> messageDefinitionMap;
+
+    public enum Status {
+        OPEN, CLOSE, NO_PARSE
+    }
 
     public enum ParseType {
         ASCII(LPT.A), EBCDIC(LPT.B), BCD(LPT.B), BINARY(LPT.A), NONE(LPT.A), NONE_V2(LPT.B);
@@ -171,11 +175,11 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
         this.parseType = parseType;
     }
 
-    public Integer getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

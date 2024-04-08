@@ -2,6 +2,7 @@ package com.alatka.messages.annotation;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.FixedFieldDefinition;
+import com.alatka.messages.context.IsoFieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 
 import java.lang.annotation.*;
@@ -65,7 +66,7 @@ public @interface FixedFieldMeta {
     String remark() default "";
 
     /**
-     * {@link FixedFieldDefinition#setStatus(Integer)}
+     * {@link IsoFieldDefinition#setStatus(FieldDefinition.Status)}
      */
-    int status() default 1;
+    FieldDefinition.Status status() default FieldDefinition.Status.OPEN;
 }

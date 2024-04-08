@@ -85,7 +85,7 @@ public @interface IsoFieldMeta {
     String remark() default "";
 
     /**
-     * {@link IsoFieldDefinition#setStatus(Integer)}
+     * {@link IsoFieldDefinition#setStatus(FieldDefinition.Status)}
      */
-    int status() default 1;
+    FieldDefinition.Status status() default FieldDefinition.Status.OPEN;
 }

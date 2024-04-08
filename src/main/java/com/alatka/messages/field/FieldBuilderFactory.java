@@ -19,6 +19,7 @@ public class FieldBuilderFactory {
     private static final List<FieldBuilder> LIST = new ArrayList<>();
 
     static {
+        init(new RawFieldBuilder());
         // subdomain
         init(new DefaultSubdomainFieldBuilder<>());
         init(new ULVSubdomainFieldBuilder());

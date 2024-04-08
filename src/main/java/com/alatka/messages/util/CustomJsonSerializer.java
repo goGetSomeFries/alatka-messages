@@ -13,6 +13,7 @@ public class CustomJsonSerializer extends JsonSerializer<Object> {
 
     @Override
     public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        gen.writeRawValue(value.toString());
+        String result = value instanceof byte[] ? BytesUtil.bytesToHex((byte[]) value) : value.toString();
+        gen.writeRawValue(result);
     }
 }

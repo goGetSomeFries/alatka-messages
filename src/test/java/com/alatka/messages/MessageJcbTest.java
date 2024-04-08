@@ -6,7 +6,6 @@ import com.alatka.messages.message.MessageBuilder;
 import com.alatka.messages.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -199,6 +198,17 @@ public class MessageJcbTest {
     }
 
     @Test
+    public void test98() {
+        String key = "iso:jcb:common:payload";
+        String hex = "F0F1F0F0723C4481A8E180081035601234567890120000000000000261190923072729468214151228092398125399022004088802000008880200002503560123456789012198121010000033300000F9F4F0F9F2F3F4F6F8F2F1F47B94F2F386F891F4F1F1F7F5F1F8404040404040404040C1C3D8E4C9D9C5D940D5C1D4C540404040404040404040C3C9E3E840D5C1D4C54040404040E4E2C107F0F1F0F3F1F2F3F3F4F406F2F2F2F3F4F4";
+        MessageHolder holder = MessageBuilder.init(key).unpack(hex);
+        System.out.println(holder);
+        MessageHolder holder1 = holder.copyOf("iso:jcb:cupd:payload");
+        byte[] pack = MessageBuilder.init("iso:jcb:cupd:payload").pack(holder1);
+        System.out.println(BytesUtil.bytesToHex(pack));
+    }
+
+    @Test
     public void test99() {
         System.out.println(BytesUtil.bytesToBinary(BytesUtil.hexToBytes("F23804818E4080000000004200000000")));
         System.out.println(BytesUtil.bytesToHex(BytesUtil.toBCD("121")));
@@ -206,7 +216,5 @@ public class MessageJcbTest {
         System.out.println(BytesUtil.fromBCD(BytesUtil.hexToBytes("213")));
         System.out.println((Arrays.toString(BytesUtil.hexToBytes("213"))));
         System.out.println(BytesUtil.fromEBCDIC(BytesUtil.hexToBytes("7E")));
-        byte[] bytes = new byte[2];
-        System.out.println(Arrays.toString(bytes));
     }
 }
