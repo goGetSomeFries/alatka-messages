@@ -1,5 +1,6 @@
 package com.alatka.messages.util;
 
+import com.alatka.messages.support.CustomPrettyPrinter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
@@ -33,7 +34,7 @@ public class JsonUtil {
 
     public static String format(Map<?, ?> map) {
         try {
-            return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(map);
+            return OBJECT_MAPPER.writer(new CustomPrettyPrinter()).writeValueAsString(map);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

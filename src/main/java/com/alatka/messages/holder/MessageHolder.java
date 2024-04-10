@@ -3,7 +3,7 @@ package com.alatka.messages.holder;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
-import com.alatka.messages.util.CustomJsonSerializer;
+import com.alatka.messages.support.CustomJsonSerializer;
 import com.alatka.messages.util.JsonUtil;
 import com.alatka.messages.util.ObjectUtil;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
