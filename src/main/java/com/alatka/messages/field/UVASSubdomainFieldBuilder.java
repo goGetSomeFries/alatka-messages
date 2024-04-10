@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * 子域类型报文域解析器
+ * UV(usage-value)AS子域类型报文域解析器
  *
  * @author ybliu
  * @see AbstractFieldBuilder
@@ -57,7 +57,7 @@ public class UVASSubdomainFieldBuilder extends SubdomainFieldBuilder<UsageSubdom
 
     @Override
     public int getOrder() {
-        return super.getOrder() + 6;
+        return super.getOrder();
     }
 
     @Override

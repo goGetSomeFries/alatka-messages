@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * TV域解析器
- * 参考F62域usage=IO
+ * 参考cups F62域usage=IO
  *
  * @author ybliu
  * @see AbstractDomainParsed

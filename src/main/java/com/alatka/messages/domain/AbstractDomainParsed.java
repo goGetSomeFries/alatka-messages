@@ -1,7 +1,6 @@
 package com.alatka.messages.domain;
 
 import com.alatka.messages.context.FieldDefinition;
-import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 
 import java.time.temporal.TemporalAccessor;
@@ -9,25 +8,18 @@ import java.util.Date;
 import java.util.stream.IntStream;
 
 /**
- * 报文域类型解析器抽象类
+ * {@link DomainParsed}抽象类
  *
  * @author ybliu
  * @see DomainParsed
  */
 public abstract class AbstractDomainParsed implements DomainParsed {
 
-    protected MessageDefinition messageDefinition;
-
-    @Override
-    public void setMessageDefinition(MessageDefinition messageDefinition) {
-        this.messageDefinition = messageDefinition;
-    }
-
     /**
      * 报文域补字符
      *
      * @param bytes      报文域字节数组
-     * @param definition
+     * @param definition {@link FieldDefinition}
      * @return 结果字节数组
      */
     protected byte[] padding(byte[] bytes, FieldDefinition definition) {

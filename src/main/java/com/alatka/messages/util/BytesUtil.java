@@ -7,8 +7,17 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * @author ybliu
+ */
 public class BytesUtil {
 
+    /**
+     * bytes拼接
+     *
+     * @param bytesArray bytes数组
+     * @return 拼接后bytes
+     */
     public static byte[] concat(byte[]... bytesArray) {
         int length = Arrays.stream(bytesArray).mapToInt(bytes -> bytes.length).sum();
         ByteBuffer byteBuffer = ByteBuffer.allocate(length);

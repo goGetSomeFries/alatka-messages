@@ -19,7 +19,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author ybliu
  * @see IsoMessageBuilder
- * @see IsoTLVMessageBuilder
  * @see FixedMessageBuilder
  */
 public abstract class MessageBuilder {
@@ -50,15 +49,14 @@ public abstract class MessageBuilder {
     }
 
     public <T> byte[] pack(T instance) {
-        MessageDefinitionContext context = MessageDefinitionContext.getInstance();
-        List<FieldDefinition> fieldDefinitions = context.fieldDefinitions(definition);
+        List<FieldDefinition> fieldDefinitions = this.buildFieldDefinitions();
 
         byte[] result = fieldDefinitions.stream()
                 .filter(this::filter)
                 .map(fieldDefinition -> this.doPack(instance, definition, fieldDefinition))
                 .peek(wrapper -> this.postProcess(wrapper.fieldDefinition, instance, wrapper.value, true))
                 .map(wrapper -> (byte[]) wrapper.value)
-                .reduce(new byte[0], BytesUtil::concat);
+                .reduce(new byte[0], this::concatBytes);
         this.postProcess();
         return result;
     }
@@ -112,6 +110,15 @@ public abstract class MessageBuilder {
         } catch (Exception e) {
             throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
         }
+    }
+
+    protected byte[] concatBytes(byte[] bytes1, byte[] bytes2) {
+        return BytesUtil.concat(bytes1, bytes2);
+    }
+
+    protected List<FieldDefinition> buildFieldDefinitions() {
+        MessageDefinitionContext context = MessageDefinitionContext.getInstance();
+        return context.fieldDefinitions(definition);
     }
 
     protected List<FieldDefinition> buildFieldDefinitions(byte[] bytes) {

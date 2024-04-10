@@ -6,6 +6,7 @@ import com.alatka.messages.util.BytesUtil;
 
 /**
  * LV（length-value）域解析器
+ * L(BINARY)
  *
  * @author ybliu
  * @see AbstractDomainParsed

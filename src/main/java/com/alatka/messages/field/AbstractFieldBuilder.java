@@ -18,56 +18,6 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
 
     protected MessageDefinition messageDefinition;
 
-    protected byte[] fromObjectToAscii(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected byte[] fromObjectToBinary(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected byte[] fromObjectToBcd(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected byte[] fromObjectToEbcdic(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected byte[] fromObjectToNone(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected T toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected T toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected T toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected T toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
-    protected T toObjectWithNone(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
-    }
-
     @Override
     public byte[] serialize(Object instance, FieldDefinition fieldDefinition) {
         // 1.获取instance属性值
@@ -185,6 +135,56 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
         } else {
             ClassUtil.setFieldValue(instance, definition.getName(), value);
         }
+    }
+
+    protected byte[] fromObjectToAscii(T value, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected byte[] fromObjectToBinary(T value, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected byte[] fromObjectToBcd(T value, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected byte[] fromObjectToEbcdic(T value, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected byte[] fromObjectToNone(T value, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected T toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected T toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected T toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected T toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
+    }
+
+    protected T toObjectWithNone(byte[] bytes, FieldDefinition fieldDefinition) {
+        this.throwException(fieldDefinition);
+        return null;
     }
 
     @Override

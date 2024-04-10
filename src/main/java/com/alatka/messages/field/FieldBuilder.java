@@ -6,7 +6,7 @@ import com.alatka.messages.context.MessageDefinition;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 报文域解析器
+ * 报文域字段解析器
  *
  * @author ybliu
  */
@@ -28,6 +28,7 @@ public interface FieldBuilder {
      * @param fieldDefinition {@link FieldDefinition}
      * @param instance        反序列化结果对象
      * @param counter         计数器，计算字节位置
+     * @return 反序列化对象
      */
     Object deserialize(byte[] bytes, FieldDefinition fieldDefinition, Object instance, AtomicInteger counter);
 
@@ -39,7 +40,7 @@ public interface FieldBuilder {
     int getOrder();
 
     /**
-     * 是否匹配报文域解析器
+     * 是否匹配解析器
      *
      * @param messageDefinition
      * @param definition        {@link FieldDefinition}

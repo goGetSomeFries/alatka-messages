@@ -17,6 +17,13 @@ import java.time.temporal.TemporalAccessor;
  */
 public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
 
+    /**
+     * 字符串转日期类型
+     *
+     * @param datetime
+     * @param formatter
+     * @return
+     */
     protected abstract T parse(String datetime, DateTimeFormatter formatter);
 
     @Override

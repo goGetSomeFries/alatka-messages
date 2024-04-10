@@ -20,7 +20,7 @@ import java.util.Objects;
 @JsonSerialize(using = CustomJsonSerializer.class)
 public class MessageHolder {
 
-    private final Map<FieldDefinition, Object> valueMap = new HashMap<>();
+    private Map<FieldDefinition, Object> valueMap = new HashMap<>();
 
     private MessageDefinition messageDefinition;
 
@@ -36,7 +36,7 @@ public class MessageHolder {
         }
         messageHolder.messageDefinition = messageDefinition;
         context.fieldDefinitions(messageDefinition)
-                .forEach(definition -> messageHolder.valueMap.put(definition, null));
+                .forEach(fieldDefinition -> messageHolder.valueMap.put(fieldDefinition, null));
         return messageHolder;
     }
 
@@ -82,13 +82,6 @@ public class MessageHolder {
     @Override
     public String toString() {
         return JsonUtil.format(valueMap);
-/*
-        return messageDefinition + valueMap.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey(Comparator.comparingInt(FieldDefinition::getIndex)))
-                .map(entry -> entry.getValue() != null && entry.getValue() instanceof byte[] ?
-                        entry.getKey() + "=" + BytesUtil.bytesToHex((byte[]) entry.getValue()) : entry.toString())
-                .collect(Collectors.joining("\n\t", "\n\t", ""));
-*/
     }
 
     @Override

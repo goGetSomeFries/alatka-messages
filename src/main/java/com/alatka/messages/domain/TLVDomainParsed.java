@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * TLV（tag-length-value）域解析器
+ * e.g. F55域
  *
  * @author ybliu
  * @see AbstractDomainParsed

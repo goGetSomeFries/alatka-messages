@@ -4,7 +4,8 @@ import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 
 /**
- * LV（length-value）域解析器
+ * LV（length-value）域解析器<br>
+ * L(ASCII)
  *
  * @author ybliu
  * @see AbstractDomainParsed

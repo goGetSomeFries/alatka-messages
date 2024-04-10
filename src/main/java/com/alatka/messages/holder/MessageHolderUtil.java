@@ -5,6 +5,9 @@ import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
 import com.alatka.messages.util.ClassUtil;
 
+/**
+ * @author ybliu
+ */
 public class MessageHolderUtil {
 
     public static <T> T getByName(Object instance, String name) {

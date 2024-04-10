@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 不定长域解析器<br>
- * e.g.F122.2域
+ * e.g.cups F122.2域
  *
  * @author ybliu
  * @see AbstractDomainParsed
@@ -18,7 +18,7 @@ public class UnfixedDomainParsed extends AbstractDomainParsed {
 
     @Override
     public int getOrder() {
-        return 30;
+        return 40;
     }
 
     @Override

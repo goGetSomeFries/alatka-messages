@@ -52,6 +52,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
     private String remark;
     /**
      * 状态
+     * {@link Status}
      */
     private Status status;
     /**

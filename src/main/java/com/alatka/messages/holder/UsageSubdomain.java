@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * usage 子域容器
+ *
  * @author ybliu
  */
 @JsonSerialize(using = CustomJsonSerializer.class)
@@ -39,12 +41,6 @@ public class UsageSubdomain<T> {
     @Override
     public String toString() {
         return JsonUtil.format(holder);
-/*
-        return holder.entrySet().stream()
-                .map(entry -> entry.getValue() != null && entry.getValue() instanceof byte[] ?
-                        entry.getKey() + "=" + BytesUtil.bytesToHex((byte[]) entry.getValue()) : entry.toString())
-                .collect(Collectors.joining("\n\t", "\n\t", ""));
-*/
     }
 
     @Override

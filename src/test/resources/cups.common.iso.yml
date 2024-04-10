@@ -78,7 +78,7 @@ alatka.messages:
       - { "domainNo": 117, "name": "addtnlData117", "fixed": false, "length": 3, "maxLength": 256, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 121, "name": "nationalSwResved", "fixed": false, "length": 3, "maxLength": 100, "remark": "银联处理中心保留", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 122, "name": "acqInstResvd", "fixed": false, "length": 3, "maxLength": 100, "remark": "受理方保留", "existSubdomain": true, "subdomainType": "DEFAULT" }
-      - { "domainNo": 123, "name": "issrInstResvd", "fixed": false, "length": 3, "maxLength": 266, "remark": "发卡方保留", "clazz": "[B" }
+      - { "domainNo": 123, "name": "issrInstResvd", "fixed": false, "length": 3, "maxLength": 100, "remark": "发卡方保留", "clazz": "[B" }
       - { "domainNo": 125, "name": "addtnlData125", "fixed": false, "length": 3, "maxLength": 256, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 126, "name": "addtnlData126", "fixed": false, "length": 3, "maxLength": 256, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 128, "name": "msgAuthnCode", "fixed": true, "length": 8, "remark": "报文鉴别码", "clazz": "java.lang.String" }

@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 public class MessageDefinitionContext {
 
     /**
-     * MessageDefinition context
+     * {@link MessageDefinition} context
      */
     private final Map<String, MessageDefinition> messageDefinitionMap = new ConcurrentHashMap<>();
 
     /**
-     * FieldDefinition context
+     * {@link FieldDefinition} context
      */
     private final Map<MessageDefinition, List<FieldDefinition>> fieldDefinitionsMap = new ConcurrentHashMap<>();
 

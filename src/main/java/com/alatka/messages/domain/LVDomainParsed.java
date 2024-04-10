@@ -18,11 +18,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class LVDomainParsed extends AbstractDomainParsed {
 
     @Override
-    public int getOrder() {
-        return 20;
-    }
-
-    @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
         return !fieldDefinition.getFixed() && MessageDefinition.Type.iso == messageDefinition.getType();
     }
@@ -49,12 +44,32 @@ public abstract class LVDomainParsed extends AbstractDomainParsed {
         return isBCD(fieldDefinition) ? BytesUtil.concat(lengthBytes, valueBytes) : valueBytes;
     }
 
+    /**
+     * V值是否是BCD码
+     *
+     * @param fieldDefinition {@link FieldDefinition}
+     * @return
+     */
     private boolean isBCD(FieldDefinition fieldDefinition) {
         return fieldDefinition.getParseType() == FieldDefinition.ParseType.BCD
                 && fieldDefinition.getClazz() == String.class;
     }
 
+    /**
+     * L值 int -> bytes
+     *
+     * @param length          L值(int)
+     * @param fieldDefinition {@link FieldDefinition}
+     * @return L值(bytes)
+     */
     protected abstract byte[] intToBytes(int length, FieldDefinition fieldDefinition);
 
+    /**
+     * L值 bytes -> int
+     *
+     * @param lengthBytes     L值(bytes)
+     * @param fieldDefinition {@link FieldDefinition}
+     * @return L值(int)
+     */
     protected abstract int bytesToInt(byte[] lengthBytes, FieldDefinition fieldDefinition);
 }

@@ -66,7 +66,14 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
     private String remark;
 
     public enum Type {
-        iso, fixed
+        /**
+         * 8583
+         */
+        iso,
+        /**
+         * 固定格式
+         */
+        fixed
     }
 
     // enum顺序不可更改

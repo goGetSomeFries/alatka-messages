@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 报文域解析器<br>
+ * 线程不安全
  *
  * @author ybliu
  * @see FieldBuilder
@@ -48,11 +49,4 @@ public interface DomainParsed {
      * @return 结果字节数组
      */
     byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter);
-
-    /**
-     * 设置 {@link MessageDefinition}
-     *
-     * @param messageDefinition {@link MessageDefinition}
-     */
-    void setMessageDefinition(MessageDefinition messageDefinition);
 }

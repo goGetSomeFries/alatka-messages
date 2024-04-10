@@ -15,8 +15,24 @@ import java.util.Map;
  */
 public abstract class SubdomainFieldBuilder<T> extends AbstractFieldBuilder<T> {
 
+    /**
+     * 子域打包
+     *
+     * @param value
+     * @param fieldDefinition {@link FieldDefinition}
+     * @param usageMap        子域 usage Map
+     * @return
+     */
     protected abstract byte[] pack(T value, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap);
 
+    /**
+     * 子域解包
+     *
+     * @param bytes
+     * @param fieldDefinition {@link FieldDefinition}
+     * @param usageMap        子域 usage Map
+     * @return
+     */
     protected abstract T unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap);
 
     @Override

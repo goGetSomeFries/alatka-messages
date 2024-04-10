@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class PageDomainParsed extends AbstractDomainParsed implements MessageHolderAware {
 
-    private Object messageHolder;
+    private ThreadLocal<Object> messageHolder = new ThreadLocal<>();
 
     @Override
     public int getOrder() {
@@ -37,13 +37,17 @@ public class PageDomainParsed extends AbstractDomainParsed implements MessageHol
 
     @Override
     public byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter) {
-        int elementLength = fieldDefinition.getLength();
-        int pageSize = MessageHolderUtil.getByName(messageHolder, fieldDefinition.getPageSizeName());
-        return Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(elementLength * pageSize));
+        try {
+            int elementLength = fieldDefinition.getLength();
+            int pageSize = MessageHolderUtil.getByName(messageHolder.get(), fieldDefinition.getPageSizeName());
+            return Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(elementLength * pageSize));
+        } finally {
+            messageHolder.remove();
+        }
     }
 
     @Override
     public void setMessageHolder(Object instance) {
-        this.messageHolder = instance;
+        this.messageHolder.set(instance);
     }
 }

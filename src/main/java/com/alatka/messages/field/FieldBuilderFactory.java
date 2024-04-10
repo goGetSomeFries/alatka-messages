@@ -3,7 +3,6 @@ package com.alatka.messages.field;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.MessageHolderAware;
-import com.alatka.messages.util.ClassUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,7 +26,6 @@ public class FieldBuilderFactory {
         init(new UVSubdomainFieldBuilder());
         init(new UVASSubdomainFieldBuilder());
         init(new TLVSubdomainFieldBuilder());
-        // collection
         init(new ListFieldBuilder());
         // datetime
         init(new LocalDateTimeFieldBuilder());
@@ -61,11 +59,11 @@ public class FieldBuilderFactory {
                 .max(Comparator.comparing(FieldBuilder::getOrder))
                 .orElseThrow(() -> new RuntimeException("FieldDefinition: " + fieldDefinition + " do not found matched 'FieldBuilder' instance"));
 
-        FieldBuilder result = (FieldBuilder) ClassUtil.newInstance(builder.getClass());
-        result.setMessageDefinition(messageDefinition);
-        if (result instanceof MessageHolderAware) {
-            ((MessageHolderAware) result).setMessageHolder(instance);
+//        FieldBuilder result = (FieldBuilder) ClassUtil.newInstance(builder.getClass());
+        builder.setMessageDefinition(messageDefinition);
+        if (builder instanceof MessageHolderAware) {
+            ((MessageHolderAware) builder).setMessageHolder(instance);
         }
-        return result;
+        return builder;
     }
 }

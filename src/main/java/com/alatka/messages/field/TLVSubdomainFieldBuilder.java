@@ -3,12 +3,11 @@ package com.alatka.messages.field;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.message.IsoTLVMessageBuilder;
-import com.alatka.messages.message.MessageBuilder;
 
 import java.util.Map;
 
 /**
- * TLV子域类型报文域解析器<br>
+ * TLV(tag-length-value)子域类型报文域解析器<br>
  * 参考F55域
  *
  * @author ybliu
@@ -31,7 +30,7 @@ public class TLVSubdomainFieldBuilder extends SubdomainFieldBuilder<Object> {
 
     @Override
     public int getOrder() {
-        return super.getOrder() + 4;
+        return super.getOrder();
     }
 
     @Override

@@ -3,13 +3,14 @@ package com.alatka.messages.domain;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.MessageHolderAware;
-import com.alatka.messages.util.ClassUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 /**
+ * {@link DomainParsed}工厂，维护{@link DomainParsed}所有实例
+ *
  * @author ybliu
  */
 public class DomainParsedFactory {
@@ -17,15 +18,15 @@ public class DomainParsedFactory {
     private static final List<DomainParsed> LIST = new ArrayList<>();
 
     static {
-        init(new UnfixedDomainParsed());
-        init(new AsciiLVDomainParsed());
-        init(new BinaryLVDomainParsed());
-        init(new TLVDomainParsed());
-        init(new TVDomainParsed());
-        init(new FixedDomainParsed());
-        init(new PageDomainParsed());
-        init(new BitmapDomainParsed());
         init(new RawDomainParsed());
+        init(new BitmapDomainParsed());
+        init(new TVDomainParsed());
+        init(new TLVDomainParsed());
+        init(new UnfixedDomainParsed());
+        init(new BinaryLVDomainParsed());
+        init(new AsciiLVDomainParsed());
+        init(new PageDomainParsed());
+        init(new FixedDomainParsed());
     }
 
     public static void init(DomainParsed domainParsed) {
@@ -40,11 +41,9 @@ public class DomainParsedFactory {
                 .max(Comparator.comparingInt(DomainParsed::getOrder))
                 .orElseThrow(() -> new RuntimeException("do not found matched 'DomainParsed' instance"));
 
-        DomainParsed result = (DomainParsed) ClassUtil.newInstance(domainParsed.getClass());
-        result.setMessageDefinition(messageDefinition);
-        if (result instanceof MessageHolderAware) {
-            ((MessageHolderAware) result).setMessageHolder(instance);
+        if (domainParsed instanceof MessageHolderAware) {
+            ((MessageHolderAware) domainParsed).setMessageHolder(instance);
         }
-        return result;
+        return domainParsed;
     }
 }

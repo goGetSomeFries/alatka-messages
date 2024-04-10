@@ -34,7 +34,7 @@ public class RawFieldBuilder extends AbstractFieldBuilder<byte[]> {
 
     @Override
     public int getOrder() {
-        return super.getOrder();
+        return super.getOrder() + 1000;
     }
 
     @Override

@@ -43,7 +43,7 @@ public class ListFieldBuilder extends SubdomainFieldBuilder<List<?>> {
 
     @Override
     public int getOrder() {
-        return super.getOrder() + 5;
+        return super.getOrder();
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 
 /**
- * 子域类型报文域解析器
+ * ULV(usage-length-value)子域类型报文域解析器
  *
  * @author ybliu
  * @see AbstractFieldBuilder
@@ -45,7 +45,7 @@ public class ULVSubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder {
 
     @Override
     public int getOrder() {
-        return super.getOrder() + 2;
+        return super.getOrder();
     }
 
     @Override
