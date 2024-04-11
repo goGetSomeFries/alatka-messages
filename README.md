@@ -76,12 +76,8 @@ alatka.messages:
   code: 4118
   #报文内容
   message:
+    # domainNo：报文域号/索引号，name：报文域名称，length：报文域字节长度，remark：报文域描述，clazz：报文域字段映射java类型
     # 请求体
-    # domainNo：报文域号/索引号
-    # name：报文域名称
-    # length：报文域字节长度
-    # remark：报文域描述
-    # clazz：报文域字段映射java类型
     request:
       - { "domainNo": 1, "name": "trxType", "length": 4, "remark": "交易代码", "clazz": "java.lang.String" }
       - { "domainNo": 2, "name": "retCode", "length": 6, "remark": "响应码", "clazz": "java.lang.String" }
@@ -306,6 +302,11 @@ TODO
     <artifactId>jackson-dataformat-yaml</artifactId>
     <version>[version]</version>
   </dependency>
+  <dependency>
+    <groupId>com.fasterxml.jackson.datatype</groupId>
+    <artifactId>jackson-datatype-jsr310</artifactId>
+    <version>[version]</version>
+  </dependency>
   <!-- annotation配置方式 -->
   <dependency>
     <groupId>org.reflections</groupId>
@@ -341,6 +342,10 @@ TODO
   <dependency>
     <groupId>com.fasterxml.jackson.dataformat</groupId>
     <artifactId>jackson-dataformat-yaml</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.fasterxml.jackson.datatype</groupId>
+    <artifactId>jackson-datatype-jsr310</artifactId>
   </dependency>
   <!-- annotation配置方式 -->
   <dependency>
@@ -439,12 +444,11 @@ YAML文件命名
 
 YAML文件内容
 ```yaml
-
 alatka.messages:
-  remark: 银联8583报文模板
+  remark: 银联8583报文
   type: iso
   group: cups
-  code: test
+  code: common
   message:
     header:
       - { "domainNo": 1, "name": "headerLength", "fixed": true, "length": 1, "remark": "报文头长度", "clazz": "java.lang.Integer", "parseType": "BINARY" }
@@ -452,15 +456,15 @@ alatka.messages:
       - { "domainNo": 3, "name": "messageLength", "fixed": true, "length": 4, "remark": "报文长度", "clazz": "java.lang.Integer" }
       - { "domainNo": 4, "name": "destinationId", "fixed": true, "length": 11, "remark": "目的ID", "clazz": "java.lang.String" }
       - { "domainNo": 5, "name": "sourceId", "fixed": true, "length": 11, "remark": "源ID", "clazz": "java.lang.String" }
-      - { "domainNo": 6, "name": "reserved", "fixed": true, "length": 3, "remark": "保留使用", "clazz": "[B" }
+      - { "domainNo": 6, "name": "reserved", "fixed": true, "length": 3, "remark": "保留使用", "clazz": "java.lang.String" }
       - { "domainNo": 7, "name": "batchNum", "fixed": true, "length": 1, "remark": "批次号", "clazz": "java.lang.String", "parseType": "BINARY" }
       - { "domainNo": 8, "name": "transInfo", "fixed": true, "length": 8, "remark": "交易信息", "clazz": "java.lang.String" }
       - { "domainNo": 9, "name": "userInfo", "fixed": true, "length": 1, "remark": "用户信息", "clazz": "java.lang.String", "parseType": "BINARY" }
       - { "domainNo": 10, "name": "rejectCode", "fixed": true, "length": 5, "remark": "拒绝码", "clazz": "java.lang.String" }
     payload:
       - { "domainNo": 0, "name": "messageType", "fixed": true, "length": 4, "remark": "报文类型", "clazz": "java.lang.String" }
-      - { "domainNo": 1, "name": "bitMap", "fixed": true, "length": 16, "remark": "位图", "clazz": "java.util.HashMap", "parseType": "BINARY" }
-      - { "domainNo": 2, "name": "primaryAcctNum", "fixed": false, "length": 2, "maxLength": 19, "remark": "主账号", "clazz": "java.lang.String" }
+      - { "domainNo": 1, "name": "bitMap", "fixed": false, "length": 16, "remark": "位图", "clazz": "java.util.HashMap", "parseType": "BINARY" }
+      - { "domainNo": 2, "name": "pan", "fixed": false, "length": 2, "maxLength": 19, "remark": "主账号", "clazz": "java.lang.String" }
       - { "domainNo": 3, "name": "processingCode", "fixed": true, "length": 6, "remark": "交易处理码", "clazz": "java.lang.String" }
       - { "domainNo": 4, "name": "amtTrans", "fixed": true, "length": 12, "remark": "交易金额", "clazz": "java.math.BigDecimal" }
       - { "domainNo": 5, "name": "amtSettlmt", "fixed": true, "length": 12, "remark": "清算金额", "clazz": "java.math.BigDecimal" }
@@ -493,7 +497,7 @@ alatka.messages:
       - { "domainNo": 43, "name": "cardAccptrNameLoc", "fixed": true, "length": 40, "remark": "受卡方名称地址", "clazz": "java.lang.String" }
       - { "domainNo": 44, "name": "addtnlRespCode", "fixed": false, "length": 2, "maxLength": 25, "remark": "附加响应数据", "clazz": "java.lang.String" }
       - { "domainNo": 45, "name": "tracK1Data", "fixed": false, "length": 2, "maxLength": 76, "remark": "第一磁道数据", "clazz": "java.lang.String" }
-      - { "domainNo": 48, "name": "addtnlDataPrivate", "fixed": false, "length": 3, "maxLength": 512, "remark": "附加数据——私有", "existSubdomain": true, "subdomainType": "UV" }
+      - { "domainNo": 48, "name": "addtnlDataPrivate", "fixed": false, "length": 3, "maxLength": 512, "remark": "附加数据——私有", "existSubdomain": true, "subdomainType": "UVAS" }
       - { "domainNo": 49, "name": "currcyCodeTrans", "fixed": true, "length": 3, "remark": "交易货币代码", "clazz": "java.lang.String" }
       - { "domainNo": 50, "name": "currcyCodeSettlmt", "fixed": true, "length": 3, "remark": "清算货币代码", "clazz": "java.lang.String" }
       - { "domainNo": 51, "name": "currcyCodeCdhldrBil", "fixed": true, "length": 3, "remark": "持卡人帐户货币代码", "clazz": "java.lang.String" }
@@ -502,7 +506,7 @@ alatka.messages:
       - { "domainNo": 54, "name": "addtnlAmt", "fixed": false, "length": 3, "maxLength": 40, "remark": "实际余额", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 55, "name": "iccData", "fixed": false, "length": 3, "maxLength": 255, "remark": "IC卡数据域", "existSubdomain": true, "subdomainType": "TLV" }
       - { "domainNo": 56, "name": "addtnlData56", "fixed": false, "length": 3, "maxLength": 512, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
-      - { "domainNo": 57, "name": "addtnlData57", "fixed": false, "length": 3, "maxLength": 100, "remark": "附加交易信息", "existSubdomain": true, "subdomainType": "UV" }
+      - { "domainNo": 57, "name": "addtnlData57", "fixed": false, "length": 3, "maxLength": 100, "remark": "附加交易信息", "existSubdomain": true, "subdomainType": "UVAS" }
       - { "domainNo": 59, "name": "detailInqrng", "fixed": false, "length": 3,  "maxLength": 600, "remark": "明细查询数据", "existSubdomain": true, "subdomainType": "UV" }
       - { "domainNo": 60, "name": "reserved", "fixed": false, "length": 3, "maxLength": 100, "remark": "自定义域", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 61, "name": "chAuthInfo", "fixed": false, "length": 3, "maxLength": 200, "remark": "持卡人身份认证信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
@@ -523,38 +527,101 @@ alatka.messages:
       - { "domainNo": 123, "name": "issrInstResvd", "fixed": false, "length": 3, "maxLength": 100, "remark": "发卡方保留", "clazz": "[B" }
       - { "domainNo": 125, "name": "addtnlData125", "fixed": false, "length": 3, "maxLength": 256, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 126, "name": "addtnlData126", "fixed": false, "length": 3, "maxLength": 256, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
-      - { "domainNo": 128, "name": "msgAuthnCode", "fixed": true, "length": 8, "remark": "报文鉴别码", "clazz": "[B" }
+      - { "domainNo": 128, "name": "msgAuthnCode", "fixed": true, "length": 8, "remark": "报文鉴别码", "clazz": "java.lang.String" }
     subPayload:
+      F48@AA:
+        - { "domainNo": 1, "name": "acqInstAddtnlInfo", "fixed": false, "length": -1, "maxLength": 510, "remark": "受理方附加交易信息", "clazz": "java.lang.String" }
+      F48@AO:
+        - { "domainNo": 1, "name": "businessType", "fixed": true, "length": 2, "remark": "关联业务类型", "clazz": "java.lang.String" }
+      F48@BC:
+        - { "domainNo": 1, "name": "riskCode", "fixed": true, "length": 3, "remark": "风险原因代码", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "riskLevel", "fixed": true, "length": 1, "remark": "风险等级", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "riskScore", "fixed": true, "length": 3, "remark": "风险评分", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "reversed", "fixed": true, "length": 12, "remark": "保留使用", "clazz": "java.lang.String" }
+      F48@NK:
+        - { "domainNo": 1, "name": "newKey", "fixed": true, "length": 510, "remark": "新密钥", "clazz": "[B" }
+      F48@IN:
+        - { "domainNo": 1, "name": "cupSecureInfo", "fixed": false, "length": -1, "maxLength": 255, "remark": "CUPSecure 认证信息", "clazz": "java.lang.String" }
+      F48@PB:
+        - { "domainNo": 1, "name": "serviceId", "fixed": true, "length": 3, "remark": "服务点输入方式码", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "icCode", "fixed": true, "length": 1, "remark": "IC卡条件代码", "clazz": "java.lang.String" }
+      F48@IP:
+        - { "domainNo": 1, "name": "instalments", "fixed": true, "length": 2, "remark": "期数", "clazz": "java.lang.Integer" }
+        - { "domainNo": 2, "name": "reversed", "fixed": true, "length": 30, "remark": "保留使用", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "reversed1", "fixed": true, "length": 1, "remark": "保留使用", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "reversed2", "fixed": true, "length": 1, "remark": "保留使用", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "installmentFeeRate", "fixed": true, "length": 6, "remark": "分期付款手续费率", "clazz": "java.lang.Integer" }
+        - { "domainNo": 6, "name": "MerchantFeeRate", "fixed": true, "length": 6, "remark": "商户补贴手续费率", "clazz": "java.lang.Integer" }
+        - { "domainNo": 7, "name": "reversed3", "fixed": true, "length": 16, "remark": "保留使用", "clazz": "java.lang.String" }
+      F48@RA:
+        - { "domainNo": 1, "name": "price", "fixed": true, "length": 12, "remark": "折扣前标价", "clazz": "java.lang.Integer" }
+      F48@RP:
+        - { "domainNo": 1, "name": "productCode", "fixed": true, "length": 30, "remark": "商品代码", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "reversed", "fixed": true, "length": 30, "remark": "保留使用", "clazz": "java.lang.String" }
+      F48@PZ:
+        - { "domainNo": 1, "name": "userCodeType", "fixed": true, "length": 2, "remark": "用户号码类型", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "userCode", "fixed": true, "length": 40, "remark": "用户号码（支付项目）", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "userCodeArea", "fixed": true, "length": 4, "remark": "用户号码地区编码", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "userCodeExtArea", "fixed": true, "length": 4, "remark": "用户号码附加地区编码", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "payTag", "fixed": true, "length": 1, "remark": "支付方式标志", "clazz": "java.lang.String" }
+        - { "domainNo": 6, "name": "payType", "fixed": true, "length": 2, "remark": "支付方式类型", "clazz": "java.lang.String" }
+        - { "domainNo": 7, "name": "payCode", "fixed": true, "length": 40, "remark": "支付方式号码", "clazz": "java.lang.String" }
+        - { "domainNo": 8, "name": "durationOfDelegated", "fixed": true, "length": 2, "remark": "委托关系限期", "clazz": "java.lang.String" }
+        - { "domainNo": 9, "name": "highLimitAmt", "fixed": true, "length": 12, "remark": "最高限制金额", "clazz": "java.math.BigDecimal" }
+        - { "domainNo": 10, "name": "lowLimitAmt", "fixed": true, "length": 12, "remark": "最低限制金额", "clazz": "java.math.BigDecimal" }
+        - { "domainNo": 11, "name": "payDateRange", "fixed": true, "length": 17, "remark": "支付区间", "clazz": "java.lang.String" }
+        - { "domainNo": 12, "name": "reversed", "fixed": true, "length": 22, "remark": "保留使用", "clazz": "java.lang.String" }
+      F48@CB:
+        - { "domainNo": 1, "name": "payType", "fixed": true, "length": 2, "remark": "付款类型", "clazz": "java.lang.Integer" }
+        - { "domainNo": 2, "name": "payCode", "fixed": true, "length": 30, "remark": "付款代码", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "payReason", "fixed": true, "length": 30, "remark": "付款原因", "clazz": "java.lang.String" }
+      F53:
+        - { "domainNo": 1, "name": "keyType", "fixed": true, "length": 1, "remark": "重置密钥的类型/PIN格式", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "encryptionMethodUsed", "fixed": true, "length": 1, "remark": "加密算法标志", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 14, "remark": "保留使用", "clazz": "java.lang.Long" }
+      F54:
+        - { "domainNo": 1, "name": "accountType1", "fixed": true, "length": 2, "remark": "账户类型", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "balanceType1", "fixed": true, "length": 2, "remark": "余额类型", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "currencyCode1", "fixed": true, "length": 3, "remark": "货币代码", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "balanceCode1", "fixed": true, "length": 1, "remark": "余额符号", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "balance1", "fixed": true, "length": 12, "remark": "余额", "clazz": "java.math.BigDecimal" }
+        - { "domainNo": 6, "name": "accountType2", "fixed": true, "length": 2, "remark": "账户类型", "clazz": "java.lang.String" }
+        - { "domainNo": 7, "name": "balanceType2", "fixed": true, "length": 2, "remark": "余额类型", "clazz": "java.lang.String" }
+        - { "domainNo": 8, "name": "currencyCode2", "fixed": true, "length": 3, "remark": "货币代码", "clazz": "java.lang.String" }
+        - { "domainNo": 9, "name": "balanceCode2", "fixed": true, "length": 1, "remark": "余额符号", "clazz": "java.lang.String" }
+        - { "domainNo": 10, "name": "balance2", "fixed": true, "length": 12, "remark": "余额", "clazz": "java.math.BigDecimal" }
       F55$TLV:
-        - { "domainNo": 0x9F26, "name": "crypt", "fixed": false, "remark": "应用密文", "clazz": "[B" }
-        - { "domainNo": 0x9F27, "name": "cryptInfoData", "fixed": false, "remark": "密文信息数据", "clazz": "[B" }
-        - { "domainNo": 0x9F10, "name": "issuerAppData", "fixed": false, "remark": "发卡行应用数据", "clazz": "[B" }
-        - { "domainNo": 0x9F37, "name": "unpredictableNumber", "fixed": false, "remark": "不可预知数", "clazz": "[B" }
-        - { "domainNo": 0x9F36, "name": "appTransCounter", "fixed": false, "remark": "应用交易计数器", "clazz": "[B" }
-        - { "domainNo": 0x95, "name": "termVerificationResult", "fixed": false, "remark": "终端验证结果", "clazz": "[B" }
-        - { "domainNo": 0x9A, "name": "transDate", "fixed": false, "remark": "交易日期", "clazz": "java.time.LocalDate", "pattern": "yyMMdd", "parseType": "BCD" }
-        - { "domainNo": 0x9C, "name": "transType", "fixed": false, "remark": "交易类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 0x9F02, "name": "transAmt", "fixed": false, "remark": "授权金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
-        - { "domainNo": 0x5F2A, "name": "transCurrencyCode", "fixed": false, "remark": "交易货币代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 0x82, "name": "appInterchangeProfile", "fixed": false, "remark": "应用交互特征", "clazz": "[B" }
-        - { "domainNo": 0x9F1A, "name": "termCountryCode", "fixed": false, "remark": "终端国家代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 0x9F03, "name": "otherAmt", "fixed": false, "remark": "其它金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
-        - { "domainNo": 0x9F33, "name": "termCap", "fixed": false, "remark": "终端性能", "clazz": "[B" }
-        - { "domainNo": 0x9F34, "name": "cardholderVerificationMethodResults", "fixed": false, "remark": "持卡人验证方法结果", "clazz": "[B" }
-        - { "domainNo": 0x9F35, "name": "termType", "fixed": false, "remark": "终端类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 0x9F1E, "name": "interfaceDeviceSerialNumber", "fixed": false, "remark": "接口设备序列号", "clazz": "java.lang.String" }
-        - { "domainNo": 0x84, "name": "dedicatedFileName", "fixed": false, "remark": "专用文件名称", "clazz": "[B" }
-        - { "domainNo": 0x9F09, "name": "termAppVersionNumber", "fixed": false, "remark": "应用版本号", "clazz": "[B" }
-        - { "domainNo": 0x9F41, "name": "transSequenceCounter", "fixed": false, "remark": "交易序列计数器", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 0x91, "name": "issuerAuthenticationData", "fixed": false, "remark": "发卡行认证数据", "clazz": "[B" }
-        - { "domainNo": 0x71, "name": "issuerScriptTemplate1", "fixed": false, "remark": "发卡行脚本1", "clazz": "[B" }
-        - { "domainNo": 0x72, "name": "issuerScriptTemplate2", "fixed": false, "remark": "发卡行脚本2", "clazz": "[B" }
-        - { "domainNo": 0xDF31, "name": "issuerScriptResults", "fixed": false, "remark": "发卡方脚本结果", "clazz": "[B" }
-        - { "domainNo": 0x9F74, "name": "issuerAuthorizationCode", "fixed": false, "remark": "电子现金发卡行授权码", "clazz": "java.lang.String" }
-        - { "domainNo": 0x9F63, "name": "cardProductIdentification", "fixed": false, "remark": "卡产品标识信息", "clazz": "[B" }
-        - { "domainNo": 0x8A, "name": "authorizationResponseCode", "fixed": false, "remark": "授权响应码", "clazz": "java.lang.String" }
+        - { "domainNo": 0x9F26, "name": "crypt", "fixed": true, "length": 8, "remark": "应用密文", "clazz": "[B" }
+        - { "domainNo": 0x9F27, "name": "cryptInfoData", "fixed": true, "length": 1, "remark": "密文信息数据", "clazz": "[B" }
+        - { "domainNo": 0x9F10, "name": "issuerAppData", "fixed": false, "maxLength": 32, "remark": "发卡行应用数据", "clazz": "[B" }
+        - { "domainNo": 0x9F37, "name": "unpredictableNumber", "fixed": true, "length": 4, "remark": "不可预知数", "clazz": "[B" }
+        - { "domainNo": 0x9F36, "name": "appTransCounter", "fixed": true, "length": 2, "remark": "应用交易计数器", "clazz": "[B" }
+        - { "domainNo": 0x95, "name": "termVerificationResult", "fixed": true, "length": 5, "remark": "终端验证结果", "clazz": "[B" }
+        - { "domainNo": 0x9A, "name": "transDate", "fixed": true, "length": 3, "remark": "交易日期", "clazz": "java.time.LocalDate", "pattern": "yyMMdd", "parseType": "BCD" }
+        - { "domainNo": 0x9C, "name": "transType", "fixed": true, "length": 1, "remark": "交易类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x9F02, "name": "transAmt", "fixed": true, "length": 6, "remark": "授权金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
+        - { "domainNo": 0x5F2A, "name": "transCurrencyCode", "fixed": true, "length": 2, "remark": "交易货币代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x82, "name": "appInterchangeProfile", "fixed": true, "length": 2, "remark": "应用交互特征", "clazz": "[B" }
+        - { "domainNo": 0x9F1A, "name": "termCountryCode", "fixed": true, "length": 2, "remark": "终端国家代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x9F03, "name": "otherAmt", "fixed": true, "length": 6, "remark": "其它金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
+        - { "domainNo": 0x9F33, "name": "termCap", "fixed": true, "length": 3, "remark": "终端性能", "clazz": "[B" }
+        - { "domainNo": 0x9F34, "name": "cardholderVerificationMethodResults", "fixed": true, "length": 3, "remark": "持卡人验证方法结果", "clazz": "[B" }
+        - { "domainNo": 0x9F35, "name": "termType", "fixed": true, "length": 1, "remark": "终端类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x9F1E, "name": "interfaceDeviceSerialNumber", "fixed": true, "length": 8, "remark": "接口设备序列号", "clazz": "java.lang.String" }
+        - { "domainNo": 0x84, "name": "dedicatedFileName", "fixed": false, "maxLength": 16, "remark": "专用文件名称", "clazz": "[B" }
+        - { "domainNo": 0x9F09, "name": "termAppVersionNumber", "fixed": true, "length": 2, "remark": "应用版本号", "clazz": "[B" }
+        - { "domainNo": 0x9F41, "name": "transSequenceCounter", "fixed": false, "maxLength": 4, "remark": "交易序列计数器", "clazz": "java.lang.Integer", "parseType": "BCD" }
+        - { "domainNo": 0x91, "name": "issuerAuthenticationData", "fixed": false, "maxLength": 16, "remark": "发卡行认证数据", "clazz": "[B" }
+        - { "domainNo": 0x71, "name": "issuerScriptTemplate1", "fixed": false, "maxLength": 128, "remark": "发卡行脚本1", "clazz": "[B" }
+        - { "domainNo": 0x72, "name": "issuerScriptTemplate2", "fixed": false, "maxLength": 128, "remark": "发卡行脚本2", "clazz": "[B" }
+        - { "domainNo": 0xDF31, "name": "issuerScriptResults", "fixed": false, "maxLength": 21, "remark": "发卡方脚本结果", "clazz": "[B" }
+        - { "domainNo": 0x9F74, "name": "issuerAuthorizationCode", "fixed": true, "length": 6, "remark": "电子现金发卡行授权码", "clazz": "java.lang.String" }
+        - { "domainNo": 0x9F63, "name": "cardProductIdentification", "fixed": true, "length": 16, "remark": "卡产品标识信息", "clazz": "[B" }
+        - { "domainNo": 0x8A, "name": "authorizationResponseCode", "fixed": true, "length": 2, "remark": "授权响应码", "clazz": "java.lang.String" }
       F56@PR$TLV:
         - { "domainNo": 0x01, "name": "tag01", "fixed": false, "remark": "PAR", "clazz": "java.lang.String" }
+      F57@AR:
+        - { "domainNo": 1, "name": "f57f1", "fixed": true, "length": 3, "remark": "附加应答信息", "clazz": "java.lang.String" }
       F57@AB:
         - { "domainNo": 1, "name": "addInfo", "fixed": true, "length": 20, "remark": "发卡方附加交易信息", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "cupsAddInfo", "fixed": true, "length": 20, "remark": "CUPS附加交易信息", "clazz": "java.lang.String" }
@@ -576,6 +643,43 @@ alatka.messages:
         - { "domainNo": 4, "name": "transAmt", "fixed": true, "length": 13, "remark": "交易金额", "clazz": "java.lang.String" }
         - { "domainNo": 5, "name": "balanceAmt", "fixed": true, "length": 13, "remark": "余额", "clazz": "java.lang.String" }
         - { "domainNo": 6, "name": "memoCode", "fixed": true, "length": 10, "remark": "备注代码", "clazz": "java.lang.String" }
+      F60:
+        - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 4, "remark": "报文原因码", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f60f2", "fixed": true, "length": 1, "remark": "账户所有人类型", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "f60f3", "fixed": true, "length": 1, "remark": "终端读取能力", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "f60f4", "fixed": true, "length": 1, "remark": "IC卡条件代码", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "f60f5", "fixed": true, "length": 1, "remark": "保留使用", "clazz": "java.lang.String" }
+        - { "domainNo": 6, "name": "f60f6", "fixed": true, "length": 2, "remark": "终端类型", "clazz": "java.lang.String" }
+        - { "domainNo": 7, "name": "f60f7", "fixed": true, "length": 1, "remark": "受理免验密码标志", "clazz": "java.lang.String" }
+        - { "domainNo": 8, "name": "f60f8", "fixed": true, "length": 1, "remark": "IC卡验证可靠性标志", "clazz": "java.lang.String" }
+        - { "domainNo": 9, "name": "f60f9", "fixed": true, "length": 2, "remark": "电子商务标志", "clazz": "java.lang.String" }
+        - { "domainNo": 10, "name": "f60f10", "fixed": true, "length": 1, "remark": "交互方式标志", "clazz": "java.lang.String" }
+        - { "domainNo": 11, "name": "f60f11", "fixed": false, "length": -1, "maxLength": 15, "remark": "交易发生附加信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
+      F60_F11:
+        - { "domainNo": 1, "name": "f60f11f1", "fixed": true, "length": 2, "remark": "特殊计费类型", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f60f11f2", "fixed": true, "length": 1, "remark": "特殊计费档次", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "f60f11f3", "fixed": true, "length": 3, "remark": "保留使用（第3位为MAC算法标识）", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "f60f11f4", "fixed": true, "length": 1, "remark": "支持部分承兑和返回余额标志", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "f60f11f5", "fixed": true, "length": 1, "remark": "交易发起方式", "clazz": "java.lang.String" }
+        - { "domainNo": 6, "name": "f60f11f6", "fixed": true, "length": 1, "remark": "交易介质", "clazz": "java.lang.String" }
+        - { "domainNo": 7, "name": "f60f11f7", "fixed": true, "length": 1, "remark": "IC 卡的应用类型", "clazz": "java.lang.String" }
+        - { "domainNo": 8, "name": "f60f11f8", "fixed": true, "length": 2, "remark": "账户结算类型", "clazz": "java.lang.String" }
+        - { "domainNo": 9, "name": "f60f11f9", "fixed": true, "length": 1, "remark": "卡账户等级", "clazz": "java.lang.String" }
+        - { "domainNo": 10, "name": "f60f11f10", "fixed": true, "length": 2, "remark": "卡产品", "clazz": "java.lang.String" }
+      F61:
+        - { "domainNo": 1, "name": "f61f1", "fixed": true, "length": 2, "remark": "证件类别", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f61f2", "fixed": true, "length": 20, "remark": "证件编号", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "cvvResult", "fixed": true, "length": 1, "remark": "CVV校验结果", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "pvvResult", "fixed": true, "length": 1, "remark": "PVV校验结果", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "f61f5", "fixed": true, "length": 3, "remark": "处理中心标志", "clazz": "java.lang.String" }
+        - { "domainNo": 6, "name": "f61f6", "fixed": true, "length": 3, "remark": "无卡校验值", "clazz": "java.lang.String" }
+        - { "domainNo": 7, "name": "f61f7", "fixed": true, "length": 1, "remark": "无卡校验结果", "clazz": "java.lang.String" }
+        - { "domainNo": 8, "name": "f61f8", "fixed": true, "length": 1, "remark": "ARQC认证结果值", "clazz": "java.lang.String" }
+        - { "domainNo": 9, "name": "f61f9", "fixed": true, "length": 3, "remark": "安全信息校验值-处理中心标志", "clazz": "java.lang.String" }
+        - { "domainNo": 10, "name": "f61f10", "fixed": false, "length": -1, "maxLength": 165, "remark": "安全信息校验值-安全认证信息", "existSubdomain": true, "subdomainType": "UV" }
+      F61_F10@AM:
+        - { "domainNo": 1, "name": "f61f10f1", "fixed": true, "length": 16, "remark": "交易校验方式", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f61f10f2", "fixed": false, "length": -1, "maxLength": 147, "remark": "业务自定义数据", "clazz": "java.lang.String" }
       F61_F10@AR:
         - { "domainNo": 1, "name": "f61f10f1", "fixed": true, "length": 6, "remark": "SR流水号", "clazz": "java.lang.Integer" }
         - { "domainNo": 2, "name": "f61f10f2", "fixed": true, "length": 19, "remark": "验证服务时间", "clazz": "java.time.LocalDateTime", "pattern": "yyyy-MM-dd HH:mm:ss" }
@@ -610,8 +714,23 @@ alatka.messages:
         - { "domainNo": 1, "name": "messageType", "fixed": true, "length": 4, "remark": "原始交易的报文类型", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "sysTraceAuditNum", "fixed": true, "length": 6, "remark": "原始系统跟踪号", "clazz": "java.lang.Integer" }
         - { "domainNo": 3, "name": "transmsnDateTime", "fixed": true, "length": 10, "remark": "原始交易传输时间", "clazz": "java.time.LocalDateTime", "pattern": "MMddHHmmss" }
-        - { "domainNo": 4, "name": "acqInstIdCode", "fixed": true, "length": 11, "remark": "代理机构标识码", "clazz": "java.lang.String", "fieldType": "NUMBER" }
-        - { "domainNo": 5, "name": "fwdInstIdCode", "fixed": true, "length": 11, "remark": "发送机构标识码", "clazz": "java.lang.String", "fieldType": "NUMBER" }
+        - { "domainNo": 4, "name": "acqInstIdCode", "fixed": true, "length": 11, "remark": "代理机构标识码", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "fwdInstIdCode", "fixed": true, "length": 11, "remark": "发送机构标识码", "clazz": "java.lang.String" }
+      F121:
+        - { "domainNo": 1, "name": "f121f1", "fixed": true, "length": 1, "remark": "应答原因码", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f121f2", "fixed": true, "length": 1, "remark": "单/双或双/单转换码", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "f121f3", "fixed": true, "length": 1, "remark": "卡性质", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "f121f4", "fixed": true, "length": 40, "remark": "CUPS保留", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "f121f5", "fixed": true, "length": 38, "remark": "转入和转出方标识代码/手续费信息", "existSubdomain": true, "subdomainType": "UV" }
+      F121_F5@FD:
+        - { "domainNo": 1, "name": "f121f5f1", "fixed": true, "length": 36, "remark": "手续费信息", "clazz": "java.lang.String" }
+      F121_F5@ID:
+        - { "domainNo": 1, "name": "f121f5f1", "fixed": true, "length": 8, "remark": "转出方标识代码", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f121f5f2", "fixed": true, "length": 8, "remark": "转入方标识代码", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "f121f5f3", "fixed": true, "length": 20, "remark": "其余", "clazz": "java.lang.String" }
+      F122:
+        - { "domainNo": 1, "name": "mchntRate", "fixed": true, "length": 6, "remark": "商户扣率", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "acqInstInfo", "fixed": false, "length": -1, "maxLength": 94, "remark": "受理方信息", "clazz": "java.lang.String" }
 ```
 
 YAML文件命名
@@ -644,22 +763,22 @@ cups.test.ios.yml
 |alatka.messages.message.response|报文应答域（固定格式）|/|/|
 |alatka.messages.message.subPayload|报文子域|/|/|
 |alatka.messages.message.subPayload.F[N]|N子域|/|/|
-|alatka.messages.message.subPayload.F[N]@[U]|N子域usage|/|/|
-|alatka.messages.message.subPayload.F[N]$[TLV/TV]|N子域TLV/TV|/|/|
+|alatka.messages.message.subPayload.F[N]@[U]|usage为U的N子域|/|/|
+|alatka.messages.message.subPayload.F[N]$[TLV/TV]|TLV/TV类型N子域|/|/|
 |alatka.messages.message.subPayload.F[M]_F[N]|嵌套子域|/|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].domainNo|报文域号|Y|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].name|报文域名称，同一报文内部唯一|Y|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].fixed|报文域是否定长|Y|固定格式默认为true，8583无默认值|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].length|定长域中指数据字节长度，变长域指长度值字节长度，分页域指单页数据字节长度|Y|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].maxLength|变长域最大字节长度（8583）|N|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].remark|报文域备注|Y|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].status|状态|N|1|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].clazz|报文域数据类型|Y|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].pattern|报文域数据格式，日期类型域使用|N|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].existSubdomain|是否存在子域名|N|false|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].subdomainType|子域类型（UV ULV TLV LIST DEFAULT...）|N|/|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].parseType|解析方式，默认ASCII（ASCII BCD BINARY...）|N|ASCII|
-|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].pageSizeName|分页域页数|N|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].domainNo|报文域号|Y|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].name|报文域名称，同一报文内部唯一|Y|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].fixed|报文域是否定长|Y|固定格式默认为true，8583无默认值|
+|alatka.messages.message.[header/request/response/payload/subPayload].length|定长域中指数据字节长度，变长域指长度值字节长度，分页域指单页数据字节长度|Y|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].maxLength|变长域最大字节长度（8583）|N|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].remark|报文域备注|Y|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].status|状态|N|1|
+|alatka.messages.message.[header/request/response/payload/subPayload].clazz|报文域数据类型|Y|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].pattern|报文域数据格式，日期类型域使用|N|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].existSubdomain|是否存在子域名|N|false|
+|alatka.messages.message.[header/request/response/payload/subPayload].subdomainType|子域类型（UV ULV TLV LIST DEFAULT...）|N|/|
+|alatka.messages.message.[header/request/response/payload/subPayload].parseType|解析方式，默认ASCII（ASCII BCD BINARY...）|N|ASCII|
+|alatka.messages.message.[header/request/response/payload/subPayload].pageSizeName|分页域页数|N|/|
 
 ##### 2.1.4.YAML文件命名规则
 
