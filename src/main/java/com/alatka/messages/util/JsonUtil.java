@@ -1,11 +1,12 @@
 package com.alatka.messages.util;
 
-import com.alatka.messages.support.CustomPrettyPrinter;
+import com.alatka.messages.support.CustomByteArraySerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
@@ -17,8 +18,13 @@ public class JsonUtil {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     static {
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addSerializer(new CustomByteArraySerializer());
+        OBJECT_MAPPER.registerModule(simpleModule);
+
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         OBJECT_MAPPER.registerModule(javaTimeModule);
+
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
         OBJECT_MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -34,7 +40,9 @@ public class JsonUtil {
 
     public static String format(Map<?, ?> map) {
         try {
-            return OBJECT_MAPPER.writer(new CustomPrettyPrinter()).writeValueAsString(map);
+            String str = OBJECT_MAPPER.writeValueAsString(map);
+            Map<?, ?> result = OBJECT_MAPPER.readValue(str, Map.class);
+            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(result);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
