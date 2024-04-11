@@ -216,5 +216,6 @@ public class MessageJcbTest {
         System.out.println(BytesUtil.fromBCD(BytesUtil.hexToBytes("213")));
         System.out.println((Arrays.toString(BytesUtil.hexToBytes("213"))));
         System.out.println(BytesUtil.fromEBCDIC(BytesUtil.hexToBytes("7E")));
+        System.out.println(String.class.getName());
     }
 }
