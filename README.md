@@ -756,6 +756,7 @@ cups.test.ios.yml
 |alatka.messages.type|报文类型，取值为fixed/iso|Y|/|
 |alatka.messages.group|报文分组，指代机构代码|Y|/|
 |alatka.messages.code|报文标识代码|Y|/|
+|alatka.messages.holder|报文java类型|N|/|
 |alatka.messages.message|报文域相关信息|/|/|
 |alatka.messages.message.header|报文域头|/|/|
 |alatka.messages.message.payload|报文域（8583）|/|/|
@@ -770,17 +771,17 @@ cups.test.ios.yml
 |alatka.messages.message.[header/request/response/payload/subPayload].name|报文域名称，同一报文内部唯一|Y|/|
 |alatka.messages.message.[header/request/response/payload/subPayload].fixed|报文域是否定长|Y|固定格式默认为true，8583无默认值|
 |alatka.messages.message.[header/request/response/payload/subPayload].length|定长域中指数据字节长度，变长域指长度位字节长度，分页域指单页数据字节长度|Y|/|
-|alatka.messages.message.[header/request/response/payload/subPayload].maxLength|变长域最大字节长度（8583）|N|/|
 |alatka.messages.message.[header/request/response/payload/subPayload].remark|报文域备注|Y|/|
 |alatka.messages.message.[header/request/response/payload/subPayload].status|OPEN：正常，CLOSE：关闭，NO_PARSE：不解析该域，原样处理|N|OPEN|
 |alatka.messages.message.[header/request/response/payload/subPayload].clazz|报文域数据类型，值为[类].class.getName()|Y|/|
 |alatka.messages.message.[header/request/response/payload/subPayload].pattern|报文域数据格式，日期类型域使用|N|/|
 |alatka.messages.message.[header/request/response/payload/subPayload].existSubdomain|是否存在子域|N|false|
-|alatka.messages.message.[header/request/response/payload/subPayload].nonSubdomainException|未配置usage子域异常（8583）|N|true|
 |alatka.messages.message.[header/request/response/payload/subPayload].subdomainType|子域类型（UV ULV TLV LIST DEFAULT...）|N|/|
 |alatka.messages.message.[header/request/response/payload/subPayload].parseType|解析方式（ASCII BCD EBCDIC BINARY...）|N|ASCII|
 |alatka.messages.message.[header/request/response/payload/subPayload].pageSizeName|分页域页数|N|/|
-|alatka.messages.message.[header/request/response/payload/subPayload].aliasName|TV域名称（8583）|N|/|
+|alatka.messages.message.[header/payload/subPayload].nonSubdomainException|未配置usage子域异常（8583）|N|true|
+|alatka.messages.message.[header/payload/subPayload].aliasName|TV域名称（8583）|N|/|
+|alatka.messages.message.[header/payload/subPayload].maxLength|变长域最大字节长度（8583）|N|/|
 
 ##### 2.1.4.YAML文件命名规则
 
@@ -980,22 +981,26 @@ public interface F56 {
 |@MessageMeta|group|alatka.messages.group|
 |@MessageMeta|code|alatka.messages.code|
 |@MessageMeta|kind|alatka.messages.message|
+|@MessageMeta|header|alatka.messages.message.header|
 |@MessageMeta|domain|alatka.messages.message.subPayload.F[N]|
 |@MessageMeta|usage|alatka.messages.message.subPayload.F[N]@[U]|
 |@MessageMeta|domainType|alatka.messages.message.subPayload.F[N]$[TLV/TV]|
 |@MessageMeta|remark|alatka.messages.remark|
 |@MessageMeta|charset|alatka.messages.charset|
-|@FixedFieldMeta/@IsoFieldMeta|domainNo|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].domainNo|
-|@FixedFieldMeta/@IsoFieldMeta|pattern|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].pattern|
-|@FixedFieldMeta/@IsoFieldMeta|fixed|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].fixed|
-|@FixedFieldMeta/@IsoFieldMeta|length|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].length|
-|@FixedFieldMeta/@IsoFieldMeta|maxLength|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].maxLength|
-|@FixedFieldMeta/@IsoFieldMeta|existSubdomain|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].existSubdomain|
-|@FixedFieldMeta/@IsoFieldMeta|subdomainType|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].subdomainType|
-|@FixedFieldMeta/@IsoFieldMeta|parseType|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].parseType|
-|@FixedFieldMeta/@IsoFieldMeta|pageSizeName|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].pageSizeName|
-|@FixedFieldMeta/@IsoFieldMeta|remark|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].remark|
-|@FixedFieldMeta/@IsoFieldMeta|status|alatka.messages.message.[header/request/response/payload/subPayload.F[N]*].status|
+|@MessageMeta|customize|alatka.messages.holder|
+|@FixedFieldMeta/@IsoFieldMeta|domainNo|alatka.messages.message.[header/request/response/payload/subPayload].domainNo|
+|@FixedFieldMeta/@IsoFieldMeta|pattern|alatka.messages.message.[header/request/response/payload/subPayload].pattern|
+|@FixedFieldMeta/@IsoFieldMeta|fixed|alatka.messages.message.[header/request/response/payload/subPayload].fixed|
+|@FixedFieldMeta/@IsoFieldMeta|length|alatka.messages.message.[header/request/response/payload/subPayload].length|
+|@IsoFieldMeta|maxLength|alatka.messages.message.[header/payload/subPayload].maxLength|
+|@IsoFieldMeta|nonSubdomainException|alatka.messages.message.[header/payload/subPayload].nonSubdomainException|
+|@IsoFieldMeta|aliasName|alatka.messages.message.[header/payload/subPayload].aliasName|
+|@FixedFieldMeta/@IsoFieldMeta|existSubdomain|alatka.messages.message.[header/request/response/payload/subPayload].existSubdomain|
+|@FixedFieldMeta/@IsoFieldMeta|subdomainType|alatka.messages.message.[header/request/response/payload/subPayload].subdomainType|
+|@FixedFieldMeta/@IsoFieldMeta|parseType|alatka.messages.message.[header/request/response/payload/subPayload].parseType|
+|@FixedFieldMeta/@IsoFieldMeta|pageSizeName|alatka.messages.message.[header/request/response/payload/subPayload].pageSizeName|
+|@FixedFieldMeta/@IsoFieldMeta|remark|alatka.messages.message.[header/request/response/payload/subPayload].remark|
+|@FixedFieldMeta/@IsoFieldMeta|status|alatka.messages.message.[header/request/response/payload/subPayload].status|
 
 #### 2.3.数据库配置
 TODO
@@ -1135,6 +1140,7 @@ TODO
 5. **报文子域**：分页子域、8583各类子域等
 6. **报文子域使用标识**：8583 ULV/UV类型子域usage值；例如F48域AA/BC/NK，F59域QL/QD/QR 等
 
+### 类结构
 ## 六、TODO
 
 - header处理
