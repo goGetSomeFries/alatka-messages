@@ -228,18 +228,18 @@ import holder.com.alatka.messages.MessageHolder;
 public class Test {
   public static void main(String[] args) {
     // 1.加载配置
-    String filePath = ""; // 0601.4118.fixed.yml文件classpath
-    new FixedYamlMessageDefinitionBuilder(filePath).build();
+    String classpath = ""; // 0601.4118.fixed.yml文件classpath
+    new FixedYamlMessageDefinitionBuilder(classpath).build();
 
     // 2.接收处理请求报文
-    byte[] reqBytes = null; // 需要解包的字节数据
+    byte[] reqBytes = ...; // 需要解包的字节数据
     String reqKey = "fixed:0601:4118:request"; // [type]:[group]:[code]:[kind] 唯一标识一类报文
     MessageHolder req = MessageBuilder.init(reqKey).unpack(reqBytes); // 解包为对应MessageHolder实体
 
     // 3.业务处理...
 
     // 4.响应实体序列化为字节数组
-    MessageHolder res = null; // 响应实体
+    MessageHolder res = ...; // 响应实体
     String resKey = "fixed:0601:4118:response"; // [type]:[group]:[code]:[kind] 唯一标识一类报文
     byte[] resBytes = MessageBuilder.init(resKey).pack(res); // 打包响应MessageHolder实体为字节数组
 
@@ -258,14 +258,14 @@ public class Test {
         new FixedAnnotationMessageDefinitionBuilder(packagePath).build();
 
         // 2.接收处理请求报文
-        byte[] reqBytes = null; // 需要解包的字节数据
+        byte[] reqBytes = ...; // 需要解包的字节数据
         String reqKey = "fixed:0601:4118:request"; // [type]:[group]:[code]:[kind] 唯一标识一类报文
         Fixed4118Req req = MessageBuilder.init(reqKey).unpack(reqBytes); // 解包为对应实体
 
         // 3.业务处理...
 
         // 4.响应实体序列化为字节数组
-        Fixed4118Res res = null; // 响应实体
+        Fixed4118Res res = ...; // 响应实体
         String resKey = "fixed:0601:4118:response"; // [type]:[group]:[code]:[kind] 唯一标识一类报文
         byte[] resBytes = MessageBuilder.init(resKey).pack(res); // 打包响应实体为字节数组
 
@@ -1095,6 +1095,7 @@ alatka.messages:
       F13: com.xxx.yyy.POJO3
   .....
 ```
+注：POJO字段名称及java类型需要与YAML配置中一一对应。
 
 #### 2.2.注解方式指定MessageHolder
 
