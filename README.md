@@ -1121,8 +1121,32 @@ public class Fixed3006Res extends FixedHeader {
 
 报文配置信息在`MessageDefinitionBuilder#build()`方法执行后全部加载到内存中，在交易接口较多的场景下，内存开销较多；TODO
 
-### 子域配置
-TODO
+### 4.子域配置
+
+子域配置需额外增加两项参数：`existSubdomain: true`，`subdomainType: [子域类型]`
+
+#### UV类型
+
+UV（usage-value）类型子域，以银联59域为例，父域配置为：
+```yaml
+- { "domainNo": 59, "name": "detailInqrng", "fixed": false, "length": 3,  "maxLength": 600, "remark": "明细查询数据", "existSubdomain": true, "subdomainType": "UV" }
+```
+usage=QL子域
+```yaml
+F59@QL:
+  - { "domainNo": 1, "name": "number", "fixed": true, "length": 3, "remark": "当前明细顺序号", "clazz": "java.lang.Integer" }
+```
+usage=QD子域
+```yaml
+F59@QD:
+  - { "domainNo": 1, "name": "number", "fixed": true, "length": 3, "remark": "当前明细顺序号", "clazz": "java.lang.Integer" }
+  - { "domainNo": 2, "name": "beginDate", "fixed": true, "length": 8, "remark": "明细起始日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
+  - { "domainNo": 3, "name": "endDate", "fixed": true, "length": 8, "remark": "明细中止日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
+```
+#### DEFAULT类型
+
+DEFAULT类型子域为固定
+
 ### 注意事项
 
 - 报文域类型不支持java原始类型（int/byte/long/short/boolean...）：原始类型有默认值，会影响报文域取值和赋值；
