@@ -1125,28 +1125,122 @@ public class Fixed3006Res extends FixedHeader {
 
 子域配置需额外增加两项参数：`existSubdomain: true`，`subdomainType: [子域类型]`
 
+#### DEFAULT类型
+
+DEFAULT类型子域，子域无特殊格式处理，以银联53域为例，父域配置为：
+
+```yaml
+- { "domainNo": 53, "name": "secRelatdCtrlInfo", "fixed": true, "length": 16, "remark": "安全控制信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
+```
+子域配置为`F[子域号]`，后接子域字段：
+```yaml
+F53:
+  - { "domainNo": 1, "name": "keyType", "fixed": true, "length": 1, "remark": "重置密钥的类型/PIN格式", "clazz": "java.lang.String" }
+  - { "domainNo": 2, "name": "encryptionMethodUsed", "fixed": true, "length": 1, "remark": "加密算法标志", "clazz": "java.lang.String" }
+  - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 14, "remark": "保留使用", "clazz": "java.lang.Long" }
+```
 #### UV类型
 
 UV（usage-value）类型子域，以银联59域为例，父域配置为：
 ```yaml
 - { "domainNo": 59, "name": "detailInqrng", "fixed": false, "length": 3,  "maxLength": 600, "remark": "明细查询数据", "existSubdomain": true, "subdomainType": "UV" }
 ```
-usage=QL子域
+子域配置为`F[子域号]@[usage]`；usage=QL子域配置为：
 ```yaml
 F59@QL:
   - { "domainNo": 1, "name": "number", "fixed": true, "length": 3, "remark": "当前明细顺序号", "clazz": "java.lang.Integer" }
 ```
-usage=QD子域
+usage=QD子域：
 ```yaml
 F59@QD:
   - { "domainNo": 1, "name": "number", "fixed": true, "length": 3, "remark": "当前明细顺序号", "clazz": "java.lang.Integer" }
   - { "domainNo": 2, "name": "beginDate", "fixed": true, "length": 8, "remark": "明细起始日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
   - { "domainNo": 3, "name": "endDate", "fixed": true, "length": 8, "remark": "明细中止日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
 ```
-#### DEFAULT类型
+#### UVAS类型
 
-DEFAULT类型子域为固定
+UVAS类型子域，为多个UV以usage=AS方式组合，配置方式与UV类型相同；UVAS类型会判断域中是否存在usage=AS及自动解析处理；以银联57域为例，父域配置为：
+```yaml
+- { "domainNo": 57, "name": "addtnlData57", "fixed": false, "length": 3, "maxLength": 100, "remark": "附加交易信息", "existSubdomain": true, "subdomainType": "UVAS" }
+```
+子域配置为`F[子域号]@[usage]`；usage=AR子域：
+```yaml
+F57@AR:
+  - { "domainNo": 1, "name": "f57f1", "fixed": true, "length": 3, "remark": "附加应答信息", "clazz": "java.lang.String" }
+```
+usage=AB子域：
+```yaml
+F57@AB:
+  - { "domainNo": 1, "name": "addInfo", "fixed": true, "length": 20, "remark": "发卡方附加交易信息", "clazz": "java.lang.String" }
+  - { "domainNo": 2, "name": "cupsAddInfo", "fixed": true, "length": 20, "remark": "CUPS附加交易信息", "clazz": "java.lang.String" }
+  - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 56, "remark": "保留使用", "clazz": "java.lang.String" }
+```
+#### TLV类型
+TLV（tag-length-value）类型子域，以银联55域为例，父域配置为：
+```yaml
+- { "domainNo": 55, "name": "iccData", "fixed": false, "length": 3, "maxLength": 255, "remark": "IC卡数据域", "existSubdomain": true, "subdomainType": "TLV" }
+```
+子域配置为`F[子域号]$TLV`：
+```yaml
+F55$TLV:
+  - { "domainNo": 0x9F26, "name": "crypt", "fixed": true, "length": 8, "remark": "应用密文", "clazz": "[B" }
+  - { "domainNo": 0x9F27, "name": "cryptInfoData", "fixed": true, "length": 1, "remark": "密文信息数据", "clazz": "[B" }
+  - { "domainNo": 0x9F10, "name": "issuerAppData", "fixed": false, "maxLength": 32, "remark": "发卡行应用数据", "clazz": "[B" }
+  - { "domainNo": 0x9F37, "name": "unpredictableNumber", "fixed": true, "length": 4, "remark": "不可预知数", "clazz": "[B" }
+  - { "domainNo": 0x9F36, "name": "appTransCounter", "fixed": true, "length": 2, "remark": "应用交易计数器", "clazz": "[B" }
+  - { "domainNo": 0x95, "name": "termVerificationResult", "fixed": true, "length": 5, "remark": "终端验证结果", "clazz": "[B" }
+  - { "domainNo": 0x9A, "name": "transDate", "fixed": true, "length": 3, "remark": "交易日期", "clazz": "java.time.LocalDate", "pattern": "yyMMdd", "parseType": "BCD" }
+  - { "domainNo": 0x9C, "name": "transType", "fixed": true, "length": 1, "remark": "交易类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
+  - { "domainNo": 0x9F02, "name": "transAmt", "fixed": true, "length": 6, "remark": "授权金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
+  - { "domainNo": 0x5F2A, "name": "transCurrencyCode", "fixed": true, "length": 2, "remark": "交易货币代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
+  - { "domainNo": 0x82, "name": "appInterchangeProfile", "fixed": true, "length": 2, "remark": "应用交互特征", "clazz": "[B" }
+  - { "domainNo": 0x9F1A, "name": "termCountryCode", "fixed": true, "length": 2, "remark": "终端国家代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
+  - { "domainNo": 0x9F03, "name": "otherAmt", "fixed": true, "length": 6, "remark": "其它金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
+  - { "domainNo": 0x9F33, "name": "termCap", "fixed": true, "length": 3, "remark": "终端性能", "clazz": "[B" }
+  - { "domainNo": 0x9F34, "name": "cardholderVerificationMethodResults", "fixed": true, "length": 3, "remark": "持卡人验证方法结果", "clazz": "[B" }
+  - { "domainNo": 0x9F35, "name": "termType", "fixed": true, "length": 1, "remark": "终端类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
+  - { "domainNo": 0x9F1E, "name": "interfaceDeviceSerialNumber", "fixed": true, "length": 8, "remark": "接口设备序列号", "clazz": "java.lang.String" }
+  - { "domainNo": 0x84, "name": "dedicatedFileName", "fixed": false, "maxLength": 16, "remark": "专用文件名称", "clazz": "[B" }
+  - { "domainNo": 0x9F09, "name": "termAppVersionNumber", "fixed": true, "length": 2, "remark": "应用版本号", "clazz": "[B" }
+  - { "domainNo": 0x9F41, "name": "transSequenceCounter", "fixed": false, "maxLength": 4, "remark": "交易序列计数器", "clazz": "java.lang.Integer", "parseType": "BCD" }
+  - { "domainNo": 0x91, "name": "issuerAuthenticationData", "fixed": false, "maxLength": 16, "remark": "发卡行认证数据", "clazz": "[B" }
+  - { "domainNo": 0x71, "name": "issuerScriptTemplate1", "fixed": false, "maxLength": 128, "remark": "发卡行脚本1", "clazz": "[B" }
+  - { "domainNo": 0x72, "name": "issuerScriptTemplate2", "fixed": false, "maxLength": 128, "remark": "发卡行脚本2", "clazz": "[B" }
+  - { "domainNo": 0xDF31, "name": "issuerScriptResults", "fixed": false, "maxLength": 21, "remark": "发卡方脚本结果", "clazz": "[B" }
+  - { "domainNo": 0x9F74, "name": "issuerAuthorizationCode", "fixed": true, "length": 6, "remark": "电子现金发卡行授权码", "clazz": "java.lang.String" }
+  - { "domainNo": 0x9F63, "name": "cardProductIdentification", "fixed": true, "length": 16, "remark": "卡产品标识信息", "clazz": "[B" }
+  - { "domainNo": 0x8A, "name": "authorizationResponseCode", "fixed": true, "length": 2, "remark": "授权响应码", "clazz": "java.lang.String" }
+```
+#### TV类型
+TV（tag-value）类型子域，以银联55域为例，父域配置为：
+```yaml
+```
+子域配置为`F[子域号]$TV`：
+```yaml
+```
+#### ULV类型
 
+ULV（usage-length-value）类型子域，U（usage）2字节acsii编码，L（length）3字节acsii编码，无需额外配置；以银联63域为例，父域配置为：
+```yaml
+- { "domainNo": 63, "name": "finaclNetData", "fixed": false, "length": 3, "maxLength": 512, "remark": "金融网络数据", "existSubdomain": true, "subdomainType": "ULV" }
+```
+子域配置为`F[子域号]@[usage]`；usage=SM子域：
+```yaml
+F63@SM:
+  - { "domainNo": 1, "name": "pin", "fixed": true, "length": 16, "remark": "SM4算法加密的PIN数据", "clazz": "[B" }
+```
+usage=TK子域格式为TLV，配置为`F[子域号]@[usage]$TLV`：
+```yaml
+F63@TK$TLV:
+  - { "domainNo": 0x01, "name": "tag01", "fixed": false, "remark": "是否验证过Token相关信息", "clazz": "java.lang.String" }
+  - { "domainNo": 0x02, "name": "tag02", "fixed": false, "remark": "Token", "clazz": "java.lang.String" }
+  - { "domainNo": 0x03, "name": "tag03", "fixed": false, "remark": "Token有效期", "clazz": "java.time.YearMonth", "pattern": "yyMM" }
+  - { "domainNo": 0x04, "name": "tag04", "fixed": false, "remark": "Token担保级别", "clazz": "java.lang.String" }
+  - { "domainNo": 0x05, "name": "tag05", "fixed": false, "remark": "Token应用场景标识", "clazz": "java.lang.Integer" }
+  - { "domainNo": 0x06, "name": "tag06", "fixed": false, "remark": "TRID", "clazz": "java.lang.String" }
+  - { "domainNo": 0x07, "name": "tag07", "fixed": false, "remark": "保留使用", "clazz": "[B" }
+  - { "domainNo": 0x08, "name": "tag08", "fixed": false, "remark": "产品标识", "clazz": "[B" }
+```
 ### 注意事项
 
 - 报文域类型不支持java原始类型（int/byte/long/short/boolean...）：原始类型有默认值，会影响报文域取值和赋值；
