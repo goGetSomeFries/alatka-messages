@@ -1151,7 +1151,8 @@ public class Fixed3006Res extends FixedHeader {
 
 ### 3.报文配置内存优化
 
-报文配置信息在`MessageDefinitionBuilder#build()`方法执行后全部加载到内存中，在交易接口较多的场景下，内存开销较多；TODO
+报文配置信息在`MessageDefinitionBuilder#build()`方法执行后全部加载到jvm内存中，供后续报文打包解包使用；
+jvm内存开销随着报文接口的增多而线性增加，接口较多的场景下，内存开销问题不容忽视；
 
 ### 4.YAML子域配置
 
