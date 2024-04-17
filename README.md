@@ -355,6 +355,38 @@ TODO
   <!-- TODO 数据库配置方式 -->
 </dependencies>
 ```
+**注：`alatka-messages`及其相关制品已上传至阿里云仓库，如需下载可进行如下配置：**
+
+1.设置仓库凭证
+
+在 settings.xml 文件<servers></servers>中设置以下仓库的访问凭证。
+```xml
+<servers>
+  <server>
+    <id>2448467-release-d4LMO3</id>
+    <username>661f7b16a0522beff388bd5c</username>
+    <password>R06ilmt)Ii=j</password>
+  </server>
+</servers>
+```
+2.配置仓库和包信息
+
+在settings.xml文件<repositories></repositories>节点中加入对应的仓库使用地址。
+```xml
+<repositories>
+  <repository>
+    <id>2448467-release-d4LMO3</id>
+    <url>https://packages.aliyun.com/maven/repository/2448467-release-d4LMO3</url>
+    <releases>
+      <enabled>true</enabled>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+</repositories>
+```
+3.配置`alatka-messages`坐标
 
 ### 2.报文格式定义
 
@@ -1121,7 +1153,7 @@ public class Fixed3006Res extends FixedHeader {
 
 报文配置信息在`MessageDefinitionBuilder#build()`方法执行后全部加载到内存中，在交易接口较多的场景下，内存开销较多；TODO
 
-### 4.子域配置
+### 4.YAML子域配置
 
 子域配置需额外增加两项参数：`existSubdomain: true`，`subdomainType: [子域类型]`
 
@@ -1251,7 +1283,7 @@ F63@TK$TLV:
 ```
 #### ULV_V2类型
 
-ULV_v2（usage-length-value）类型子域，U（usage）2字节ebcdic编码，L（length）2字节ebcdic编码；以银联63域为例，父域配置为：
+ULV_V2（usage-length-value）类型子域，U（usage）2字节ebcdic编码，L（length）2字节ebcdic编码；以jcb 60域为例，父域配置为：
 ```yaml
 - { "domainNo": 60, "name": "stipRelInfo", "fixed": false, "length": 1, "maxLength": 255, "remark": "STIP related information", "existSubdomain": true, "subdomainType": "ULV_V2", "parseType": "NONE_V2" }
 ```
