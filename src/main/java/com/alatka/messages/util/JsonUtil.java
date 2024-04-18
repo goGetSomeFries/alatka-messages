@@ -38,6 +38,14 @@ public class JsonUtil {
         }
     }
 
+    public static <T> String objectToJson(T object) {
+        try {
+            return OBJECT_MAPPER.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static String format(Map<?, ?> map) {
         try {
             String str = OBJECT_MAPPER.writeValueAsString(map);

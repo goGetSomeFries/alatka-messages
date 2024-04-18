@@ -1,11 +1,11 @@
 package com.alatka.messages.definition;
 
-import com.alatka.messages.holder.MessageHolder;
-import com.alatka.messages.holder.UsageSubdomain;
 import com.alatka.messages.annotation.MessageMeta;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
+import com.alatka.messages.holder.MessageHolder;
+import com.alatka.messages.holder.UsageSubdomain;
 import com.alatka.messages.util.ClassUtil;
 import org.reflections.Reflections;
 
@@ -60,11 +60,11 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
                 messageDefinitionMap.put(FieldDefinition.SUBFIELD_KEY_DEFAULT, definition);
                 fieldDefinition.setMessageDefinitionMap(messageDefinitionMap);
             }
+        }
 
-            // 子域默认FieldDefinition.ParseType.NONE
-            if (fieldDefinition.getParseType() == FieldDefinition.ParseType.ASCII) {
-                fieldDefinition.setParseType(FieldDefinition.ParseType.NONE);
-            }
+        if (fieldDefinition.getParseType() == FieldDefinition.ParseType.ASCII &&
+                (fieldDefinition.getExistSubdomain() || fieldDefinition.getClazz() == byte[].class)) {
+            fieldDefinition.setParseType(FieldDefinition.ParseType.NONE);
         }
     }
 

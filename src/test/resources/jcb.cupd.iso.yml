@@ -71,26 +71,26 @@ alatka.messages:
       F44:
         - { "domainNo": 1, "name": "f44f1", "fixed": true, "length": 1, "remark": "CAV2 Result Code", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "f44f2", "fixed": true, "length": 1, "remark": "AVS Result Code", "clazz": "java.lang.String" }
-      F48@01:
+      F48$01:
         - { "domainNo": 1, "name": "cav2", "fixed": true, "length": 3, "remark": "cav2", "clazz": "java.lang.String" }
-      F48@02:
+      F48$02:
         - { "domainNo": 1, "name": "xid", "fixed": true, "length": 40, "remark": "xid", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "cavv", "fixed": true, "length": 40, "remark": "cavv", "clazz": "java.lang.String" }
         - { "domainNo": 3, "name": "eci", "fixed": true, "length": 2, "remark": "eci", "clazz": "java.lang.String" }
         - { "domainNo": 4, "name": "reserved", "fixed": true, "length": 6, "remark": "reserved", "clazz": "java.lang.String" }
-      F48@03:
+      F48$03:
         - { "domainNo": 1, "name": "postalCode", "fixed": true, "length": 9, "remark": "postal code", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "streetAddress", "fixed": true, "length": 5, "remark": "street address", "clazz": "java.lang.String" }
-      F48@04:
+      F48$04:
         - { "domainNo": 1, "name": "posData", "fixed": true, "length": 1, "remark": "pos data extended condition code", "clazz": "java.lang.String" }
-      F48@20:
+      F48$20:
         - { "domainNo": 1, "name": "transitFlag", "fixed": true, "length": 2, "remark": "Transit Flag", "clazz": "java.lang.String" }
-      F48@21:
+      F48$21:
         - { "domainNo": 1, "name": "f48f1", "fixed": true, "length": 19, "remark": "Associated PAN", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "f48f2", "fixed": true, "length": 4, "remark": "Associated PAN Expiration Date", "clazz": "java.time.MonthDay", "pattern": "MMdd" }
-      F48@30:
+      F48$30:
         - { "domainNo": 1, "name": "f48f1", "fixed": true, "length": 16, "remark": "Original Transaction ID", "clazz": "java.lang.String" }
-      F48@31:
+      F48$31:
         - { "domainNo": 1, "name": "f48f1", "fixed": true, "length": 16, "remark": "Transaction ID", "clazz": "java.lang.String" }
       F53:
         - { "domainNo": 1, "name": "f53f1", "fixed": true, "length": 2, "remark": "Key Type", "clazz": "java.lang.String" }
@@ -106,7 +106,7 @@ alatka.messages:
         - { "domainNo": 3, "name": "f54f3", "fixed": true, "length": 1, "remark": "Currency Code", "clazz": "java.lang.String" }
         - { "domainNo": 4, "name": "f54f4", "fixed": true, "length": 1, "remark": "Credit or Debit Sign", "clazz": "java.lang.String" }
         - { "domainNo": 5, "name": "f54f5", "fixed": true, "length": 1, "remark": "Amount", "clazz": "java.lang.String" }
-      F55$TLV:
+      F55@TLV:
         - { "domainNo": 0x9F26, "name": "crypt", "fixed": true, "length": 8, "remark": "应用密文", "clazz": "[B" }
         - { "domainNo": 0x9F27, "name": "cryptInfoData", "fixed": true, "length": 1, "remark": "密文信息数据", "clazz": "[B" }
         - { "domainNo": 0x9F10, "name": "issuerAppData", "fixed": false, "maxLength": 32, "remark": "发卡行应用数据", "clazz": "[B" }
@@ -132,11 +132,11 @@ alatka.messages:
         - { "domainNo": 0x91, "name": "issuerAuthenticationData", "fixed": false, "maxLength": 16, "remark": "发卡行认证数据", "clazz": "[B" }
         - { "domainNo": 0x71, "name": "issuerScriptTemplate1", "fixed": false, "maxLength": 128, "remark": "发卡行脚本1", "clazz": "[B" }
         - { "domainNo": 0x72, "name": "issuerScriptTemplate2", "fixed": false, "maxLength": 128, "remark": "发卡行脚本2", "clazz": "[B" }
-      F60@01:
+      F60$01:
         - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 1, "remark": "STIP Institution", "clazz": "java.lang.String" }
-      F60@02:
+      F60$02:
         - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 1, "remark": "STIP Reason", "clazz": "java.lang.String" }
-      F60@03:
+      F60$03:
         - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 2, "remark": "STIP Rejected Reason", "clazz": "java.lang.String" }
       F61:
         - { "domainNo": 1, "name": "f61f1", "fixed": true, "length": 1, "remark": "Mail/Telephone Order Transaction Sign", "clazz": "java.lang.String" }

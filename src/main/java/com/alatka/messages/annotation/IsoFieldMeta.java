@@ -19,6 +19,11 @@ import java.lang.annotation.*;
 public @interface IsoFieldMeta {
 
     /**
+     * {@link IsoFieldDefinition#setIndex(Integer)}
+     */
+    int index() default Integer.MIN_VALUE;
+
+    /**
      * {@link IsoFieldDefinition#setDomainNo(Integer)}
      */
     int domainNo();
@@ -55,7 +60,7 @@ public @interface IsoFieldMeta {
     MessageDefinition.DomainType subdomainType() default MessageDefinition.DomainType.NONE;
 
     /**
-     * ${@link IsoFieldDefinition#setNonSubdomainException(Boolean)}
+     * {@link IsoFieldDefinition#setNonSubdomainException(Boolean)}
      */
     boolean nonSubdomainException() default true;
 

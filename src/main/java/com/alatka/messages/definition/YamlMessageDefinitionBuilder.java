@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -35,9 +36,9 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
 
     /**
      * 子域key Pattern<br>
-     * e.g. F61@SM$TLV F59@SM_F3 F60$TLV
+     * e.g. F61$SM@TLV F59$SM_F3 F60@TLV
      */
-    private static final Pattern PATTERN = Pattern.compile("^([@\\w]+?)(@[0-9A-Z]{2})?(\\$\\w+)?$");
+    private static final Pattern PATTERN = Pattern.compile("^([\\$\\w]+?)(\\$[0-9A-Z]{2})?(@\\w+)?$");
 
     private final String classpath;
 
@@ -54,9 +55,9 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
         List<Map<String, Object>> list;
         if (kind == MessageDefinition.Kind.subPayload) {
             String domain = definition.getDomain();
-            String usage = definition.getUsage().isEmpty() ? "" : "@".concat(definition.getUsage());
+            String usage = definition.getUsage().isEmpty() ? "" : "$".concat(definition.getUsage());
             String domainType = definition.getDomainType() == MessageDefinition.DomainType.NONE ?
-                    "" : "$".concat(definition.getDomainType().name());
+                    "" : "@".concat(definition.getDomainType().name());
 
             Map<String, Object> map = this.getValueWithMap(message, kind.name());
             list = this.getValueWithMap(map, domain.concat(usage).concat(domainType));
@@ -64,18 +65,17 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
             list = this.getValueWithMap(message, kind.name());
         }
 
+        AtomicInteger counter = new AtomicInteger(0);
         return list.stream()
                 .map(map -> JsonUtil.mapToObject(map, fieldDefinitionClass()))
                 .map(entity -> (S) entity)
-                .peek(fieldDefinition -> this.buildFieldDefinition(definition, fieldDefinition))
+                .peek(fieldDefinition -> this.buildFieldDefinition(definition, fieldDefinition, counter))
                 .peek(fieldDefinition -> this.postBuildFieldDefinition(definition, fieldDefinition))
                 .collect(Collectors.toList());
     }
 
-    private void buildFieldDefinition(MessageDefinition definition, FieldDefinition fieldDefinition) {
-        if (fieldDefinition.getIndex() == null) {
-            fieldDefinition.setIndex(fieldDefinition.getDomainNo());
-        }
+    private void buildFieldDefinition(MessageDefinition definition, FieldDefinition fieldDefinition, AtomicInteger counter) {
+        fieldDefinition.setIndex(counter.getAndIncrement());
         if (fieldDefinition.getFixed() == null) {
             fieldDefinition.setFixed(Boolean.TRUE);
         }

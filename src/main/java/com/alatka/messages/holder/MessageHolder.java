@@ -1,16 +1,20 @@
 package com.alatka.messages.holder;
 
+import com.alatka.messages.annotation.MessageMeta;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
 import com.alatka.messages.support.CustomJsonSerializer;
+import com.alatka.messages.util.ClassUtil;
 import com.alatka.messages.util.JsonUtil;
 import com.alatka.messages.util.ObjectUtil;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 消息报文容器
@@ -25,6 +29,33 @@ public class MessageHolder {
     private MessageDefinition messageDefinition;
 
     private MessageHolder() {
+    }
+
+    public static <T> MessageHolder fromPojo(T object) {
+        MessageHolder messageHolder = new MessageHolder();
+        MessageDefinitionContext context = MessageDefinitionContext.getInstance();
+        MessageDefinition messageDefinition = context.messageDefinition(object.getClass());
+        messageHolder.messageDefinition = messageDefinition;
+        context.fieldDefinitions(messageDefinition)
+                .forEach(fieldDefinition -> {
+                    Object value = ClassUtil.getFieldValue(object, fieldDefinition.getName());
+                    Object result = null;
+                    if (value == null) {
+                        result = value;
+                    } else if (value == UsageSubdomain.class) {
+                        List<MessageHolder> list = ((UsageSubdomain<T>) value).getHolder().values().stream()
+                                .map(MessageHolder::fromPojo).collect(Collectors.toList());
+                        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
+                        list.forEach(usageSubdomain::put);
+                        result = usageSubdomain;
+                    } else if (value.getClass().isAnnotationPresent(MessageMeta.class)) {
+                        result = fromPojo(value);
+                    } else {
+                        result = value;
+                    }
+                    messageHolder.valueMap.put(fieldDefinition, result);
+                });
+        return messageHolder;
     }
 
     public static MessageHolder newInstance(String key) {
