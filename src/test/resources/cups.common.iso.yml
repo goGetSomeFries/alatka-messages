@@ -256,14 +256,14 @@ alatka.messages:
       F63$SM:
         - { "domainNo": 1, "name": "pin", "fixed": true, "length": 16, "remark": "SM4算法加密的PIN数据", "clazz": "[B" }
       F63$TK@TLV:
-        - { "domainNo": 0x01, "name": "tag01", "fixed": false, "remark": "是否验证过Token相关信息", "clazz": "java.lang.String" }
-        - { "domainNo": 0x02, "name": "tag02", "fixed": false, "remark": "Token", "clazz": "java.lang.String" }
-        - { "domainNo": 0x03, "name": "tag03", "fixed": false, "remark": "Token有效期", "clazz": "java.time.YearMonth", "pattern": "yyMM" }
-        - { "domainNo": 0x04, "name": "tag04", "fixed": false, "remark": "Token担保级别", "clazz": "java.lang.String" }
-        - { "domainNo": 0x05, "name": "tag05", "fixed": false, "remark": "Token应用场景标识", "clazz": "java.lang.Integer" }
-        - { "domainNo": 0x06, "name": "tag06", "fixed": false, "remark": "TRID", "clazz": "java.lang.String" }
-        - { "domainNo": 0x07, "name": "tag07", "fixed": false, "remark": "保留使用", "clazz": "[B" }
-        - { "domainNo": 0x08, "name": "tag08", "fixed": false, "remark": "产品标识", "clazz": "[B" }
+        - { "domainNo": 0x01, "name": "tag01", "fixed": true, "length": 1, "remark": "是否验证过Token相关信息", "clazz": "java.lang.String" }
+        - { "domainNo": 0x02, "name": "tag02", "fixed": false, "maxLength": 19, "remark": "Token", "clazz": "java.lang.String" }
+        - { "domainNo": 0x03, "name": "tag03", "fixed": true, "length": 4, "remark": "Token有效期", "clazz": "java.time.YearMonth", "pattern": "yyMM" }
+        - { "domainNo": 0x04, "name": "tag04", "fixed": false, "maxLength": 2, "remark": "Token担保级别", "clazz": "java.lang.String" }
+        - { "domainNo": 0x05, "name": "tag05", "fixed": true, "length": 2, "remark": "Token应用场景标识", "clazz": "java.lang.Integer" }
+        - { "domainNo": 0x06, "name": "tag06", "fixed": false, "maxLength": 11, "remark": "TRID", "clazz": "java.lang.String" }
+        - { "domainNo": 0x07, "name": "tag07", "fixed": false, "maxLength": 32, "remark": "保留使用", "clazz": "[B" }
+        - { "domainNo": 0x08, "name": "tag08", "fixed": true, "length": 4, "remark": "产品标识", "clazz": "[B" }
       F90:
         - { "domainNo": 1, "name": "messageType", "fixed": true, "length": 4, "remark": "原始交易的报文类型", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "sysTraceAuditNum", "fixed": true, "length": 6, "remark": "原始系统跟踪号", "clazz": "java.lang.Integer" }
