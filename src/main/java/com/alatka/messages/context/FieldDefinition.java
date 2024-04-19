@@ -33,7 +33,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
      */
     private Class<?> clazz;
     /**
-     * 域值格式
+     * 域值格式，日期类型使用
      */
     private String pattern;
     /**
@@ -78,12 +78,26 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
     private Map<String, MessageDefinition> messageDefinitionMap;
 
     public enum Status {
-        OPEN, CLOSE, NO_PARSE
+        /**
+         * 正常
+         */
+        OPEN,
+        /**
+         * 关闭，不解析到{@link MessageDefinitionContext}中
+         */
+        CLOSE,
+        /**
+         * 报文域解析时不做处理
+         */
+        NO_PARSE
     }
 
     public enum ParseType {
         ASCII(LPT.A), EBCDIC(LPT.B), BCD(LPT.B), BINARY(LPT.A), NONE(LPT.A), NONE_V2(LPT.B);
 
+        /**
+         * 变长域的长度域编码类型
+         */
         private LPT lenParseType;
 
         ParseType(LPT lenParseType) {
