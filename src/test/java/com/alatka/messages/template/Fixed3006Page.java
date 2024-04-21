@@ -10,12 +10,10 @@ import java.time.LocalTime;
 import java.time.MonthDay;
 import java.util.Objects;
 
-@MessageMeta(
-        type = MessageDefinition.Type.fixed,
-        group = "0305",
-        code = "3006",
-        kind = MessageDefinition.Kind.subPayload,
-        remark = "信用卡账单明细查询")
+import static com.alatka.messages.context.MessageDefinition.Kind.subPayload;
+import static com.alatka.messages.context.MessageDefinition.Type.fixed;
+
+@MessageMeta( type = fixed, group = "0305", code = "3006", kind = subPayload, remark = "信用卡账单明细查询")
 public class Fixed3006Page {
     @FixedFieldMeta(domainNo = 1, length = 3, remark = "月份序号")
     private Integer monthNbr;
