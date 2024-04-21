@@ -19,4 +19,5 @@
 - 支持**YAML文件**、**注解**、**数据库表**（待实现）三种配置形式；
 - **YAML文件**、**数据库表**支持动态配置，可做热更新；
 
-[访问wiki获取详情](https://gitee.com/liuyibing123456/alatka-messages.wiki.git)
+
+[访问wiki获取详情](https://gitee.com/liuyibing123456/alatka-messages/wikis)
