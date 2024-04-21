@@ -173,7 +173,7 @@ alatka.messages:
         - { "domainNo": 0x9F63, "name": "cardProductIdentification", "fixed": true, "length": 16, "remark": "卡产品标识信息", "clazz": "[B" }
         - { "domainNo": 0x8A, "name": "authorizationResponseCode", "fixed": true, "length": 2, "remark": "授权响应码", "clazz": "java.lang.String" }
       F56$PR@TLV:
-        - { "domainNo": 0x01, "name": "tag01", "fixed": false, "remark": "PAR", "clazz": "java.lang.String" }
+        - { "domainNo": 0x01, "name": "tag01", "fixed": true, "length": 29, "remark": "PAR", "clazz": "java.lang.String" }
       F57$AR:
         - { "domainNo": 1, "name": "f57f1", "fixed": true, "length": 3, "remark": "附加应答信息", "clazz": "java.lang.String" }
       F57$AB:
