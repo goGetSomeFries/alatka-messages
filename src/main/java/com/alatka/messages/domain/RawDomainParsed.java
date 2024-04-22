@@ -1,11 +1,8 @@
 package com.alatka.messages.domain;
 
 import com.alatka.messages.context.FieldDefinition;
-import com.alatka.messages.context.IsoFieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
-import com.alatka.messages.util.BytesUtil;
 
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -18,6 +15,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RawDomainParsed extends AbstractDomainParsed {
 
     private AbstractDomainParsed fixedDomainParsed = new FixedDomainParsed();
+
+    private AbstractDomainParsed asciiLVDomainParsed = new AsciiLVDomainParsed() {
+        @Override
+        protected boolean raw(FieldDefinition fieldDefinition) {
+            return true;
+        }
+    };
+
+    private AbstractDomainParsed binaryLVDomainParsed = new BinaryLVDomainParsed() {
+        @Override
+        protected boolean raw(FieldDefinition fieldDefinition) {
+            return true;
+        }
+    };
 
     @Override
     public int getOrder() {
@@ -36,29 +47,15 @@ public class RawDomainParsed extends AbstractDomainParsed {
 
     @Override
     public byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter) {
+        DomainParsed domainParsed = null;
         if (fieldDefinition.getFixed()) {
-            return fixedDomainParsed.unpack(bytes, fieldDefinition, counter);
+            domainParsed = fixedDomainParsed;
+        } else if (fieldDefinition.getParseType().getLenParseType() == FieldDefinition.ParseType.LPT.A) {
+            domainParsed = asciiLVDomainParsed;
+        } else {
+            domainParsed = binaryLVDomainParsed;
         }
-
-        Integer length = fieldDefinition.getLength();
-        byte[] lengthBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(length));
-        byte[] valueBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(this.bytesToInt(lengthBytes, fieldDefinition)));
-
-        if (valueBytes.length > ((IsoFieldDefinition) fieldDefinition).getMaxLength()) {
-            throw new RuntimeException("fieldDefinition: " + fieldDefinition
-                    + " max length: " + ((IsoFieldDefinition) fieldDefinition).getMaxLength() + ", actually length: " + valueBytes.length);
-        }
-        return BytesUtil.concat(lengthBytes, valueBytes);
+        return domainParsed.unpack(bytes, fieldDefinition, counter);
     }
 
-    private int bytesToInt(byte[] lengthBytes, FieldDefinition fieldDefinition) {
-        if (fieldDefinition.getParseType().getLenParseType() == FieldDefinition.ParseType.LPT.A) {
-            return Integer.parseInt(new String(lengthBytes));
-
-        }
-        int length = BytesUtil.bytesToInt(lengthBytes);
-        return fieldDefinition.getParseType() != FieldDefinition.ParseType.BCD ?
-                length :
-                length % 2 == 0 ? length / 2 : length / 2 + 1;
-    }
 }

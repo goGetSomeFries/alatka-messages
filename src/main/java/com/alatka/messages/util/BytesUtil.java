@@ -90,6 +90,7 @@ public class BytesUtil {
     }
 
     private static byte[] toBytes(String str, int radix) {
+        // TODO bug str = "0011"时，bytes.length = 1
         byte[] bytes = new BigInteger(str, radix).toByteArray();
         if (bytes.length > 1 && bytes[0] == 0 && (bytes[1] & 0x80) == 0x80) {
             return Arrays.copyOfRange(bytes, 1, bytes.length);

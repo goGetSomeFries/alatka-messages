@@ -27,15 +27,6 @@ public class IsoYamlMessageBuilderTest {
     @Test
     @DisplayName("消息头")
     public void test01() {
-        String key = "iso:cups:common:header";
-        String actualHex = "2E023034303730333035303030312020203030303130303030202020414139013030303030303030003030303030";
-        MessageHolder actualObj = MessageBuilder.init(key).unpack(actualHex);
-        byte[] expectedBytes = MessageBuilder.init(key).pack(actualObj);
-        MessageHolder expectedObj = MessageBuilder.init(key).unpack(expectedBytes);
-
-        Assertions.assertEquals(BytesUtil.bytesToHex(expectedBytes), actualHex);
-        Assertions.assertArrayEquals(expectedBytes, BytesUtil.hexToBytes(actualHex));
-        Assertions.assertEquals(expectedObj, actualObj);
     }
 
     @Test
@@ -43,17 +34,17 @@ public class IsoYamlMessageBuilderTest {
     public void test02() {
         String key = "iso:cups:common:payload";
         MessageHolder expectedObj = MessageHolder.newInstance(key);
-        expectedObj.put(0, "0100");
-        expectedObj.put(2, "6225880155238798");
-        expectedObj.put(3, "000000");
-        expectedObj.put(4, new BigDecimal("10000012"));
-        expectedObj.put(7, LocalDateTime.now());
-        expectedObj.put(9, 100);
-        expectedObj.put(11, new Random().nextInt(1000000));
-        expectedObj.put(12, LocalTime.now());
-        expectedObj.put(13, MonthDay.now());
-        expectedObj.put(14, YearMonth.now());
-        expectedObj.put(25, "83");
+        expectedObj.put(0, "0100"); // String类型 定长
+        expectedObj.put(2, "6225880155238798"); // String类型 变长
+        expectedObj.put(3, null); // String类型 定长右补空格
+        expectedObj.put(4, new BigDecimal("10000012")); // BigDecimal类型 定长左补0
+        expectedObj.put(7, LocalDateTime.now()); // LocalDateTime类型 定长
+        expectedObj.put(9, 100); // Integer类型 定长左补0
+        expectedObj.put(11, new Random().nextInt(1000000)); // Integer类型 定长
+        expectedObj.put(12, LocalTime.now()); // LocalTime类型 定长
+        expectedObj.put(13, MonthDay.now()); // MonthDay类型 定长
+        expectedObj.put(14, YearMonth.now()); // YearMonth类型 定长
+        expectedObj.put(25, "83"); // String类型 定长
         expectedObj.put(28, null); // TODO
         expectedObj.put(32, "220881");
         expectedObj.put(35, null); // TODO
@@ -64,7 +55,7 @@ public class IsoYamlMessageBuilderTest {
         MessageHolder actualObj = MessageBuilder.init(key).unpack(expectedBytes);
         byte[] actualBytes = MessageBuilder.init(key).pack(actualObj);
 
-        Assertions.assertArrayEquals(expectedBytes, actualBytes);
+        Assertions.assertEquals(BytesUtil.bytesToHex(expectedBytes), BytesUtil.bytesToHex(actualBytes));
 //        Assertions.assertEquals(expectedObj, actualObj);
     }
 

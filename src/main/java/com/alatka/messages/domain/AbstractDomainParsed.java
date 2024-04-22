@@ -25,7 +25,7 @@ public abstract class AbstractDomainParsed implements DomainParsed {
     protected byte[] padding(byte[] bytes, FieldDefinition definition) {
         int paddingLength = definition.getLength() - bytes.length;
         if (paddingLength < 0) {
-            throw new RuntimeException(definition + " actual length: " + bytes.length + ", expected length: " + definition.getLength());
+            throw new IllegalArgumentException(definition + " actual length: " + bytes.length + ", expected length: " + definition.getLength());
         }
         if (paddingLength == 0) {
             return bytes;

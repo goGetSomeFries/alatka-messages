@@ -45,6 +45,16 @@ public class ClassUtil {
         }
     }
 
+    public static <T, S> S invoke(T instance, String methodName, Class[] paramTypes, Object[] params) {
+        try {
+            Method method = instance.getClass().getDeclaredMethod(methodName, paramTypes);
+            method.setAccessible(true);
+            return (S) method.invoke(instance, params);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void buildDeclaredFields(Class<?> clazz, List<Field> list) {
         List<Field> result = Stream.of(clazz.getDeclaredFields())
                 // Coverage 生成__$hits$__ 属性

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class MessageCupsTest {
+public class MessageCupsYamlTest {
 
     @BeforeAll
     public static void beforeAll() {

@@ -24,7 +24,7 @@ public abstract class LVDomainParsed extends AbstractDomainParsed {
 
     @Override
     public byte[] pack(byte[] bytes, FieldDefinition fieldDefinition) {
-        if (this.isBCD(fieldDefinition)) {
+        if (this.raw(fieldDefinition)) {
             return bytes;
         }
         byte[] lengthBytes = this.intToBytes(bytes.length, fieldDefinition);
@@ -41,16 +41,10 @@ public abstract class LVDomainParsed extends AbstractDomainParsed {
             throw new RuntimeException("fieldDefinition: " + fieldDefinition
                     + " max length: " + ((IsoFieldDefinition) fieldDefinition).getMaxLength() + ", actually length: " + valueBytes.length);
         }
-        return isBCD(fieldDefinition) ? BytesUtil.concat(lengthBytes, valueBytes) : valueBytes;
+        return raw(fieldDefinition) ? BytesUtil.concat(lengthBytes, valueBytes) : valueBytes;
     }
 
-    /**
-     * V值是否是BCD码
-     *
-     * @param fieldDefinition {@link FieldDefinition}
-     * @return
-     */
-    private boolean isBCD(FieldDefinition fieldDefinition) {
+    protected boolean raw(FieldDefinition fieldDefinition) {
         return fieldDefinition.getParseType() == FieldDefinition.ParseType.BCD
                 && fieldDefinition.getClazz() == String.class;
     }
