@@ -115,8 +115,8 @@ public class MessageCupsTest {
 
     @Test
     public void test09() {
-        String key = "iso:cups:common:payload";
-        String hex = "";
+        String key = "iso:cups:common:header";
+        String hex = "2E023034303730333035303030312020203030303130303030202020414139013030303030303030003030303030";
         MessageHolder holder = MessageBuilder.init(key).unpack(hex);
         System.out.println(holder);
         byte[] pack = MessageBuilder.init(key).pack(holder);

@@ -59,7 +59,7 @@ public class MessageDefinitionContext {
         condition.setKind(MessageDefinition.Kind.subPayload);
         String domain = messageDefinition.getKind() == MessageDefinition.Kind.subPayload ?
                 messageDefinition.getDomain()
-                        .concat(messageDefinition.getUsage().isEmpty() ? "" : "@".concat(messageDefinition.getUsage()))
+                        .concat(messageDefinition.getUsage().isEmpty() ? "" : "$".concat(messageDefinition.getUsage()))
                         .concat("_F").concat(fieldDefinition.getDomainNo().toString()) :
                 "F".concat(fieldDefinition.getDomainNo().toString());
         condition.setDomain(domain);
