@@ -28,7 +28,7 @@ alatka.messages:
       - { "domainNo": 28, "name": "amtTransFee", "fixed": true, "length": 9, "remark": "交易费", "existSubdomain": true, "subdomainType": "DEFAULT" }
       - { "domainNo": 32, "name": "acqInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "代理机构标识码", "clazz": "java.lang.String" }
       - { "domainNo": 33, "name": "fwdInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "发送机构标识码", "clazz": "java.lang.String" }
-      - { "domainNo": 35, "name": "tracK2Data", "fixed": false, "length": 2, "maxLength": 37, "remark": "第二磁道数据", "clazz": "[B", "parseType": "BCD", "status": "NO_PARSE" }
+      - { "domainNo": 35, "name": "tracK2Data", "fixed": false, "length": 2, "maxLength": 37, "remark": "第二磁道数据", "clazz": "[B", "parseType": "BCD", "status": "RAW" }
       - { "domainNo": 36, "name": "tracK3Data", "fixed": false, "length": 3, "maxLength": 104,  "remark": "第三磁道数据", "clazz": "[B" }
       - { "domainNo": 37, "name": "retrivlRefNum", "fixed": true, "length": 12, "remark": "检索参考号", "clazz": "java.lang.String" }
       - { "domainNo": 38, "name": "authrIdResp", "fixed": true, "length": 6, "remark": "授权标识应答码", "clazz": "java.lang.String" }

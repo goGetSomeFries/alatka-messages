@@ -24,7 +24,7 @@ public class RawDomainParsedTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setStatus(FieldDefinition.Status.NO_PARSE);
+        fieldDefinition.setStatus(FieldDefinition.Status.RAW);
 
         boolean matched = domainParsed.matched(null, fieldDefinition);
 

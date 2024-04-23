@@ -39,6 +39,6 @@ public class RawFieldBuilder extends AbstractFieldBuilder<byte[]> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getStatus() == FieldDefinition.Status.NO_PARSE;
+        return definition.getStatus() == FieldDefinition.Status.RAW;
     }
 }

@@ -12,7 +12,7 @@ import java.time.YearMonth;
 import java.util.Map;
 
 import static com.alatka.messages.context.FieldDefinition.ParseType.*;
-import static com.alatka.messages.context.FieldDefinition.Status.NO_PARSE;
+import static com.alatka.messages.context.FieldDefinition.Status.RAW;
 import static com.alatka.messages.context.MessageDefinition.DomainType.*;
 import static com.alatka.messages.context.MessageDefinition.Kind.payload;
 import static com.alatka.messages.context.MessageDefinition.Type.iso;
@@ -66,7 +66,7 @@ public class CommonPayload {
     private String acqInstIdCode;
     @IsoFieldMeta(domainNo = 33, fixed = false, length = 1, maxLength = 6, remark = "发送机构标识码", parseType = BCD)
     private String fwdInstIdCode;
-    @IsoFieldMeta(domainNo = 35, fixed = false, length = 1, maxLength = 20, remark = "第二磁道数据", parseType = BCD, status = NO_PARSE)
+    @IsoFieldMeta(domainNo = 35, fixed = false, length = 1, maxLength = 20, remark = "第二磁道数据", parseType = BCD, status = RAW)
     private byte[] tracK2Data;
     @IsoFieldMeta(domainNo = 36, fixed = false, length = 1, maxLength = 54, remark = "第三磁道数据", parseType = BCD)
     private byte[] tracK3Data;

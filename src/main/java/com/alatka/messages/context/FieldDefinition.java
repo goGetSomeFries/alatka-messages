@@ -89,7 +89,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
         /**
          * 报文域解析时不做处理
          */
-        NO_PARSE
+        RAW
     }
 
     public enum ParseType {

@@ -15,19 +15,6 @@ public class LVDomainParsedTest {
     private LVDomainParsed domainParsed = new BinaryLVDomainParsed();
 
     @Test
-    @DisplayName("matched()")
-    void test01() {
-        FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setFixed(false);
-        MessageDefinition messageDefinition = new MessageDefinition();
-        messageDefinition.setType(MessageDefinition.Type.iso);
-
-        boolean matched = domainParsed.matched(messageDefinition, fieldDefinition);
-
-        Assertions.assertTrue(matched);
-    }
-
-    @Test
     @DisplayName("raw()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();

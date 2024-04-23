@@ -37,7 +37,7 @@ public class RawDomainParsed extends AbstractDomainParsed {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
-        return fieldDefinition.getStatus() == FieldDefinition.Status.NO_PARSE;
+        return fieldDefinition.getStatus() == FieldDefinition.Status.RAW;
     }
 
     @Override
