@@ -30,10 +30,6 @@ public class BinaryLVDomainParsed extends LVDomainParsed {
         length = fieldDefinition.getParseType() == FieldDefinition.ParseType.BCD ? length * 2 : length;
         byte[] lenBytes = BytesUtil.intToBytes(length);
 
-        if (lenBytes.length == fieldDefinition.getLength()) {
-            return lenBytes;
-        }
-
         byte[] fillBytes = new byte[fieldDefinition.getLength() - lenBytes.length];
         return BytesUtil.concat(fillBytes, lenBytes);
     }

@@ -1,6 +1,7 @@
 package com.alatka.messages.domain;
 
 import com.alatka.messages.context.FieldDefinition;
+import com.alatka.messages.context.IsoFieldDefinition;
 import com.alatka.messages.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -39,9 +40,56 @@ public class RawDomainParsedTest {
     }
 
     @Test
-    @DisplayName("unpack() ")
+    @DisplayName("unpack() 定长域")
     void test04() {
-        // TODO
+        String str = "T01123456789";
+        FieldDefinition fieldDefinition = new FieldDefinition();
+        fieldDefinition.setFixed(true);
+        fieldDefinition.setLength(9);
+        AtomicInteger counter = new AtomicInteger(3);
+
+        byte[] pack = domainParsed.unpack(str.getBytes(), fieldDefinition, counter);
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), "313233343536373839");
     }
 
+    @Test
+    @DisplayName("unpack() 定长域")
+    void test05() {
+        String str = "T01123456789";
+        FieldDefinition fieldDefinition = new FieldDefinition();
+        fieldDefinition.setFixed(true);
+        fieldDefinition.setLength(9);
+        AtomicInteger counter = new AtomicInteger(3);
+
+        byte[] pack = domainParsed.unpack(str.getBytes(), fieldDefinition, counter);
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), "313233343536373839");
+    }
+
+    @Test
+    @DisplayName("unpack() 不定长域 L=BINARY")
+    void test06() {
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
+        fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
+        fieldDefinition.setFixed(false);
+        fieldDefinition.setLength(1);
+        fieldDefinition.setMaxLength(5);
+        byte[] bytes = BytesUtil.hexToBytes("051E2E3E4E5E");
+        AtomicInteger counter = new AtomicInteger(0);
+        byte[] unpack = domainParsed.unpack(bytes, fieldDefinition, counter);
+        Assertions.assertEquals(BytesUtil.bytesToHex(unpack), "051E2E3E4E5E");
+    }
+
+    @Test
+    @DisplayName("unpack() 不定长域 L=ASCII")
+    void test07() {
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
+        fieldDefinition.setParseType(FieldDefinition.ParseType.ASCII);
+        fieldDefinition.setFixed(false);
+        fieldDefinition.setLength(2);
+        fieldDefinition.setMaxLength(5);
+        byte[] bytes = BytesUtil.hexToBytes("30351E2E3E4E5E");
+        AtomicInteger counter = new AtomicInteger(0);
+        byte[] unpack = domainParsed.unpack(bytes, fieldDefinition, counter);
+        Assertions.assertEquals(BytesUtil.bytesToHex(unpack), "30351E2E3E4E5E");
+    }
 }

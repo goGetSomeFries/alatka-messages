@@ -47,15 +47,13 @@ public class RawDomainParsed extends AbstractDomainParsed {
 
     @Override
     public byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter) {
-        DomainParsed domainParsed = null;
         if (fieldDefinition.getFixed()) {
-            domainParsed = fixedDomainParsed;
-        } else if (fieldDefinition.getParseType().getLenParseType() == FieldDefinition.ParseType.LPT.A) {
-            domainParsed = asciiLVDomainParsed;
-        } else {
-            domainParsed = binaryLVDomainParsed;
+            return fixedDomainParsed.unpack(bytes, fieldDefinition, counter);
         }
-        return domainParsed.unpack(bytes, fieldDefinition, counter);
+
+        return fieldDefinition.getParseType().getLenParseType() == FieldDefinition.ParseType.LPT.A ?
+                asciiLVDomainParsed.unpack(bytes, fieldDefinition, counter) :
+                binaryLVDomainParsed.unpack(bytes, fieldDefinition, counter);
     }
 
 }

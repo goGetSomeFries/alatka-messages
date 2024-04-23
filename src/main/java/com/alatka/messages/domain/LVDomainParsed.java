@@ -38,7 +38,7 @@ public abstract class LVDomainParsed extends AbstractDomainParsed {
         byte[] valueBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(this.bytesToInt(lengthBytes, fieldDefinition)));
 
         if (valueBytes.length > ((IsoFieldDefinition) fieldDefinition).getMaxLength()) {
-            throw new RuntimeException("fieldDefinition: " + fieldDefinition
+            throw new IllegalArgumentException("fieldDefinition: " + fieldDefinition
                     + " max length: " + ((IsoFieldDefinition) fieldDefinition).getMaxLength() + ", actually length: " + valueBytes.length);
         }
         return raw(fieldDefinition) ? BytesUtil.concat(lengthBytes, valueBytes) : valueBytes;
