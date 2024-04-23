@@ -1,7 +1,7 @@
 alatka.messages:
   remark: 0305固定格式模板
   type: fixed
-  group: 0305
+  group: "0305"
   code: template
   message:
     request:
