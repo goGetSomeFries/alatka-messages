@@ -1,4 +1,4 @@
-package com.alatka.messages.model.cups;
+package com.alatka.messages.model.iso.cups;
 
 public interface Field104 {
 }

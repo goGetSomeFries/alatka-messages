@@ -1,4 +1,4 @@
-package com.alatka.messages.model.cups;
+package com.alatka.messages.model.iso.cups;
 
 import com.alatka.messages.annotation.IsoFieldMeta;
 import com.alatka.messages.annotation.MessageMeta;

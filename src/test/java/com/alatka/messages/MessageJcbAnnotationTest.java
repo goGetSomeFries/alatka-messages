@@ -3,14 +3,12 @@ package com.alatka.messages;
 import com.alatka.messages.definition.IsoAnnotationMessageDefinitionBuilder;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.message.MessageBuilder;
-import com.alatka.messages.model.jcb.CommonPayload;
+import com.alatka.messages.model.iso.jcb.CommonPayload;
 import com.alatka.messages.util.BytesUtil;
 import com.alatka.messages.util.JsonUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 public class MessageJcbAnnotationTest {
 
