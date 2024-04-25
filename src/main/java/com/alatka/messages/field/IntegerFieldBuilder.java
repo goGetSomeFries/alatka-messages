@@ -5,7 +5,7 @@ import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 
 /**
- * Integer类型报文域解析器
+ * {@link Integer}类型报文域解析器
  *
  * @author ybliu
  * @see NumberFieldBuilder
@@ -31,6 +31,12 @@ public class IntegerFieldBuilder extends NumberFieldBuilder<Integer> {
     }
 
     @Override
+    protected Integer toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
+        String str = BytesUtil.fromEBCDIC(bytes);
+        return Integer.parseInt(str);
+    }
+
+    @Override
     protected byte[] fromObjectToAscii(Integer value, FieldDefinition definition) {
         return String.valueOf(value).getBytes();
     }
@@ -44,6 +50,11 @@ public class IntegerFieldBuilder extends NumberFieldBuilder<Integer> {
     @Override
     protected byte[] fromObjectToBcd(Integer value, FieldDefinition definition) {
         return BytesUtil.toBCD(String.valueOf(value));
+    }
+
+    @Override
+    protected byte[] fromObjectToEbcdic(Integer value, FieldDefinition fieldDefinition) {
+        return BytesUtil.toEBCDIC(String.valueOf(value));
     }
 
     @Override

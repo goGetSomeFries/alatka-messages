@@ -1,13 +1,13 @@
 package com.alatka.messages.field;
 
-import com.alatka.messages.util.BytesUtil;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
+import com.alatka.messages.util.BytesUtil;
 
 import java.math.BigDecimal;
 
 /**
- * BigDecimal类型报文域解析器
+ * {@link BigDecimal}类型报文域解析器
  *
  * @author ybliu
  * @see NumberFieldBuilder
@@ -34,6 +34,11 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
     }
 
     @Override
+    protected byte[] fromObjectToEbcdic(BigDecimal value, FieldDefinition fieldDefinition) {
+        return BytesUtil.toEBCDIC(value.toString());
+    }
+
+    @Override
     protected BigDecimal toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
         return new BigDecimal(new String(bytes));
     }
@@ -47,6 +52,12 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
     @Override
     protected BigDecimal toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
         return new BigDecimal(BytesUtil.fromBCD(bytes));
+    }
+
+    @Override
+    protected BigDecimal toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
+        String str = BytesUtil.fromEBCDIC(bytes);
+        return new BigDecimal(str);
     }
 
     @Override

@@ -42,6 +42,7 @@ public class FieldBuilderFactory {
         // number
         init(new IntegerFieldBuilder());
         init(new BigDecimalFieldBuilder());
+        init(new BigIntegerFieldBuilder());
         init(new LongFieldBuilder());
         // map
         init(new BitmapFieldBuilder());

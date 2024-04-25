@@ -5,7 +5,7 @@ import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 
 /**
- * Long类型报文域解析器
+ * {@link Long}类型报文域解析器
  *
  * @author ybliu
  * @see NumberFieldBuilder
