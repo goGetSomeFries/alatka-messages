@@ -67,7 +67,7 @@ class AbstractDomainParsedTest {
         fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
 
         byte[] padding = domainParsed.padding(BytesUtil.hexToBytes(hex), fieldDefinition);
-        String actual = BytesUtil.bytesToHex(BytesUtil.toEBCDIC("0".getBytes())) + hex;
+        String actual = BytesUtil.bytesToHex(BytesUtil.toEBCDIC("0")) + hex;
         Assertions.assertEquals(BytesUtil.bytesToHex(padding), actual);
     }
 
@@ -81,7 +81,7 @@ class AbstractDomainParsedTest {
         fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
 
         byte[] padding = domainParsed.padding(BytesUtil.hexToBytes(hex), fieldDefinition);
-        String actual = hex + BytesUtil.bytesToHex(BytesUtil.toEBCDIC(" ".getBytes()));
+        String actual = hex + BytesUtil.bytesToHex(BytesUtil.toEBCDIC(" "));
         Assertions.assertEquals(BytesUtil.bytesToHex(padding), actual);
     }
 

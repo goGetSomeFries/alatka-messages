@@ -37,8 +37,7 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected byte[] fromObjectToEbcdic(String value, FieldDefinition definition) {
-        byte[] bytes = value.getBytes();
-        return BytesUtil.toEBCDIC(bytes);
+        return BytesUtil.toEBCDIC(value);
     }
 
     @Override

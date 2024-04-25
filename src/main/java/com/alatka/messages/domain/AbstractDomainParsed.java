@@ -41,7 +41,7 @@ public abstract class AbstractDomainParsed implements DomainParsed {
     private byte[] fillBytes(FieldDefinition definition) {
         switch (definition.getParseType()) {
             case EBCDIC:
-                return isNumberType(definition.getClazz()) ? BytesUtil.toEBCDIC("0".getBytes()) : BytesUtil.toEBCDIC(" ".getBytes());
+                return isNumberType(definition.getClazz()) ? BytesUtil.toEBCDIC("0") : BytesUtil.toEBCDIC(" ");
             case BCD:
                 return BytesUtil.intToBytes(0);
             default:

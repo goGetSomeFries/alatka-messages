@@ -53,8 +53,8 @@ public class BytesUtil {
         return new BigInteger(1, bytes).intValueExact();
     }
 
-    public static byte[] toEBCDIC(byte[] bytes) {
-        return new String(bytes).getBytes(Charset.forName("IBM-500"));
+    public static byte[] toEBCDIC(String str) {
+        return str.getBytes(Charset.forName("IBM-500"));
     }
 
     public static String fromEBCDIC(byte[] bytes) {

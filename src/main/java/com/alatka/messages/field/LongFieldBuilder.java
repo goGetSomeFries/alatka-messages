@@ -47,6 +47,11 @@ public class LongFieldBuilder extends NumberFieldBuilder<Long> {
     }
 
     @Override
+    protected byte[] fromObjectToEbcdic(Long value, FieldDefinition fieldDefinition) {
+        return BytesUtil.toEBCDIC(String.valueOf(value));
+    }
+
+    @Override
     public int getOrder() {
         return super.getOrder() + 1;
     }

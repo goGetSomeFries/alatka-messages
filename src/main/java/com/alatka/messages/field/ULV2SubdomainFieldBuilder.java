@@ -36,13 +36,13 @@ public class ULV2SubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder 
 
     @Override
     protected byte[] usageId(String id) {
-        return BytesUtil.toEBCDIC(id.getBytes());
+        return BytesUtil.toEBCDIC(id);
     }
 
     @Override
     protected byte[] usageLen(int length) {
         String str = String.format("%0" + this.usageLenLength() + "d", length);
-        return BytesUtil.toEBCDIC(str.getBytes());
+        return BytesUtil.toEBCDIC(str);
     }
 
     @Override
