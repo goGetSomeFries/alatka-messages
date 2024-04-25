@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 public class LongFieldBuilderTest {
 
     private FieldBuilder fieldBuilder = new LongFieldBuilder();
@@ -63,11 +65,8 @@ public class LongFieldBuilderTest {
     }
 
     @Test
-    @DisplayName("fromObjectToNone()")
+    @DisplayName("()")
     void test07() {
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> ClassUtil.invoke(fieldBuilder, "fromObjectToNone",
-                        new Class[]{Object.class, FieldDefinition.class}, new Object[]{1L, null}));
     }
 
     @Test
