@@ -31,6 +31,12 @@ public class LongFieldBuilder extends NumberFieldBuilder<Long> {
     }
 
     @Override
+    protected Long toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
+        String str = BytesUtil.fromEBCDIC(bytes);
+        return Long.parseLong(str);
+    }
+
+    @Override
     protected byte[] fromObjectToAscii(Long value, FieldDefinition definition) {
         return String.valueOf(value).getBytes();
     }
