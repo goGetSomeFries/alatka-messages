@@ -16,6 +16,7 @@ import java.util.stream.IntStream;
  * List类型报文域解析器
  *
  * @author ybliu
+ * @see SubdomainFieldBuilder
  * @see AbstractFieldBuilder
  * @see FieldBuilder
  */
@@ -23,21 +24,24 @@ public class ListFieldBuilder extends SubdomainFieldBuilder<List<?>> {
 
     @Override
     protected List<?> unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
-        AtomicInteger counter = new AtomicInteger(0);
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
+        MessageBuilder messageBuilder = MessageBuilder.init(definition);
+        AtomicInteger counter = new AtomicInteger(0);
+
         return IntStream.range(0, bytes.length / fieldDefinition.getLength())
                 .mapToObj(i -> {
                     byte[] elementBytes =
                             Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(fieldDefinition.getLength()));
-                    return MessageBuilder.init(definition).unpack(elementBytes);
+                    return messageBuilder.unpack(elementBytes);
                 }).collect(Collectors.toList());
     }
 
     @Override
     protected byte[] pack(List<?> value, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
+        MessageBuilder messageBuilder = MessageBuilder.init(definition);
         return value.stream()
-                .map(instance -> MessageBuilder.init(definition).pack(instance))
+                .map(instance -> messageBuilder.pack(instance))
                 .reduce(new byte[0], BytesUtil::concat);
     }
 
@@ -48,6 +52,7 @@ public class ListFieldBuilder extends SubdomainFieldBuilder<List<?>> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return super.matched(messageDefinition, definition) && definition.getSubdomainType() == MessageDefinition.DomainType.LIST;
+        return super.matched(messageDefinition, definition)
+                && definition.getSubdomainType() == MessageDefinition.DomainType.LIST;
     }
 }

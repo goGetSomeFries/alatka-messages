@@ -2,6 +2,7 @@ package com.alatka.messages.field;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
+import com.alatka.messages.context.MessageDefinitionContext;
 import com.alatka.messages.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -92,6 +95,11 @@ public class BitmapFieldBuilderTest {
     @Test
     @DisplayName("fromObjectToBinary() bitmap != null")
     void test07() {
+        MessageDefinition messageDefinition = new MessageDefinition();
+        MessageDefinitionContext.getInstance().fieldDefinitions(messageDefinition, Collections.emptyList());
+
+        fieldBuilder.setMessageDefinition(messageDefinition);
+
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setFixed(true);
         fieldDefinition.setLength(8);
