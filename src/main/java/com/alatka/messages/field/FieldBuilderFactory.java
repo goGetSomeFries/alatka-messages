@@ -18,7 +18,6 @@ public class FieldBuilderFactory {
     private static final List<FieldBuilder> LIST = new ArrayList<>();
 
     static {
-        init(new RawFieldBuilder());
         // subdomain
         init(new DefaultSubdomainFieldBuilder<>());
         init(new ULVSubdomainFieldBuilder());
@@ -44,8 +43,10 @@ public class FieldBuilderFactory {
         init(new BigDecimalFieldBuilder());
         init(new BigIntegerFieldBuilder());
         init(new LongFieldBuilder());
-        // map
+        // bitmap
         init(new BitmapFieldBuilder());
+        // raw
+        init(new RawFieldBuilder());
     }
 
     public static void init(FieldBuilder fieldBuilder) {

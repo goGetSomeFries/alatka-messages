@@ -37,16 +37,16 @@ public class DateFieldBuilder extends AbstractFieldBuilder<Date> {
     @Override
     protected Date toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
         String datetime = new String(bytes);
-        try {
-            return this.formatter(fieldDefinition).parse(datetime);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("fieldDefinition: " + fieldDefinition, e);
-        }
+        return getDate(fieldDefinition, datetime);
     }
 
     @Override
     protected Date toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
         String datetime = BytesUtil.fromBCD(bytes);
+        return getDate(fieldDefinition, datetime);
+    }
+
+    private Date getDate(FieldDefinition fieldDefinition, String datetime) {
         try {
             return this.formatter(fieldDefinition).parse(datetime);
         } catch (ParseException e) {

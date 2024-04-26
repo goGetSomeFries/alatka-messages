@@ -13,8 +13,38 @@ import com.alatka.messages.context.MessageDefinition;
 public class BytesFieldBuilder extends AbstractFieldBuilder<byte[]> {
 
     @Override
+    protected byte[] fromObjectToAscii(byte[] value, FieldDefinition fieldDefinition) {
+        return this.fromObjectToNone(value, fieldDefinition);
+    }
+
+    @Override
+    protected byte[] fromObjectToBinary(byte[] value, FieldDefinition fieldDefinition) {
+        return this.fromObjectToNone(value, fieldDefinition);
+    }
+
+    @Override
     protected byte[] fromObjectToBcd(byte[] value, FieldDefinition fieldDefinition) {
         return this.fromObjectToNone(value, fieldDefinition);
+    }
+
+    @Override
+    protected byte[] fromObjectToEbcdic(byte[] value, FieldDefinition fieldDefinition) {
+        return this.fromObjectToNone(value, fieldDefinition);
+    }
+
+    @Override
+    protected byte[] fromObjectToNone(byte[] value, FieldDefinition fieldDefinition) {
+        return value;
+    }
+
+    @Override
+    protected byte[] toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
+        return this.fromObjectToNone(bytes, fieldDefinition);
+    }
+
+    @Override
+    protected byte[] toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
+        return this.toObjectWithNone(bytes, fieldDefinition);
     }
 
     @Override
@@ -23,8 +53,8 @@ public class BytesFieldBuilder extends AbstractFieldBuilder<byte[]> {
     }
 
     @Override
-    protected byte[] fromObjectToNone(byte[] value, FieldDefinition fieldDefinition) {
-        return value;
+    protected byte[] toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
+        return this.toObjectWithNone(bytes, fieldDefinition);
     }
 
     @Override

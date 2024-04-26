@@ -50,26 +50,6 @@ public abstract class SubdomainFieldBuilder<T> extends AbstractFieldBuilder<T> {
     }
 
     @Override
-    protected byte[] fromObjectToBcd(T value, FieldDefinition fieldDefinition) {
-        return this.fromObjectToNone(value, fieldDefinition);
-    }
-
-    @Override
-    protected T toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
-        return this.toObjectWithNone(bytes, fieldDefinition);
-    }
-
-    @Override
-    protected byte[] fromObjectToEbcdic(T value, FieldDefinition fieldDefinition) {
-        return this.fromObjectToNone(value, fieldDefinition);
-    }
-
-    @Override
-    protected T toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
-        return this.toObjectWithNone(bytes, fieldDefinition);
-    }
-
-    @Override
     public int getOrder() {
         return super.getOrder() + 100;
     }

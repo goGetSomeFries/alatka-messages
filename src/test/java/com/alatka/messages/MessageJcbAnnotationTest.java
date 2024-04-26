@@ -14,7 +14,7 @@ public class MessageJcbAnnotationTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoAnnotationMessageDefinitionBuilder("com.alatka.messages.model.jcb").build();
+        new IsoAnnotationMessageDefinitionBuilder("com.alatka.messages.model.iso.jcb").build();
     }
 
     private void doTest(String hex) {

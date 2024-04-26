@@ -37,6 +37,9 @@ public abstract class MessageBuilder {
     public static <S extends MessageBuilder> S init(String key) {
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
         MessageDefinition definition = context.messageDefinition(key);
+        if (definition == null) {
+            throw new IllegalArgumentException("key [" + key + "] not exist");
+        }
         return init(definition);
     }
 
