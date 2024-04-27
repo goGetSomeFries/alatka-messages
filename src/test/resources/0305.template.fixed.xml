@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<alatka-messages xmlns="http://message.alatka.com"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://message.alatka.com alatka-messages.xsd">
+    <remark>0305固定格式模板</remark>
+    <type>fixed</type>
+    <group>0305</group>
+    <code>template</code>
+    <message>
+        <request>
+            <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="java.lang.String"/>
+            <field domainNo="2" name="retCode" length="6" remark="响应码" clazz="java.lang.String"/>
+            <field domainNo="3" name="bnkNbr" length="4" remark="银行代号" clazz="java.lang.String"/>
+            <field domainNo="4" name="source" length="2" remark="交易来源" clazz="java.lang.String"/>
+            <field domainNo="5" name="brnNo" length="6" remark="网点代号" clazz="java.lang.String"/>
+            <field domainNo="6" name="opeNo" length="6" remark="操作员号" clazz="java.lang.String"/>
+            <field domainNo="7" name="seqNo" length="6" remark="流水号" clazz="java.lang.Integer"/>
+        </request>
+        <response>
+            <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="java.lang.String"/>
+            <field domainNo="2" name="retCode" length="6" remark="响应码" clazz="java.lang.String"/>
+            <field domainNo="3" name="bnkNbr" length="4" remark="银行代号" clazz="java.lang.String"/>
+            <field domainNo="4" name="source" length="2" remark="交易来源" clazz="java.lang.String"/>
+            <field domainNo="5" name="brnNo" length="6" remark="网点代号" clazz="java.lang.String"/>
+            <field domainNo="6" name="opeNo" length="6" remark="操作员号" clazz="java.lang.String"/>
+            <field domainNo="7" name="seqNo" length="6" remark="流水号" clazz="java.lang.Integer"/>
+        </response>
+    </message>
+</alatka-messages>

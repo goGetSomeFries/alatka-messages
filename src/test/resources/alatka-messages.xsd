@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://message.alatka.com" targetNamespace="http://message.alatka.com">
+    <xs:element name="alatka-messages" type="alatka-messagesType"/>
+    <xs:complexType name="alatka-messagesType">
+        <xs:all>
+            <xs:element type="xs:string" name="remark"/>
+            <xs:element type="xs:string" name="type">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="iso"/>
+                        <xs:enumeration value="fixed"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element type="xs:string" name="group"/>
+            <xs:element type="xs:string" name="code"/>
+            <xs:element type="xs:string" name="domain" minOccurs="0"/>
+            <xs:element type="xs:string" name="usage" minOccurs="0"/>
+            <xs:element type="xs:string" name="domainType" minOccurs="0"/>
+            <xs:element type="xs:string" name="charset" minOccurs="0"/>
+            <xs:element type="xs:string" name="holder" minOccurs="0"/>
+            <xs:element type="messageType" name="message"/>
+        </xs:all>
+    </xs:complexType>
+    <xs:complexType name="messageType">
+        <xs:sequence>
+            <xs:element type="payloadType" name="header" minOccurs="0"/>
+            <xs:element type="payloadType" name="request" minOccurs="0"/>
+            <xs:element type="payloadType" name="response" minOccurs="0"/>
+            <xs:element type="payloadType" name="payload" minOccurs="0"/>
+            <xs:element type="payloadType" name="subPayload" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="payloadType">
+        <xs:sequence>
+            <xs:element type="fieldType" name="field" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="fieldType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:int" name="index" use="optional"/>
+                <xs:attribute type="xs:int" name="domainNo" use="required"/>
+                <xs:attribute type="xs:string" name="name" use="required"/>
+                <xs:attribute type="xs:string" name="clazz" use="optional"/>
+                <xs:attribute type="xs:string" name="pattern" use="optional"/>
+                <xs:attribute type="xs:boolean" name="fixed" use="optional"/>
+                <xs:attribute type="xs:int" name="length" use="required"/>
+                <xs:attribute type="xs:string" name="remark" use="required"/>
+                <xs:attribute type="xs:string" name="status" use="optional"/>
+                <xs:attribute type="xs:string" name="pageSizeName" use="optional"/>
+                <xs:attribute type="xs:string" name="parseType" use="optional"/>
+                <xs:attribute type="xs:boolean" name="existSubdomain" use="optional"/>
+                <xs:attribute type="xs:string" name="subdomainType" use="optional"/>
+                <xs:attribute type="xs:string" name="aliasName" use="optional"/>
+                <xs:attribute type="xs:int" name="maxLength" use="optional"/>
+                <xs:attribute type="xs:boolean" name="nonSubdomainException" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>
