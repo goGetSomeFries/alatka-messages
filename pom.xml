@@ -29,6 +29,12 @@
             <artifactId>jackson-dataformat-yaml</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- xml配置方式 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- annotation配置方式 -->
         <dependency>
             <groupId>org.reflections</groupId>

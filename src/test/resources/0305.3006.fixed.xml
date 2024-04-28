@@ -2,11 +2,7 @@
 <alatka-messages xmlns="http://message.alatka.com"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://message.alatka.com alatka-messages.xsd">
-    <remark>信用卡账单明细查询</remark>
-    <type>fixed</type>
-    <group>0305</group>
-    <code>3006</code>
-    <message>
+    <message type="fixed" group="0305" code="3006" remark="信用卡账单明细查询">
         <request>
             <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="java.lang.String"/>
             <field domainNo="2" name="retCode" length="6" remark="响应码" clazz="java.lang.String"/>
@@ -43,7 +39,7 @@
             <field domainNo="12" name="rtnInd" length="1" remark="翻页标志" clazz="java.lang.String"/>
             <field domainNo="13" name="elements" fixed="false" length="141" remark="集合" clazz="java.util.ArrayList" pageSizeName="counts" existSubdomain="true" subdomainType="LIST"/>
         </response>
-        <subPayload>
+        <subPayload domain="F13">
             <field domainNo="1" name="monthNbr" length="3" remark="月份序号" clazz="java.lang.Integer"/>
             <field domainNo="2" name="valDate" length="8" remark="入账日期" clazz="java.time.LocalDate" pattern="yyyyMMdd"/>
             <field domainNo="3" name="purDate" length="8" remark="记录日期" clazz="java.time.LocalDate" pattern="yyyyMMdd"/>

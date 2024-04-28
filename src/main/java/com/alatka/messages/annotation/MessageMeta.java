@@ -2,6 +2,7 @@ package com.alatka.messages.annotation;
 
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.MessageHolder;
+import com.alatka.messages.support.Constant;
 
 import java.lang.annotation.*;
 
@@ -68,7 +69,7 @@ public @interface MessageMeta {
     /**
      * {@link MessageDefinition#setCharset(String)}
      */
-    String charset() default "GB18030";
+    String charset() default Constant.DEFAULT_CHARSET;
 
     /**
      * {@link MessageDefinition#setRemark(String)}
