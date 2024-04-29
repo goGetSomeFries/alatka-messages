@@ -138,5 +138,6 @@ public class MessageJcbYamlTest {
         System.out.println(BytesUtil.fromEBCDIC(BytesUtil.hexToBytes("7E")));
         System.out.println(String.class.getName());
         System.out.println(Arrays.toString(BytesUtil.hexToBytes("100000")));
+        System.out.println(0x29);
     }
 }
