@@ -1,22 +1,16 @@
 package com.alatka.messages.definition;
 
-import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
-import com.alatka.messages.context.MessageDefinitionContext;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.support.Constant;
 import com.alatka.messages.util.ClassUtil;
-import com.alatka.messages.util.FileUtil;
-import com.alatka.messages.util.JsonUtil;
 import com.alatka.messages.util.YamlUtil;
 
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -26,9 +20,10 @@ import java.util.stream.Stream;
  * yaml文件报文定义解析器
  *
  * @author ybliu
+ * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefinitionBuilder<Path> {
+public abstract class YamlMessageDefinitionBuilder extends FileMessageDefinitionBuilder {
 
     /**
      * yaml root element
@@ -41,19 +36,16 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
      */
     private static final Pattern PATTERN = Pattern.compile("^([\\$\\w]+?)(\\$[0-9A-Z]{2})?(@\\w+)?$");
 
-    private final String classpath;
-
     public YamlMessageDefinitionBuilder(String classpath) {
-        this.classpath = classpath;
+        super(classpath);
     }
 
     @Override
-    protected <S extends FieldDefinition> List<S> buildFieldDefinitions(MessageDefinition definition, Path source) {
+    protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, Path source) {
         Map<String, Object> yaml = YamlUtil.getMap(source.toFile(), YAML_ROOT_NAME, Object.class);
         Map<String, Object> message = this.getValueWithMap(yaml, "message");
         MessageDefinition.Kind kind = definition.getKind();
 
-        List<Map<String, Object>> list;
         if (kind == MessageDefinition.Kind.subPayload) {
             String domain = definition.getDomain();
             String usage = definition.getUsage().isEmpty() ? "" : "$".concat(definition.getUsage());
@@ -61,61 +53,22 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
                     "" : "@".concat(definition.getDomainType().name());
 
             Map<String, Object> map = this.getValueWithMap(message, kind.name());
-            list = this.getValueWithMap(map, domain.concat(usage).concat(domainType));
-        } else {
-            list = this.getValueWithMap(message, kind.name());
+            return this.getValueWithMap(map, domain.concat(usage).concat(domainType));
         }
-
-        AtomicInteger counter = new AtomicInteger(0);
-        return list.stream()
-                .map(map -> JsonUtil.mapToObject(map, fieldDefinitionClass()))
-                .map(entity -> (S) entity)
-                .peek(fieldDefinition -> this.buildFieldDefinition(definition, fieldDefinition, counter))
-                .peek(fieldDefinition -> this.postBuildFieldDefinition(definition, fieldDefinition))
-                .collect(Collectors.toList());
-    }
-
-    private void buildFieldDefinition(MessageDefinition definition, FieldDefinition fieldDefinition, AtomicInteger counter) {
-        fieldDefinition.setIndex(counter.getAndIncrement());
-        if (fieldDefinition.getFixed() == null) {
-            fieldDefinition.setFixed(Boolean.TRUE);
-        }
-        if (fieldDefinition.getStatus() == null) {
-            fieldDefinition.setStatus(FieldDefinition.Status.OPEN);
-        }
-        if (fieldDefinition.getParseType() == null) {
-            FieldDefinition.ParseType parseType =
-                    fieldDefinition.getExistSubdomain() || fieldDefinition.getClazz() == byte[].class ?
-                            FieldDefinition.ParseType.NONE : FieldDefinition.ParseType.ASCII;
-            fieldDefinition.setParseType(parseType);
-        }
-        if (fieldDefinition.getExistSubdomain()) {
-            if (fieldDefinition.getClazz() == null) {
-                fieldDefinition.setOriginClass(MessageHolder.class);
-            }
-            List<MessageDefinition> list = MessageDefinitionContext.getInstance()
-                    .childrenMessageDefinitions(definition, fieldDefinition);
-            Map<String, MessageDefinition> messageDefinitionMap =
-                    list.stream().collect(Collectors.toMap(d ->
-                            d.getUsage().isEmpty() ? FieldDefinition.SUBFIELD_KEY_DEFAULT : d.getUsage(), Function.identity()));
-            fieldDefinition.setMessageDefinitionMap(messageDefinitionMap);
-        }
+        return this.getValueWithMap(message, kind.name());
     }
 
     @Override
     protected List<MessageDefinition> buildMessageDefinitions(Path source) {
         Map<String, Object> yaml = YamlUtil.getMap(source.toFile(), YAML_ROOT_NAME, Object.class);
+        Map<String, Object> message = this.getValueWithMap(yaml, "message");
 
         AtomicReference<MessageDefinition> header = new AtomicReference<>();
 
         return Arrays.stream(MessageDefinition.Kind.values())
-                .filter(kind -> yaml.containsKey("message"))
-                .filter(kind -> {
-                    Map<String, Object> message = this.getValueWithMap(yaml, "message");
-                    return message.containsKey(kind.name());
-                }).flatMap(kind -> {
+                .filter(kind -> message.containsKey(kind.name()))
+                .flatMap(kind -> {
                     if (kind == MessageDefinition.Kind.subPayload) {
-                        Map<String, Object> message = this.getValueWithMap(yaml, "message");
                         Map<String, Object> subPayload = this.getValueWithMap(message, kind.name());
                         return subPayload.keySet().stream()
                                 .map(identity -> buildMessageDefinition(kind, identity, yaml));
@@ -180,29 +133,8 @@ public abstract class YamlMessageDefinitionBuilder extends AbstractMessageDefini
         return definition;
     }
 
-    private <T> T getValueWithMap(Map<String, Object> map, String key) {
-        return (T) map.get(key);
-    }
-
     @Override
-    protected List<Path> getSources() {
-        return FileUtil.getClasspathFiles(this.classpath, "*." + this.type() + ".yml");
+    protected String fileSuffix() {
+        return ".yml";
     }
-
-    /**
-     * {@link FieldDefinition}后处理器
-     *
-     * @param definition      {@link MessageDefinition}
-     * @param fieldDefinition {@link FieldDefinition}
-     */
-    protected abstract void postBuildFieldDefinition(MessageDefinition definition, FieldDefinition fieldDefinition);
-
-    /**
-     * get {@link FieldDefinition} type
-     *
-     * @param <S> {@link FieldDefinition}
-     * @return {@link FieldDefinition} type
-     */
-    protected abstract <S extends FieldDefinition> Class<S> fieldDefinitionClass();
-
 }

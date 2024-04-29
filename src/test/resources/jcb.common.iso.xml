@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<alatka-messages xmlns="http://message.alatka.com"
+<alatka-messages xmlns="http://messages.alatka.com"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://message.alatka.com alatka-messages.xsd">
+                 xsi:schemaLocation="http://messages.alatka.com alatka-messages.xsd">
     <message type="iso" group="jcb" code="common" remark="jcb 8583报文">
         <header>
             <field domainNo="1" name="messageLength" fixed="true" length="2" remark="报文长度" clazz="java.lang.Integer" parseType="BINARY"/>

@@ -1,20 +1,14 @@
 package com.alatka.messages.definition;
 
-import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
-import com.alatka.messages.context.MessageDefinitionContext;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.support.Constant;
 import com.alatka.messages.util.ClassUtil;
-import com.alatka.messages.util.FileUtil;
-import com.alatka.messages.util.JsonUtil;
 import com.alatka.messages.util.XmlUtil;
 
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,18 +16,17 @@ import java.util.stream.Stream;
  * xml文件报文定义解析器
  *
  * @author ybliu
+ * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public abstract class XmlMessageDefinitionBuilder extends AbstractMessageDefinitionBuilder<Path> {
-
-    private final String classpath;
+public abstract class XmlMessageDefinitionBuilder extends FileMessageDefinitionBuilder {
 
     public XmlMessageDefinitionBuilder(String classpath) {
-        this.classpath = classpath;
+        super(classpath);
     }
 
     @Override
-    protected <S extends FieldDefinition> List<S> buildFieldDefinitions(MessageDefinition definition, Path source) {
+    protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, Path source) {
         Map<String, Object> xml = XmlUtil.getMap(source.toFile(), Object.class);
         Map<String, Object> message = this.getValueWithMap(xml, "message");
         MessageDefinition.Kind kind = definition.getKind();
@@ -41,51 +34,18 @@ public abstract class XmlMessageDefinitionBuilder extends AbstractMessageDefinit
         Map<String, Object> result;
         if (kind == MessageDefinition.Kind.subPayload) {
             Object value = this.getValueWithMap(message, kind.name());
-            result = value instanceof Map ? (Map<String, Object>) value
-                    : ((List<Map<String, Object>>) value).stream()
-                    .filter(map -> Objects.equals(map.get("domain"), definition.getDomain())
-                            && Objects.equals(map.get("usage"), definition.getUsage()))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("未匹配子域"));
+            result = value instanceof Map ? (Map<String, Object>) value :
+                    ((List<Map<String, Object>>) value).stream()
+                            .filter(map -> Objects.equals(map.get("domain"), definition.getDomain())
+                                    && Objects.equals(Optional.ofNullable(map.get("usage")).orElse(""), definition.getUsage()))
+                            .findFirst()
+                            .orElseThrow(() -> new RuntimeException("未匹配子域"));
         } else {
             result = this.getValueWithMap(message, kind.name());
         }
-        List<Map<String, Object>> list = this.getValueWithMap(result, "field");
 
-        AtomicInteger counter = new AtomicInteger(0);
-        return list.stream()
-                .map(map -> JsonUtil.mapToObject(map, fieldDefinitionClass()))
-                .map(entity -> (S) entity)
-                .peek(fieldDefinition -> this.buildFieldDefinition(definition, fieldDefinition, counter))
-                .peek(fieldDefinition -> this.postBuildFieldDefinition(definition, fieldDefinition))
-                .collect(Collectors.toList());
-    }
-
-    private void buildFieldDefinition(MessageDefinition definition, FieldDefinition fieldDefinition, AtomicInteger counter) {
-        fieldDefinition.setIndex(counter.getAndIncrement());
-        if (fieldDefinition.getFixed() == null) {
-            fieldDefinition.setFixed(Boolean.TRUE);
-        }
-        if (fieldDefinition.getStatus() == null) {
-            fieldDefinition.setStatus(FieldDefinition.Status.OPEN);
-        }
-        if (fieldDefinition.getParseType() == null) {
-            FieldDefinition.ParseType parseType =
-                    fieldDefinition.getExistSubdomain() || fieldDefinition.getClazz() == byte[].class ?
-                            FieldDefinition.ParseType.NONE : FieldDefinition.ParseType.ASCII;
-            fieldDefinition.setParseType(parseType);
-        }
-        if (fieldDefinition.getExistSubdomain()) {
-            if (fieldDefinition.getClazz() == null) {
-                fieldDefinition.setOriginClass(MessageHolder.class);
-            }
-            List<MessageDefinition> list = MessageDefinitionContext.getInstance()
-                    .childrenMessageDefinitions(definition, fieldDefinition);
-            Map<String, MessageDefinition> messageDefinitionMap =
-                    list.stream().collect(Collectors.toMap(d ->
-                            d.getUsage().isEmpty() ? FieldDefinition.SUBFIELD_KEY_DEFAULT : d.getUsage(), Function.identity()));
-            fieldDefinition.setMessageDefinitionMap(messageDefinitionMap);
-        }
+        Object value = this.getValueWithMap(result, "field");
+        return (List<Map<String, Object>>) (value instanceof Map ? Collections.singletonList(value) : value);
     }
 
     @Override
@@ -143,29 +103,8 @@ public abstract class XmlMessageDefinitionBuilder extends AbstractMessageDefinit
         return definition;
     }
 
-    private <T> T getValueWithMap(Map<String, Object> map, String key) {
-        return (T) map.get(key);
-    }
-
     @Override
-    protected List<Path> getSources() {
-        return FileUtil.getClasspathFiles(this.classpath, "*." + this.type() + ".xml");
+    protected String fileSuffix() {
+        return ".xml";
     }
-
-    /**
-     * {@link FieldDefinition}后处理器
-     *
-     * @param definition      {@link MessageDefinition}
-     * @param fieldDefinition {@link FieldDefinition}
-     */
-    protected abstract void postBuildFieldDefinition(MessageDefinition definition, FieldDefinition fieldDefinition);
-
-    /**
-     * get {@link FieldDefinition} type
-     *
-     * @param <S> {@link FieldDefinition}
-     * @return {@link FieldDefinition} type
-     */
-    protected abstract <S extends FieldDefinition> Class<S> fieldDefinitionClass();
-
 }
