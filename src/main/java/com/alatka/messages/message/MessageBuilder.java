@@ -46,8 +46,7 @@ public abstract class MessageBuilder {
     public static <S extends MessageBuilder> S init(MessageDefinition definition) {
         MessageBuilder messageBuilder =
                 definition.getType() == MessageDefinition.Type.fixed ?
-                        new FixedMessageBuilder() : new IsoMessageBuilder();
-        messageBuilder.definition = definition;
+                        new FixedMessageBuilder(definition) : new IsoMessageBuilder(definition);
         return (S) messageBuilder;
     }
 
