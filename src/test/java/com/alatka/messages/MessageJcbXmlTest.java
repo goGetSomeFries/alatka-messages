@@ -22,9 +22,10 @@ public class MessageJcbXmlTest {
         MessageHolder holder = MessageBuilder.init(key).unpack(hex);
         System.out.println(holder);
         byte[] pack = MessageBuilder.init(key).pack(holder);
-        Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), hex.toUpperCase());
+
         MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
-        Assertions.assertEquals(holder, holder1);
+        Assertions.assertEquals(holder1, holder);
     }
 
     @Test

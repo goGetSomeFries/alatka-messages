@@ -18,12 +18,13 @@ public class MessageCupsYamlTest {
     }
 
     private void doTest(String hex, String key) {
-        CommonPayload holder = MessageBuilder.init(key).unpack(hex);
-        System.out.println(MessageHolder.fromPojo(holder));
+        MessageHolder holder = MessageBuilder.init(key).unpack(hex);
+        System.out.println(holder);
         byte[] pack = MessageBuilder.init(key).pack(holder);
-        CommonPayload holder1 = MessageBuilder.init(key).unpack(pack);
-        Assertions.assertEquals(JsonUtil.objectToJson(holder), JsonUtil.objectToJson(holder1));
-        Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), hex.toUpperCase());
+
+        MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
+        Assertions.assertEquals(holder1, holder);
     }
 
     @Test
