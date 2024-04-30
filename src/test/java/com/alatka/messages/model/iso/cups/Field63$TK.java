@@ -12,21 +12,21 @@ import static com.alatka.messages.context.MessageDefinition.Type.iso;
 @MessageMeta(type = iso, group = "cups", code = "common", kind = subPayload, domain = "F63", usage = "TK", domainType = TLV, remark = "银联8583 63域usage=TK")
 public class Field63$TK implements Field63 {
 
-    @IsoFieldMeta(domainNo = 0x01, fixed = true, length = 1, remark = "是否验证过Token相关信息")
+    @IsoFieldMeta(domainNo = 1, aliasName = "01", fixed = true, length = 1, remark = "是否验证过Token相关信息")
     private String tag01;
-    @IsoFieldMeta(domainNo = 0x02, fixed = false, maxLength = 19, remark = "Token")
+    @IsoFieldMeta(domainNo = 2, aliasName = "02", fixed = false, maxLength = 19, remark = "Token")
     private String tag02;
-    @IsoFieldMeta(domainNo = 0x03, fixed = true, length = 4, remark = "Token有效期", pattern = "yyMM")
+    @IsoFieldMeta(domainNo = 3, aliasName = "03", fixed = true, length = 4, remark = "Token有效期", pattern = "yyMM")
     private YearMonth tag03;
-    @IsoFieldMeta(domainNo = 0x04, fixed = false, maxLength = 2, remark = "Token担保级别")
+    @IsoFieldMeta(domainNo = 4, aliasName = "04", fixed = false, maxLength = 2, remark = "Token担保级别")
     private String tag04;
-    @IsoFieldMeta(domainNo = 0x05, fixed = true, length = 2, remark = "Token应用场景标识")
+    @IsoFieldMeta(domainNo = 5, aliasName = "05", fixed = true, length = 2, remark = "Token应用场景标识")
     private Integer tag05;
-    @IsoFieldMeta(domainNo = 0x06, fixed = false, maxLength = 11, remark = "TRID")
+    @IsoFieldMeta(domainNo = 6, aliasName = "06", fixed = false, maxLength = 11, remark = "TRID")
     private String tag06;
-    @IsoFieldMeta(domainNo = 0x07, fixed = false, maxLength = 32, remark = "保留使用")
+    @IsoFieldMeta(domainNo = 7, aliasName = "07", fixed = false, maxLength = 32, remark = "保留使用")
     private byte[] tag07;
-    @IsoFieldMeta(domainNo = 0x08, fixed = true, length = 4, remark = "产品标识")
+    @IsoFieldMeta(domainNo = 8, aliasName = "08", fixed = true, length = 4, remark = "产品标识")
     private byte[] tag08;
 
     public String getTag01() {

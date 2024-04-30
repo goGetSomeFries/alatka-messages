@@ -26,19 +26,19 @@ public class IsoTLVMessageBuilder extends MessageBuilder {
 
     @Override
     protected List<FieldDefinition> buildFieldDefinitions(byte[] bytes) {
-        Map<Integer, IsoFieldDefinition> tagMap = super.buildFieldDefinitions(bytes).stream()
+        Map<String, IsoFieldDefinition> tagMap = super.buildFieldDefinitions(bytes).stream()
                 .map(s -> (IsoFieldDefinition) s)
-                .collect(Collectors.toMap(IsoFieldDefinition::getDomainNo, Function.identity()));
+                .collect(Collectors.toMap(IsoFieldDefinition::getAliasName, Function.identity()));
         return doBuildFieldDefinitions(bytes, tagMap);
     }
 
-    private List<FieldDefinition> doBuildFieldDefinitions(byte[] bytes, Map<Integer, IsoFieldDefinition> tagMap) {
-        List<Integer> list = new ArrayList<>();
+    private List<FieldDefinition> doBuildFieldDefinitions(byte[] bytes, Map<String, IsoFieldDefinition> tagMap) {
+        List<String> list = new ArrayList<>();
         AtomicInteger counter = new AtomicInteger(0);
         while (counter.get() < bytes.length) {
             int tagLength = (bytes[counter.get()] & 0x1F) == 0x1F ? 2 : 1;
             byte[] tagBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(tagLength));
-            int tag = BytesUtil.bytesToInt(tagBytes);
+            String tag = BytesUtil.bytesToHex(tagBytes);
             list.add(tag);
 
             byte flagByte = bytes[counter.get()];

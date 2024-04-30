@@ -21,7 +21,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
      */
     private Integer index;
     /**
-     * 域序号/TLV子域tag
+     * 域序号
      */
     private Integer domainNo;
     /**
@@ -128,15 +128,6 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
 
     public void setDomainNo(Integer domainNo) {
         this.domainNo = domainNo;
-    }
-
-    /**
-     * xml解析TLV domainNo
-     * @param domainNo
-     */
-    public void setDomainNo(String domainNo) {
-        this.domainNo = domainNo.toUpperCase().startsWith("0X") ?
-                Integer.parseInt(domainNo.substring(2), 16) : Integer.parseInt(domainNo);
     }
 
     public String getName() {

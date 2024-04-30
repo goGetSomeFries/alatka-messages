@@ -1,6 +1,7 @@
 package com.alatka.messages.domain;
 
 import com.alatka.messages.context.FieldDefinition;
+import com.alatka.messages.context.IsoFieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 
@@ -50,7 +51,7 @@ public class TLVDomainParsed extends AbstractDomainParsed {
         if (bytes.length == 0) {
             return bytes;
         }
-        byte[] tagBytes = BytesUtil.intToBytes(fieldDefinition.getDomainNo());
+        byte[] tagBytes = BytesUtil.hexToBytes(((IsoFieldDefinition) fieldDefinition).getAliasName());
 
         byte[] valueBytes = fieldDefinition.getFixed() ? this.padding(bytes, fieldDefinition) : bytes;
 

@@ -158,36 +158,36 @@
             <field domainNo="10" name="balance2" fixed="true" length="12" remark="余额" clazz="java.math.BigDecimal"/>
         </subPayload>
         <subPayload domain="F55" domainType="TLV">
-            <field domainNo="0x9F26" name="crypt" fixed="true" length="8" remark="应用密文" clazz="[B"/>
-            <field domainNo="0x9F27" name="cryptInfoData" fixed="true" length="1" remark="密文信息数据" clazz="[B"/>
-            <field domainNo="0x9F10" name="issuerAppData" fixed="false" maxLength="32" remark="发卡行应用数据" clazz="[B"/>
-            <field domainNo="0x9F37" name="unpredictableNumber" fixed="true" length="4" remark="不可预知数" clazz="[B"/>
-            <field domainNo="0x9F36" name="appTransCounter" fixed="true" length="2" remark="应用交易计数器" clazz="[B"/>
-            <field domainNo="0x95" name="termVerificationResult" fixed="true" length="5" remark="终端验证结果" clazz="[B"/>
-            <field domainNo="0x9A" name="transDate" fixed="true" length="3" remark="交易日期" clazz="java.time.LocalDate" pattern="yyMMdd" parseType="BCD"/>
-            <field domainNo="0x9C" name="transType" fixed="true" length="1" remark="交易类型" clazz="java.lang.Integer" parseType="BCD"/>
-            <field domainNo="0x9F02" name="transAmt" fixed="true" length="6" remark="授权金额" clazz="java.math.BigDecimal" parseType="BCD"/>
-            <field domainNo="0x5F2A" name="transCurrencyCode" fixed="true" length="2" remark="交易货币代码" clazz="java.lang.Integer" parseType="BCD"/>
-            <field domainNo="0x82" name="appInterchangeProfile" fixed="true" length="2" remark="应用交互特征" clazz="[B"/>
-            <field domainNo="0x9F1A" name="termCountryCode" fixed="true" length="2" remark="终端国家代码" clazz="java.lang.Integer" parseType="BCD"/>
-            <field domainNo="0x9F03" name="otherAmt" fixed="true" length="6" remark="其它金额" clazz="java.math.BigDecimal" parseType="BCD"/>
-            <field domainNo="0x9F33" name="termCap" fixed="true" length="3" remark="终端性能" clazz="[B"/>
-            <field domainNo="0x9F34" name="cardholderVerificationMethodResults" fixed="true" length="3" remark="持卡人验证方法结果" clazz="[B"/>
-            <field domainNo="0x9F35" name="termType" fixed="true" length="1" remark="终端类型" clazz="java.lang.Integer" parseType="BCD"/>
-            <field domainNo="0x9F1E" name="interfaceDeviceSerialNumber" fixed="true" length="8" remark="接口设备序列号" clazz="java.lang.String"/>
-            <field domainNo="0x84" name="dedicatedFileName" fixed="false" maxLength="16" remark="专用文件名称" clazz="[B"/>
-            <field domainNo="0x9F09" name="termAppVersionNumber" fixed="true" length="2" remark="应用版本号" clazz="[B"/>
-            <field domainNo="0x9F41" name="transSequenceCounter" fixed="false" maxLength="4" remark="交易序列计数器" clazz="java.lang.Integer" parseType="BCD"/>
-            <field domainNo="0x91" name="issuerAuthenticationData" fixed="false" maxLength="16" remark="发卡行认证数据" clazz="[B"/>
-            <field domainNo="0x71" name="issuerScriptTemplate1" fixed="false" maxLength="128" remark="发卡行脚本1" clazz="[B"/>
-            <field domainNo="0x72" name="issuerScriptTemplate2" fixed="false" maxLength="128" remark="发卡行脚本2" clazz="[B"/>
-            <field domainNo="0xDF31" name="issuerScriptResults" fixed="false" maxLength="21" remark="发卡方脚本结果" clazz="[B"/>
-            <field domainNo="0x9F74" name="issuerAuthorizationCode" fixed="true" length="6" remark="电子现金发卡行授权码" clazz="java.lang.String"/>
-            <field domainNo="0x9F63" name="cardProductIdentification" fixed="true" length="16" remark="卡产品标识信息" clazz="[B"/>
-            <field domainNo="0x8A" name="authorizationResponseCode" fixed="true" length="2" remark="授权响应码" clazz="java.lang.String"/>
+            <field domainNo="1" aliasName="9F26" name="crypt" fixed="true" length="8" remark="应用密文" clazz="[B"/>
+            <field domainNo="2" aliasName="9F27" name="cryptInfoData" fixed="true" length="1" remark="密文信息数据" clazz="[B"/>
+            <field domainNo="3" aliasName="9F10" name="issuerAppData" fixed="false" maxLength="32" remark="发卡行应用数据" clazz="[B"/>
+            <field domainNo="4" aliasName="9F37" name="unpredictableNumber" fixed="true" length="4" remark="不可预知数" clazz="[B"/>
+            <field domainNo="5" aliasName="9F36" name="appTransCounter" fixed="true" length="2" remark="应用交易计数器" clazz="[B"/>
+            <field domainNo="6" aliasName="95" name="termVerificationResult" fixed="true" length="5" remark="终端验证结果" clazz="[B"/>
+            <field domainNo="7" aliasName="9A" name="transDate" fixed="true" length="3" remark="交易日期" clazz="java.time.LocalDate" pattern="yyMMdd" parseType="BCD"/>
+            <field domainNo="8" aliasName="9C" name="transType" fixed="true" length="1" remark="交易类型" clazz="java.lang.Integer" parseType="BCD"/>
+            <field domainNo="9" aliasName="9F02" name="transAmt" fixed="true" length="6" remark="授权金额" clazz="java.math.BigDecimal" parseType="BCD"/>
+            <field domainNo="10" aliasName="5F2A" name="transCurrencyCode" fixed="true" length="2" remark="交易货币代码" clazz="java.lang.Integer" parseType="BCD"/>
+            <field domainNo="11" aliasName="82" name="appInterchangeProfile" fixed="true" length="2" remark="应用交互特征" clazz="[B"/>
+            <field domainNo="12" aliasName="9F1A" name="termCountryCode" fixed="true" length="2" remark="终端国家代码" clazz="java.lang.Integer" parseType="BCD"/>
+            <field domainNo="13" aliasName="9F03" name="otherAmt" fixed="true" length="6" remark="其它金额" clazz="java.math.BigDecimal" parseType="BCD"/>
+            <field domainNo="14" aliasName="9F33" name="termCap" fixed="true" length="3" remark="终端性能" clazz="[B"/>
+            <field domainNo="15" aliasName="9F34" name="cardholderVerificationMethodResults" fixed="true" length="3" remark="持卡人验证方法结果" clazz="[B"/>
+            <field domainNo="16" aliasName="9F35" name="termType" fixed="true" length="1" remark="终端类型" clazz="java.lang.Integer" parseType="BCD"/>
+            <field domainNo="17" aliasName="9F1E" name="interfaceDeviceSerialNumber" fixed="true" length="8" remark="接口设备序列号" clazz="java.lang.String"/>
+            <field domainNo="18" aliasName="84" name="dedicatedFileName" fixed="false" maxLength="16" remark="专用文件名称" clazz="[B"/>
+            <field domainNo="19" aliasName="9F09" name="termAppVersionNumber" fixed="true" length="2" remark="应用版本号" clazz="[B"/>
+            <field domainNo="20" aliasName="9F41" name="transSequenceCounter" fixed="false" maxLength="4" remark="交易序列计数器" clazz="java.lang.Integer" parseType="BCD"/>
+            <field domainNo="21" aliasName="91" name="issuerAuthenticationData" fixed="false" maxLength="16" remark="发卡行认证数据" clazz="[B"/>
+            <field domainNo="22" aliasName="71" name="issuerScriptTemplate1" fixed="false" maxLength="128" remark="发卡行脚本1" clazz="[B"/>
+            <field domainNo="23" aliasName="72" name="issuerScriptTemplate2" fixed="false" maxLength="128" remark="发卡行脚本2" clazz="[B"/>
+            <field domainNo="24" aliasName="DF31" name="issuerScriptResults" fixed="false" maxLength="21" remark="发卡方脚本结果" clazz="[B"/>
+            <field domainNo="25" aliasName="9F74" name="issuerAuthorizationCode" fixed="true" length="6" remark="电子现金发卡行授权码" clazz="java.lang.String"/>
+            <field domainNo="26" aliasName="9F63" name="cardProductIdentification" fixed="true" length="16" remark="卡产品标识信息" clazz="[B"/>
+            <field domainNo="27" aliasName="8A" name="authorizationResponseCode" fixed="true" length="2" remark="授权响应码" clazz="java.lang.String"/>
         </subPayload>
         <subPayload domain="F56" usage="PR" domainType="TLV">
-            <field domainNo="0x01" name="tag01" fixed="true" length="29" remark="PAR" clazz="java.lang.String"/>
+            <field domainNo="1" aliasName="01" name="tag01" fixed="true" length="29" remark="PAR" clazz="java.lang.String"/>
         </subPayload>
         <subPayload domain="F57" usage="AR">
             <field domainNo="1" name="f57f1" fixed="true" length="3" remark="附加应答信息" clazz="java.lang.String"/>
@@ -285,14 +285,14 @@
             <field domainNo="1" name="pin" fixed="true" length="16" remark="SM4算法加密的PIN数据" clazz="[B"/>
         </subPayload>
         <subPayload domain="F63" usage="TK" domainType="TLV">
-            <field domainNo="0x01" name="tag01" fixed="true" length="1" remark="是否验证过Token相关信息" clazz="java.lang.String"/>
-            <field domainNo="0x02" name="tag02" fixed="false" maxLength="19" remark="Token" clazz="java.lang.String"/>
-            <field domainNo="0x03" name="tag03" fixed="true" length="4" remark="Token有效期" clazz="java.time.YearMonth" pattern="yyMM"/>
-            <field domainNo="0x04" name="tag04" fixed="false" maxLength="2" remark="Token担保级别" clazz="java.lang.String"/>
-            <field domainNo="0x05" name="tag05" fixed="true" length="2" remark="Token应用场景标识" clazz="java.lang.Integer"/>
-            <field domainNo="0x06" name="tag06" fixed="false" maxLength="11" remark="TRID" clazz="java.lang.String"/>
-            <field domainNo="0x07" name="tag07" fixed="false" maxLength="32" remark="保留使用" clazz="[B"/>
-            <field domainNo="0x08" name="tag08" fixed="true" length="4" remark="产品标识" clazz="[B"/>
+            <field domainNo="1" aliasName="01" name="tag01" fixed="true" length="1" remark="是否验证过Token相关信息" clazz="java.lang.String"/>
+            <field domainNo="2" aliasName="02" name="tag02" fixed="false" maxLength="19" remark="Token" clazz="java.lang.String"/>
+            <field domainNo="3" aliasName="03" name="tag03" fixed="true" length="4" remark="Token有效期" clazz="java.time.YearMonth" pattern="yyMM"/>
+            <field domainNo="4" aliasName="04" name="tag04" fixed="false" maxLength="2" remark="Token担保级别" clazz="java.lang.String"/>
+            <field domainNo="5" aliasName="05" name="tag05" fixed="true" length="2" remark="Token应用场景标识" clazz="java.lang.Integer"/>
+            <field domainNo="6" aliasName="06" name="tag06" fixed="false" maxLength="11" remark="TRID" clazz="java.lang.String"/>
+            <field domainNo="7" aliasName="07" name="tag07" fixed="false" maxLength="32" remark="保留使用" clazz="[B"/>
+            <field domainNo="8" aliasName="08" name="tag08" fixed="true" length="4" remark="产品标识" clazz="[B"/>
         </subPayload>
         <subPayload domain="F90">
             <field domainNo="1" name="messageType" fixed="true" length="4" remark="原始交易的报文类型" clazz="java.lang.String"/>

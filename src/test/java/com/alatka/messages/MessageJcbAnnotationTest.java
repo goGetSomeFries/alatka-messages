@@ -23,8 +23,8 @@ public class MessageJcbAnnotationTest {
         System.out.println(MessageHolder.fromPojo(holder));
         byte[] pack = MessageBuilder.init(key).pack(holder);
         CommonPayload holder1 = MessageBuilder.init(key).unpack(pack);
-        Assertions.assertEquals(JsonUtil.objectToJson(holder), JsonUtil.objectToJson(holder1));
         Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
+        Assertions.assertEquals(JsonUtil.objectToJson(holder), JsonUtil.objectToJson(holder1));
     }
 
     @Test
