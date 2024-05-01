@@ -1,20 +1,18 @@
-package com.alatka.messages.template;
+package com.alatka.messages.model.fixed.b0305;
 
 import com.alatka.messages.annotation.FixedFieldMeta;
 import com.alatka.messages.annotation.MessageMeta;
-import com.alatka.messages.context.MessageDefinition;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.MonthDay;
-import java.util.Objects;
 
 import static com.alatka.messages.context.MessageDefinition.Kind.subPayload;
 import static com.alatka.messages.context.MessageDefinition.Type.fixed;
 
-@MessageMeta( type = fixed, group = "0305", code = "3006", kind = subPayload, remark = "信用卡账单明细查询")
-public class Fixed3006Page {
+@MessageMeta(type = fixed, group = "0305", code = "3006", kind = subPayload, remark = "信用卡账单明细查询")
+public class C3006Page {
     @FixedFieldMeta(domainNo = 1, length = 3, remark = "月份序号")
     private Integer monthNbr;
     @FixedFieldMeta(domainNo = 2, length = 8, remark = "入账日期", pattern = "yyyyMMdd")
@@ -196,58 +194,4 @@ public class Fixed3006Page {
         this.facePayFlag = facePayFlag;
     }
 
-    @Override
-    public String toString() {
-        return "Fixed3006Page{" +
-                "monthNbr=" + monthNbr +
-                ", valDate=" + valDate +
-                ", purDate=" + purDate +
-                ", purTime=" + purTime +
-                ", tranNo=" + tranNo +
-                ", tranType='" + tranType + '\'' +
-                ", amount=" + amount +
-                ", amountFl='" + amountFl + '\'' +
-                ", authCode='" + authCode + '\'' +
-                ", desline1='" + desline1 + '\'' +
-                ", desline2='" + desline2 + '\'' +
-                ", cardEnd='" + cardEnd + '\'' +
-                ", currNum='" + currNum + '\'' +
-                ", mpFlag='" + mpFlag + '\'' +
-                ", purDate1=" + purDate1 +
-                ", revInd=" + revInd +
-                ", mcc='" + mcc + '\'' +
-                ", facePayFlag=" + facePayFlag +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Fixed3006Page)) return false;
-        Fixed3006Page that = (Fixed3006Page) o;
-        return Objects.equals(monthNbr, that.monthNbr) &&
-                Objects.equals(valDate, that.valDate) &&
-                Objects.equals(purDate, that.purDate) &&
-                // pattern = "HHmmssSS" 导致毫秒精度丢失
-//                Objects.equals(purTime, that.purTime) &&
-                Objects.equals(tranNo, that.tranNo) &&
-                Objects.equals(tranType, that.tranType) &&
-                Objects.equals(amount, that.amount) &&
-                Objects.equals(amountFl, that.amountFl) &&
-                Objects.equals(authCode, that.authCode) &&
-                Objects.equals(desline1, that.desline1) &&
-                Objects.equals(desline2, that.desline2) &&
-                Objects.equals(cardEnd, that.cardEnd) &&
-                Objects.equals(currNum, that.currNum) &&
-                Objects.equals(mpFlag, that.mpFlag) &&
-                Objects.equals(purDate1, that.purDate1) &&
-                Objects.equals(revInd, that.revInd) &&
-                Objects.equals(mcc, that.mcc) &&
-                Objects.equals(facePayFlag, that.facePayFlag);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(monthNbr, valDate, purDate, /*purTime, */tranNo, tranType, amount, amountFl, authCode, desline1, desline2, cardEnd, currNum, mpFlag, purDate1, revInd, mcc, facePayFlag);
-    }
 }

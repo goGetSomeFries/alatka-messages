@@ -1,18 +1,13 @@
-package com.alatka.messages.template;
+package com.alatka.messages.model.fixed.b0305;
 
 import com.alatka.messages.annotation.FixedFieldMeta;
 import com.alatka.messages.annotation.MessageMeta;
-import com.alatka.messages.context.MessageDefinition;
 
-import java.util.Objects;
+import static com.alatka.messages.context.MessageDefinition.Kind.response;
+import static com.alatka.messages.context.MessageDefinition.Type.fixed;
 
-@MessageMeta(
-        type = MessageDefinition.Type.fixed,
-        group = "0305",
-        code = "4118",
-        kind = MessageDefinition.Kind.response,
-        remark = "客户以及账户标签内容交易")
-public class Fixed4118Res extends FixedHeader {
+@MessageMeta(type = fixed, group = "0305", code = "4118", kind = response, remark = "客户以及账户标签内容交易")
+public class C4118Response extends Header {
 
     @FixedFieldMeta(domainNo = 8, length = 8, remark = "标志位")
     private String option;
@@ -85,30 +80,4 @@ public class Fixed4118Res extends FixedHeader {
         this.option = option;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Fixed4118Res)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        Fixed4118Res that = (Fixed4118Res) o;
-        return Objects.equals(option, that.option) &&
-                Objects.equals(custNbr, that.custNbr) &&
-                Objects.equals(cardNbr, that.cardNbr) &&
-                Objects.equals(tagType, that.tagType) &&
-                Objects.equals(tagCode, that.tagCode) &&
-                Objects.equals(tagInfo, that.tagInfo) &&
-                Objects.equals(resvd, that.resvd);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), option, custNbr, cardNbr, tagType, tagCode, tagInfo, resvd);
-    }
 }

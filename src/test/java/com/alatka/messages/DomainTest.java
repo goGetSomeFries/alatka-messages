@@ -13,25 +13,30 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class IsoYamlMessageBuilderTest {
+@DisplayName("各类型域")
+public class DomainTest {
 
     @BeforeAll
     public static void beforeAll() {
         new IsoYamlMessageDefinitionBuilder().build();
     }
 
-    @Test
-    @DisplayName("消息头")
-    public void test01() {
+    private void doTest(String hex, String key) {
+        MessageHolder holder = MessageBuilder.init(key).unpack(hex);
+        System.out.println(holder);
+        byte[] pack = MessageBuilder.init(key).pack(holder);
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), hex.toUpperCase());
+
+        MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
+        Assertions.assertEquals(holder1, holder);
     }
 
     @Test
     @DisplayName("各类型域")
-    public void test02() {
+    public void test01() {
         String key = "iso:cups:common:payload";
         MessageHolder expectedObj = MessageHolder.newInstance(key);
         expectedObj.put(0, "0100"); // String类型 定长
@@ -60,8 +65,8 @@ public class IsoYamlMessageBuilderTest {
     }
 
     @Test
-    @DisplayName("子域:UV单条")
-    public void test03() {
+    @DisplayName("子域:UV")
+    public void test02() {
         MessageHolder instance1 = MessageHolder.newInstance("iso:cups:test:subPayload:F48:AA");
         instance1.put(1, "DJIEJ47824781IFQIJFJOEJKL:SJE$@!!");
         UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
@@ -80,7 +85,7 @@ public class IsoYamlMessageBuilderTest {
     }
 
     @Test
-    @DisplayName("子域:UV多条")
+    @DisplayName("子域:UVAS")
     public void test04() {
         MessageHolder instance1 = MessageHolder.newInstance("iso:cups:test:subPayload:F48:PB");
         instance1.put(1, "DJI");
@@ -269,27 +274,6 @@ public class IsoYamlMessageBuilderTest {
         byte[] actual = MessageBuilder.init(key).pack(object);
 
         Assertions.assertArrayEquals(expected, actual);
-    }
-
-
-    @Test
-    public void test98() {
-        String hex = "30323030E23A44C1A8E098120000000010000081313636323531383830303030303531363838333030303030303832353131323430303836333734333131323430303038323530383235363031313032313032303630383932323530303030303839323235303030303334363235313838303030303035313638383D3238303535303130303030303030303931303030303030303231363830313233343536373831323334353637383930313233343543484E32393030304348494E4120554E494F4E5041592053494D554C41544F522020202020202020313536000000000000000032343030303030303030303030303030303237303030303035303030313030303030303030303034303231303032303231534D303136E069374A9BC6AB9A659912BE707F824330383033303530303031303433353131533030303030303032353033303530303031202020303030303030303030303030303041413030303044363132303134";
-        MessageHolder holder = MessageBuilder.init("iso:cups:common:payload").unpack(hex);
-//        byte[] pack = MessageBuilder.init("iso:cups:common:payload").pack(holder);
-//        Assertions.assertEquals(hex, BytesUtil.bytesToHex(pack));
-        System.out.println(holder);
-        System.out.println(Arrays.toString("0".getBytes()));
-    }
-
-    @Test
-    public void test99() {
-        String key = "iso:jcb:common:payload";
-        String hex = "f0f1f0f0767d448188e1a008103568560090000176000000000000000176000000000176122913412700000001000172134127122925041229639981000008885280000888518000f0f0f0f1f7f2f1f2f1f3f2f7f3f9f4f5f3f34040f3f2f5f6f2f2f0f340404040404040d1c3c240e3c5e2e340d4c5d9c3c8c1d5e3404040404040e3c5e2e340c3c9e3e84040404040d1d7d54af0f2f4f71122334455667788990011223344556677889900000201094725454745445395202545900000000006404040404040f0f3f1f4f9f6f5f8f7f4404040f1f4404040f0f4f0f1f0f8f4f0f8f4f006f2f2f2f3f9f2";
-        MessageHolder holder = MessageBuilder.init(key).unpack(hex);
-        System.out.println(holder);
-        byte[] pack = MessageBuilder.init(key).pack(holder);
-        Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
     }
 
 }

@@ -1,10 +1,8 @@
-package com.alatka.messages.template;
+package com.alatka.messages.model.fixed.b0305;
 
 import com.alatka.messages.annotation.FixedFieldMeta;
 
-import java.util.Objects;
-
-public class FixedHeader {
+public class Header {
 
     @FixedFieldMeta(domainNo = 1, length = 4, remark = "交易代码")
     private String trxType;
@@ -77,39 +75,4 @@ public class FixedHeader {
         this.seqNo = seqNo;
     }
 
-    @Override
-    public String toString() {
-        return "FixedHeader{" +
-                "trxType='" + trxType + '\'' +
-                ", retCode='" + retCode + '\'' +
-                ", bnkNbr='" + bnkNbr + '\'' +
-                ", source='" + source + '\'' +
-                ", brnNo='" + brnNo + '\'' +
-                ", opeNo='" + opeNo + '\'' +
-                ", seqNo=" + seqNo +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof FixedHeader)) {
-            return false;
-        }
-        FixedHeader that = (FixedHeader) o;
-        return Objects.equals(trxType, that.trxType) &&
-                Objects.equals(retCode, that.retCode) &&
-                Objects.equals(bnkNbr, that.bnkNbr) &&
-                Objects.equals(source, that.source) &&
-                Objects.equals(brnNo, that.brnNo) &&
-                Objects.equals(opeNo, that.opeNo) &&
-                Objects.equals(seqNo, that.seqNo);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(trxType, retCode, bnkNbr, source, brnNo, opeNo, seqNo);
-    }
 }
