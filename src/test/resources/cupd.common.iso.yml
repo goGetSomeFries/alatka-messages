@@ -135,6 +135,37 @@ alatka.messages:
         - { "domainNo": 2, "name": "f60f11f2", "fixed": true, "length": 1, "remark": "保留使用", "clazz": "java.lang.String" }
         - { "domainNo": 3, "name": "f60f11f3", "fixed": true, "length": 3, "remark": "保留使用（第3位为MAC算法标识）", "clazz": "java.lang.String" }
         - { "domainNo": 4, "name": "f60f11f4", "fixed": true, "length": 9, "remark": "保留使用", "clazz": "java.lang.String" }
+      F62$DA@TLV2:
+        - { "domainNo": 1, "aliasName": "T00", "name": "f104f1", "fixed": false, "maxLength": 6, "remark": "渠道编码", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "aliasName": "T01", "name": "f104f2", "fixed": false, "maxLength": 4, "remark": "账务代码", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "aliasName": "T02", "name": "f104f3", "fixed": false, "maxLength": 32, "remark": "渠道流水号", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "aliasName": "T03", "name": "f104f4", "fixed": true, "length": 71, "remark": "反洗钱相关", "existSubdomain": true, "subdomainType": "DEFAULT" }
+        - { "domainNo": 5, "aliasName": "T94", "name": "f104f5", "fixed": true, "length": 8, "remark": "原始交易信息", "clazz": "java.lang.String" }
+        - { "domainNo": 6, "aliasName": "T95", "name": "f104f6", "fixed": true, "length": 15, "remark": "第三方支付信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
+        - { "domainNo": 7, "aliasName": "T96", "name": "f104f7", "fixed": true, "length": 67, "remark": "无卡平台信息", "clazz": "java.lang.String" }
+        - { "domainNo": 8, "aliasName": "T97", "name": "f104f8", "fixed": true, "length": 51, "remark": "总帐系统配套会计平台", "existSubdomain": true, "subdomainType": "DEFAULT" }
+        - { "domainNo": 9, "aliasName": "T98", "name": "f104f9", "fixed": false, "maxLength": 19, "remark": "联盟流水号", "clazz": "java.lang.String" }
+        - { "domainNo": 10, "aliasName": "T99", "name": "f104f10", "fixed": true, "length": 134, "remark": "行内信息", "clazz": "java.lang.String" }
+      F62$DA_F4:
+        - { "domainNo": 1, "name": "f62f4f1", "fixed": true, "length": 34, "remark": "订单号", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f62f4f2", "fixed": true, "length": 17, "remark": "IP地址和MAC地址", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "f62f4f3", "fixed": true, "length": 8, "remark": "机具终端编号（ATM/POS）", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "f62f4f4", "fixed": true, "length": 12, "remark": "电话交易电话号码", "clazz": "java.lang.String" }
+      F62$DA_F6:
+        - { "domainNo": 1, "name": "f62f6f1", "fixed": true, "length": 1, "remark": "第三方渠道", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f62f6f2", "fixed": true, "length": 14, "remark": "第三方机构号", "clazz": "java.lang.String" }
+      F62$DA_F7:
+        - { "domainNo": 1, "name": "f62f7f1", "fixed": true, "length": 31, "remark": "无卡平台交易流水号", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f62f7f2", "fixed": true, "length": 20, "remark": "无卡平台清算信息", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "f62f7f3", "fixed": true, "length": 4, "remark": "无卡平台交易类型", "clazz": "java.lang.String" }
+        - { "domainNo": 4, "name": "f62f7f4", "fixed": true, "length": 6, "remark": "业务种类编码", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "f62f7f5", "fixed": true, "length": 1, "remark": "无卡平台商户境内外标识", "clazz": "java.lang.String" }
+      F62$DA_F8:
+        - { "domainNo": 1, "name": "f62f8f1", "fixed": true, "length": 1, "remark": "交易性质", "clazz": "java.lang.String" }
+        - { "domainNo": 2, "name": "f62f8f2", "fixed": true, "length": 20, "remark": "系统间流水号", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "f62f8f3", "fixed": true, "length": 8, "remark": "交易发起系统日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
+        - { "domainNo": 4, "name": "f62f8f4", "fixed": true, "length": 11, "remark": "交易发起系统代码", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "name": "f62f8f5", "fixed": true, "length": 11, "remark": "交易接收系统代码", "clazz": "java.lang.String" }
       F63$SM:
         - { "domainNo": 1, "name": "pin", "fixed": true, "length": 16, "remark": "SM4算法加密的PIN数据", "clazz": "[B" }
       F90:
@@ -200,4 +231,4 @@ alatka.messages:
       F122:
         - { "domainNo": 1, "name": "f122f1", "fixed": true, "length": 6, "remark": "银行网点号", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "f122f2", "fixed": true, "length": 6, "remark": "操作员号", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "f122f3", "fixed": true, "length": 6, "remark": "持卡人姓名", "clazz": "java.lang.String" }
+        - { "domainNo": 3, "name": "f122f3", "fixed": true, "length": 30, "remark": "持卡人姓名", "clazz": "java.lang.String" }

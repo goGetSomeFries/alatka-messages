@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +28,7 @@ public class BitmapFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(BigDecimal.class);
+        fieldDefinition.setOriginClass(Map.class);
         fieldDefinition.setDomainNo(1);
         MessageDefinition messageDefinition = new MessageDefinition();
         messageDefinition.setType(MessageDefinition.Type.iso);
