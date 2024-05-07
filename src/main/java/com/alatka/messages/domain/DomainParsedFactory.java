@@ -22,6 +22,7 @@ public class DomainParsedFactory {
         init(new BitmapDomainParsed());
         init(new TVDomainParsed());
         init(new TLVDomainParsed());
+        init(new TLV2DomainParsed());
         init(new UnfixedDomainParsed());
         init(new BinaryLVDomainParsed());
         init(new AsciiLVDomainParsed());

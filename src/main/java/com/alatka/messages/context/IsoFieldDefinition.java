@@ -1,5 +1,7 @@
 package com.alatka.messages.context;
 
+import com.alatka.messages.domain.TLV2DomainParsed;
+import com.alatka.messages.domain.TLVDomainParsed;
 import com.alatka.messages.domain.TVDomainParsed;
 
 /**
@@ -11,6 +13,8 @@ public class IsoFieldDefinition extends FieldDefinition {
 
     /**
      * {@link TVDomainParsed}
+     * {@link TLVDomainParsed}
+     * {@link TLV2DomainParsed}
      */
     private String aliasName;
     /**

@@ -2,7 +2,6 @@ package com.alatka.messages.model.iso.cups;
 
 import com.alatka.messages.annotation.IsoFieldMeta;
 import com.alatka.messages.annotation.MessageMeta;
-import com.alatka.messages.template.F59QRPage;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class Field59$QR implements Field59 {
     @IsoFieldMeta(domainNo = 2, fixed = true, length = 3, remark = "所有满足查询条件的记录数")
     private Integer counts;
     @IsoFieldMeta(domainNo = 3, fixed = false, length = 50, maxLength = 5000, remark = "查询结果", pageSizeName = "counts", existSubdomain = true, subdomainType = LIST)
-    private List<F59QRPage> elements;
+    private List<Field59$QR_F3> elements;
 
     public String getCurrencyCode() {
         return currencyCode;
@@ -36,11 +35,11 @@ public class Field59$QR implements Field59 {
         this.counts = counts;
     }
 
-    public List<F59QRPage> getElements() {
+    public List<Field59$QR_F3> getElements() {
         return elements;
     }
 
-    public void setElements(List<F59QRPage> elements) {
+    public void setElements(List<Field59$QR_F3> elements) {
         this.elements = elements;
     }
 }

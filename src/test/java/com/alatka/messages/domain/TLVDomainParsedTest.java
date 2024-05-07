@@ -1,6 +1,7 @@
 package com.alatka.messages.domain;
 
 import com.alatka.messages.context.FieldDefinition;
+import com.alatka.messages.context.IsoFieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
@@ -46,8 +47,8 @@ public class TLVDomainParsedTest {
     @DisplayName("pack() L>1B")
     void test04() {
         String hex = "010203040506070809";
-        FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setDomainNo(0x9F11);
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
+        fieldDefinition.setAliasName("9F11");
         fieldDefinition.setLength(129);
         fieldDefinition.setFixed(true);
         fieldDefinition.setOriginClass(String.class);
@@ -62,8 +63,8 @@ public class TLVDomainParsedTest {
     @DisplayName("pack() L=1B")
     void test05() {
         String hex = "010203040506070809";
-        FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setDomainNo(0x9F11);
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
+        fieldDefinition.setAliasName("9F11");
         fieldDefinition.setFixed(false);
 
         byte[] pack = domainParsed.pack(BytesUtil.hexToBytes(hex), fieldDefinition);

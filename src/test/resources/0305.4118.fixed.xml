@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<alatka-messages xmlns="http://messages.alatka.com"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://messages.alatka.com alatka-messages.xsd">
+    <message type="fixed" group="0305" code="4118" remark="客户以及账户标签内容交易">
+        <request>
+            <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="java.lang.String"/>
+            <field domainNo="2" name="retCode" length="6" remark="响应码" clazz="java.lang.String"/>
+            <field domainNo="3" name="bnkNbr" length="4" remark="银行代号" clazz="java.lang.String"/>
+            <field domainNo="4" name="source" length="2" remark="交易来源" clazz="java.lang.String"/>
+            <field domainNo="5" name="brnNo" length="6" remark="网点代号" clazz="java.lang.String"/>
+            <field domainNo="6" name="opeNo" length="6" remark="操作员号" clazz="java.lang.String"/>
+            <field domainNo="7" name="seqNo" length="6" remark="流水号" clazz="java.lang.Integer"/>
+            <field domainNo="8" name="option" length="8" remark="标志位" clazz="java.lang.String"/>
+            <field domainNo="9" name="custNbr" length="19" remark="证件号码" clazz="java.lang.String"/>
+            <field domainNo="10" name="cardNbr" length="19" remark="卡号" clazz="java.lang.String"/>
+            <field domainNo="11" name="tagType" length="5" remark="标签类型" clazz="java.lang.String"/>
+            <field domainNo="12" name="tagCode" length="4" remark="标签代码" clazz="java.lang.String"/>
+            <field domainNo="13" name="tagInfo" length="20" remark="标签内容" clazz="java.lang.String"/>
+            <field domainNo="14" name="resvd" length="500" remark="保留域" clazz="java.lang.String"/>
+        </request>
+        <response>
+            <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="java.lang.String"/>
+            <field domainNo="2" name="retCode" length="6" remark="响应码" clazz="java.lang.String"/>
+            <field domainNo="3" name="bnkNbr" length="4" remark="银行代号" clazz="java.lang.String"/>
+            <field domainNo="4" name="source" length="2" remark="交易来源" clazz="java.lang.String"/>
+            <field domainNo="5" name="brnNo" length="6" remark="网点代号" clazz="java.lang.String"/>
+            <field domainNo="6" name="opeNo" length="6" remark="操作员号" clazz="java.lang.String"/>
+            <field domainNo="7" name="seqNo" length="6" remark="流水号" clazz="java.lang.Integer"/>
+            <field domainNo="8" name="option" length="8" remark="标志位" clazz="java.lang.String"/>
+            <field domainNo="9" name="custNbr" length="19" remark="证件号码" clazz="java.lang.String"/>
+            <field domainNo="10" name="cardNbr" length="19" remark="卡号" clazz="java.lang.String"/>
+            <field domainNo="11" name="tagType" length="5" remark="标签类型" clazz="java.lang.String"/>
+            <field domainNo="12" name="tagCode" length="4" remark="标签代码" clazz="java.lang.String"/>
+            <field domainNo="13" name="tagInfo" length="20" remark="标签内容" clazz="java.lang.String"/>
+            <field domainNo="14" name="resvd" length="500" remark="保留域" clazz="java.lang.String"/>
+        </response>
+    </message>
+</alatka-messages>

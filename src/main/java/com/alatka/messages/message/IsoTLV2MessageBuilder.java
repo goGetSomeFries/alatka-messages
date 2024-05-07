@@ -14,13 +14,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * 8583 TLV报文打包/解包器
+ * 8583 TLV2报文打包/解包器
  *
  * @author ybliu
  */
-public class IsoTLVMessageBuilder extends MessageBuilder {
+public class IsoTLV2MessageBuilder extends MessageBuilder {
 
-    public IsoTLVMessageBuilder(MessageDefinition definition) {
+    private static final int TAG_LENGTH = 3;
+    private static final int LEN_LENGTH = 3;
+
+    public IsoTLV2MessageBuilder(MessageDefinition definition) {
         super.definition = definition;
     }
 
@@ -36,17 +39,12 @@ public class IsoTLVMessageBuilder extends MessageBuilder {
         List<String> list = new ArrayList<>();
         AtomicInteger counter = new AtomicInteger(0);
         while (counter.get() < bytes.length) {
-            int tagLength = (bytes[counter.get()] & 0x1F) == 0x1F ? 2 : 1;
-            byte[] tagBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(tagLength));
-            String tag = BytesUtil.bytesToHex(tagBytes);
-            list.add(tag);
+            byte[] tagBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(TAG_LENGTH));
+            list.add(new String(tagBytes));
 
-            byte flagByte = bytes[counter.get()];
-            byte[] lenBytes = (flagByte & 128) == 0 ?
-                    Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(1)) :
-                    Arrays.copyOfRange(bytes, counter.addAndGet(1), counter.addAndGet(flagByte & 127));
+            byte[] lenBytes = Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(LEN_LENGTH));
 
-            int valueLength = BytesUtil.bytesToInt(lenBytes);
+            int valueLength = Integer.parseInt(new String(lenBytes));
             counter.addAndGet(valueLength);
         }
 

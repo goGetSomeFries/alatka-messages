@@ -35,6 +35,7 @@ public class TLVSubdomainFieldBuilder extends SubdomainFieldBuilder<Object> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return super.matched(messageDefinition, definition) && definition.getSubdomainType() == MessageDefinition.DomainType.TLV;
+        return super.matched(messageDefinition, definition)
+                && definition.getSubdomainType() == MessageDefinition.DomainType.TLV;
     }
 }

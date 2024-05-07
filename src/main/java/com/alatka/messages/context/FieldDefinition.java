@@ -21,7 +21,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
      */
     private Integer index;
     /**
-     * 域序号/TLV子域tag
+     * 域序号
      */
     private Integer domainNo;
     /**

@@ -14,55 +14,55 @@ import static com.alatka.messages.context.MessageDefinition.Type.iso;
 @MessageMeta(type = iso, group = "cups", code = "common", kind = subPayload, domain = "F55", domainType = TLV, remark = "cups 55域")
 public class Field55 {
 
-    @IsoFieldMeta(index = 1, domainNo = 0x9F26, fixed = true, length = 8, remark = "应用密文")
+    @IsoFieldMeta(domainNo = 1, aliasName = "9F26", fixed = true, length = 8, remark = "应用密文")
     private byte[] crypt;
-    @IsoFieldMeta(index = 2, domainNo = 0x9F27, fixed = true, length = 1, remark = "密文信息数据")
+    @IsoFieldMeta(domainNo = 2, aliasName = "9F27", fixed = true, length = 1, remark = "密文信息数据")
     private byte[] cryptInfoData;
-    @IsoFieldMeta(index = 3, domainNo = 0x9F10, fixed = false, maxLength = 32, remark = "发卡行应用数据")
+    @IsoFieldMeta(domainNo = 3, aliasName = "9F10", fixed = false, maxLength = 32, remark = "发卡行应用数据")
     private byte[] issuerAppData;
-    @IsoFieldMeta(index = 4, domainNo = 0x9F37, fixed = true, length = 4, remark = "不可预知数")
+    @IsoFieldMeta(domainNo = 4, aliasName = "9F37", fixed = true, length = 4, remark = "不可预知数")
     private byte[] unpredictableNumber;
-    @IsoFieldMeta(index = 5, domainNo = 0x9F36, fixed = true, length = 2, remark = "应用交易计数器")
+    @IsoFieldMeta(domainNo = 5, aliasName = "9F36", fixed = true, length = 2, remark = "应用交易计数器")
     private byte[] appTransCounter;
-    @IsoFieldMeta(index = 6, domainNo = 0x95, fixed = true, length = 5, remark = "终端验证结果")
+    @IsoFieldMeta(domainNo = 6, aliasName = "95", fixed = true, length = 5, remark = "终端验证结果")
     private byte[] termVerificationResult;
-    @IsoFieldMeta(index = 7, domainNo = 0x9A, fixed = true, length = 3, remark = "交易日期", pattern = "yyMMdd", parseType = BCD)
+    @IsoFieldMeta(domainNo = 7, aliasName = "9A", fixed = true, length = 3, remark = "交易日期", pattern = "yyMMdd", parseType = BCD)
     private LocalDate transDate;
-    @IsoFieldMeta(index = 8, domainNo = 0x9C, fixed = true, length = 1, remark = "交易类型", parseType = BCD)
+    @IsoFieldMeta(domainNo = 8, aliasName = "9C", fixed = true, length = 1, remark = "交易类型", parseType = BCD)
     private Integer transType;
-    @IsoFieldMeta(index = 9, domainNo = 0x9F02, fixed = true, length = 6, remark = "授权金额", parseType = BCD)
+    @IsoFieldMeta(domainNo = 9, aliasName = "9F02", fixed = true, length = 6, remark = "授权金额", parseType = BCD)
     private BigDecimal transAmt;
-    @IsoFieldMeta(index = 10, domainNo = 0x5F2A, fixed = true, length = 2, remark = "交易货币代码", parseType = BCD)
+    @IsoFieldMeta(domainNo = 10, aliasName = "5F2A", fixed = true, length = 2, remark = "交易货币代码", parseType = BCD)
     private Integer transCurrencyCode;
-    @IsoFieldMeta(index = 11, domainNo = 0x82, fixed = true, length = 2, remark = "应用交互特征")
+    @IsoFieldMeta(domainNo = 11, aliasName = "82", fixed = true, length = 2, remark = "应用交互特征")
     private byte[] appInterchangeProfile;
-    @IsoFieldMeta(index = 12, domainNo = 0x9F1A, fixed = true, length = 2, remark = "终端国家代码", parseType = BCD)
+    @IsoFieldMeta(domainNo = 12, aliasName = "9F1A", fixed = true, length = 2, remark = "终端国家代码", parseType = BCD)
     private Integer termCountryCode;
-    @IsoFieldMeta(index = 13, domainNo = 0x9F03, fixed = true, length = 6, remark = "其它金额", parseType = BCD)
+    @IsoFieldMeta(domainNo = 13, aliasName = "9F03", fixed = true, length = 6, remark = "其它金额", parseType = BCD)
     private BigDecimal otherAmt;
-    @IsoFieldMeta(index = 14, domainNo = 0x9F34, fixed = true, length = 3, remark = "持卡人验证方法结果")
+    @IsoFieldMeta(domainNo = 14, aliasName = "9F34", fixed = true, length = 3, remark = "持卡人验证方法结果")
     private byte[] cardholderVerificationMethodResults;
-    @IsoFieldMeta(index = 15, domainNo = 0x9F35, fixed = true, length = 1, remark = "终端类型", parseType = BCD)
+    @IsoFieldMeta(domainNo = 15, aliasName = "9F35", fixed = true, length = 1, remark = "终端类型", parseType = BCD)
     private Integer termType;
-    @IsoFieldMeta(index = 16, domainNo = 0x9F09, fixed = true, length = 2, remark = "应用版本号")
+    @IsoFieldMeta(domainNo = 16, aliasName = "9F09", fixed = true, length = 2, remark = "应用版本号")
     private byte[] termAppVersionNumber;
-    @IsoFieldMeta(index = 17, domainNo = 0x9F33, fixed = true, length = 3, remark = "终端性能")
+    @IsoFieldMeta(domainNo = 17, aliasName = "9F33", fixed = true, length = 3, remark = "终端性能")
     private byte[] termCap;
-    @IsoFieldMeta(index = 18, domainNo = 0x9F1E, fixed = true, length = 8, remark = "接口设备序列号")
+    @IsoFieldMeta(domainNo = 18, aliasName = "9F1E", fixed = true, length = 8, remark = "接口设备序列号")
     private String interfaceDeviceSerialNumber;
-    @IsoFieldMeta(index = 19, domainNo = 0x4F, fixed = false, maxLength = 16, remark = "icc application ID")
+    @IsoFieldMeta(domainNo = 19, aliasName = "4F", fixed = false, maxLength = 16, remark = "icc application ID")
     private byte[] iccAppId;
-    @IsoFieldMeta(index = 20, domainNo = 0x9F41, fixed = false, maxLength = 4, remark = "交易序列计数器", parseType = BCD)
+    @IsoFieldMeta(domainNo = 20, aliasName = "9F41", fixed = false, maxLength = 4, remark = "交易序列计数器", parseType = BCD)
     private Integer transSequenceCounter;
-    @IsoFieldMeta(index = 21, domainNo = 0x9F7C, fixed = false, maxLength = 32, remark = "Partner Discretionary Data")
+    @IsoFieldMeta(domainNo = 21, aliasName = "9F7C", fixed = false, maxLength = 32, remark = "Partner Discretionary Data")
     private byte[] pdd;
-    @IsoFieldMeta(index = 22, domainNo = 0x84, fixed = false, maxLength = 16, remark = "专用文件名称")
+    @IsoFieldMeta(domainNo = 22, aliasName = "84", fixed = false, maxLength = 16, remark = "专用文件名称")
     private byte[] dedicatedFileName;
-    @IsoFieldMeta(index = 23, domainNo = 0x91, fixed = false, maxLength = 16, remark = "发卡行认证数据")
+    @IsoFieldMeta(domainNo = 23, aliasName = "91", fixed = false, maxLength = 16, remark = "发卡行认证数据")
     private byte[] issuerAuthenticationData;
-    @IsoFieldMeta(index = 24, domainNo = 0x71, fixed = false, maxLength = 128, remark = "发卡行脚本1")
+    @IsoFieldMeta(domainNo = 24, aliasName = "71", fixed = false, maxLength = 128, remark = "发卡行脚本1")
     private byte[] issuerScriptTemplate1;
-    @IsoFieldMeta(index = 25, domainNo = 0x72, fixed = false, maxLength = 128, remark = "发卡行脚本2")
+    @IsoFieldMeta(domainNo = 25, aliasName = "72", fixed = false, maxLength = 128, remark = "发卡行脚本2")
     private byte[] issuerScriptTemplate2;
 
     public byte[] getCrypt() {

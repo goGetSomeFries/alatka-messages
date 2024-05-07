@@ -86,7 +86,7 @@ public class CommonPayload {
     private Field44 addtnlRespCode;
     @IsoFieldMeta(domainNo = 45, fixed = false, length = 1, maxLength = 76, remark = "第一磁道数据", parseType = EBCDIC)
     private String tracK1Data;
-    @IsoFieldMeta(domainNo = 48, fixed = false, length = 1, maxLength = 255, remark = "附加数据——私有", existSubdomain = true, subdomainType = ULV_V2, parseType = NONE_V2, nonSubdomainException = false)
+    @IsoFieldMeta(domainNo = 48, fixed = false, length = 1, maxLength = 255, remark = "附加数据——私有", existSubdomain = true, subdomainType = ULV2, parseType = NONE_V2, nonSubdomainException = false)
     private UsageSubdomain<Field48> addtnlDataPrivate;
     @IsoFieldMeta(domainNo = 49, fixed = true, length = 3, remark = "交易货币代码", parseType = EBCDIC)
     private String currcyCodeTrans;
@@ -102,7 +102,7 @@ public class CommonPayload {
     private Field54 addtnlAmt;
     @IsoFieldMeta(domainNo = 55, fixed = false, length = 2, maxLength = 255, remark = "IC卡数据域", existSubdomain = true, subdomainType = TLV, parseType = NONE_V2)
     private Field55 iccData;
-    @IsoFieldMeta(domainNo = 60, fixed = false, length = 1, maxLength = 255, remark = "STIP related information", existSubdomain = true, subdomainType = ULV_V2, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 60, fixed = false, length = 1, maxLength = 255, remark = "STIP related information", existSubdomain = true, subdomainType = ULV2, parseType = NONE_V2)
     private UsageSubdomain<Field60> stipRelInfo;
     @IsoFieldMeta(domainNo = 61, fixed = false, length = 1, maxLength = 255, remark = "point of service information", existSubdomain = true, subdomainType = DEFAULT, parseType = NONE_V2)
     private Field61 ponitOfServiceInfo;

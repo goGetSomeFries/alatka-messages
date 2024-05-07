@@ -52,6 +52,6 @@ public class ULV2SubdomainFieldBuilder extends AbstractULVSubdomainFieldBuilder 
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return super.matched(messageDefinition, definition) && definition.getSubdomainType() == MessageDefinition.DomainType.ULV_V2;
+        return super.matched(messageDefinition, definition) && definition.getSubdomainType() == MessageDefinition.DomainType.ULV2;
     }
 }
