@@ -1,30 +1,31 @@
 package com.alatka.messages;
 
-import com.alatka.messages.definition.IsoAnnotationMessageDefinitionBuilder;
+import com.alatka.messages.definition.IsoXmlMessageDefinitionBuilder;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.message.MessageBuilder;
-import com.alatka.messages.model.iso.jcb.CommonPayload;
 import com.alatka.messages.util.BytesUtil;
-import com.alatka.messages.util.JsonUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class MessageJcbAnnotationTest {
+import java.util.Arrays;
+
+public class MessageJcbXmlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoAnnotationMessageDefinitionBuilder("com.alatka.messages.model.iso.jcb").build();
+        new IsoXmlMessageDefinitionBuilder().build();
     }
 
     private void doTest(String hex) {
         String key = "iso:jcb:common:payload";
-        CommonPayload holder = MessageBuilder.init(key).unpack(hex);
-        System.out.println(MessageHolder.fromPojo(holder));
+        MessageHolder holder = MessageBuilder.init(key).unpack(hex);
+        System.out.println(holder);
         byte[] pack = MessageBuilder.init(key).pack(holder);
-        CommonPayload holder1 = MessageBuilder.init(key).unpack(pack);
-        Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
-        Assertions.assertEquals(JsonUtil.objectToJson(holder), JsonUtil.objectToJson(holder1));
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), hex.toUpperCase());
+
+        MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
+        Assertions.assertEquals(holder1, holder);
     }
 
     @Test

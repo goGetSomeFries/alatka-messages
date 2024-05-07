@@ -22,9 +22,10 @@ public class MessageJcbYamlTest {
         MessageHolder holder = MessageBuilder.init(key).unpack(hex);
         System.out.println(holder);
         byte[] pack = MessageBuilder.init(key).pack(holder);
-        Assertions.assertEquals(hex.toUpperCase(), BytesUtil.bytesToHex(pack));
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), hex.toUpperCase());
+
         MessageHolder holder1 = MessageBuilder.init(key).unpack(pack);
-        Assertions.assertEquals(holder, holder1);
+        Assertions.assertEquals(holder1, holder);
     }
 
     @Test
@@ -138,5 +139,6 @@ public class MessageJcbYamlTest {
         System.out.println(BytesUtil.fromEBCDIC(BytesUtil.hexToBytes("7E")));
         System.out.println(String.class.getName());
         System.out.println(Arrays.toString(BytesUtil.hexToBytes("100000")));
+        System.out.println(0x29);
     }
 }

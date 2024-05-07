@@ -3,6 +3,8 @@ package com.alatka.messages.field;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.UsageSubdomain;
+import com.alatka.messages.message.IsoMessageBuilder;
+import com.alatka.messages.message.IsoTLVMessageBuilder;
 import com.alatka.messages.message.MessageBuilder;
 import com.alatka.messages.util.BytesUtil;
 
@@ -26,7 +28,7 @@ public abstract class AbstractULVSubdomainFieldBuilder extends SubdomainFieldBui
                 .map(entry -> {
                     byte[] usageBytes = this.usageId(entry.getKey());
                     byte[] valueBytes = super.validate(fieldDefinition, entry.getKey()) ?
-                            MessageBuilder.init(usageMap.get(entry.getKey())).pack(entry.getValue()) :
+                            this.generateMessageBuilder(usageMap.get(entry.getKey())).pack(entry.getValue()) :
                             (byte[]) entry.getValue();
                     byte[] lenBytes = this.usageLen(valueBytes.length);
                     return BytesUtil.concat(usageBytes, lenBytes, valueBytes);
@@ -47,13 +49,19 @@ public abstract class AbstractULVSubdomainFieldBuilder extends SubdomainFieldBui
             Object value = null;
             if (super.validate(fieldDefinition, usageId)) {
                 MessageDefinition definition = usageMap.get(usageId);
-                value = MessageBuilder.init(definition).unpack(usageValueBytes);
+                value = this.generateMessageBuilder(definition).unpack(usageValueBytes);
             } else {
                 value = usageValueBytes;
             }
             usageSubdomain.put(usageId, value);
         }
         return usageSubdomain;
+    }
+
+    private MessageBuilder generateMessageBuilder(MessageDefinition definition) {
+        return definition.getDomainType() == MessageDefinition.DomainType.TLV ?
+                new IsoTLVMessageBuilder(definition) :
+                new IsoMessageBuilder(definition);
     }
 
     protected abstract int usageIdLength();
