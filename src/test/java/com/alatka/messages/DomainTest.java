@@ -11,7 +11,6 @@ import org.junit.jupiter.api.*;
 import java.math.BigDecimal;
 import java.time.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -270,78 +269,16 @@ public class DomainTest {
     }
 
     @Test
-    @DisplayName("子域:ULV-TLV")
+    @DisplayName("子域:UV$TV")
     public void test12() {
-        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:test:subPayload:F56:PR");
-        instance1.put(0x01, "DJK");
-
-        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
-        usageSubdomain.put(instance1);
-
-        String key = "iso:cups:test:payload";
-        MessageHolder instance = MessageHolder.newInstance(key);
-        instance.put(0, "0100");
-        instance.put(56, usageSubdomain);
-
-        byte[] expected = MessageBuilder.init(key).pack(instance);
-        MessageHolder object = MessageBuilder.init(key).unpack(expected);
-        byte[] actual = MessageBuilder.init(key).pack(object);
-
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("子域:UV-分页")
-    public void test15() {
-        List<MessageHolder> list = new ArrayList<>();
-        MessageHolder instance11 = MessageHolder.newInstance("iso:cups:test:subPayload:F59@QR_F3");
-        instance11.put(1, 1);
-        instance11.put(2, LocalDate.now());
-        instance11.put(3, "156");
-        instance11.put(4, "15400");
-        instance11.put(5, "45700000");
-        instance11.put(6, "test");
-        MessageHolder instance12 = MessageHolder.newInstance("iso:cups:test:subPayload:F59@QR_F3");
-        instance12.put(1, 1);
-        instance12.put(2, LocalDate.now());
-        instance12.put(3, "156");
-        instance12.put(4, "15400");
-        instance12.put(5, "45700000");
-        instance12.put(6, "test");
-        list.add(instance11);
-        list.add(instance12);
-
-        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:test:subPayload:F59:QR");
-        instance1.put(1, "156");
-        instance1.put(2, 2);
-        instance1.put(3, list);
-
-        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
-        usageSubdomain.put(instance1);
-
-        String key = "iso:cups:test:payload";
-        MessageHolder instance = MessageHolder.newInstance(key);
-        instance.put(0, "0100");
-        instance.put(59, usageSubdomain);
-
-        byte[] expected = MessageBuilder.init(key).pack(instance);
-        MessageHolder object = MessageBuilder.init(key).unpack(expected);
-        byte[] actual = MessageBuilder.init(key).pack(object);
-
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("子域:UV-TV")
-    public void test16() {
-        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:test:subPayload:F62:IO");
+        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F62:IO");
         instance1.put(1, "VIS");
         instance1.put(2, LocalDateTime.now());
         instance1.put(3, "838822");
         instance1.put(4, "8977");
         instance1.put(5, "87987657678");
         instance1.put(6, "87987657678");
-        instance1.put(7, "00");
+        instance1.put(7, null);
         instance1.put(8, "000000000033");
         instance1.put(9, "99999999");
         instance1.put(10, null);
@@ -351,29 +288,142 @@ public class DomainTest {
         UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
         usageSubdomain.put(instance1);
 
-        String key = "iso:cups:test:payload";
+        String key = "iso:cups:common:payload";
         MessageHolder instance = MessageHolder.newInstance(key);
         instance.put(0, "0100");
         instance.put(62, usageSubdomain);
+        instance.put(128, "00000000");
 
-        byte[] expected = MessageBuilder.init(key).pack(instance);
-        MessageHolder object = MessageBuilder.init(key).unpack(expected);
-        byte[] actual = MessageBuilder.init(key).pack(object);
-
-        Assertions.assertArrayEquals(expected, actual);
+        this.doTest(instance, key);
     }
 
+    @Test
+    @DisplayName("子域:UV$TLV2")
+    public void test13() {
+        MessageHolder instance1 = MessageHolder.newInstance("iso:cupd:common:subPayload:F62:DA");
+        instance1.put(1, "VIS");
+        instance1.put(2, "0020");
+        instance1.put(3, "EJIFJEIJFALEUBNN");
+        instance1.put(4, null);
+        instance1.put(5, null);
+        instance1.put(6, null);
+
+        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
+        usageSubdomain.put(instance1);
+
+        String key = "iso:cupd:common:payload";
+        MessageHolder instance = MessageHolder.newInstance(key);
+        instance.put(0, "0100");
+        instance.put(62, usageSubdomain);
+        instance.put(128, "00000000");
+
+        this.doTest(instance, key);
+    }
+
+    @Test
+    @DisplayName("子域:ULV$TLV")
+    public void test14() {
+        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F56:PR");
+        instance1.put(0x01, "DJK");
+
+        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
+        usageSubdomain.put(instance1);
+
+        String key = "iso:cups:common:payload";
+        MessageHolder instance = MessageHolder.newInstance(key);
+        instance.put(0, "0100");
+        instance.put(56, usageSubdomain);
+        instance.put(128, "00000000");
+
+        this.doTest(instance, key);
+    }
+
+    @Test
+    @DisplayName("子域:UV-LIST")
+    public void test15() {
+        List<MessageHolder> list = new ArrayList<>();
+        MessageHolder instance11 = MessageHolder.newInstance("iso:cups:common:subPayload:F59$QR_F3");
+        instance11.put(1, 1);
+        instance11.put(2, LocalDate.now());
+        instance11.put(3, "156");
+        instance11.put(4, "15400");
+        instance11.put(5, "45700000");
+        instance11.put(6, "test");
+        MessageHolder instance12 = MessageHolder.newInstance("iso:cups:common:subPayload:F59$QR_F3");
+        instance12.put(1, 1);
+        instance12.put(2, LocalDate.now());
+        instance12.put(3, "156");
+        instance12.put(4, "15400");
+        instance12.put(5, "45700000");
+        instance12.put(6, "test");
+        list.add(instance11);
+        list.add(instance12);
+
+        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F59:QR");
+        instance1.put(1, "156");
+        instance1.put(2, 2);
+        instance1.put(3, list);
+
+        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
+        usageSubdomain.put(instance1);
+
+        String key = "iso:cups:common:payload";
+        MessageHolder instance = MessageHolder.newInstance(key);
+        instance.put(0, "0100");
+        instance.put(59, usageSubdomain);
+        instance.put(128, "00000000");
+
+        this.doTest(instance, key);
+    }
+
+    @Test
+    @DisplayName("子域:DEFAULT-DEFAULT")
+    public void test16() {
+        MessageHolder instance11 = MessageHolder.newInstance("iso:cups:common:subPayload:F60_F11");
+        instance11.put(1, "K1");
+        instance11.put(2, "K");
+        instance11.put(3, "KMK");
+        instance11.put(4, "K");
+        instance11.put(5, "K");
+        instance11.put(6, "K");
+        instance11.put(7, "K");
+        instance11.put(8, "K9");
+        instance11.put(9, "K");
+        instance11.put(10, "22");
+
+
+        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F60");
+        instance1.put(1, "0000");
+        instance1.put(2, "A");
+        instance1.put(3, "0");
+        instance1.put(4, "1");
+        instance1.put(5, "1");
+        instance1.put(6, "31");
+        instance1.put(7, "E");
+        instance1.put(8, "D");
+        instance1.put(9, "UA");
+        instance1.put(10, "Q");
+        instance1.put(11, instance11);
+
+        String key = "iso:cups:common:payload";
+        MessageHolder instance = MessageHolder.newInstance(key);
+        instance.put(0, "0100");
+        instance.put(60, instance1);
+        instance.put(128, "00000000");
+
+        this.doTest(instance, key);
+    }
 
     @Test
     @DisplayName("子域:DEFAULT-UV")
-    public void test19() {
-        MessageHolder instance11 = MessageHolder.newInstance("iso:cups:test:subPayload:F61_F10:CR");
+    public void test17() {
+        MessageHolder instance11 = MessageHolder.newInstance("iso:cups:common:subPayload:F61_F10:CR");
         instance11.put(1, "K");
 
         UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
         usageSubdomain.put(instance11);
 
-        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:test:subPayload:F61");
+        MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F61");
         instance1.put(1, "01");
         instance1.put(2, "220881199873641934");
         instance1.put(3, "0");
@@ -385,17 +435,13 @@ public class DomainTest {
         instance1.put(9, "U");
         instance1.put(10, usageSubdomain);
 
-        String key = "iso:cups:test:payload";
+        String key = "iso:cups:common:payload";
         MessageHolder instance = MessageHolder.newInstance(key);
         instance.put(0, "0100");
         instance.put(61, instance1);
+        instance.put(128, "00000000");
 
-        byte[] expected = MessageBuilder.init(key).pack(instance);
-        MessageHolder object = MessageBuilder.init(key).unpack(expected);
-        byte[] actual = MessageBuilder.init(key).pack(object);
-
-        Assertions.assertArrayEquals(expected, actual);
+        this.doTest(instance, key);
     }
-
 
 }
