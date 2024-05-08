@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * List类型报文域解析器
+ * 分页类型报文域解析器
  *
  * @author ybliu
  * @see SubdomainFieldBuilder
  * @see AbstractFieldBuilder
  * @see FieldBuilder
  */
-public class ListFieldBuilder extends SubdomainFieldBuilder<List<?>> {
+public class PageFieldBuilder extends SubdomainFieldBuilder<List<?>> {
 
     @Override
     protected List<?> unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
@@ -53,6 +53,6 @@ public class ListFieldBuilder extends SubdomainFieldBuilder<List<?>> {
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
         return super.matched(messageDefinition, definition)
-                && definition.getSubdomainType() == MessageDefinition.DomainType.LIST;
+                && definition.getSubdomainType() == MessageDefinition.DomainType.PAGE;
     }
 }

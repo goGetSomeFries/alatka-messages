@@ -19,13 +19,13 @@ public class FieldBuilderFactory {
 
     static {
         // subdomain
-        init(new DefaultSubdomainFieldBuilder<>());
+        init(new FixedSubdomainFieldBuilder<>());
         init(new ULVSubdomainFieldBuilder());
         init(new ULV2SubdomainFieldBuilder());
         init(new UVSubdomainFieldBuilder());
         init(new UVASSubdomainFieldBuilder());
         init(new TLVSubdomainFieldBuilder());
-        init(new ListFieldBuilder());
+        init(new PageFieldBuilder());
         // datetime
         init(new LocalDateTimeFieldBuilder());
         init(new CustomDateTimeFieldBuilder());

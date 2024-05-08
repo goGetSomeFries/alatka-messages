@@ -23,7 +23,7 @@ public class C3006Response extends Header {
     private Integer counts;
     @FixedFieldMeta(domainNo = 12, length = 1, remark = "翻页标志")
     private String rtnInd;
-    @FixedFieldMeta(domainNo = 13, fixed = false, length = 141, remark = "集合", pageSizeName = "counts", existSubdomain = true, subdomainType = MessageDefinition.DomainType.LIST)
+    @FixedFieldMeta(domainNo = 13, fixed = false, length = 141, remark = "集合", pageSizeName = "counts", existSubdomain = true, subdomainType = MessageDefinition.DomainType.PAGE)
     private List<C3006Page> elements;
 
     public String getCardNbr() {

@@ -37,7 +37,7 @@
             <field domainNo="10" name="option" length="1" remark="币种选项" clazz="java.lang.String"/>
             <field domainNo="11" name="counts" length="2" remark="本次返回交易条数" clazz="java.lang.Integer"/>
             <field domainNo="12" name="rtnInd" length="1" remark="翻页标志" clazz="java.lang.String"/>
-            <field domainNo="13" name="elements" fixed="false" length="141" remark="集合" clazz="java.util.ArrayList" pageSizeName="counts" existSubdomain="true" subdomainType="LIST"/>
+            <field domainNo="13" name="elements" fixed="false" length="141" remark="集合" clazz="java.util.ArrayList" pageSizeName="counts" existSubdomain="true" subdomainType="PAGE"/>
         </response>
         <subPayload domain="F13">
             <field domainNo="1" name="monthNbr" length="3" remark="月份序号" clazz="java.lang.Integer"/>
