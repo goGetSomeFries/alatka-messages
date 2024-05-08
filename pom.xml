@@ -6,11 +6,11 @@
     <parent>
         <artifactId>alatka</artifactId>
         <groupId>com.alatka</groupId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
     </parent>
 
     <artifactId>alatka-messages</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 
     <dependencies>
         <dependency>

@@ -3,7 +3,7 @@ package com.alatka.messages.model.iso.cups;
 import com.alatka.messages.annotation.IsoFieldMeta;
 import com.alatka.messages.annotation.MessageMeta;
 
-import static com.alatka.messages.context.MessageDefinition.DomainType.DEFAULT;
+import static com.alatka.messages.context.MessageDefinition.DomainType.FIXED;
 import static com.alatka.messages.context.MessageDefinition.Kind.subPayload;
 import static com.alatka.messages.context.MessageDefinition.Type.iso;
 
@@ -30,7 +30,7 @@ public class Field60 {
     private String f60f9;
     @IsoFieldMeta(domainNo = 10, fixed = true, length = 1, remark = "交互方式标志")
     private String f60f10;
-    @IsoFieldMeta(domainNo = 11, fixed = true, length = -1, maxLength = 15, remark = "交易发生附加信息", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 11, fixed = true, length = -1, maxLength = 15, remark = "交易发生附加信息", existSubdomain = true, subdomainType = FIXED)
     private Field60_F11 f60f11;
 
     public String getF60f1() {

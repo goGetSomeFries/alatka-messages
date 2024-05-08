@@ -60,7 +60,7 @@ public class CommonPayload {
     private String posCondCode;
     @IsoFieldMeta(domainNo = 26, fixed = true, length = 1, remark = "服务点PIN获取码", parseType = BCD)
     private String posPinCaptrCode;
-    @IsoFieldMeta(domainNo = 28, fixed = true, length = 9, remark = "交易费", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 28, fixed = true, length = 9, remark = "交易费", existSubdomain = true, subdomainType = FIXED)
     private Field28 amtTransFee;
     @IsoFieldMeta(domainNo = 32, fixed = false, length = 1, maxLength = 6, remark = "代理机构标识码", parseType = BCD)
     private String acqInstIdCode;
@@ -80,9 +80,9 @@ public class CommonPayload {
     private String cardAccptrTermnlId;
     @IsoFieldMeta(domainNo = 42, fixed = true, length = 15, remark = "受卡方标识码", parseType = EBCDIC)
     private String cardAccptrId;
-    @IsoFieldMeta(domainNo = 43, fixed = true, length = 40, remark = "受卡方名称地址", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 43, fixed = true, length = 40, remark = "受卡方名称地址", existSubdomain = true, subdomainType = FIXED)
     private Field43 cardAccptrNameLoc;
-    @IsoFieldMeta(domainNo = 44, fixed = false, length = 1, maxLength = 99, remark = "附加响应数据", existSubdomain = true, subdomainType = DEFAULT, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 44, fixed = false, length = 1, maxLength = 99, remark = "附加响应数据", existSubdomain = true, subdomainType = FIXED, parseType = NONE_V2)
     private Field44 addtnlRespCode;
     @IsoFieldMeta(domainNo = 45, fixed = false, length = 1, maxLength = 76, remark = "第一磁道数据", parseType = EBCDIC)
     private String tracK1Data;
@@ -96,23 +96,23 @@ public class CommonPayload {
     private String currcyCodeCdhldrBil;
     @IsoFieldMeta(domainNo = 52, fixed = true, length = 8, remark = "个人标识码数据")
     private byte[] pinData;
-    @IsoFieldMeta(domainNo = 53, fixed = true, length = 8, remark = "安全控制信息", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 53, fixed = true, length = 8, remark = "安全控制信息", existSubdomain = true, subdomainType = FIXED)
     private Field53 secRelatdCtrlInfo;
-    @IsoFieldMeta(domainNo = 54, fixed = false, length = 1, maxLength = 120, remark = "实际余额", existSubdomain = true, subdomainType = DEFAULT, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 54, fixed = false, length = 1, maxLength = 120, remark = "实际余额", existSubdomain = true, subdomainType = FIXED, parseType = NONE_V2)
     private Field54 addtnlAmt;
     @IsoFieldMeta(domainNo = 55, fixed = false, length = 2, maxLength = 255, remark = "IC卡数据域", existSubdomain = true, subdomainType = TLV, parseType = NONE_V2)
     private Field55 iccData;
     @IsoFieldMeta(domainNo = 60, fixed = false, length = 1, maxLength = 255, remark = "STIP related information", existSubdomain = true, subdomainType = ULV2, parseType = NONE_V2)
     private UsageSubdomain<Field60> stipRelInfo;
-    @IsoFieldMeta(domainNo = 61, fixed = false, length = 1, maxLength = 255, remark = "point of service information", existSubdomain = true, subdomainType = DEFAULT, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 61, fixed = false, length = 1, maxLength = 255, remark = "point of service information", existSubdomain = true, subdomainType = FIXED, parseType = NONE_V2)
     private Field61 ponitOfServiceInfo;
     @IsoFieldMeta(domainNo = 63, fixed = false, length = 1, maxLength = 255, remark = "transaction code", parseType = EBCDIC)
     private String finaclNetData;
     @IsoFieldMeta(domainNo = 70, fixed = true, length = 2, remark = "网络管理信息码", parseType = BCD)
     private String netwkMgmtInfoCode;
-    @IsoFieldMeta(domainNo = 90, fixed = true, length = 21, remark = "原始数据元", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 90, fixed = true, length = 21, remark = "原始数据元", existSubdomain = true, subdomainType = FIXED)
     private Field90 origDataElemts;
-    @IsoFieldMeta(domainNo = 95, fixed = true, length = 42, remark = "replacement amounts", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 95, fixed = true, length = 42, remark = "replacement amounts", existSubdomain = true, subdomainType = FIXED)
     private Field95 replacementAmt;
     @IsoFieldMeta(domainNo = 96, fixed = true, length = 8, remark = "报文安全码")
     private byte[] msgSecurityCode;
@@ -122,7 +122,7 @@ public class CommonPayload {
     private String fileName;
     @IsoFieldMeta(domainNo = 105, fixed = true, length = 16, remark = "message security code for triple DES")
     private byte[] msgSecurityCodeForTriDes;
-    @IsoFieldMeta(domainNo = 120, fixed = false, length = 2, maxLength = 30, remark = "record data", existSubdomain = true, subdomainType = DEFAULT, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 120, fixed = false, length = 2, maxLength = 30, remark = "record data", existSubdomain = true, subdomainType = FIXED, parseType = NONE_V2)
     private Field120 recordData;
     @IsoFieldMeta(domainNo = 127, fixed = false, length = 2, maxLength = 6, remark = "negative data access code", parseType = EBCDIC)
     private String negDataAccessCode;
