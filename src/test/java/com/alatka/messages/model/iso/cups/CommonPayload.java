@@ -98,9 +98,9 @@ public class CommonPayload {
     private String currcyCodeCdhldrBil;
     @IsoFieldMeta(domainNo = 52, fixed = true, length = 8, remark = "个人标识码数据")
     private byte[] pinData;
-    @IsoFieldMeta(domainNo = 53, fixed = true, length = 16, remark = "安全控制信息", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 53, fixed = true, length = 16, remark = "安全控制信息", existSubdomain = true, subdomainType = FIXED)
     private Field53 secRelatdCtrlInfo;
-    @IsoFieldMeta(domainNo = 54, fixed = false, length = 3, maxLength = 40, remark = "实际余额", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 54, fixed = false, length = 3, maxLength = 40, remark = "实际余额", existSubdomain = true, subdomainType = FIXED)
     private Field54 addtnlAmt;
     @IsoFieldMeta(domainNo = 55, fixed = false, length = 3, maxLength = 255, remark = "IC卡数据域", existSubdomain = true, subdomainType = TLV)
     private Field55 iccData;
@@ -110,9 +110,9 @@ public class CommonPayload {
     private UsageSubdomain<Field57> addtnlData57;
     @IsoFieldMeta(domainNo = 59, fixed = false, length = 3, maxLength = 600, remark = "明细查询数据", existSubdomain = true, subdomainType = UV)
     private UsageSubdomain<Field59> detailInqrng;
-    @IsoFieldMeta(domainNo = 60, fixed = false, length = 3, maxLength = 100, remark = "自定义域", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 60, fixed = false, length = 3, maxLength = 100, remark = "自定义域", existSubdomain = true, subdomainType = FIXED)
     private Field60 reserved;
-    @IsoFieldMeta(domainNo = 61, fixed = false, length = 3, maxLength = 200, remark = "持卡人身份认证信息", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 61, fixed = false, length = 3, maxLength = 200, remark = "持卡人身份认证信息", existSubdomain = true, subdomainType = FIXED)
     private Field61 chAuthInfo;
     @IsoFieldMeta(domainNo = 62, fixed = false, length = 3, maxLength = 200, remark = "交换中心数据", existSubdomain = true, subdomainType = UV)
     private UsageSubdomain<Field62> switchingData;
@@ -120,7 +120,7 @@ public class CommonPayload {
     private UsageSubdomain<Field63> finaclNetData;
     @IsoFieldMeta(domainNo = 70, fixed = true, length = 3, remark = "网络管理信息码")
     private String netwkMgmtInfoCode;
-    @IsoFieldMeta(domainNo = 90, fixed = true, length = 42, remark = "原始数据元", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 90, fixed = true, length = 42, remark = "原始数据元", existSubdomain = true, subdomainType = FIXED)
     private Field90 origDataElemts;
     @IsoFieldMeta(domainNo = 96, fixed = true, length = 8, remark = "报文安全码")
     private byte[] msgSecurityCode;
@@ -138,9 +138,9 @@ public class CommonPayload {
     private UsageSubdomain<Field116> addtnlData116;
     @IsoFieldMeta(domainNo = 117, fixed = false, length = 3, maxLength = 256, remark = "附加信息", existSubdomain = true, subdomainType = ULV)
     private UsageSubdomain<Field117> addtnlData117;
-    @IsoFieldMeta(domainNo = 121, fixed = false, length = 3, maxLength = 100, remark = "银联处理中心保留", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 121, fixed = false, length = 3, maxLength = 100, remark = "银联处理中心保留", existSubdomain = true, subdomainType = FIXED)
     private Field121 nationalSwResved;
-    @IsoFieldMeta(domainNo = 122, fixed = false, length = 3, maxLength = 100, remark = "受理方保留", existSubdomain = true, subdomainType = DEFAULT)
+    @IsoFieldMeta(domainNo = 122, fixed = false, length = 3, maxLength = 100, remark = "受理方保留", existSubdomain = true, subdomainType = FIXED)
     private Field122 acqInstResvd;
     @IsoFieldMeta(domainNo = 123, fixed = false, length = 3, maxLength = 100, remark = "发卡方保留")
     private byte[] issrInstResvd;

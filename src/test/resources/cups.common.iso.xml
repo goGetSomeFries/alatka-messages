@@ -56,18 +56,18 @@
             <field domainNo="50" name="currcyCodeSettlmt" fixed="true" length="3" remark="清算货币代码" clazz="java.lang.String"/>
             <field domainNo="51" name="currcyCodeCdhldrBil" fixed="true" length="3" remark="持卡人帐户货币代码" clazz="java.lang.String"/>
             <field domainNo="52" name="pinData" fixed="true" length="8" remark="个人标识码数据" clazz="[B"/>
-            <field domainNo="53" name="secRelatdCtrlInfo" fixed="true" length="16" remark="安全控制信息" existSubdomain="true" subdomainType="DEFAULT"/>
-            <field domainNo="54" name="addtnlAmt" fixed="false" length="3" maxLength="40" remark="实际余额" existSubdomain="true" subdomainType="DEFAULT"/>
+            <field domainNo="53" name="secRelatdCtrlInfo" fixed="true" length="16" remark="安全控制信息" existSubdomain="true" subdomainType="FIXED"/>
+            <field domainNo="54" name="addtnlAmt" fixed="false" length="3" maxLength="40" remark="实际余额" existSubdomain="true" subdomainType="FIXED"/>
             <field domainNo="55" name="iccData" fixed="false" length="3" maxLength="255" remark="IC卡数据域" existSubdomain="true" subdomainType="TLV"/>
             <field domainNo="56" name="addtnlData56" fixed="false" length="3" maxLength="512" remark="附加信息" existSubdomain="true" subdomainType="ULV"/>
             <field domainNo="57" name="addtnlData57" fixed="false" length="3" maxLength="100" remark="附加交易信息" existSubdomain="true" subdomainType="UVAS"/>
             <field domainNo="59" name="detailInqrng" fixed="false" length="3" maxLength="600" remark="明细查询数据" existSubdomain="true" subdomainType="UV"/>
-            <field domainNo="60" name="reserved" fixed="false" length="3" maxLength="100" remark="自定义域" existSubdomain="true" subdomainType="DEFAULT"/>
-            <field domainNo="61" name="chAuthInfo" fixed="false" length="3" maxLength="200" remark="持卡人身份认证信息" existSubdomain="true" subdomainType="DEFAULT"/>
+            <field domainNo="60" name="reserved" fixed="false" length="3" maxLength="100" remark="自定义域" existSubdomain="true" subdomainType="FIXED"/>
+            <field domainNo="61" name="chAuthInfo" fixed="false" length="3" maxLength="200" remark="持卡人身份认证信息" existSubdomain="true" subdomainType="FIXED"/>
             <field domainNo="62" name="switchingData" fixed="false" length="3" maxLength="200" remark="交换中心数据" existSubdomain="true" subdomainType="UV"/>
             <field domainNo="63" name="finaclNetData" fixed="false" length="3" maxLength="512" remark="金融网络数据" existSubdomain="true" subdomainType="ULV"/>
             <field domainNo="70" name="netwkMgmtInfoCode" fixed="true" length="3" remark="网络管理信息码" clazz="java.lang.String"/>
-            <field domainNo="90" name="origDataElemts" fixed="true" length="42" remark="原始数据元" existSubdomain="true" subdomainType="DEFAULT"/>
+            <field domainNo="90" name="origDataElemts" fixed="true" length="42" remark="原始数据元" existSubdomain="true" subdomainType="FIXED"/>
             <field domainNo="96" name="msgSecurityCode" fixed="true" length="8" remark="报文安全码" clazz="[B"/>
             <field domainNo="100" name="rcvgInstIdCode" fixed="false" length="2" maxLength="11" remark="接收机构标识码" clazz="java.lang.String"/>
             <field domainNo="102" name="acctId1" fixed="false" length="2" maxLength="28" remark="帐户标识1" clazz="java.lang.String"/>
@@ -76,8 +76,8 @@
             <field domainNo="113" name="addtnlData113" fixed="false" length="3" maxLength="512" remark="附加信息" existSubdomain="true" subdomainType="ULV"/>
             <field domainNo="116" name="addtnlData116" fixed="false" length="3" maxLength="512" remark="附加信息" existSubdomain="true" subdomainType="ULV"/>
             <field domainNo="117" name="addtnlData117" fixed="false" length="3" maxLength="256" remark="附加信息" existSubdomain="true" subdomainType="ULV"/>
-            <field domainNo="121" name="nationalSwResved" fixed="false" length="3" maxLength="100" remark="银联处理中心保留" existSubdomain="true" subdomainType="DEFAULT"/>
-            <field domainNo="122" name="acqInstResvd" fixed="false" length="3" maxLength="100" remark="受理方保留" existSubdomain="true" subdomainType="DEFAULT"/>
+            <field domainNo="121" name="nationalSwResved" fixed="false" length="3" maxLength="100" remark="银联处理中心保留" existSubdomain="true" subdomainType="FIXED"/>
+            <field domainNo="122" name="acqInstResvd" fixed="false" length="3" maxLength="100" remark="受理方保留" existSubdomain="true" subdomainType="FIXED"/>
             <field domainNo="123" name="issrInstResvd" fixed="false" length="3" maxLength="100" remark="发卡方保留" clazz="[B"/>
             <field domainNo="125" name="addtnlData125" fixed="false" length="3" maxLength="256" remark="附加信息" existSubdomain="true" subdomainType="ULV"/>
             <field domainNo="126" name="addtnlData126" fixed="false" length="3" maxLength="256" remark="附加信息" existSubdomain="true" subdomainType="ULV"/>
@@ -208,7 +208,7 @@
         <subPayload domain="F59" usage="QR">
             <field domainNo="1" name="currencyCode" fixed="true" length="3" remark="卡账户货币代码" clazz="java.lang.String"/>
             <field domainNo="2" name="counts" fixed="true" length="3" remark="所有满足查询条件的记录数" clazz="java.lang.Integer"/>
-            <field domainNo="3" name="elements" fixed="false" length="50" maxLength="5000" remark="查询结果" clazz="java.util.ArrayList" pageSizeName="counts" existSubdomain="true" subdomainType="LIST"/>
+            <field domainNo="3" name="elements" fixed="false" length="50" maxLength="5000" remark="查询结果" clazz="java.util.ArrayList" pageSizeName="counts" existSubdomain="true" subdomainType="PAGE"/>
         </subPayload>
         <subPayload domain="F59$QR_F3">
             <field domainNo="1" name="number" fixed="true" length="3" remark="明细顺序号" clazz="java.lang.Integer"/>
@@ -229,7 +229,7 @@
             <field domainNo="8" name="f60f8" fixed="true" length="1" remark="IC卡验证可靠性标志" clazz="java.lang.String"/>
             <field domainNo="9" name="f60f9" fixed="true" length="2" remark="电子商务标志" clazz="java.lang.String"/>
             <field domainNo="10" name="f60f10" fixed="true" length="1" remark="交互方式标志" clazz="java.lang.String"/>
-            <field domainNo="11" name="f60f11" fixed="false" length="-1" maxLength="15" remark="交易发生附加信息" existSubdomain="true" subdomainType="DEFAULT"/>
+            <field domainNo="11" name="f60f11" fixed="false" length="-1" maxLength="15" remark="交易发生附加信息" existSubdomain="true" subdomainType="FIXED"/>
         </subPayload>
         <subPayload domain="F60_F11">
             <field domainNo="1" name="f60f11f1" fixed="true" length="2" remark="特殊计费类型" clazz="java.lang.String"/>

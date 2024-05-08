@@ -5,9 +5,9 @@ import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.definition.IsoYamlMessageDefinitionBuilder;
 import org.junit.jupiter.api.*;
 
-public class ListFieldBuilderTest {
+public class PageFieldBuilderTest {
 
-    private ListFieldBuilder fieldBuilder = new ListFieldBuilder();
+    private PageFieldBuilder fieldBuilder = new PageFieldBuilder();
 
     @BeforeAll
     public static void beforeAll() {
@@ -26,7 +26,7 @@ public class ListFieldBuilderTest {
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setExistSubdomain(true);
-        fieldDefinition.setSubdomainType(MessageDefinition.DomainType.LIST);
+        fieldDefinition.setSubdomainType(MessageDefinition.DomainType.PAGE);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

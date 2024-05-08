@@ -51,26 +51,26 @@ alatka.messages:
       - { "domainNo": 49, "name": "currcyCodeTrans", "fixed": true, "length": 3, "remark": "交易货币代码", "clazz": "java.lang.String" }
       - { "domainNo": 51, "name": "currcyCodeCdhldrBil", "fixed": true, "length": 3, "remark": "持卡人帐户货币代码", "clazz": "java.lang.String" }
       - { "domainNo": 52, "name": "pinData", "fixed": true, "length": 8, "remark": "个人标识码数据", "clazz": "[B" }
-      - { "domainNo": 53, "name": "secRelatdCtrlInfo", "fixed": true, "length": 16, "remark": "安全控制信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
-      - { "domainNo": 54, "name": "addtnlAmt", "fixed": false, "length": 3, "maxLength": 40, "remark": "实际余额", "existSubdomain": true, "subdomainType": "DEFAULT" }
+      - { "domainNo": 53, "name": "secRelatdCtrlInfo", "fixed": true, "length": 16, "remark": "安全控制信息", "existSubdomain": true, "subdomainType": "FIXED" }
+      - { "domainNo": 54, "name": "addtnlAmt", "fixed": false, "length": 3, "maxLength": 40, "remark": "实际余额", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 55, "name": "iccData", "fixed": false, "length": 3, "maxLength": 300, "remark": "IC卡数据域", "existSubdomain": true, "subdomainType": "TLV" }
       - { "domainNo": 57, "name": "addtnlData57", "fixed": false, "length": 3, "maxLength": 100, "remark": "附加交易信息", "existSubdomain": true, "subdomainType": "UVAS" }
-      - { "domainNo": 60, "name": "reserved", "fixed": false, "length": 3, "maxLength": 100, "remark": "自定义域", "existSubdomain": true, "subdomainType": "DEFAULT" }
-      - { "domainNo": 61, "name": "chAuthInfo", "fixed": false, "length": 3, "maxLength": 200, "remark": "持卡人身份认证信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
+      - { "domainNo": 60, "name": "reserved", "fixed": false, "length": 3, "maxLength": 100, "remark": "自定义域", "existSubdomain": true, "subdomainType": "FIXED" }
+      - { "domainNo": 61, "name": "chAuthInfo", "fixed": false, "length": 3, "maxLength": 200, "remark": "持卡人身份认证信息", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 62, "name": "switchingData", "fixed": false, "length": 3, "maxLength": 200, "remark": "交换中心数据", "existSubdomain": true, "subdomainType": "UV" }
       - { "domainNo": 63, "name": "finaclNetData", "fixed": false, "length": 3, "maxLength": 512, "remark": "金融网络数据", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 70, "name": "netwkMgmtInfoCode", "fixed": true, "length": 3, "remark": "网络管理信息码", "clazz": "java.lang.String" }
-      - { "domainNo": 90, "name": "origDataElemts", "fixed": true, "length": 42, "remark": "原始数据元", "existSubdomain": true, "subdomainType": "DEFAULT" }
+      - { "domainNo": 90, "name": "origDataElemts", "fixed": true, "length": 42, "remark": "原始数据元", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 91, "name": "overDraftFlag", "fixed": true, "length": 1, "remark": "自定义域", "clazz": "java.lang.String" }
       - { "domainNo": 96, "name": "msgSecurityCode", "fixed": true, "length": 8, "remark": "报文安全码", "clazz": "[B" }
       - { "domainNo": 100, "name": "rcvgInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "接收机构标识码", "clazz": "java.lang.String" }
       - { "domainNo": 102, "name": "acctId1", "fixed": false, "length": 2, "maxLength": 32, "remark": "帐户标识1", "clazz": "java.lang.String" }
       - { "domainNo": 103, "name": "acctId2", "fixed": false, "length": 2, "maxLength": 32, "remark": "帐户标识2", "clazz": "java.lang.String" }
       - { "domainNo": 104, "name": "addtnlData104", "fixed": false, "length": 3, "maxLength": 512, "remark": "业务行业应用信息域", "existSubdomain": true, "subdomainType": "ULV" }
-      - { "domainNo": 108, "name": "addReqInfo", "fixed": false, "length": 3, "maxLength": 32, "remark": "附加请求信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
+      - { "domainNo": 108, "name": "addReqInfo", "fixed": false, "length": 3, "maxLength": 32, "remark": "附加请求信息", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 117, "name": "addtnlData117", "fixed": false, "length": 3, "maxLength": 256, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 121, "name": "nationalSwResved", "fixed": false, "length": 3, "maxLength": 100, "remark": "保留", "clazz": "[B" }
-      - { "domainNo": 122, "name": "acqInstResvd", "fixed": false, "length": 3, "maxLength": 50, "remark": "受理方保留", "existSubdomain": true, "subdomainType": "DEFAULT" }
+      - { "domainNo": 122, "name": "acqInstResvd", "fixed": false, "length": 3, "maxLength": 50, "remark": "受理方保留", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 123, "name": "issrInstResvd", "fixed": false, "length": 3, "maxLength": 999, "remark": "发卡方保留", "clazz": "[B" }
       - { "domainNo": 127, "name": "addtnlData127", "fixed": false, "length": 3, "maxLength": 999, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 128, "name": "msgAuthnCode", "fixed": true, "length": 8, "remark": "报文鉴别码", "clazz": "java.lang.String" }
@@ -118,8 +118,8 @@ alatka.messages:
         - { "domainNo": 25, "aliasName": "9F74", "name": "issuerAuthorizationCode", "fixed": true, "length": 6, "remark": "电子现金发卡行授权码", "clazz": "java.lang.String" }
       F60:
         - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 4, "remark": "报文原因码", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f60f2", "fixed": true, "length": 11, "remark": "服务点附加信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
-        - { "domainNo": 3, "name": "f60f3", "fixed": true, "length": 15, "remark": "服务点附加信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
+        - { "domainNo": 2, "name": "f60f2", "fixed": true, "length": 11, "remark": "服务点附加信息", "existSubdomain": true, "subdomainType": "FIXED" }
+        - { "domainNo": 3, "name": "f60f3", "fixed": true, "length": 15, "remark": "服务点附加信息", "existSubdomain": true, "subdomainType": "FIXED" }
       F60_F2:
         - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 1, "remark": "账户所有人类型", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "f60f2", "fixed": true, "length": 1, "remark": "终端读取能力", "clazz": "java.lang.String" }
@@ -139,11 +139,11 @@ alatka.messages:
         - { "domainNo": 1, "aliasName": "T00", "name": "f104f1", "fixed": false, "maxLength": 6, "remark": "渠道编码", "clazz": "java.lang.String" }
         - { "domainNo": 2, "aliasName": "T01", "name": "f104f2", "fixed": false, "maxLength": 4, "remark": "账务代码", "clazz": "java.lang.String" }
         - { "domainNo": 3, "aliasName": "T02", "name": "f104f3", "fixed": false, "maxLength": 32, "remark": "渠道流水号", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "aliasName": "T03", "name": "f104f4", "fixed": true, "length": 71, "remark": "反洗钱相关", "existSubdomain": true, "subdomainType": "DEFAULT" }
+        - { "domainNo": 4, "aliasName": "T03", "name": "f104f4", "fixed": true, "length": 71, "remark": "反洗钱相关", "existSubdomain": true, "subdomainType": "FIXED" }
         - { "domainNo": 5, "aliasName": "T94", "name": "f104f5", "fixed": true, "length": 8, "remark": "原始交易信息", "clazz": "java.lang.String" }
-        - { "domainNo": 6, "aliasName": "T95", "name": "f104f6", "fixed": true, "length": 15, "remark": "第三方支付信息", "existSubdomain": true, "subdomainType": "DEFAULT" }
+        - { "domainNo": 6, "aliasName": "T95", "name": "f104f6", "fixed": true, "length": 15, "remark": "第三方支付信息", "existSubdomain": true, "subdomainType": "FIXED" }
         - { "domainNo": 7, "aliasName": "T96", "name": "f104f7", "fixed": true, "length": 67, "remark": "无卡平台信息", "clazz": "java.lang.String" }
-        - { "domainNo": 8, "aliasName": "T97", "name": "f104f8", "fixed": true, "length": 51, "remark": "总帐系统配套会计平台", "existSubdomain": true, "subdomainType": "DEFAULT" }
+        - { "domainNo": 8, "aliasName": "T97", "name": "f104f8", "fixed": true, "length": 51, "remark": "总帐系统配套会计平台", "existSubdomain": true, "subdomainType": "FIXED" }
         - { "domainNo": 9, "aliasName": "T98", "name": "f104f9", "fixed": false, "maxLength": 19, "remark": "联盟流水号", "clazz": "java.lang.String" }
         - { "domainNo": 10, "aliasName": "T99", "name": "f104f10", "fixed": true, "length": 134, "remark": "行内信息", "clazz": "java.lang.String" }
       F62$DA_F4:
