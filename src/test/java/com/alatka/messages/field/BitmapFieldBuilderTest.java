@@ -73,7 +73,7 @@ public class BitmapFieldBuilderTest {
     }
 
     @Test
-    @DisplayName("fromObjectToBinary() bitmap = null")
+    @DisplayName("fromObjectToBinary() bitmap != null")
     void test06() {
         Map<Integer, Boolean> map = new HashMap<>();
         map.put(1, false);
@@ -91,7 +91,7 @@ public class BitmapFieldBuilderTest {
     // TODO
     @Disabled
     @Test
-    @DisplayName("fromObjectToBinary() bitmap != null")
+    @DisplayName("fromObjectToBinary() bitmap = null")
     void test07() {
         MessageDefinition messageDefinition = new MessageDefinition();
         MessageDefinitionContext.getInstance().fieldDefinitions(messageDefinition, Collections.emptyList());

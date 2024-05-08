@@ -23,9 +23,6 @@ public abstract class MessageBuilder {
 
     protected MessageDefinition definition;
 
-    protected MessageBuilder() {
-    }
-
     public static <T> MessageBuilder init(Class<T> clazz) {
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
         MessageDefinition definition = context.messageDefinition(clazz);
@@ -102,6 +99,7 @@ public abstract class MessageBuilder {
     }
 
     public <T> T unpack(byte[] bytes) {
+        // MessageHolder or POJO
         Object instance = definition.getHolder() == MessageHolder.class ?
                 MessageHolder.newInstance(definition.identity()) : ClassUtil.newInstance(definition.getHolder());
         AtomicInteger counter = new AtomicInteger(0);

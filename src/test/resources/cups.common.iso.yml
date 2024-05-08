@@ -129,10 +129,12 @@ alatka.messages:
         - { "domainNo": 1, "name": "payType", "fixed": true, "length": 2, "remark": "付款类型", "clazz": "java.lang.Integer" }
         - { "domainNo": 2, "name": "payCode", "fixed": true, "length": 30, "remark": "付款代码", "clazz": "java.lang.String" }
         - { "domainNo": 3, "name": "payReason", "fixed": true, "length": 30, "remark": "付款原因", "clazz": "java.lang.String" }
+      F48$ON:
+        - { "domainNo": 1, "name": "orderNo", "fixed": true, "length": 40, "remark": "订单号", "clazz": "java.lang.String" }
       F53:
         - { "domainNo": 1, "name": "keyType", "fixed": true, "length": 1, "remark": "重置密钥的类型/PIN格式", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "encryptionMethodUsed", "fixed": true, "length": 1, "remark": "加密算法标志", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 14, "remark": "保留使用", "clazz": "java.lang.Long" }
+        - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 14, "remark": "保留使用", "clazz": "java.lang.String" }
       F54:
         - { "domainNo": 1, "name": "accountType1", "fixed": true, "length": 2, "remark": "账户类型", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "balanceType1", "fixed": true, "length": 2, "remark": "余额类型", "clazz": "java.lang.String" }

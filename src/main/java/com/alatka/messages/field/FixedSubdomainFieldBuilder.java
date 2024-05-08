@@ -14,10 +14,10 @@ import java.util.Map;
  * @see AbstractFieldBuilder
  * @see FieldBuilder
  */
-public class FixedSubdomainFieldBuilder<T> extends SubdomainFieldBuilder<T> {
+public class FixedSubdomainFieldBuilder extends SubdomainFieldBuilder<Object> {
 
     @Override
-    protected byte[] pack(T value, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
+    protected byte[] pack(Object value, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
         return fieldDefinition.getFixed() ?
                 new DefaultMessageBuilder(definition).pack(value) :
@@ -25,7 +25,7 @@ public class FixedSubdomainFieldBuilder<T> extends SubdomainFieldBuilder<T> {
     }
 
     @Override
-    protected T unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
+    protected Object unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
         return fieldDefinition.getFixed() ?
                 new DefaultMessageBuilder(definition).unpack(bytes) :

@@ -78,7 +78,7 @@ alatka.messages:
       F53:
         - { "domainNo": 1, "name": "keyType", "fixed": true, "length": 1, "remark": "重置密钥的类型/PIN格式", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "encryptionMethodUsed", "fixed": true, "length": 1, "remark": "加密算法标志", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 14, "remark": "保留使用", "clazz": "java.lang.Long" }
+        - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 14, "remark": "保留使用", "clazz": "java.lang.String" }
       F54:
         - { "domainNo": 1, "name": "accountType1", "fixed": true, "length": 2, "remark": "账户类型", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "balanceType1", "fixed": true, "length": 2, "remark": "余额类型", "clazz": "java.lang.String" }
