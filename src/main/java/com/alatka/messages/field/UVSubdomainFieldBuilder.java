@@ -5,6 +5,7 @@ import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.UsageSubdomain;
 import com.alatka.messages.message.IsoMessageBuilder;
 import com.alatka.messages.message.IsoTLV2MessageBuilder;
+import com.alatka.messages.message.IsoTVMessageBuilder;
 import com.alatka.messages.message.MessageBuilder;
 import com.alatka.messages.util.BytesUtil;
 
@@ -54,9 +55,14 @@ public class UVSubdomainFieldBuilder extends SubdomainFieldBuilder<UsageSubdomai
     }
 
     private MessageBuilder generateMessageBuilder(MessageDefinition definition) {
-        return definition.getDomainType() == MessageDefinition.DomainType.TLV2 ?
-                new IsoTLV2MessageBuilder(definition) :
-                new IsoMessageBuilder(definition);
+        switch (definition.getDomainType()) {
+            case TLV2:
+                return new IsoTLV2MessageBuilder(definition);
+            case TV:
+                return new IsoTVMessageBuilder(definition);
+            default:
+                return new IsoMessageBuilder(definition);
+        }
     }
 
     @Override
