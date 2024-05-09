@@ -34,8 +34,16 @@ public class TVDomainParsedTest {
     }
 
     @Test
-    @DisplayName("pack()")
+    @DisplayName("pack() byte.length=0")
     void test03() {
+        byte[] bytes = new byte[0];
+        byte[] pack = domainParsed.pack(bytes, null);
+        Assertions.assertSame(pack, bytes);
+    }
+
+    @Test
+    @DisplayName("pack()")
+    void test04() {
         String value = "123456789";
         IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
         fieldDefinition.setAliasName("T01");
@@ -48,7 +56,7 @@ public class TVDomainParsedTest {
 
     @Test
     @DisplayName("unpack()")
-    void test04() {
+    void test05() {
         String str = "T01123456789";
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setLength(9);

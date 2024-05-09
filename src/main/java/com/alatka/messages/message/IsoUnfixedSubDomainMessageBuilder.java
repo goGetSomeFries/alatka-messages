@@ -58,7 +58,7 @@ public class IsoUnfixedSubDomainMessageBuilder extends MessageBuilder {
     }
 
     @Override
-    protected <T> MessageBuilder.Wrapper doUnpack(T instance, MessageDefinition definition,
+    protected <T> Wrapper doUnpack(T instance, MessageDefinition definition,
                                                   FieldDefinition fieldDefinition, byte[] bytes, AtomicInteger counter) {
         return counter.get() >= bytes.length ? new Wrapper(null, fieldDefinition) :
                 super.doUnpack(instance, definition, fieldDefinition, bytes, counter);
