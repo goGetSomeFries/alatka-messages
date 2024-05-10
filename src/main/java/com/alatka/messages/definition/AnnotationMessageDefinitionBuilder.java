@@ -9,6 +9,7 @@ import com.alatka.messages.holder.UsageSubdomain;
 import com.alatka.messages.util.ClassUtil;
 import org.reflections.Reflections;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Function;
@@ -34,7 +35,7 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
         ClassUtil.buildDeclaredFields(source, list);
 
         return list.stream()
-                .filter(this::filter)
+                .filter(field -> field.isAnnotationPresent(annotationClass()))
                 .map(field -> new Wrapper(field, this.buildFieldDefinition(field)))
                 .peek(wrapper -> this.postBuildFieldDefinition(wrapper.field, wrapper.fieldDefinition))
                 .map(wrapper -> (S) wrapper.fieldDefinition)
@@ -74,6 +75,17 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
         return Collections.singletonList(definition);
     }
 
+    @Override
+    protected List<Class<?>> getSources() {
+        Reflections reflections = new Reflections(this.packageName);
+        Set<Class<?>> set = reflections.getTypesAnnotatedWith(MessageMeta.class, true);
+        ArrayList<Class<?>> list = new ArrayList<>(set);
+        return list.stream()
+                .filter(clazz -> clazz.getAnnotation(MessageMeta.class).type() == this.type())
+                .sorted(Comparator.comparing(this::buildMessageDefinition))
+                .collect(Collectors.toList());
+    }
+
     private MessageDefinition buildMessageDefinition(Class<?> clazz) {
         MessageMeta annotation = clazz.getAnnotation(MessageMeta.class);
         MessageDefinition definition = new MessageDefinition();
@@ -91,17 +103,6 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
     }
 
     @Override
-    protected List<Class<?>> getSources() {
-        Reflections reflections = new Reflections(this.packageName);
-        Set<Class<?>> set = reflections.getTypesAnnotatedWith(MessageMeta.class, true);
-        ArrayList<Class<?>> list = new ArrayList<>(set);
-        return list.stream()
-                .filter(clazz -> clazz.getAnnotation(MessageMeta.class).type() == this.type())
-                .sorted(Comparator.comparing(this::buildMessageDefinition))
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public void refresh() {
         throw new UnsupportedOperationException("注解不支持动态加载");
     }
@@ -115,7 +116,12 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
      */
     protected abstract <S extends FieldDefinition> S buildFieldDefinition(Field field);
 
-    protected abstract boolean filter(Field field);
+    /**
+     * 域注解类
+     *
+     * @return
+     */
+    protected abstract Class<? extends Annotation> annotationClass();
 
     private class Wrapper {
         private final Field field;

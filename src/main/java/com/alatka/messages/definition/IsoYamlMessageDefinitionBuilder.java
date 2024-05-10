@@ -9,6 +9,7 @@ import com.alatka.messages.context.MessageDefinition;
  *
  * @author ybliu
  * @see YamlMessageDefinitionBuilder
+ * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
 public class IsoYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilder {
@@ -25,7 +26,7 @@ public class IsoYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilde
     protected void postBuildFieldDefinition(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
         IsoFieldDefinition definition = (IsoFieldDefinition) fieldDefinition;
         if (definition.getLength() == null) {
-            definition.setLength(Integer.MIN_VALUE);
+            definition.setLength(0);
         }
         if (definition.getFixed() && definition.getMaxLength() == null) {
             definition.setMaxLength(definition.getLength());

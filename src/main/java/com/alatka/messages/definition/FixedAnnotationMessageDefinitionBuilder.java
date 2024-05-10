@@ -4,6 +4,7 @@ import com.alatka.messages.annotation.FixedFieldMeta;
 import com.alatka.messages.context.FixedFieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 /**
@@ -20,8 +21,8 @@ public class FixedAnnotationMessageDefinitionBuilder extends AnnotationMessageDe
     }
 
     @Override
-    protected boolean filter(Field field) {
-        return field.isAnnotationPresent(FixedFieldMeta.class);
+    protected Class<? extends Annotation> annotationClass() {
+        return FixedFieldMeta.class;
     }
 
     @Override
