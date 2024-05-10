@@ -55,11 +55,6 @@ public @interface MessageMeta {
     MessageDefinition.DomainType domainType() default MessageDefinition.DomainType.NONE;
 
     /**
-     * {@link MessageDefinition#setHeader(MessageDefinition)}
-     */
-    Class<?> header() default Class.class;
-
-    /**
      * true: 使用 {@link MessageHolder} 对象，作为报文解析后的容器<br>
      * false: 使用注解定义类的对象，作为报文解析后的容器
      * {@link MessageDefinition#setHolder(Class)}

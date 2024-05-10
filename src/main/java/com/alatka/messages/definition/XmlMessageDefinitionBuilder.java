@@ -53,8 +53,6 @@ public abstract class XmlMessageDefinitionBuilder extends FileMessageDefinitionB
         Map<String, Object> xml = XmlUtil.getMap(source.toFile(), Object.class);
         Map<String, Object> message = this.getValueWithMap(xml, "message");
 
-        AtomicReference<MessageDefinition> header = new AtomicReference<>();
-
         return Arrays.stream(MessageDefinition.Kind.values())
                 .filter(kind -> message.containsKey(kind.name()))
                 .flatMap(kind -> {
@@ -65,15 +63,6 @@ public abstract class XmlMessageDefinitionBuilder extends FileMessageDefinitionB
                         return list.stream().map(subPayload -> buildMessageDefinition(kind, subPayload, message));
                     }
                     return Stream.of(buildMessageDefinition(kind, null, message));
-                }).peek(definition -> {
-                    if (definition.getKind() == MessageDefinition.Kind.header) {
-                        header.set(definition);
-                    }
-                    if (definition.getKind() == MessageDefinition.Kind.payload ||
-                            definition.getKind() == MessageDefinition.Kind.request ||
-                            definition.getKind() == MessageDefinition.Kind.response) {
-                        definition.setHeader(header.get());
-                    }
                 }).collect(Collectors.toList());
     }
 
