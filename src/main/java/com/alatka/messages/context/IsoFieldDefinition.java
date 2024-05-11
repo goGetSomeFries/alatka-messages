@@ -4,6 +4,9 @@ import com.alatka.messages.domain.TLV2DomainParsed;
 import com.alatka.messages.domain.TLVDomainParsed;
 import com.alatka.messages.domain.TVDomainParsed;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * 8583报文域定义类
  *
@@ -54,12 +57,13 @@ public class IsoFieldDefinition extends FieldDefinition {
 
     @Override
     public String toString() {
-        return "{" + String.join(":",
-                "F" + getDomainNo(),
+        return Stream.of("F" + getDomainNo(),
+                getAliasName(),
                 getName(),
                 getFixed() ? getLength().toString() : getLength() + "~" + getMaxLength(),
                 getRemark())
-                + "}";
+                .filter(e -> e != null)
+                .collect(Collectors.joining(":", "{", "}"));
     }
 
 }
