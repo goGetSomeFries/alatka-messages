@@ -8,27 +8,27 @@ import com.alatka.messages.holder.MessageHolderUtil;
 import java.util.Map;
 
 /**
- * 8583报文打包/解包器
+ * 8583 payload报文打包/解包器
  *
  * @author ybliu
  */
-public class IsoMessageBuilder extends MessageBuilder {
+public class PayloadMessageBuilder extends MessageBuilder {
 
     private ThreadLocal<Map<Integer, Boolean>> bitmap = new ThreadLocal<>();
 
-    public IsoMessageBuilder(MessageDefinition definition) {
+    public PayloadMessageBuilder(MessageDefinition definition) {
         super.definition = definition;
     }
 
     @Override
     protected boolean filter(FieldDefinition fieldDefinition) {
-        return MessageDefinition.Kind.payload == definition.getKind() && fieldDefinition.getDomainNo() > 1 ?
+        return fieldDefinition.getDomainNo() > 1 ?
                 this.bitmap.get().getOrDefault(fieldDefinition.getDomainNo(), false) : true;
     }
 
     @Override
     protected void postProcess(FieldDefinition fieldDefinition, Object instance, Object value, boolean packed) {
-        if (MessageDefinition.Kind.payload == definition.getKind() && fieldDefinition.getDomainNo() == 1) {
+        if (fieldDefinition.getDomainNo() == 1) {
             if (packed) {
                 this.bitmap.set(BitmapFieldBuilder.generate((byte[]) value));
             } else {
@@ -39,8 +39,6 @@ public class IsoMessageBuilder extends MessageBuilder {
 
     @Override
     protected void postProcess() {
-        if (MessageDefinition.Kind.payload == definition.getKind()) {
-            this.bitmap.remove();
-        }
+        this.bitmap.remove();
     }
 }

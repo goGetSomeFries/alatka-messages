@@ -3,9 +3,9 @@ package com.alatka.messages.field;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.UsageSubdomain;
-import com.alatka.messages.message.IsoMessageBuilder;
-import com.alatka.messages.message.IsoTLVMessageBuilder;
+import com.alatka.messages.message.DefaultMessageBuilder;
 import com.alatka.messages.message.MessageBuilder;
+import com.alatka.messages.message.TLVSubdomainMessageBuilder;
 import com.alatka.messages.util.BytesUtil;
 
 import java.util.Arrays;
@@ -60,8 +60,8 @@ public abstract class AbstractULVSubdomainFieldBuilder extends SubdomainFieldBui
 
     private MessageBuilder generateMessageBuilder(MessageDefinition definition) {
         return definition.getDomainType() == MessageDefinition.DomainType.TLV ?
-                new IsoTLVMessageBuilder(definition) :
-                new IsoMessageBuilder(definition);
+                new TLVSubdomainMessageBuilder(definition) :
+                new DefaultMessageBuilder(definition);
     }
 
     protected abstract int usageIdLength();
