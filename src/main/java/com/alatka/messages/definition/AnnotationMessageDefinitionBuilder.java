@@ -87,10 +87,6 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
         definition.setHolder(annotation.customize() ? MessageHolder.class : clazz);
         definition.setCharset(annotation.charset());
         definition.setRemark(annotation.remark());
-        if (annotation.header() != Class.class) {
-            MessageDefinition header = MessageDefinitionContext.getInstance().messageDefinition(annotation.header());
-            definition.setHeader(header);
-        }
         return definition;
     }
 

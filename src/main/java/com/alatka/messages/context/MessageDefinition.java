@@ -48,10 +48,6 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
      */
     private DomainType domainType;
     /**
-     * 报文头{@link MessageDefinition}
-     */
-    private MessageDefinition header;
-    /**
      * 报文实体类<br>
      * {@link MessageHolder}/POJO
      */
@@ -162,14 +158,6 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
 
     public void setDomainType(DomainType domainType) {
         this.domainType = domainType;
-    }
-
-    public MessageDefinition getHeader() {
-        return header;
-    }
-
-    public void setHeader(MessageDefinition header) {
-        this.header = header;
     }
 
     public Class<?> getHolder() {

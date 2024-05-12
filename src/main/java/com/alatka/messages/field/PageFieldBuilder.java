@@ -2,6 +2,7 @@ package com.alatka.messages.field;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
+import com.alatka.messages.message.DefaultMessageBuilder;
 import com.alatka.messages.message.MessageBuilder;
 import com.alatka.messages.util.BytesUtil;
 
@@ -25,7 +26,7 @@ public class PageFieldBuilder extends SubdomainFieldBuilder<List<?>> {
     @Override
     protected List<?> unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
-        MessageBuilder messageBuilder = MessageBuilder.init(definition);
+        MessageBuilder messageBuilder = new DefaultMessageBuilder(definition);
         AtomicInteger counter = new AtomicInteger(0);
 
         return IntStream.range(0, bytes.length / fieldDefinition.getLength())
@@ -39,7 +40,7 @@ public class PageFieldBuilder extends SubdomainFieldBuilder<List<?>> {
     @Override
     protected byte[] pack(List<?> value, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
-        MessageBuilder messageBuilder = MessageBuilder.init(definition);
+        MessageBuilder messageBuilder = new DefaultMessageBuilder(definition);
         return value.stream()
                 .map(instance -> messageBuilder.pack(instance))
                 .reduce(new byte[0], BytesUtil::concat);

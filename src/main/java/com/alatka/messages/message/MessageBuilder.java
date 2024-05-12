@@ -18,8 +18,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 报文打包/解包器
  *
  * @author ybliu
- * @see IsoMessageBuilder
- * @see FixedMessageBuilder
  */
 public abstract class MessageBuilder {
 
@@ -28,13 +26,13 @@ public abstract class MessageBuilder {
     protected MessageBuilder() {
     }
 
-    public static <T, S extends MessageBuilder> S init(Class<T> clazz) {
+    public static <T> MessageBuilder init(Class<T> clazz) {
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
         MessageDefinition definition = context.messageDefinition(clazz);
         return init(definition);
     }
 
-    public static <S extends MessageBuilder> S init(String key) {
+    public static MessageBuilder init(String key) {
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
         MessageDefinition definition = context.messageDefinition(key);
         if (definition == null) {
@@ -43,11 +41,28 @@ public abstract class MessageBuilder {
         return init(definition);
     }
 
-    public static <S extends MessageBuilder> S init(MessageDefinition definition) {
-        MessageBuilder messageBuilder =
-                definition.getType() == MessageDefinition.Type.fixed ?
-                        new FixedMessageBuilder(definition) : new IsoMessageBuilder(definition);
-        return (S) messageBuilder;
+    /**
+     * 支持8583、固定格式解析<br>
+     * 支持8583各类子域单独解析<br>
+     * 不支持分页子域、8583不定长子域单独解析
+     *
+     * @param definition
+     * @return
+     */
+    public static MessageBuilder init(MessageDefinition definition) {
+        if (definition.getKind() == MessageDefinition.Kind.payload) {
+            return new PayloadMessageBuilder(definition);
+        }
+        if (definition.getDomainType() == MessageDefinition.DomainType.TV) {
+            return new TVSubdomainMessageBuilder(definition);
+        }
+        if (definition.getDomainType() == MessageDefinition.DomainType.TLV) {
+            return new TLVSubdomainMessageBuilder(definition);
+        }
+        if (definition.getDomainType() == MessageDefinition.DomainType.TLV2) {
+            return new TLV2SubdomainMessageBuilder(definition);
+        }
+        return new DefaultMessageBuilder(definition);
     }
 
     public <T> byte[] pack(T instance) {
@@ -55,7 +70,13 @@ public abstract class MessageBuilder {
 
         byte[] result = fieldDefinitions.stream()
                 .filter(this::filter)
-                .map(fieldDefinition -> this.doPack(instance, definition, fieldDefinition))
+                .map(fieldDefinition -> {
+                    try {
+                        return this.doPack(instance, definition, fieldDefinition);
+                    } catch (Exception e) {
+                        throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+                    }
+                })
                 .peek(wrapper -> this.postProcess(wrapper.fieldDefinition, instance, wrapper.value, true))
                 .map(wrapper -> (byte[]) wrapper.value)
                 .reduce(new byte[0], this::concatBytes);
@@ -64,19 +85,15 @@ public abstract class MessageBuilder {
     }
 
     protected <T> Wrapper doPack(T instance, MessageDefinition definition, FieldDefinition fieldDefinition) {
-        try {
-            // 对象解析为字节数组
-            FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
-            byte[] bytes = fieldBuilder.serialize(instance, fieldDefinition);
+        // 对象解析为字节数组
+        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
+        byte[] bytes = fieldBuilder.serialize(instance, fieldDefinition);
 
-            // 字节数组包装成定义格式报文域
-            DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
-            byte[] packed = domainParsed.pack(bytes, fieldDefinition);
+        // 字节数组包装成定义格式报文域
+        DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
+        byte[] packed = domainParsed.pack(bytes, fieldDefinition);
 
-            return new Wrapper(packed, fieldDefinition);
-        } catch (Exception e) {
-            throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
-        }
+        return new Wrapper(packed, fieldDefinition);
     }
 
     public <T> T unpack(String hexStr) {
@@ -92,26 +109,27 @@ public abstract class MessageBuilder {
         List<FieldDefinition> fieldDefinitions = this.buildFieldDefinitions(bytes);
         fieldDefinitions.stream()
                 .filter(this::filter)
-                .map(fieldDefinition -> this.doUnpack(instance, definition, fieldDefinition, bytes, counter))
-                .forEach(wrapper -> this.postProcess(wrapper.fieldDefinition, instance, wrapper.value, false));
+                .map(fieldDefinition -> {
+                    try {
+                        return this.doUnpack(instance, definition, fieldDefinition, bytes, counter);
+                    } catch (Exception e) {
+                        throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+                    }
+                }).forEach(wrapper -> this.postProcess(wrapper.fieldDefinition, instance, wrapper.value, false));
         this.postProcess();
         return (T) instance;
     }
 
     protected <T> Wrapper doUnpack(T instance, MessageDefinition definition,
                                    FieldDefinition fieldDefinition, byte[] bytes, AtomicInteger counter) {
-        try {
-            // 解析报文域字节数组
-            DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
-            byte[] valueBytes = domainParsed.unpack(bytes, fieldDefinition, counter);
+        // 解析报文域字节数组
+        DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
+        byte[] valueBytes = domainParsed.unpack(bytes, fieldDefinition, counter);
 
-            // 字节数组解析为对象
-            FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
-            Object value = fieldBuilder.deserialize(valueBytes, fieldDefinition, instance, counter);
-            return new Wrapper(value, fieldDefinition);
-        } catch (Exception e) {
-            throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
-        }
+        // 字节数组解析为对象
+        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
+        Object value = fieldBuilder.deserialize(valueBytes, fieldDefinition, instance, counter);
+        return new Wrapper(value, fieldDefinition);
     }
 
     protected byte[] concatBytes(byte[] bytes1, byte[] bytes2) {

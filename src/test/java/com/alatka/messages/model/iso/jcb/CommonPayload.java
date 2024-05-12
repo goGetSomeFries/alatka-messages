@@ -17,7 +17,7 @@ import static com.alatka.messages.context.MessageDefinition.DomainType.*;
 import static com.alatka.messages.context.MessageDefinition.Kind.payload;
 import static com.alatka.messages.context.MessageDefinition.Type.iso;
 
-@MessageMeta(type = iso, group = "jcb", code = "common", header = CommonHeader.class, kind = payload, remark = "jcb报文体")
+@MessageMeta(type = iso, group = "jcb", code = "common", kind = payload, remark = "jcb报文体")
 public class CommonPayload {
 
     @IsoFieldMeta(domainNo = 0, fixed = true, length = 4, remark = "报文类型", parseType = EBCDIC)

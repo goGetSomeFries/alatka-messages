@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -63,8 +62,6 @@ public abstract class YamlMessageDefinitionBuilder extends FileMessageDefinition
         Map<String, Object> yaml = YamlUtil.getMap(source.toFile(), YAML_ROOT_NAME, Object.class);
         Map<String, Object> message = this.getValueWithMap(yaml, "message");
 
-        AtomicReference<MessageDefinition> header = new AtomicReference<>();
-
         return Arrays.stream(MessageDefinition.Kind.values())
                 .filter(kind -> message.containsKey(kind.name()))
                 .flatMap(kind -> {
@@ -74,15 +71,6 @@ public abstract class YamlMessageDefinitionBuilder extends FileMessageDefinition
                                 .map(identity -> buildMessageDefinition(kind, identity, yaml));
                     }
                     return Stream.of(buildMessageDefinition(kind, null, yaml));
-                }).peek(definition -> {
-                    if (definition.getKind() == MessageDefinition.Kind.header) {
-                        header.set(definition);
-                    }
-                    if (definition.getKind() == MessageDefinition.Kind.payload ||
-                            definition.getKind() == MessageDefinition.Kind.request ||
-                            definition.getKind() == MessageDefinition.Kind.response) {
-                        definition.setHeader(header.get());
-                    }
                 }).collect(Collectors.toList());
     }
 
