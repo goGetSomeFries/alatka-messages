@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
  *
  * @author ybliu
  */
-public class IsoUnfixedSubDomainMessageBuilder extends MessageBuilder {
+public class UnfixedSubdomainMessageBuilder extends MessageBuilder {
 
-    public IsoUnfixedSubDomainMessageBuilder(MessageDefinition definition) {
+    public UnfixedSubdomainMessageBuilder(MessageDefinition definition) {
         super.definition = definition;
     }
 
@@ -27,22 +27,18 @@ public class IsoUnfixedSubDomainMessageBuilder extends MessageBuilder {
 
     @Override
     protected <T> Wrapper doPack(T instance, MessageDefinition definition, FieldDefinition fieldDefinition) {
-        try {
-            // 对象解析为字节数组
-            FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
-            byte[] bytes = fieldBuilder.serialize(instance, fieldDefinition);
-            if (bytes.length == 0 && (isNull == null || isNull.booleanValue())) {
-                isNull = Boolean.TRUE;
-                return new Wrapper(bytes, fieldDefinition);
-            }
-
-            isNull = Boolean.FALSE;
-            DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
-            byte[] packed = domainParsed.pack(bytes, fieldDefinition);
-            return new Wrapper(packed, fieldDefinition);
-        } catch (Exception e) {
-            throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+        // 对象解析为字节数组
+        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
+        byte[] bytes = fieldBuilder.serialize(instance, fieldDefinition);
+        if (bytes.length == 0 && (isNull == null || isNull.booleanValue())) {
+            isNull = Boolean.TRUE;
+            return new Wrapper(bytes, fieldDefinition);
         }
+
+        isNull = Boolean.FALSE;
+        DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
+        byte[] packed = domainParsed.pack(bytes, fieldDefinition);
+        return new Wrapper(packed, fieldDefinition);
     }
 
     @Override
@@ -59,7 +55,7 @@ public class IsoUnfixedSubDomainMessageBuilder extends MessageBuilder {
 
     @Override
     protected <T> Wrapper doUnpack(T instance, MessageDefinition definition,
-                                                  FieldDefinition fieldDefinition, byte[] bytes, AtomicInteger counter) {
+                                   FieldDefinition fieldDefinition, byte[] bytes, AtomicInteger counter) {
         return counter.get() >= bytes.length ? new Wrapper(null, fieldDefinition) :
                 super.doUnpack(instance, definition, fieldDefinition, bytes, counter);
     }

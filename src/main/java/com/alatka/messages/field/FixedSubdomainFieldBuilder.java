@@ -2,8 +2,8 @@ package com.alatka.messages.field;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
-import com.alatka.messages.message.IsoUnfixedSubDomainMessageBuilder;
-import com.alatka.messages.message.MessageBuilder;
+import com.alatka.messages.message.DefaultMessageBuilder;
+import com.alatka.messages.message.UnfixedSubdomainMessageBuilder;
 
 import java.util.Map;
 
@@ -20,16 +20,16 @@ public class FixedSubdomainFieldBuilder<T> extends SubdomainFieldBuilder<T> {
     protected byte[] pack(T value, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
         return fieldDefinition.getFixed() ?
-                MessageBuilder.init(definition).pack(value) :
-                new IsoUnfixedSubDomainMessageBuilder(definition).pack(value);
+                new DefaultMessageBuilder(definition).pack(value) :
+                new UnfixedSubdomainMessageBuilder(definition).pack(value);
     }
 
     @Override
     protected T unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
         return fieldDefinition.getFixed() ?
-                MessageBuilder.init(definition).unpack(bytes) :
-                new IsoUnfixedSubDomainMessageBuilder(definition).unpack(bytes);
+                new DefaultMessageBuilder(definition).unpack(bytes) :
+                new UnfixedSubdomainMessageBuilder(definition).unpack(bytes);
     }
 
     @Override

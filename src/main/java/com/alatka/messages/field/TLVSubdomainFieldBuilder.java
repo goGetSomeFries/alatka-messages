@@ -2,7 +2,7 @@ package com.alatka.messages.field;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
-import com.alatka.messages.message.IsoTLVMessageBuilder;
+import com.alatka.messages.message.TLVSubdomainMessageBuilder;
 
 import java.util.Map;
 
@@ -19,13 +19,13 @@ public class TLVSubdomainFieldBuilder extends SubdomainFieldBuilder<Object> {
     @Override
     protected byte[] pack(Object value, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
-        return new IsoTLVMessageBuilder(definition).pack(value);
+        return new TLVSubdomainMessageBuilder(definition).pack(value);
     }
 
     @Override
     protected Object unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
-        return new IsoTLVMessageBuilder(definition).unpack(bytes);
+        return new TLVSubdomainMessageBuilder(definition).unpack(bytes);
     }
 
     @Override
