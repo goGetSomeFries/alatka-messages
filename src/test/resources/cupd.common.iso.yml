@@ -1,5 +1,5 @@
 alatka.messages:
-  remark: 银联数据8583报文
+  remark: cupd8583报文
   type: iso
   group: cupd
   code: common

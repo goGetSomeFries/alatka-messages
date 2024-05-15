@@ -1,4 +1,4 @@
-package com.alatka.messages.model.fixed.b0305;
+package com.alatka.messages.model.fixed.b9001;
 
 import com.alatka.messages.annotation.FixedFieldMeta;
 

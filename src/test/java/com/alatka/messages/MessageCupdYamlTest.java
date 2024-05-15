@@ -6,7 +6,7 @@ import com.alatka.messages.message.MessageBuilder;
 import com.alatka.messages.util.BytesUtil;
 import org.junit.jupiter.api.*;
 
-@DisplayName("银联数据8583报文")
+@DisplayName("cupd8583报文")
 public class MessageCupdYamlTest {
 
     @BeforeAll
