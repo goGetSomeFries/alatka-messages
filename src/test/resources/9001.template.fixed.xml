@@ -2,7 +2,7 @@
 <alatka-messages xmlns="http://messages.alatka.com"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://messages.alatka.com alatka-messages.xsd">
-    <message type="fixed" group="0305" code="template" remark="0305固定格式模板">
+    <message type="fixed" group="9001" code="template" remark="9001固定格式模板">
         <request>
             <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="java.lang.String"/>
             <field domainNo="2" name="retCode" length="6" remark="响应码" clazz="java.lang.String"/>

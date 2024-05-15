@@ -1,7 +1,7 @@
 alatka.messages:
   remark: 信用卡账单明细查询
   type: fixed
-  group: "0305"
+  group: 9001
   code: 3006
   message:
     request:
