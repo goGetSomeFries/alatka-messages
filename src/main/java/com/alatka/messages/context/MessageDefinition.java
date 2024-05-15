@@ -23,7 +23,7 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
     /**
      * 报文分组
      * 8583: visa/jcb/master/cups...<br>
-     * fixed: 0305...
+     * fixed: 9001...
      */
     private String group;
     /**

@@ -238,22 +238,22 @@ public class DomainTest {
     @Test
     @DisplayName("子域:LIST")
     public void test11() {
-        MessageHolder instance1 = MessageHolder.newInstance("fixed:0305:3006:subPayload:F13");
+        MessageHolder instance1 = MessageHolder.newInstance("fixed:9001:3006:subPayload:F13");
         instance1.put(1, 1);
         instance1.put(2, LocalDate.now());
         instance1.put(3, LocalDate.now());
         instance1.put(5, 23423);
-        MessageHolder instance2 = MessageHolder.newInstance("fixed:0305:3006:subPayload:F13");
+        MessageHolder instance2 = MessageHolder.newInstance("fixed:9001:3006:subPayload:F13");
         instance2.put(1, 2);
         instance2.put(2, LocalDate.now());
         instance2.put(3, LocalDate.now());
         instance2.put(5, 23425);
 
-        String key = "fixed:0305:3006:response";
+        String key = "fixed:9001:3006:response";
         MessageHolder instance = MessageHolder.newInstance(key);
         instance.put(1, "3006");
         instance.put(2, "000000");
-        instance.put(3, "0305");
+        instance.put(3, "9001");
         instance.put(4, "PR");
         instance.put(5, "900999");
         instance.put(6, "000000");

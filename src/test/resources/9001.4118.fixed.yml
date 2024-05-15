@@ -1,7 +1,7 @@
 alatka.messages:
   remark: 客户以及账户标签内容交易
   type: fixed
-  group: "0305"
+  group: 9001
   code: 4118
   message:
     request:
