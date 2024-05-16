@@ -11,7 +11,7 @@ import java.time.MonthDay;
 import static com.alatka.messages.context.MessageDefinition.Kind.subPayload;
 import static com.alatka.messages.context.MessageDefinition.Type.fixed;
 
-@MessageMeta(type = fixed, group = "9001", code = "3006", kind = subPayload, remark = "信用卡账单明细查询")
+@MessageMeta(type = fixed, group = "9001", code = "3006", kind = subPayload, remark = "明细查询")
 public class C3006Page {
     @FixedFieldMeta(domainNo = 1, length = 3, remark = "月份序号")
     private Integer monthNbr;

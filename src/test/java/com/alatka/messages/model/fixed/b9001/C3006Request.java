@@ -10,7 +10,7 @@ import java.time.YearMonth;
 import static com.alatka.messages.context.MessageDefinition.Kind.request;
 import static com.alatka.messages.context.MessageDefinition.Type.fixed;
 
-@MessageMeta(type = fixed, group = "9001", code = "3006", kind = request, remark = "信用卡账单明细查询")
+@MessageMeta(type = fixed, group = "9001", code = "3006", kind = request, remark = "明细查询")
 public class C3006Request extends Header {
 
     @FixedFieldMeta(domainNo = 8, length = 19, remark = "卡号")
