@@ -15,9 +15,9 @@
 - 支持固定格式和8583报文解析，配置方式和解析方式做到统一；
 - 支持各卡组织（visa/万事达/美运/jcb/银联/连通/网联）报文规范；
 - 支持8583**子域**及其**嵌套子域**解析；
-- 支持报文域值类型**映射java类型**（Boolean/Integer/String/LocalDate/BigDecimal/List/Map/POJO...）
-- 支持**YAML**、**XML**、**注解**、**数据库表**（待实现）三种配置形式；
+- 支持报文域值类型**映射java类型**（Boolean/Integer/String/LocalDate/BigDecimal/List/Map/POJO...）；
+- 支持**YAML**、**XML**、**注解**、**数据库表**（待实现）四种配置形式；
 - **YAML**、**XML**、**数据库表**支持动态配置，可做热更新；
 
 
-### [访问wiki获取详情](https://gitee.com/liuyibing123456/alatka-messages/wikis)
+### [访问wiki获取详情](https://gitee.com/asuka2001/alatka-messages/wikis)
