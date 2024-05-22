@@ -41,9 +41,9 @@ public class MessageHolder {
                     Object value = ClassUtil.getFieldValue(object, fieldDefinition.getName());
                     Object result = null;
                     if (value == null) {
-                        result = value;
+                        result = null;
                     } else if (value == UsageSubdomain.class) {
-                        List<MessageHolder> list = ((UsageSubdomain<T>) value).getHolder().values().stream()
+                        List<MessageHolder> list = ((UsageSubdomain<Object>) value).getHolder().values().stream()
                                 .map(MessageHolder::fromPojo).collect(Collectors.toList());
                         UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
                         list.forEach(usageSubdomain::put);

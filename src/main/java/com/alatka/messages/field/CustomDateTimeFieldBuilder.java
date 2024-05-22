@@ -23,9 +23,8 @@ public class CustomDateTimeFieldBuilder extends LocalDateTimeFieldBuilder {
     }
 
     @Override
-    protected DateTimeFormatter formatter(String pattern, boolean serialized) {
-        String newPattern = serialized ? pattern : "uuuu".concat(pattern);
-        return super.formatter(newPattern, serialized);
+    protected String doFormat(String pattern, boolean serialized) {
+        return serialized ? pattern : "uuuu".concat(pattern);
     }
 
     @Override

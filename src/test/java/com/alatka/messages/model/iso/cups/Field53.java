@@ -14,7 +14,7 @@ public class Field53 {
     @IsoFieldMeta(domainNo = 2, fixed = true, length = 1, remark = "加密算法标志")
     private String encryptionMethodUsed;
     @IsoFieldMeta(domainNo = 3, fixed = true, length = 14, remark = "保留使用")
-    private Long reserved;
+    private String reserved;
 
     public String getKeyType() {
         return keyType;
@@ -32,11 +32,11 @@ public class Field53 {
         this.encryptionMethodUsed = encryptionMethodUsed;
     }
 
-    public Long getReserved() {
+    public String getReserved() {
         return reserved;
     }
 
-    public void setReserved(Long reserved) {
+    public void setReserved(String reserved) {
         this.reserved = reserved;
     }
 }

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public class StringFieldBuilderTest {
 
-    private FieldBuilder fieldBuilder = new StringFieldBuilder();
+    private StringFieldBuilder fieldBuilder = new StringFieldBuilder();
 
     @BeforeEach
     void init() {
@@ -39,18 +39,16 @@ public class StringFieldBuilderTest {
     @DisplayName("fromObjectToAscii()")
     void test03() {
         String str = "16";
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToAscii",
-                new Class[]{String.class, FieldDefinition.class}, new Object[]{str, null});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "3136");
+        byte[] bytes = fieldBuilder.fromObjectToAscii(str, null);
+        Assertions.assertEquals("3136", BytesUtil.bytesToHex(bytes));
     }
 
     @Test
     @DisplayName("fromObjectToBinary()")
     void test04() {
         String str = "10";
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToBinary",
-                new Class[]{String.class, FieldDefinition.class}, new Object[]{str, null});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "02");
+        byte[] bytes = fieldBuilder.fromObjectToBinary(str, null);
+        Assertions.assertEquals("02", BytesUtil.bytesToHex(bytes));
     }
 
     @Test
@@ -59,9 +57,8 @@ public class StringFieldBuilderTest {
         String str = "10";
         FieldDefinition definition = new FieldDefinition();
         definition.setFixed(true);
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToBcd",
-                new Class[]{String.class, FieldDefinition.class}, new Object[]{str, definition});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "10");
+        byte[] bytes = fieldBuilder.fromObjectToBcd(str, definition);
+        Assertions.assertEquals("10", BytesUtil.bytesToHex(bytes));
     }
 
     @Test
@@ -71,36 +68,32 @@ public class StringFieldBuilderTest {
         FieldDefinition definition = new FieldDefinition();
         definition.setFixed(false);
         definition.setLength(2);
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToBcd",
-                new Class[]{String.class, FieldDefinition.class}, new Object[]{str, definition});
-        Assertions.assertArrayEquals(bytes, new byte[]{0, 2, 37});
+        byte[] bytes = fieldBuilder.fromObjectToBcd(str, definition);
+        Assertions.assertArrayEquals(new byte[]{0, 2, 37}, bytes);
     }
 
     @Test
     @DisplayName("fromObjectToEbcdic()")
     void test07() {
         String str = "12";
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToEbcdic",
-                new Class[]{String.class, FieldDefinition.class}, new Object[]{str, null});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "F1F2");
+        byte[] bytes = fieldBuilder.fromObjectToEbcdic(str, null);
+        Assertions.assertEquals("F1F2", BytesUtil.bytesToHex(bytes));
     }
 
     @Test
     @DisplayName("toObjectWithAscii()")
     void test08() {
-        String actual = "16";
-        String str = ClassUtil.invoke(fieldBuilder, "toObjectWithAscii",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual.getBytes(), null});
-        Assertions.assertEquals(str, actual);
+        String expected = "16";
+        String str = fieldBuilder.toObjectWithAscii(expected.getBytes(), null);
+        Assertions.assertEquals(expected, str);
     }
 
     @Test
     @DisplayName("toObjectWithBinary()")
     void test09() {
-        String actual = "00001111";
-        String str = ClassUtil.invoke(fieldBuilder, "toObjectWithBinary",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{BytesUtil.binaryToBytes(actual), null});
-        Assertions.assertEquals(str, actual);
+        String expected = "00001111";
+        String str = fieldBuilder.toObjectWithBinary(BytesUtil.binaryToBytes(expected), null);
+        Assertions.assertEquals(expected, str);
     }
 
     @Test
@@ -109,9 +102,8 @@ public class StringFieldBuilderTest {
         String hex = "12";
         FieldDefinition definition = new FieldDefinition();
         definition.setFixed(true);
-        String str = ClassUtil.invoke(fieldBuilder, "toObjectWithBcd",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{BytesUtil.hexToBytes(hex), definition});
-        Assertions.assertEquals(str, "12");
+        String str = fieldBuilder.toObjectWithBcd(BytesUtil.hexToBytes(hex), definition);
+        Assertions.assertEquals("12", str);
     }
 
     @Test
@@ -120,17 +112,33 @@ public class StringFieldBuilderTest {
         FieldDefinition definition = new FieldDefinition();
         definition.setFixed(false);
         definition.setLength(2);
-        String str = ClassUtil.invoke(fieldBuilder, "toObjectWithBcd",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{new byte[]{0, 2, 18}, definition});
-        Assertions.assertEquals(str, "12");
+        String str = fieldBuilder.toObjectWithBcd(new byte[]{0, 2, 18}, definition);
+        Assertions.assertEquals("12", str);
     }
 
     @Test
     @DisplayName("toObjectWithEbcdic()")
     void test12() {
         String hex = "F1F2";
-        String str = ClassUtil.invoke(fieldBuilder, "toObjectWithEbcdic",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{BytesUtil.hexToBytes(hex), null});
-        Assertions.assertEquals(str, "12");
+        String str = fieldBuilder.toObjectWithEbcdic(BytesUtil.hexToBytes(hex), null);
+        Assertions.assertEquals("12", str);
+    }
+
+    @Test
+    @DisplayName("postProcess()")
+    void test13() {
+        String str = "  123 ";
+        String result = ClassUtil.invoke(fieldBuilder, "postProcess",
+                new Class[]{String.class}, new Object[]{str});
+        Assertions.assertEquals("123", result);
+    }
+
+    @Test
+    @DisplayName("postProcess()")
+    void test14() {
+        String str = "   ";
+        String result = ClassUtil.invoke(fieldBuilder, "postProcess",
+                new Class[]{String.class}, new Object[]{str});
+        Assertions.assertNull(result);
     }
 }

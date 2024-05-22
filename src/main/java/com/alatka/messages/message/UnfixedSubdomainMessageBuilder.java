@@ -6,6 +6,7 @@ import com.alatka.messages.domain.DomainParsed;
 import com.alatka.messages.domain.DomainParsedFactory;
 import com.alatka.messages.field.FieldBuilder;
 import com.alatka.messages.field.FieldBuilderFactory;
+import com.alatka.messages.util.BytesUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -50,7 +51,7 @@ public class UnfixedSubdomainMessageBuilder extends MessageBuilder {
 
     @Override
     protected byte[] concatBytes(byte[] bytes1, byte[] bytes2) {
-        return super.concatBytes(bytes2, bytes1);
+        return BytesUtil.concat(bytes2, bytes1);
     }
 
     @Override

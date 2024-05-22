@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class DateFieldBuilderTest {
 
-    private FieldBuilder fieldBuilder = new DateFieldBuilder();
+    private DateFieldBuilder fieldBuilder = new DateFieldBuilder();
 
     @Test
     @DisplayName("order() == 90")
@@ -39,9 +39,8 @@ public class DateFieldBuilderTest {
         Date date = format.parse(str);
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setPattern(pattern);
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToAscii",
-                new Class[]{Date.class, FieldDefinition.class}, new Object[]{date, fieldDefinition});
-        Assertions.assertEquals(new String(bytes), str);
+        byte[] bytes = fieldBuilder.fromObjectToAscii(date, fieldDefinition);
+        Assertions.assertEquals(str, new String(bytes));
     }
 
     @Test
@@ -53,35 +52,56 @@ public class DateFieldBuilderTest {
         Date date = format.parse(str);
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setPattern(pattern);
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToBcd",
-                new Class[]{Date.class, FieldDefinition.class}, new Object[]{date, fieldDefinition});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), str);
+        byte[] bytes = fieldBuilder.fromObjectToBcd(date, fieldDefinition);
+        Assertions.assertEquals(str, BytesUtil.bytesToHex(bytes));
     }
 
     @Test
     @DisplayName("toObjectWithAscii()")
     void test05() {
-        String actual = "20240506";
+        String expected = "20240506";
         String pattern = "yyyyMMdd";
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setPattern(pattern);
-        Date date = ClassUtil.invoke(fieldBuilder, "toObjectWithAscii",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual.getBytes(), fieldDefinition});
-        Assertions.assertEquals(format.format(date), actual);
+        Date date = fieldBuilder.toObjectWithAscii(expected.getBytes(), fieldDefinition);
+        Assertions.assertEquals(expected, format.format(date));
     }
 
     @Test
     @DisplayName("toObjectWithBcd()")
     void test06() {
-        String actual = "20240506";
+        String expected = "20240506";
         String pattern = "yyyyMMdd";
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setPattern(pattern);
-        Date date = ClassUtil.invoke(fieldBuilder, "toObjectWithBcd",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{BytesUtil.hexToBytes(actual), fieldDefinition});
-        Assertions.assertEquals(format.format(date), actual);
+        Date date = fieldBuilder.toObjectWithBcd(BytesUtil.hexToBytes(expected), fieldDefinition);
+        Assertions.assertEquals(expected, format.format(date));
     }
 
+    @Test
+    @DisplayName("getDate()")
+    void test07() {
+        String pattern = "yyyyMMdd";
+        FieldDefinition definition = new FieldDefinition();
+        definition.setPattern(pattern);
+        String str = "20240502";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date date = ClassUtil.invoke(fieldBuilder, "getDate",
+                new Class[]{FieldDefinition.class, String.class}, new Object[]{definition, str});
+        Assertions.assertEquals(str, format.format(date));
+    }
+
+    @Test
+    @DisplayName("getDate() exception")
+    void test08() {
+        String pattern = "yyyyMMdd";
+        FieldDefinition definition = new FieldDefinition();
+        definition.setPattern(pattern);
+        String str = "Abdc";
+        Assertions.assertThrows(RuntimeException.class,
+                () -> ClassUtil.invoke(fieldBuilder, "getDate",
+                        new Class[]{FieldDefinition.class, String.class}, new Object[]{definition, str}));
+    }
 }

@@ -18,9 +18,9 @@ import java.util.Objects;
 @JsonSerialize(using = CustomJsonSerializer.class)
 public class UsageSubdomain<T> {
 
-    private final Map<String, T> holder = new HashMap<>();
+    private final Map<String, Object> holder = new HashMap<>();
 
-    public Map<String, T> getHolder() {
+    public Map<String, Object> getHolder() {
         return holder;
     }
 
@@ -32,9 +32,11 @@ public class UsageSubdomain<T> {
         if (subdomain instanceof MessageHolder) {
             MessageHolder messageHolder = (MessageHolder) subdomain;
             holder.put(messageHolder.getMessageDefinition().getUsage(), subdomain);
-        } else {
+        } else if (subdomain.getClass().isAnnotationPresent(MessageMeta.class)) {
             MessageMeta annotation = subdomain.getClass().getAnnotation(MessageMeta.class);
             holder.put(annotation.usage(), subdomain);
+        } else {
+            throw new IllegalArgumentException("subdomain must be MessageHolder type or annotation by @MessageMeta");
         }
     }
 
