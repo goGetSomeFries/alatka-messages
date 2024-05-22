@@ -5,34 +5,34 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.YearMonth;
+import java.time.MonthDay;
 import java.time.format.DateTimeFormatterBuilder;
 
-public class YearMonthFieldBuilderTest {
+public class MonthDayFieldBuilderTest {
 
-    private YearMonthFieldBuilder fieldBuilder = new YearMonthFieldBuilder();
+    private MonthDayFieldBuilder fieldBuilder = new MonthDayFieldBuilder();
 
     @Test
-    @DisplayName("order() == 85")
+    @DisplayName("order() == 84")
     void test01() {
         int order = fieldBuilder.getOrder();
-        Assertions.assertEquals(85, order);
+        Assertions.assertEquals(84, order);
     }
 
     @Test
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(YearMonth.class);
+        fieldDefinition.setOriginClass(MonthDay.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 
     @Test
     @DisplayName("parse()")
     void test03() {
-        String yearMonth = "2024-03";
-        YearMonth result = fieldBuilder.parse(yearMonth, new DateTimeFormatterBuilder().appendPattern("yyyy-MM").toFormatter());
-        Assertions.assertEquals(YearMonth.parse(yearMonth), result);
+        String monthDay = "--03-01";
+        MonthDay result = fieldBuilder.parse(monthDay, new DateTimeFormatterBuilder().appendPattern("--MM-dd").toFormatter());
+        Assertions.assertEquals(MonthDay.parse(monthDay), result);
     }
 
 }

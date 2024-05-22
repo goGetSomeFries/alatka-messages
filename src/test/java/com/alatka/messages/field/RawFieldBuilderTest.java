@@ -2,14 +2,13 @@ package com.alatka.messages.field;
 
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.util.BytesUtil;
-import com.alatka.messages.util.ClassUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RawFieldBuilderTest {
 
-    private FieldBuilder fieldBuilder = new RawFieldBuilder();
+    private RawFieldBuilder fieldBuilder = new RawFieldBuilder();
 
     @Test
     @DisplayName("order() == 1000")
@@ -29,90 +28,80 @@ public class RawFieldBuilderTest {
     @Test
     @DisplayName("fromObjectToAscii()")
     void test03() {
-        byte[] actual = BytesUtil.hexToBytes("10");
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToAscii",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = BytesUtil.hexToBytes("10");
+        byte[] bytes = fieldBuilder.fromObjectToAscii(expected, null);
+        Assertions.assertSame(bytes, expected);
     }
 
     @Test
     @DisplayName("fromObjectToBinary()")
     void test04() {
-        byte[] actual = BytesUtil.hexToBytes("10");
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToBinary",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = BytesUtil.hexToBytes("10");
+        byte[] bytes = fieldBuilder.fromObjectToBinary(expected, null);
+        Assertions.assertSame(bytes, expected);
     }
 
     @Test
     @DisplayName("fromObjectToBcd()")
     void test05() {
-        byte[] actual = BytesUtil.hexToBytes("10");
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToBcd",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = BytesUtil.hexToBytes("10");
+        byte[] bytes = fieldBuilder.fromObjectToBcd(expected, null);
+        Assertions.assertSame(expected, bytes);
     }
 
     @Test
     @DisplayName("fromObjectToEbcdic()")
     void test06() {
-        byte[] actual = BytesUtil.hexToBytes("10");
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToEbcdic",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = BytesUtil.hexToBytes("10");
+        byte[] bytes = fieldBuilder.fromObjectToEbcdic(expected, null);
+        Assertions.assertSame(expected, bytes);
     }
 
     @Test
     @DisplayName("fromObjectToNone()")
     void test07() {
-        byte[] actual = BytesUtil.hexToBytes("10");
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToNone",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = BytesUtil.hexToBytes("10");
+        byte[] bytes = fieldBuilder.fromObjectToNone(expected, null);
+        Assertions.assertSame(expected, bytes);
     }
 
     @Test
     @DisplayName("toObjectWithAscii()")
     void test08() {
-        byte[] actual = "16".getBytes();
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "toObjectWithAscii",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = "16".getBytes();
+        byte[] bytes = fieldBuilder.toObjectWithAscii(expected, null);
+        Assertions.assertSame(expected, bytes);
     }
 
     @Test
     @DisplayName("toObjectWithBinary()")
     void test09() {
-        byte[] actual = "16".getBytes();
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "toObjectWithBinary",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = "16".getBytes();
+        byte[] bytes = fieldBuilder.toObjectWithBinary(expected, null);
+        Assertions.assertSame(expected, bytes);
     }
 
     @Test
     @DisplayName("toObjectWithBcd()")
     void test10() {
-        byte[] actual = "16".getBytes();
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "toObjectWithBcd",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = "16".getBytes();
+        byte[] bytes = fieldBuilder.toObjectWithBcd(expected, null);
+        Assertions.assertSame(expected, bytes);
     }
 
     @Test
     @DisplayName("toObjectWithEbcdic()")
     void test11() {
-        byte[] actual = "16".getBytes();
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "toObjectWithEbcdic",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = "16".getBytes();
+        byte[] bytes = fieldBuilder.toObjectWithEbcdic(expected, null);
+        Assertions.assertSame(expected, bytes);
     }
 
     @Test
     @DisplayName("toObjectWithNone()")
     void test12() {
-        byte[] actual = "16".getBytes();
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "toObjectWithNone",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{actual, null});
-        Assertions.assertSame(bytes, actual);
+        byte[] expected = "16".getBytes();
+        byte[] bytes = fieldBuilder.toObjectWithNone(expected, null);
+        Assertions.assertSame(expected, bytes);
     }
 }

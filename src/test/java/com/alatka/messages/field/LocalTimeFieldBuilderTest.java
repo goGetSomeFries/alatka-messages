@@ -5,34 +5,36 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.YearMonth;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 
-public class YearMonthFieldBuilderTest {
+public class LocalTimeFieldBuilderTest {
 
-    private YearMonthFieldBuilder fieldBuilder = new YearMonthFieldBuilder();
+    private LocalTimeFieldBuilder fieldBuilder = new LocalTimeFieldBuilder();
 
     @Test
-    @DisplayName("order() == 85")
+    @DisplayName("order() == 81")
     void test01() {
         int order = fieldBuilder.getOrder();
-        Assertions.assertEquals(85, order);
+        Assertions.assertEquals(81, order);
     }
 
     @Test
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(YearMonth.class);
+        fieldDefinition.setOriginClass(LocalTime.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 
     @Test
     @DisplayName("parse()")
     void test03() {
-        String yearMonth = "2024-03";
-        YearMonth result = fieldBuilder.parse(yearMonth, new DateTimeFormatterBuilder().appendPattern("yyyy-MM").toFormatter());
-        Assertions.assertEquals(YearMonth.parse(yearMonth), result);
+        String time = "235830";
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("HHmmss").toFormatter();
+        LocalTime result = fieldBuilder.parse(time, formatter);
+        Assertions.assertEquals(LocalTime.parse(time, formatter), result);
     }
 
 }

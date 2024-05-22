@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
  * @see AbstractFieldBuilder
  * @see FieldBuilder
  */
-public class PageFieldBuilder extends SubdomainFieldBuilder<List<?>> {
+public class PageSubdomainFieldBuilder extends SubdomainFieldBuilder<List<?>> {
 
     @Override
     protected List<?> unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap) {
@@ -34,7 +34,8 @@ public class PageFieldBuilder extends SubdomainFieldBuilder<List<?>> {
                     byte[] elementBytes =
                             Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(fieldDefinition.getLength()));
                     return messageBuilder.unpack(elementBytes);
-                }).collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

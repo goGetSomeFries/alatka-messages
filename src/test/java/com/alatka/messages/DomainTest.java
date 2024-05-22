@@ -109,7 +109,7 @@ public class DomainTest {
     }
 
     @Test
-    @DisplayName("子域:DEFAULT;fixed=true")
+    @DisplayName("子域:FIXED;fixed=true")
     public void test04() {
         MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F53");
         instance1.put(1, "D");
@@ -126,7 +126,7 @@ public class DomainTest {
     }
 
     @Test
-    @DisplayName("子域:DEFAULT;fixed=false")
+    @DisplayName("子域:FIXED;fixed=false")
     public void test05() {
         MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F54");
         instance1.put(1, "AD");
@@ -145,7 +145,7 @@ public class DomainTest {
     }
 
     @Test
-    @DisplayName("子域:DEFAULT;fixed=false;last field length=-1")
+    @DisplayName("子域:FIXED;fixed=false;last field length=-1")
     public void test06() {
         MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F122");
         instance1.put(1, "2342");
@@ -181,8 +181,8 @@ public class DomainTest {
     @DisplayName("子域:TLV")
     public void test08() {
         MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F55");
-        instance1.put(0x9A, LocalDate.now());
-        instance1.put(0x9C, 1);
+        instance1.put(7, LocalDate.now());
+        instance1.put(8, 1);
 
         String key = "iso:cups:common:payload";
         MessageHolder instance = MessageHolder.newInstance(key);
@@ -324,7 +324,7 @@ public class DomainTest {
     @DisplayName("子域:ULV$TLV")
     public void test14() {
         MessageHolder instance1 = MessageHolder.newInstance("iso:cups:common:subPayload:F56:PR");
-        instance1.put(0x01, "DJK");
+        instance1.put(1, "DJK");
 
         UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
         usageSubdomain.put(instance1);
@@ -377,7 +377,7 @@ public class DomainTest {
     }
 
     @Test
-    @DisplayName("子域:DEFAULT-DEFAULT")
+    @DisplayName("子域:FIXED-FIXED")
     public void test16() {
         MessageHolder instance11 = MessageHolder.newInstance("iso:cups:common:subPayload:F60_F11");
         instance11.put(1, "K1");
@@ -415,7 +415,7 @@ public class DomainTest {
     }
 
     @Test
-    @DisplayName("子域:DEFAULT-UV")
+    @DisplayName("子域:FIXED-UV")
     public void test17() {
         MessageHolder instance11 = MessageHolder.newInstance("iso:cups:common:subPayload:F61_F10:CR");
         instance11.put(1, "K");

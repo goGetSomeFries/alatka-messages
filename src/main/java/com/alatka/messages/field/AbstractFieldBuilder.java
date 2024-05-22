@@ -68,13 +68,18 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 bytes = this.fromObjectToNone(value, fieldDefinition);
                 break;
             default:
-                throwException(fieldDefinition);
+                throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                        + " with class " + fieldDefinition.getClazz());
         }
         return bytes;
     }
 
     /**
-     * 报文域字节数组转换java类型对象
+     * 报文域字节数组转换java类型对象<br>
+     * 对象类型分三种情况：<br>
+     * 1.该域不包括子域，则为普通java类型或自定义类型<br>
+     * 2.该域包括子域，非usage子域类型，则为MessageHolder或POJO<br>
+     * 3.该域包括子域，是usage子域类型，则为UsageSubdomain<MessageHolder>或UsageSubdomain<POJO>
      *
      * @param bytes           报文域字节数组
      * @param fieldDefinition {@link FieldDefinition}
@@ -103,7 +108,8 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 instance = this.toObjectWithNone(bytes, fieldDefinition);
                 break;
             default:
-                throwException(fieldDefinition);
+                throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                        + " with class " + fieldDefinition.getClazz());
         }
         return instance;
     }
@@ -138,53 +144,53 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
     }
 
     protected byte[] fromObjectToAscii(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected byte[] fromObjectToBinary(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected byte[] fromObjectToBcd(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected byte[] fromObjectToEbcdic(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected byte[] fromObjectToNone(T value, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected T toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected T toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected T toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected T toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     protected T toObjectWithNone(byte[] bytes, FieldDefinition fieldDefinition) {
-        this.throwException(fieldDefinition);
-        return null;
+        throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
+                + " with class " + fieldDefinition.getClazz());
     }
 
     @Override
@@ -199,11 +205,6 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
 
     protected boolean returnIfNull() {
         return true;
-    }
-
-    protected void throwException(FieldDefinition definition) {
-        throw new IllegalArgumentException("illegal domainType: " + definition.getParseType()
-                + " with class " + definition.getClazz());
     }
 
 }

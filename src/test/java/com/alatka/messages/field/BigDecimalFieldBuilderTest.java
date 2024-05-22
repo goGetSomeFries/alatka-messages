@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 public class BigDecimalFieldBuilderTest {
 
-    private FieldBuilder fieldBuilder = new BigDecimalFieldBuilder();
+    private BigDecimalFieldBuilder fieldBuilder = new BigDecimalFieldBuilder();
 
     @Test
     @DisplayName("order() == 23")
@@ -32,54 +32,48 @@ public class BigDecimalFieldBuilderTest {
     @DisplayName("fromObjectToAscii()")
     void test03() {
         BigDecimal number = new BigDecimal(16);
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToAscii",
-                new Class[]{BigDecimal.class, FieldDefinition.class}, new Object[]{number, null});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "3136");
+        byte[] bytes = fieldBuilder.fromObjectToAscii(number, null);
+        Assertions.assertEquals("3136", BytesUtil.bytesToHex(bytes));
     }
 
     @Test
     @DisplayName("fromObjectToBinary()")
     void test04() {
         BigDecimal number = new BigDecimal(16);
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToBinary",
-                new Class[]{BigDecimal.class, FieldDefinition.class}, new Object[]{number, null});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "10");
+        byte[] bytes = fieldBuilder.fromObjectToBinary(number, null);
+        Assertions.assertEquals("10", BytesUtil.bytesToHex(bytes));
     }
 
     @Test
     @DisplayName("fromObjectToBcd()")
     void test05() {
         BigDecimal number = new BigDecimal(16);
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToBcd",
-                new Class[]{BigDecimal.class, FieldDefinition.class}, new Object[]{number, null});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "16");
+        byte[] bytes = fieldBuilder.fromObjectToBcd(number, null);
+        Assertions.assertEquals("16", BytesUtil.bytesToHex(bytes));
     }
 
     @Test
     @DisplayName("fromObjectToEbcdic()")
     void test06() {
         BigDecimal number = new BigDecimal(16);
-        byte[] bytes = ClassUtil.invoke(fieldBuilder, "fromObjectToEbcdic",
-                new Class[]{BigDecimal.class, FieldDefinition.class}, new Object[]{number, null});
-        Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "F1F6");
+        byte[] bytes = fieldBuilder.fromObjectToEbcdic(number, null);
+        Assertions.assertEquals("F1F6", BytesUtil.bytesToHex(bytes));
     }
 
     @Test
     @DisplayName("toObjectWithAscii()")
     void test07() {
         byte[] bytes = "16".getBytes();
-        BigDecimal number = ClassUtil.invoke(fieldBuilder, "toObjectWithAscii",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{bytes, null});
-        Assertions.assertEquals(number, new BigDecimal(16));
+        BigDecimal number = fieldBuilder.toObjectWithAscii(bytes, null);
+        Assertions.assertEquals(new BigDecimal("16"), number);
     }
 
     @Test
     @DisplayName("toObjectWithBinary()")
     void test08() {
         byte[] bytes = BytesUtil.hexToBytes("10");
-        BigDecimal number = ClassUtil.invoke(fieldBuilder, "toObjectWithBinary",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{bytes, null});
-        Assertions.assertEquals(number, new BigDecimal(16));
+        BigDecimal number = fieldBuilder.toObjectWithBinary(bytes, null);
+        Assertions.assertEquals(new BigDecimal("16"), number);
 
     }
 
@@ -87,17 +81,15 @@ public class BigDecimalFieldBuilderTest {
     @DisplayName("toObjectWithBcd()")
     void test09() {
         byte[] bytes = BytesUtil.hexToBytes("16");
-        BigDecimal number = ClassUtil.invoke(fieldBuilder, "toObjectWithBcd",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{bytes, null});
-        Assertions.assertEquals(number, new BigDecimal(16));
+        BigDecimal number = fieldBuilder.toObjectWithBcd(bytes, null);
+        Assertions.assertEquals(new BigDecimal("16"), number);
     }
 
     @Test
     @DisplayName("toObjectWithEbcdic()")
     void test10() {
         byte[] bytes = BytesUtil.hexToBytes("F1F6");
-        BigDecimal number = ClassUtil.invoke(fieldBuilder, "toObjectWithEbcdic",
-                new Class[]{byte[].class, FieldDefinition.class}, new Object[]{bytes, null});
-        Assertions.assertEquals(number, new BigDecimal(16));
+        BigDecimal number = fieldBuilder.toObjectWithEbcdic(bytes, null);
+        Assertions.assertEquals(new BigDecimal("16"), number);
     }
 }

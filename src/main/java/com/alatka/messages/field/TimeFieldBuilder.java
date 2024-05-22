@@ -56,10 +56,15 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
         return BytesUtil.toBCD(datetime);
     }
 
-    protected DateTimeFormatter formatter(String pattern, boolean serialized) {
+    private DateTimeFormatter formatter(String pattern, boolean serialized) {
+        pattern = this.doFormat(pattern, serialized);
         return "yyyyMMddHHmmssSSS".equals(pattern) ?
                 new DateTimeFormatterBuilder().appendPattern("yyyyMMddHHmmss").appendValue(ChronoField.MILLI_OF_SECOND, 3).toFormatter() :
                 DateTimeFormatter.ofPattern(pattern);
+    }
+
+    protected String doFormat(String pattern, boolean serialized) {
+        return pattern;
     }
 
     private boolean validate(String datetime) {

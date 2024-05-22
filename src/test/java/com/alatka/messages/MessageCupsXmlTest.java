@@ -1,16 +1,16 @@
 package com.alatka.messages;
 
-import com.alatka.messages.definition.IsoYamlMessageDefinitionBuilder;
+import com.alatka.messages.definition.IsoXmlMessageDefinitionBuilder;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.message.MessageBuilder;
 import com.alatka.messages.util.BytesUtil;
 import org.junit.jupiter.api.*;
 
-public class MessageCupsYamlTest {
+public class MessageCupsXmlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoYamlMessageDefinitionBuilder().build();
+        new IsoXmlMessageDefinitionBuilder().build();
     }
 
     private void doTest(String hex, String key) {
