@@ -10,7 +10,6 @@ import com.alatka.messages.util.JsonUtil;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -32,17 +31,15 @@ public abstract class FileMessageDefinitionBuilder extends AbstractMessageDefini
     protected <S extends FieldDefinition> List<S> buildFieldDefinitions(MessageDefinition definition, Path source) {
         List<Map<String, Object>> list = this.doBuildFieldDefinitions(definition, source);
 
-        AtomicInteger counter = new AtomicInteger(0);
         return list.stream()
                 .map(map -> JsonUtil.mapToObject(map, fieldDefinitionClass()))
                 .map(entity -> (S) entity)
-                .peek(fieldDefinition -> this.buildFieldDefinition(definition, fieldDefinition, counter))
+                .peek(fieldDefinition -> this.buildFieldDefinition(definition, fieldDefinition))
                 .peek(fieldDefinition -> this.postBuildFieldDefinition(definition, fieldDefinition))
                 .collect(Collectors.toList());
     }
 
-    private void buildFieldDefinition(MessageDefinition definition, FieldDefinition fieldDefinition, AtomicInteger counter) {
-        fieldDefinition.setIndex(counter.getAndIncrement());
+    private void buildFieldDefinition(MessageDefinition definition, FieldDefinition fieldDefinition) {
         if (fieldDefinition.getFixed() == null) {
             fieldDefinition.setFixed(Boolean.TRUE);
         }

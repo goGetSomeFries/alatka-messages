@@ -20,7 +20,6 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.verification.VerificationMode;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,7 +69,6 @@ public class MessageBuilderTest {
         List<IsoFieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     IsoFieldDefinition definition = new IsoFieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     definition.setAliasName("aliasName" + i);
@@ -96,7 +94,6 @@ public class MessageBuilderTest {
         List<IsoFieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     IsoFieldDefinition definition = new IsoFieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     definition.setAliasName("aliasName" + i);
@@ -147,7 +144,6 @@ public class MessageBuilderTest {
         List<IsoFieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     IsoFieldDefinition definition = new IsoFieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     definition.setAliasName("aliasName" + i);
@@ -178,7 +174,6 @@ public class MessageBuilderTest {
         List<IsoFieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     IsoFieldDefinition definition = new IsoFieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     definition.setAliasName("aliasName" + i);
@@ -208,7 +203,6 @@ public class MessageBuilderTest {
         List<IsoFieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     IsoFieldDefinition definition = new IsoFieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     definition.setAliasName("aliasName" + i);
@@ -273,7 +267,6 @@ public class MessageBuilderTest {
         List<IsoFieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     IsoFieldDefinition definition = new IsoFieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     definition.setAliasName("aliasName" + i);
@@ -292,7 +285,6 @@ public class MessageBuilderTest {
         List<IsoFieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     IsoFieldDefinition definition = new IsoFieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     definition.setAliasName("aliasName" + i);

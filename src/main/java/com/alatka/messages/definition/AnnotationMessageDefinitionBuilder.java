@@ -38,7 +38,7 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
                 .map(field -> new Wrapper(field, this.buildFieldDefinition(field)))
                 .peek(wrapper -> this.postBuildFieldDefinition(wrapper.field, wrapper.fieldDefinition))
                 .map(wrapper -> (S) wrapper.fieldDefinition)
-                .sorted(Comparator.comparing(FieldDefinition::getIndex))
+                .sorted()
                 .collect(Collectors.toList());
     }
 
