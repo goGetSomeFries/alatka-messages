@@ -19,11 +19,6 @@ import java.lang.annotation.*;
 public @interface IsoFieldMeta {
 
     /**
-     * {@link IsoFieldDefinition#setIndex(Integer)}
-     */
-    int index() default Integer.MIN_VALUE;
-
-    /**
      * {@link IsoFieldDefinition#setDomainNo(Integer)}
      */
     int domainNo();

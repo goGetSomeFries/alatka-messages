@@ -50,7 +50,6 @@ public class UnfixedSubdomainMessageBuilderTest {
         List<FieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     FieldDefinition definition = new FieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     return definition;
