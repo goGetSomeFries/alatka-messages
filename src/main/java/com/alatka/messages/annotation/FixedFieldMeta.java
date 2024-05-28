@@ -20,11 +20,6 @@ import java.lang.annotation.*;
 public @interface FixedFieldMeta {
 
     /**
-     * {@link FixedFieldDefinition#setIndex(Integer)}
-     */
-    int index() default Integer.MIN_VALUE;
-
-    /**
      * {@link FixedFieldDefinition#setDomainNo(Integer)}
      */
     int domainNo();

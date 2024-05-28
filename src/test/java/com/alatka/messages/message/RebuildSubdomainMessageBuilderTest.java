@@ -3,7 +3,9 @@ package com.alatka.messages.message;
 import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.IsoFieldDefinition;
 import com.alatka.messages.context.MessageDefinitionContext;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -30,7 +32,6 @@ public class RebuildSubdomainMessageBuilderTest {
         List<IsoFieldDefinition> list = IntStream.range(0, 5)
                 .mapToObj(i -> {
                     IsoFieldDefinition definition = new IsoFieldDefinition();
-                    definition.setIndex(i);
                     definition.setDomainNo(i);
                     definition.setName("test" + i);
                     definition.setAliasName("aliasName" + i);
@@ -45,13 +46,13 @@ public class RebuildSubdomainMessageBuilderTest {
         mockedStatic.when(MessageDefinitionContext::getInstance).thenReturn(mock);
 
         List<String> tags = list.stream()
-                .filter(d -> d.getIndex() % 2 == 0)
+                .filter(d -> d.getDomainNo() % 2 == 0)
                 .map(IsoFieldDefinition::getAliasName)
                 .collect(Collectors.toList());
         doReturn(tags).when(messageBuilder).doBuildFieldDefinitions(any(), any());
 
         List<FieldDefinition> result = messageBuilder.buildFieldDefinitions(null);
-        Assertions.assertIterableEquals(list.stream().filter(d -> d.getIndex() % 2 == 0).collect(Collectors.toList()), result);
+        Assertions.assertIterableEquals(list.stream().filter(d -> d.getDomainNo() % 2 == 0).collect(Collectors.toList()), result);
 
         mockedStatic.close();
     }

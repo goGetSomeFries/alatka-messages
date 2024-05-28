@@ -33,7 +33,6 @@ public class IsoAnnotationMessageDefinitionBuilder extends AnnotationMessageDefi
     protected IsoFieldDefinition buildFieldDefinition(Field field) {
         IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
         IsoFieldMeta annotation = field.getAnnotation(IsoFieldMeta.class);
-        fieldDefinition.setIndex(Integer.MIN_VALUE == annotation.index() ? annotation.domainNo() : annotation.index());
         fieldDefinition.setDomainNo(annotation.domainNo());
         fieldDefinition.setName(field.getName());
         fieldDefinition.setOriginClass(field.getType());

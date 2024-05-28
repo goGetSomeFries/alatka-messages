@@ -17,10 +17,6 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
     public static final String SUBFIELD_KEY_DEFAULT = "default";
 
     /**
-     * 域索引
-     */
-    private Integer index;
-    /**
      * 域序号
      */
     private Integer domainNo;
@@ -112,14 +108,6 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
             /* ASCII */ A,
             /* BINARY */ B
         }
-    }
-
-    public Integer getIndex() {
-        return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
     }
 
     public Integer getDomainNo() {
@@ -239,18 +227,16 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
             return false;
         }
         FieldDefinition that = (FieldDefinition) o;
-        return Objects.equals(index, that.index) &&
-                Objects.equals(domainNo, that.domainNo) &&
-                Objects.equals(name, that.name);
+        return Objects.equals(domainNo, that.domainNo) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, domainNo, name);
+        return Objects.hash(domainNo, name);
     }
 
     @Override
     public int compareTo(FieldDefinition o) {
-        return this.getIndex() - o.getIndex();
+        return this.getDomainNo() - o.getDomainNo();
     }
 }

@@ -33,7 +33,6 @@ public class FixedAnnotationMessageDefinitionBuilder extends AnnotationMessageDe
     protected FixedFieldDefinition buildFieldDefinition(Field field) {
         FixedFieldDefinition fieldDefinition = new FixedFieldDefinition();
         FixedFieldMeta annotation = field.getAnnotation(FixedFieldMeta.class);
-        fieldDefinition.setIndex(Integer.MIN_VALUE == annotation.index() ? annotation.domainNo() : annotation.index());
         fieldDefinition.setDomainNo(annotation.domainNo());
         fieldDefinition.setName(field.getName());
         fieldDefinition.setOriginClass(field.getType());
