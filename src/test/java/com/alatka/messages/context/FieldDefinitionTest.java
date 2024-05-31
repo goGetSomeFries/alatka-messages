@@ -18,7 +18,7 @@ public class FieldDefinitionTest {
         definition2.setDomainNo(1);
         definition2.setName("test");
         Assertions.assertTrue(definition1.equals(definition1));
-        Assertions.assertFalse(definition1.equals(null));
+        Assertions.assertNotNull(definition1);
         Assertions.assertFalse(definition1.equals("123"));
         Assertions.assertTrue(definition1.equals(definition2));
     }

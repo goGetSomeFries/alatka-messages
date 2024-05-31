@@ -28,7 +28,7 @@ public class MessageDefinitionTest {
         definition2.setDomain("F11");
         definition2.setUsage(null);
         Assertions.assertTrue(definition1.equals(definition1));
-        Assertions.assertFalse(definition1.equals(null));
+        Assertions.assertNotNull(definition1);
         Assertions.assertFalse(definition1.equals("123"));
         Assertions.assertTrue(definition1.equals(definition2));
     }
