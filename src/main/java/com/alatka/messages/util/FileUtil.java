@@ -22,15 +22,16 @@ public class FileUtil {
     }
 
     public static List<Path> getClasspathFiles(String classpath, String suffix, ClassLoader classLoader) {
-        List<Path> list = new ArrayList<>();
         try {
             URL url = classLoader.getResource(classpath);
             if (url == null) {
                 throw new IllegalArgumentException("can not find classpath: " + classpath);
             }
-            DirectoryStream<Path> paths =
-                    Files.newDirectoryStream(Paths.get(url.toURI()), suffix);
-            paths.forEach(list::add);
+
+            List<Path> list = new ArrayList<>();
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(url.toURI()), suffix)) {
+                stream.forEach(list::add);
+            }
             return list;
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
