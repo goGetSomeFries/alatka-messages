@@ -26,7 +26,7 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
 
     @Override
     public void build() {
-        this.logger.debug("报文配置{}加载开始执行...", this.getClass().getSimpleName());
+        this.logger.debug("报文配置类{}开始执行...", this.getClass().getSimpleName());
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
 
         List<MessageDefinition> messageDefinitions = new ArrayList<>();
@@ -34,8 +34,8 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
         Map<MessageDefinition, T> mapping = this.getSources().stream()
                 .peek(source -> this.logger.info("scan source: " + source))
                 .flatMap(source -> this.buildMessageDefinitions(source).stream()
-                        .peek(this::postBuildMessageDefinition)
-                        .map(definition -> new Wrapper(definition, source)))
+                        .map(definition -> new Wrapper<>(definition, source)))
+                .peek(wrapper -> this.logger.debug("build {}", wrapper.definition))
                 .peek(wrapper -> messageDefinitions.add(wrapper.definition))
                 .peek(wrapper -> {
                             if (!this.isTemplate(wrapper.definition)) {
@@ -43,7 +43,7 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
                                 context.messageDefinition(wrapper.definition.identity(), wrapper.definition);
                             }
                         }
-                ).collect(Collectors.toMap(wrapper -> wrapper.definition, wrapper -> wrapper.source));
+                ).collect(Collectors.toMap(wrapper -> wrapper.definition, wrapper -> wrapper.object));
 
         // 模板对象，减少FieldDefinition对象创建，节省内存开销
         Map<String, List<FieldDefinition>> fieldDefinitionsTemplate = messageDefinitions.stream()
@@ -58,10 +58,14 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
         // context 设置 List<FieldDefinition>
         messageDefinitions.stream()
                 .filter(definition -> !isTemplate(definition))
-                .forEach(definition ->
-                        context.fieldDefinitions(definition,
-                                buildFieldDefinitions(definition, mapping.get(definition), fieldDefinitionsTemplate)));
-        this.logger.debug("报文配置{}加载执行完成", this.getClass().getSimpleName());
+                .map(definition -> {
+                    List<FieldDefinition> fieldDefinitions =
+                            this.buildFieldDefinitions(definition, mapping.get(definition), fieldDefinitionsTemplate);
+                    return new Wrapper<>(definition, fieldDefinitions);
+                })
+                .peek(wrapper -> this.logger.debug("build {}: {}", wrapper.definition, wrapper.object))
+                .forEach(wrapper -> context.fieldDefinitions(wrapper.definition, wrapper.object));
+        this.logger.debug("报文配置类{}执行完成", this.getClass().getSimpleName());
     }
 
     @Override
@@ -93,14 +97,6 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
     }
 
     /**
-     * {@link MessageDefinition}后处理器
-     *
-     * @param definition {@link MessageDefinition}
-     */
-    private void postBuildMessageDefinition(MessageDefinition definition) {
-    }
-
-    /**
      * 是否为模板配置
      *
      * @param definition {@link MessageDefinition}
@@ -127,7 +123,7 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
      *
      * @param definition {@link FieldDefinition}
      */
-    protected void postBuildFieldDefinition(FieldDefinition definition) {
+    private void postBuildFieldDefinition(FieldDefinition definition) {
         if (definition.getClazz().isPrimitive()) {
             throw new IllegalArgumentException("fieldDefinition: " + definition + "不支持原始类型");
         }
@@ -169,14 +165,14 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
     /**
      * source & {@link MessageDefinition} container
      */
-    private class Wrapper {
+    private class Wrapper<S> {
 
         private final MessageDefinition definition;
-        private final T source;
+        private final S object;
 
-        public Wrapper(MessageDefinition definition, T source) {
+        public Wrapper(MessageDefinition definition, S object) {
             this.definition = definition;
-            this.source = source;
+            this.object = object;
         }
     }
 

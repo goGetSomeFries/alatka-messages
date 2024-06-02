@@ -4,6 +4,7 @@ import com.alatka.messages.annotation.IsoFieldMeta;
 import com.alatka.messages.context.IsoFieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 /**
@@ -20,8 +21,8 @@ public class IsoAnnotationMessageDefinitionBuilder extends AnnotationMessageDefi
     }
 
     @Override
-    protected boolean filter(Field field) {
-        return field.isAnnotationPresent(IsoFieldMeta.class);
+    protected Class<? extends Annotation> annotationClass() {
+        return IsoFieldMeta.class;
     }
 
     @Override
@@ -44,12 +45,13 @@ public class IsoAnnotationMessageDefinitionBuilder extends AnnotationMessageDefi
         fieldDefinition.setParseType(annotation.parseType());
         fieldDefinition.setExistSubdomain(annotation.existSubdomain());
         fieldDefinition.setSubdomainType(annotation.subdomainType());
-        fieldDefinition.setNonSubdomainException(annotation.nonSubdomainException());
         fieldDefinition.setPageSizeName(annotation.pageSizeName());
 
+        fieldDefinition.setNonSubdomainException(annotation.nonSubdomainException());
         fieldDefinition.setAliasName(annotation.aliasName());
-        fieldDefinition.setMaxLength(fieldDefinition.getFixed() && annotation.maxLength() == -1 ?
-                fieldDefinition.getLength() : annotation.maxLength());
+        int maxLength = annotation.maxLength();
+        fieldDefinition.setMaxLength(fieldDefinition.getFixed() && maxLength == -1 ?
+                fieldDefinition.getLength() : maxLength);
         return fieldDefinition;
     }
 }

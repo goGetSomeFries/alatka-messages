@@ -9,6 +9,7 @@ import com.alatka.messages.context.MessageDefinition;
  *
  * @author ybliu
  * @see XmlMessageDefinitionBuilder
+ * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
 public class FixedXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder {
