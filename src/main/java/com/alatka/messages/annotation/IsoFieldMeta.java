@@ -36,7 +36,7 @@ public @interface IsoFieldMeta {
     /**
      * {@link IsoFieldDefinition#setLength(Integer)}
      */
-    int length() default Integer.MIN_VALUE;
+    int length() default 0;
 
     /**
      * {@link IsoFieldDefinition#setMaxLength(Integer)}

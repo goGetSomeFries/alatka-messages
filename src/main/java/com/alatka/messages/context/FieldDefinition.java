@@ -60,7 +60,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
      */
     private ParseType parseType;
     /**
-     * 是否是子域
+     * 是否存在子域
      */
     private Boolean existSubdomain = Boolean.FALSE;
     /**

@@ -44,7 +44,7 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
      */
     private String usage;
     /**
-     * 8583子域类型
+     * 报文域类型
      */
     private DomainType domainType;
     /**

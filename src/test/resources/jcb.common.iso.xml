@@ -131,7 +131,7 @@
             <field domainNo="6" aliasName="95" name="termVerificationResult" fixed="true" length="5" remark="终端验证结果" clazz="[B"/>
             <field domainNo="7" aliasName="9A" name="transDate" fixed="true" length="3" remark="交易日期" clazz="java.time.LocalDate" pattern="yyMMdd" parseType="BCD"/>
             <field domainNo="8" aliasName="9C" name="transType" fixed="true" length="1" remark="交易类型" clazz="java.lang.Integer" parseType="BCD"/>
-            <field domainNo="8" aliasName="9F02" name="transAmt" fixed="true" length="6" remark="授权金额" clazz="java.math.BigDecimal" parseType="BCD"/>
+            <field domainNo="9" aliasName="9F02" name="transAmt" fixed="true" length="6" remark="授权金额" clazz="java.math.BigDecimal" parseType="BCD"/>
             <field domainNo="10" aliasName="5F2A" name="transCurrencyCode" fixed="true" length="2" remark="交易货币代码" clazz="java.lang.Integer" parseType="BCD"/>
             <field domainNo="11" aliasName="82" name="appInterchangeProfile" fixed="true" length="2" remark="应用交互特征" clazz="[B"/>
             <field domainNo="12" aliasName="9F1A" name="termCountryCode" fixed="true" length="2" remark="终端国家代码" clazz="java.lang.Integer" parseType="BCD"/>

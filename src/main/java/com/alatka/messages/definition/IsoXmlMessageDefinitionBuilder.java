@@ -9,6 +9,7 @@ import com.alatka.messages.context.MessageDefinition;
  *
  * @author ybliu
  * @see XmlMessageDefinitionBuilder
+ * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
 public class IsoXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder {
@@ -25,7 +26,7 @@ public class IsoXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder 
     protected void postBuildFieldDefinition(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
         IsoFieldDefinition definition = (IsoFieldDefinition) fieldDefinition;
         if (definition.getLength() == null) {
-            definition.setLength(Integer.MIN_VALUE);
+            definition.setLength(0);
         }
         if (definition.getFixed() && definition.getMaxLength() == null) {
             definition.setMaxLength(definition.getLength());
