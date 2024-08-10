@@ -43,6 +43,8 @@ public class FieldBuilderFactory {
         init(new BigDecimalFieldBuilder());
         init(new BigIntegerFieldBuilder());
         init(new LongFieldBuilder());
+        // boolean
+        init(new BooleanFieldBuilder());
         // bitmap
         init(new BitmapFieldBuilder());
         // raw
