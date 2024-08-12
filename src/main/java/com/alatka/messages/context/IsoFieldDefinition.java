@@ -4,6 +4,7 @@ import com.alatka.messages.domain.TLV2DomainParsed;
 import com.alatka.messages.domain.TLVDomainParsed;
 import com.alatka.messages.domain.TVDomainParsed;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,8 +23,8 @@ public class IsoFieldDefinition extends FieldDefinition {
     private String aliasName;
     /**
      * 最大长度<br>
-     * {@link IsoFieldDefinition#getFixed()} = true：{@link IsoFieldDefinition#getLength()} = {@link IsoFieldDefinition#maxLength}<br>
-     * {@link IsoFieldDefinition#getFixed()} = false：数据最大长度
+     * {@link #getFixed()} = true：{@link #getLength()} = {@link #getMaxLength()}<br>
+     * {@link #getFixed()} = false：数据最大长度
      */
     private Integer maxLength;
     /**
@@ -58,11 +59,11 @@ public class IsoFieldDefinition extends FieldDefinition {
     @Override
     public String toString() {
         return Stream.of("F" + getDomainNo(),
-                getAliasName(),
-                getName(),
-                getFixed() ? getLength().toString() : getLength() + "~" + getMaxLength(),
-                getRemark())
-                .filter(e -> e != null)
+                        getAliasName(),
+                        getName(),
+                        getFixed() ? getLength().toString() : getLength() + "~" + getMaxLength(),
+                        getRemark())
+                .filter(Objects::nonNull)
                 .collect(Collectors.joining(":", "{", "}"));
     }
 

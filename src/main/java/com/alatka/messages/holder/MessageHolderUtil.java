@@ -8,6 +8,7 @@ import com.alatka.messages.util.ClassUtil;
 /**
  * @author ybliu
  */
+@SuppressWarnings("unchecked")
 public class MessageHolderUtil {
 
     public static <T> T getByName(Object instance, String name) {

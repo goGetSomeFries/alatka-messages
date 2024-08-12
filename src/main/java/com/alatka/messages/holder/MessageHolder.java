@@ -24,13 +24,14 @@ import java.util.stream.Collectors;
 @JsonSerialize(using = CustomJsonSerializer.class)
 public class MessageHolder {
 
-    private Map<FieldDefinition, Object> valueMap = new HashMap<>();
+    private final Map<FieldDefinition, Object> valueMap = new HashMap<>();
 
     private MessageDefinition messageDefinition;
 
     private MessageHolder() {
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> MessageHolder fromPojo(T object) {
         MessageHolder messageHolder = new MessageHolder();
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
@@ -41,7 +42,7 @@ public class MessageHolder {
                     Object value = ClassUtil.getFieldValue(object, fieldDefinition.getName());
                     Object result = null;
                     if (value == null) {
-                        result = null;
+                        // do nothing
                     } else if (value == UsageSubdomain.class) {
                         List<MessageHolder> list = ((UsageSubdomain<Object>) value).getHolder().values().stream()
                                 .map(MessageHolder::fromPojo).collect(Collectors.toList());
@@ -96,11 +97,13 @@ public class MessageHolder {
         this.valueMap.put(definition, value);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getByName(String name) {
         FieldDefinition definition = MessageDefinitionContext.getInstance().fieldDefinition(this.messageDefinition, name);
         return definition == null ? null : (T) this.valueMap.get(definition);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getByDomainNo(Integer domainNo) {
         FieldDefinition definition = MessageDefinitionContext.getInstance().fieldDefinition(this.messageDefinition, domainNo);
         return definition == null ? null : (T) this.valueMap.get(definition);

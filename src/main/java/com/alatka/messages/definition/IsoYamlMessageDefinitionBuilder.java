@@ -12,7 +12,7 @@ import com.alatka.messages.context.MessageDefinition;
  * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public class IsoYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilder {
+public class IsoYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilder<IsoFieldDefinition> {
 
     public IsoYamlMessageDefinitionBuilder() {
         this("");
@@ -34,7 +34,7 @@ public class IsoYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilde
     }
 
     @Override
-    protected Class<?> fieldDefinitionClass() {
+    protected Class<IsoFieldDefinition> fieldDefinitionClass() {
         return IsoFieldDefinition.class;
     }
 

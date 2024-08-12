@@ -37,7 +37,7 @@ public class BitmapDomainParsed extends AbstractDomainParsed {
     @Override
     public byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter) {
         byte[] flag = Arrays.copyOfRange(bytes, counter.get(), counter.get() + 1);
-        Integer length = (flag[0] & 0x80) == 0 ? 8 : 16;
+        int length = (flag[0] & 0x80) == 0 ? 8 : 16;
         return Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(length));
     }
 }

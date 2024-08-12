@@ -43,7 +43,7 @@ public class PageSubdomainFieldBuilder extends SubdomainFieldBuilder<List<?>> {
         MessageDefinition definition = usageMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT);
         MessageBuilder messageBuilder = new DefaultMessageBuilder(definition);
         return value.stream()
-                .map(instance -> messageBuilder.pack(instance))
+                .map(messageBuilder::pack)
                 .reduce(new byte[0], BytesUtil::concat);
     }
 

@@ -12,7 +12,7 @@ import com.alatka.messages.context.MessageDefinition;
  * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public class FixedXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder {
+public class FixedXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder<FixedFieldDefinition> {
 
     public FixedXmlMessageDefinitionBuilder() {
         this("");

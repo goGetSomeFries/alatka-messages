@@ -69,7 +69,7 @@ public class BooleanFieldBuilder extends AbstractFieldBuilder<Boolean> {
     }
 
     private int convert(Boolean value) {
-        return value.booleanValue() ? 1 : 0;
+        return value ? 1 : 0;
     }
 
     private Boolean convert(Integer value) {

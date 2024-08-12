@@ -19,7 +19,7 @@ public class ClassUtil {
             constructor.setAccessible(true);
             return constructor.newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                NoSuchMethodException e) {
+                 NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }
@@ -32,7 +32,8 @@ public class ClassUtil {
         }
     }
 
-    public static <T, S> S invoke(Class<T> clazz, String methodName, Class[] paramTypes, Object[] params) {
+    @SuppressWarnings("unchecked")
+    public static <T, S> S invoke(Class<T> clazz, String methodName, Class<?>[] paramTypes, Object[] params) {
         try {
             Method method = clazz.getDeclaredMethod(methodName, paramTypes);
             method.setAccessible(true);
@@ -40,12 +41,14 @@ public class ClassUtil {
             constructor.setAccessible(true);
             T instance = constructor.newInstance();
             return (S) method.invoke(instance, params);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static <T, S> S invoke(T instance, String methodName, Class[] paramTypes, Object[] params) {
+    @SuppressWarnings("unchecked")
+    public static <T, S> S invoke(T instance, String methodName, Class<?>[] paramTypes, Object[] params) {
         try {
             Method method = instance.getClass().getDeclaredMethod(methodName, paramTypes);
             method.setAccessible(true);
@@ -69,11 +72,7 @@ public class ClassUtil {
 
     public static void setFieldValue(Object instance, String fieldName, Object value) {
         try {
-            List<Field> list = new ArrayList<>();
-            buildDeclaredFields(instance.getClass(), list);
-            Map<String, Field> map = list.stream().collect(Collectors.toMap(Field::getName, Function.identity()));
-            Field field = map.get(fieldName);
-            field.setAccessible(true);
+            Field field = getField(instance, fieldName);
             field.set(instance, value);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
@@ -82,15 +81,20 @@ public class ClassUtil {
 
     public static Object getFieldValue(Object instance, String fieldName) {
         try {
-            List<Field> list = new ArrayList<>();
-            buildDeclaredFields(instance.getClass(), list);
-            Map<String, Field> map = list.stream().collect(Collectors.toMap(Field::getName, Function.identity()));
-            Field field = map.get(fieldName);
-            field.setAccessible(true);
+            Field field = getField(instance, fieldName);
             return field.get(instance);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Field getField(Object instance, String fieldName) {
+        List<Field> list = new ArrayList<>();
+        buildDeclaredFields(instance.getClass(), list);
+        Map<String, Field> map = list.stream().collect(Collectors.toMap(Field::getName, Function.identity()));
+        Field field = map.get(fieldName);
+        field.setAccessible(true);
+        return field;
     }
 
     /**
