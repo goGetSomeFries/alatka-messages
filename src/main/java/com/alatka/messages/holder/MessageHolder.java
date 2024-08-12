@@ -11,7 +11,6 @@ import com.alatka.messages.util.ObjectUtil;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -42,13 +41,11 @@ public class MessageHolder {
                     Object value = ClassUtil.getFieldValue(object, fieldDefinition.getName());
                     Object result = null;
                     if (value == null) {
-                        // do nothing
-                    } else if (value == UsageSubdomain.class) {
-                        List<MessageHolder> list = ((UsageSubdomain<Object>) value).getHolder().values().stream()
-                                .map(MessageHolder::fromPojo).collect(Collectors.toList());
-                        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
-                        list.forEach(usageSubdomain::put);
-                        result = usageSubdomain;
+                        result = null;
+                    } else if (value.getClass() == UsageSubdomain.class) {
+                        result = ((UsageSubdomain<Object>) value).getHolder().entrySet().stream()
+                                .collect(Collectors.toMap(Map.Entry::getKey,
+                                        entry -> entry.getValue() instanceof byte[] ? entry.getValue() : fromPojo(entry.getValue())));
                     } else if (value.getClass().isAnnotationPresent(MessageMeta.class)) {
                         result = fromPojo(value);
                     } else {
