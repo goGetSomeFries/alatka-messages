@@ -94,7 +94,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
         /**
          * 变长域的长度域编码类型
          */
-        private LPT lenParseType;
+        private final LPT lenParseType;
 
         ParseType(LPT lenParseType) {
             this.lenParseType = lenParseType;

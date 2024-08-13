@@ -43,8 +43,8 @@ public abstract class MessageBuilder {
      * 支持8583各类子域单独解析<br>
      * 不支持分页子域、8583不定长子域单独解析
      *
-     * @param definition
-     * @return
+     * @param definition {@link MessageDefinition}
+     * @return {@link MessageBuilder}
      */
     public static MessageBuilder init(MessageDefinition definition) {
         if (definition.getKind() == MessageDefinition.Kind.payload) {
@@ -98,6 +98,7 @@ public abstract class MessageBuilder {
         return this.unpack(bytes);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T unpack(byte[] bytes) {
         // MessageHolder or POJO
         Object instance = definition.getHolder() == MessageHolder.class ?
@@ -148,7 +149,7 @@ public abstract class MessageBuilder {
      * {@link FieldDefinition} 过滤器
      *
      * @param fieldDefinition {@link FieldDefinition}
-     * @return
+     * @return 是否过滤
      */
     protected boolean filter(FieldDefinition fieldDefinition) {
         return true;
@@ -158,9 +159,9 @@ public abstract class MessageBuilder {
      * 后处理
      *
      * @param fieldDefinition {@link FieldDefinition}
-     * @param instance
-     * @param value
-     * @param packed
+     * @param instance        对象实例
+     * @param value           字段值
+     * @param packed          打包/解包
      */
     protected void postProcess(FieldDefinition fieldDefinition, Object instance, Object value, boolean packed) {
     }
@@ -168,7 +169,7 @@ public abstract class MessageBuilder {
     protected void postProcess() {
     }
 
-    class Wrapper {
+    protected class Wrapper {
         private final Object value;
         private final FieldDefinition fieldDefinition;
 

@@ -14,16 +14,16 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RawDomainParsed extends AbstractDomainParsed {
 
-    private AbstractDomainParsed fixedDomainParsed = new FixedDomainParsed();
+    private final AbstractDomainParsed fixedDomainParsed = new FixedDomainParsed();
 
-    private AbstractDomainParsed asciiLVDomainParsed = new AsciiLVDomainParsed() {
+    private final AbstractDomainParsed asciiLVDomainParsed = new AsciiLVDomainParsed() {
         @Override
         protected boolean raw(FieldDefinition fieldDefinition) {
             return true;
         }
     };
 
-    private AbstractDomainParsed binaryLVDomainParsed = new BinaryLVDomainParsed() {
+    private final AbstractDomainParsed binaryLVDomainParsed = new BinaryLVDomainParsed() {
         @Override
         protected boolean raw(FieldDefinition fieldDefinition) {
             return true;

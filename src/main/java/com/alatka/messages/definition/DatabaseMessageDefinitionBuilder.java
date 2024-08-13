@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
  * @author ybliu
  * @see AbstractMessageDefinitionBuilder
  */
-public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDefinitionBuilder<Map<String, Object>> {
+public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDefinitionBuilder<Map<String, Object>, FieldDefinition> {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public DatabaseMessageDefinitionBuilder(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -35,7 +35,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
     }
 
     @Override
-    protected <S extends FieldDefinition> List<S> buildFieldDefinitions(MessageDefinition definition, Map<String, Object> source) {
+    protected List<FieldDefinition> buildFieldDefinitions(MessageDefinition definition, Map<String, Object> source) {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "select * from ALK_FIELD_DEFINITION WHERE M_ID = ?";
 
@@ -59,8 +59,8 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
                     result.put("subdomainType", resultSet.getString("F_SUBDOMAIN_TYPE"));
                     result.put("aliasName", resultSet.getString("F_ALIAS_NAME"));
                     result.put("maxLength", resultSet.getInt("F_MAX_LENGTH"));
-                    boolean nonSubdomainException = resultSet.getString("F_NON_SUBDOMAIN_EXCEPTION") == null ?
-                            true : resultSet.getBoolean("F_NON_SUBDOMAIN_EXCEPTION");
+                    boolean nonSubdomainException = resultSet.getString("F_NON_SUBDOMAIN_EXCEPTION") == null
+                            || resultSet.getBoolean("F_NON_SUBDOMAIN_EXCEPTION");
                     result.put("nonSubdomainException", nonSubdomainException);
                     list.add(result);
                 }
@@ -71,7 +71,6 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
 
         return list.stream()
                 .map(map -> this.buildFieldDefinition(map, definition))
-                .map(entity -> (S) entity)
                 .sorted()
                 .collect(Collectors.toList());
     }

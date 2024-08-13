@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
  * @see AnnotationMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public class IsoAnnotationMessageDefinitionBuilder extends AnnotationMessageDefinitionBuilder {
+public class IsoAnnotationMessageDefinitionBuilder extends AnnotationMessageDefinitionBuilder<IsoFieldDefinition> {
 
     public IsoAnnotationMessageDefinitionBuilder(String packageName) {
         super(packageName);

@@ -12,7 +12,7 @@ import com.alatka.messages.context.MessageDefinition;
  */
 public class RawFieldBuilder extends AbstractFieldBuilder<byte[]> {
 
-    private BytesFieldBuilder fieldBuilder = new BytesFieldBuilder();
+    private final BytesFieldBuilder fieldBuilder = new BytesFieldBuilder();
 
     @Override
     protected byte[] fromObjectToAscii(byte[] value, FieldDefinition fieldDefinition) {

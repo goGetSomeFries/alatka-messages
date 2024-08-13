@@ -65,8 +65,7 @@ public class MessageDefinitionContext {
         condition.setDomain(domain);
         condition.setUsage("");
 
-        return this.messageDefinitionMap.entrySet().stream()
-                .map(Map.Entry::getValue)
+        return this.messageDefinitionMap.values().stream()
                 .filter(md -> md.getType() == condition.getType()
                         && md.getGroup().equals(condition.getGroup())
                         && md.getCode().equals(condition.getCode())

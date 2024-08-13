@@ -121,6 +121,7 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
      * @param definition {@link FieldDefinition}
      * @return 值
      */
+    @SuppressWarnings("unchecked")
     private T getValue(Object instance, FieldDefinition definition) {
         if (instance instanceof MessageHolder) {
             return ((MessageHolder) instance).getByName(definition.getName());

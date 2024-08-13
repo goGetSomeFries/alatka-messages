@@ -18,20 +18,20 @@ public abstract class SubdomainFieldBuilder<T> extends AbstractFieldBuilder<T> {
     /**
      * 子域打包
      *
-     * @param value
+     * @param value 被打包对象
      * @param fieldDefinition {@link FieldDefinition}
      * @param usageMap        子域 usage Map
-     * @return
+     * @return 字节数组
      */
     protected abstract byte[] pack(T value, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap);
 
     /**
      * 子域解包
      *
-     * @param bytes
+     * @param bytes 数据字节数组
      * @param fieldDefinition {@link FieldDefinition}
      * @param usageMap        子域 usage Map
-     * @return
+     * @return 解包对象
      */
     protected abstract T unpack(byte[] bytes, FieldDefinition fieldDefinition, Map<String, MessageDefinition> usageMap);
 

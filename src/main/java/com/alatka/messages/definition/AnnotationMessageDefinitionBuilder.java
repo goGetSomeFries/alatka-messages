@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author ybliu
  * @see AbstractMessageDefinitionBuilder
  */
-public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessageDefinitionBuilder<Class<?>> {
+public abstract class AnnotationMessageDefinitionBuilder<S extends FieldDefinition> extends AbstractMessageDefinitionBuilder<Class<?>, S> {
 
     private final String packageName;
 
@@ -30,7 +30,8 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
     }
 
     @Override
-    protected <S extends FieldDefinition> List<S> buildFieldDefinitions(MessageDefinition definition, Class<?> source) {
+    @SuppressWarnings("unchecked")
+    protected List<S> buildFieldDefinitions(MessageDefinition definition, Class<?> source) {
         List<Field> list = new ArrayList<>();
         ClassUtil.buildDeclaredFields(source, list);
 
@@ -110,16 +111,15 @@ public abstract class AnnotationMessageDefinitionBuilder extends AbstractMessage
     /**
      * 构建{@link FieldDefinition}对象
      *
-     * @param <S>   {@link FieldDefinition}
      * @param field {@link Field}
      * @return {@link FieldDefinition}
      */
-    protected abstract <S extends FieldDefinition> S buildFieldDefinition(Field field);
+    protected abstract S buildFieldDefinition(Field field);
 
     /**
      * 域注解类
      *
-     * @return
+     * @return {@link com.alatka.messages.annotation.IsoFieldMeta}/{@link com.alatka.messages.annotation.FixedFieldMeta}
      */
     protected abstract Class<? extends Annotation> annotationClass();
 

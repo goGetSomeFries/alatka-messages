@@ -23,7 +23,7 @@ import java.util.stream.IntStream;
  */
 public class BitmapFieldBuilder extends AbstractFieldBuilder<Map<Integer, Boolean>> implements MessageHolderAware {
 
-    private ThreadLocal<Object> messageHolder = new ThreadLocal<>();
+    private final ThreadLocal<Object> messageHolder = new ThreadLocal<>();
 
     @Override
     protected boolean returnIfNull() {
