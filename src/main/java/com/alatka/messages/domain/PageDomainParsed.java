@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class PageDomainParsed extends AbstractDomainParsed implements MessageHolderAware {
 
-    private ThreadLocal<Object> messageHolder = new ThreadLocal<>();
+    private final ThreadLocal<Object> messageHolder = new ThreadLocal<>();
 
     @Override
     public int getOrder() {

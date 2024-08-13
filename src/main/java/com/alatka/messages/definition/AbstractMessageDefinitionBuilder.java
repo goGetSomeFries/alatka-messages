@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @author ybliu
  * @see MessageDefinitionBuilder
  */
-public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefinitionBuilder {
+public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinition> implements MessageDefinitionBuilder {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -32,7 +32,7 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
         List<MessageDefinition> messageDefinitions = new ArrayList<>();
         // MessageDefinition -> source 映射
         Map<MessageDefinition, T> mapping = this.getSources().stream()
-                .peek(source -> this.logger.info("scan source: " + source))
+                .peek(source -> this.logger.info("scan source: {}", source))
                 .flatMap(source -> this.buildMessageDefinitions(source).stream()
                         .map(definition -> new Wrapper<>(definition, source)))
                 .peek(wrapper -> this.logger.debug("build {}", wrapper.definition))
@@ -46,11 +46,11 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
                 ).collect(Collectors.toMap(wrapper -> wrapper.definition, wrapper -> wrapper.object));
 
         // 模板对象，减少FieldDefinition对象创建，节省内存开销
-        Map<String, List<FieldDefinition>> fieldDefinitionsTemplate = messageDefinitions.stream()
+        Map<String, List<S>> fieldDefinitionsTemplate = messageDefinitions.stream()
                 .filter(this::isTemplate)
                 .collect(Collectors.toMap(this::buildTemplateKey,
                         definition -> {
-                            List<FieldDefinition> list = this.buildFieldDefinitions(definition, mapping.get(definition));
+                            List<S> list = this.buildFieldDefinitions(definition, mapping.get(definition));
                             list.forEach(this::postBuildFieldDefinition);
                             return list;
                         }));
@@ -82,7 +82,7 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
      * @param templates  {@link MessageDefinition}模板对象
      * @return {@link FieldDefinition}集合
      */
-    private <S extends FieldDefinition> List<S> buildFieldDefinitions(
+    private List<FieldDefinition> buildFieldDefinitions(
             MessageDefinition definition, T source, Map<String, List<S>> templates) {
         List<S> list = templates.get(buildTemplateKey(definition));
         Map<S, S> map = list == null ? Collections.emptyMap()
@@ -92,7 +92,8 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
         return this.buildFieldDefinitions(definition, source).stream()
                 .filter(fieldDefinition -> fieldDefinition.getStatus() != FieldDefinition.Status.CLOSE)
                 .peek(this::postBuildFieldDefinition)
-                .map(fieldDefinition -> map.getOrDefault(fieldDefinition, (S) fieldDefinition))
+                .map(fieldDefinition -> map.getOrDefault(fieldDefinition, fieldDefinition))
+                .map(entity -> (FieldDefinition) entity)
                 .collect(Collectors.toList());
     }
 
@@ -141,12 +142,11 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
     /**
      * 根据数据源构造{@link FieldDefinition}集合
      *
-     * @param <S>        {@link FieldDefinition}
      * @param definition {@link MessageDefinition}
      * @param source     数据源
      * @return {@link FieldDefinition}集合
      */
-    protected abstract <S extends FieldDefinition> List<S> buildFieldDefinitions(MessageDefinition definition, T source);
+    protected abstract List<S> buildFieldDefinitions(MessageDefinition definition, T source);
 
     /**
      * 获取报文配置信息数据源：注解、数据库表、配置文件...
@@ -165,12 +165,12 @@ public abstract class AbstractMessageDefinitionBuilder<T> implements MessageDefi
     /**
      * source & {@link MessageDefinition} container
      */
-    private class Wrapper<S> {
+    private class Wrapper<U> {
 
         private final MessageDefinition definition;
-        private final S object;
+        private final U object;
 
-        public Wrapper(MessageDefinition definition, S object) {
+        public Wrapper(MessageDefinition definition, U object) {
             this.definition = definition;
             this.object = object;
         }

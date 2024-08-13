@@ -31,7 +31,7 @@ public class UnfixedSubdomainMessageBuilder extends MessageBuilder {
         // 对象解析为字节数组
         FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
         byte[] bytes = fieldBuilder.serialize(instance, fieldDefinition);
-        if (bytes.length == 0 && (isNull == null || isNull.booleanValue())) {
+        if (bytes.length == 0 && (isNull == null || isNull)) {
             isNull = Boolean.TRUE;
             return new Wrapper(bytes, fieldDefinition);
         }
@@ -44,9 +44,8 @@ public class UnfixedSubdomainMessageBuilder extends MessageBuilder {
 
     @Override
     protected List<FieldDefinition> buildFieldDefinitions() {
-        List<FieldDefinition> fieldDefinitions = super.buildFieldDefinitions().stream()
+        return super.buildFieldDefinitions().stream()
                 .sorted(Comparator.reverseOrder()).collect(Collectors.toList());
-        return fieldDefinitions;
     }
 
     @Override

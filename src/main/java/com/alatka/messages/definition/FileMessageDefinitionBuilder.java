@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author ybliu
  * @see AbstractMessageDefinitionBuilder
  */
-public abstract class FileMessageDefinitionBuilder extends AbstractMessageDefinitionBuilder<Path> {
+public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> extends AbstractMessageDefinitionBuilder<Path, S> {
 
     private final String classpath;
 
@@ -28,12 +28,11 @@ public abstract class FileMessageDefinitionBuilder extends AbstractMessageDefini
     }
 
     @Override
-    protected <S extends FieldDefinition> List<S> buildFieldDefinitions(MessageDefinition definition, Path source) {
+    protected List<S> buildFieldDefinitions(MessageDefinition definition, Path source) {
         List<Map<String, Object>> list = this.doBuildFieldDefinitions(definition, source);
 
         return list.stream()
                 .map(map -> JsonUtil.mapToObject(map, fieldDefinitionClass()))
-                .map(entity -> (S) entity)
                 .peek(fieldDefinition -> this.buildFieldDefinition(definition, fieldDefinition))
                 .peek(fieldDefinition -> this.postBuildFieldDefinition(definition, fieldDefinition))
                 .collect(Collectors.toList());
@@ -65,6 +64,7 @@ public abstract class FileMessageDefinitionBuilder extends AbstractMessageDefini
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected <T> T getValueWithMap(Map<String, Object> map, String key) {
         return (T) map.get(key);
     }
@@ -77,7 +77,7 @@ public abstract class FileMessageDefinitionBuilder extends AbstractMessageDefini
     /**
      * 文件后缀
      *
-     * @return
+     * @return 文件后缀
      */
     protected abstract String fileSuffix();
 
@@ -94,9 +94,8 @@ public abstract class FileMessageDefinitionBuilder extends AbstractMessageDefini
     /**
      * get {@link FieldDefinition} type
      *
-     * @param <S> {@link FieldDefinition}
      * @return {@link FieldDefinition} type
      */
-    protected abstract <S extends FieldDefinition> Class<S> fieldDefinitionClass();
+    protected abstract Class<S> fieldDefinitionClass();
 
 }

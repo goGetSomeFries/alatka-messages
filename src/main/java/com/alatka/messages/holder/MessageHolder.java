@@ -11,7 +11,6 @@ import com.alatka.messages.util.ObjectUtil;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -24,13 +23,14 @@ import java.util.stream.Collectors;
 @JsonSerialize(using = CustomJsonSerializer.class)
 public class MessageHolder {
 
-    private Map<FieldDefinition, Object> valueMap = new HashMap<>();
+    private final Map<FieldDefinition, Object> valueMap = new HashMap<>();
 
     private MessageDefinition messageDefinition;
 
     private MessageHolder() {
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> MessageHolder fromPojo(T object) {
         MessageHolder messageHolder = new MessageHolder();
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
@@ -42,12 +42,10 @@ public class MessageHolder {
                     Object result = null;
                     if (value == null) {
                         result = null;
-                    } else if (value == UsageSubdomain.class) {
-                        List<MessageHolder> list = ((UsageSubdomain<Object>) value).getHolder().values().stream()
-                                .map(MessageHolder::fromPojo).collect(Collectors.toList());
-                        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
-                        list.forEach(usageSubdomain::put);
-                        result = usageSubdomain;
+                    } else if (value.getClass() == UsageSubdomain.class) {
+                        result = ((UsageSubdomain<Object>) value).getHolder().entrySet().stream()
+                                .collect(Collectors.toMap(Map.Entry::getKey,
+                                        entry -> entry.getValue() instanceof byte[] ? entry.getValue() : fromPojo(entry.getValue())));
                     } else if (value.getClass().isAnnotationPresent(MessageMeta.class)) {
                         result = fromPojo(value);
                     } else {
@@ -96,11 +94,13 @@ public class MessageHolder {
         this.valueMap.put(definition, value);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getByName(String name) {
         FieldDefinition definition = MessageDefinitionContext.getInstance().fieldDefinition(this.messageDefinition, name);
         return definition == null ? null : (T) this.valueMap.get(definition);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getByDomainNo(Integer domainNo) {
         FieldDefinition definition = MessageDefinitionContext.getInstance().fieldDefinition(this.messageDefinition, domainNo);
         return definition == null ? null : (T) this.valueMap.get(definition);

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class PayloadMessageBuilder extends MessageBuilder {
 
-    private ThreadLocal<Map<Integer, Boolean>> bitmap = new ThreadLocal<>();
+    private final ThreadLocal<Map<Integer, Boolean>> bitmap = new ThreadLocal<>();
 
     public PayloadMessageBuilder(MessageDefinition definition) {
         super.definition = definition;

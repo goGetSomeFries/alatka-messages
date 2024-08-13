@@ -1,5 +1,6 @@
 package com.alatka.messages.definition;
 
+import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.support.Constant;
@@ -8,7 +9,6 @@ import com.alatka.messages.util.XmlUtil;
 
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,13 +19,14 @@ import java.util.stream.Stream;
  * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public abstract class XmlMessageDefinitionBuilder extends FileMessageDefinitionBuilder {
+public abstract class XmlMessageDefinitionBuilder<S extends FieldDefinition> extends FileMessageDefinitionBuilder<S> {
 
     public XmlMessageDefinitionBuilder(String classpath) {
         super(classpath);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, Path source) {
         Map<String, Object> xml = XmlUtil.getMap(source.toFile(), Object.class);
         Map<String, Object> message = this.getValueWithMap(xml, "message");
@@ -49,6 +50,7 @@ public abstract class XmlMessageDefinitionBuilder extends FileMessageDefinitionB
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected List<MessageDefinition> buildMessageDefinitions(Path source) {
         Map<String, Object> xml = XmlUtil.getMap(source.toFile(), Object.class);
         Map<String, Object> message = this.getValueWithMap(xml, "message");

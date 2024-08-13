@@ -1,5 +1,6 @@
 package com.alatka.messages.definition;
 
+import com.alatka.messages.context.FieldDefinition;
 import com.alatka.messages.context.MessageDefinition;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.support.Constant;
@@ -22,7 +23,7 @@ import java.util.stream.Stream;
  * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public abstract class YamlMessageDefinitionBuilder extends FileMessageDefinitionBuilder {
+public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> extends FileMessageDefinitionBuilder<S> {
 
     /**
      * yaml root element
@@ -33,7 +34,7 @@ public abstract class YamlMessageDefinitionBuilder extends FileMessageDefinition
      * 子域key Pattern<br>
      * e.g. F61$SM@TLV F59$SM_F3 F60@TLV
      */
-    private static final Pattern PATTERN = Pattern.compile("^([\\$\\w]+?)(\\$[0-9A-Z]{2})?(@\\w+)?$");
+    private static final Pattern PATTERN = Pattern.compile("^([$\\w]+?)(\\$[0-9A-Z]{2})?(@\\w+)?$");
 
     public YamlMessageDefinitionBuilder(String classpath) {
         super(classpath);

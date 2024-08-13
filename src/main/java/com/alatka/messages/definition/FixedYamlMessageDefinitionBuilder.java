@@ -12,7 +12,7 @@ import com.alatka.messages.context.MessageDefinition;
  * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public class FixedYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilder {
+public class FixedYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilder<FixedFieldDefinition> {
 
     public FixedYamlMessageDefinitionBuilder() {
         this("");

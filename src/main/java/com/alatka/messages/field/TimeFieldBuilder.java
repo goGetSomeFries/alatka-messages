@@ -20,16 +20,16 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
     /**
      * 字符串转日期类型
      *
-     * @param datetime
-     * @param formatter
-     * @return
+     * @param datetime 日期类型字符串
+     * @param formatter {@link DateTimeFormatter}
+     * @return 日期类型对象
      */
     protected abstract T parse(String datetime, DateTimeFormatter formatter);
 
     @Override
     protected T toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
         String datetime = new String(bytes);
-        if (!validate(datetime)) {
+        if (validate(datetime)) {
             return null;
         }
         return this.parse(datetime, this.formatter(fieldDefinition.getPattern(), false));
@@ -38,7 +38,7 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
     @Override
     protected T toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
         String datetime = BytesUtil.fromBCD(bytes);
-        if (!validate(datetime)) {
+        if (validate(datetime)) {
             return null;
         }
         return this.parse(datetime, this.formatter(fieldDefinition.getPattern(), false));
@@ -68,6 +68,6 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
     }
 
     private boolean validate(String datetime) {
-        return !datetime.matches("^0+$");
+        return datetime.matches("^0+$");
     }
 }

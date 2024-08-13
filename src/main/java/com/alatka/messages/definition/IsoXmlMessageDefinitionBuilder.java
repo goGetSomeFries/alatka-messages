@@ -12,7 +12,7 @@ import com.alatka.messages.context.MessageDefinition;
  * @see FileMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public class IsoXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder {
+public class IsoXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder<IsoFieldDefinition> {
 
     public IsoXmlMessageDefinitionBuilder() {
         this("");
@@ -34,7 +34,7 @@ public class IsoXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder 
     }
 
     @Override
-    protected Class<?> fieldDefinitionClass() {
+    protected Class<IsoFieldDefinition> fieldDefinitionClass() {
         return IsoFieldDefinition.class;
     }
 

@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
  * @see AnnotationMessageDefinitionBuilder
  * @see AbstractMessageDefinitionBuilder
  */
-public class FixedAnnotationMessageDefinitionBuilder extends AnnotationMessageDefinitionBuilder {
+public class FixedAnnotationMessageDefinitionBuilder extends AnnotationMessageDefinitionBuilder<FixedFieldDefinition> {
 
     public FixedAnnotationMessageDefinitionBuilder(String packageName) {
         super(packageName);
