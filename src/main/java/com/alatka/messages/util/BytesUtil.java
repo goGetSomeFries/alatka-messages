@@ -30,9 +30,9 @@ public class BytesUtil {
     }
 
     public static String bytesToBinary(byte[] bytes) {
-        String binaryStr = new BigInteger(1, bytes).toString(2);
-        // 左补0
-        return padding(binaryStr);
+        return IntStream.range(0, bytes.length)
+                .mapToObj(i -> String.format("%8s", Integer.toBinaryString(bytes[i] & 0xFF)).replace(' ', '0'))
+                .collect(Collectors.joining());
     }
 
     public static byte[] hexToBytes(String hexStr) {
@@ -81,12 +81,6 @@ public class BytesUtil {
 
     private static String intToHexString(int i) {
         return Integer.toHexString(i).toUpperCase();
-    }
-
-    private static String padding(String str) {
-        int count = str.length() % 8;
-        return count == 0 ? str :
-                IntStream.range(0, 8 - count).mapToObj(i -> "0").collect(Collectors.joining("")).concat(str);
     }
 
     private static byte[] toBytes(String str, int radix) {
