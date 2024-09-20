@@ -3,7 +3,7 @@ package com.alatka.messages;
 import com.alatka.messages.definition.IsoAnnotationMessageDefinitionBuilder;
 import com.alatka.messages.holder.MessageHolder;
 import com.alatka.messages.message.MessageBuilder;
-import com.alatka.messages.model.iso.other.Cups0810;
+import com.alatka.messages.model.iso.cups.b0810.Cups0810;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ public class MessageCups0810AnnotationTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoAnnotationMessageDefinitionBuilder("com.alatka.messages.model.iso.other").build();
+        new IsoAnnotationMessageDefinitionBuilder("com.alatka.messages.model.iso.cups.b0810").build();
     }
 
     @Test
