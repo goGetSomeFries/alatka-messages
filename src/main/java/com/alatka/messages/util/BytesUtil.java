@@ -26,22 +26,55 @@ public class BytesUtil {
     }
 
     public static byte[] binaryToBytes(String binaryStr) {
-        return toBytes(binaryStr, 2);
+        if (binaryStr.length() % 8 != 0) {
+            String prefix = IntStream.range(0, 8 - binaryStr.length() % 8)
+                    .mapToObj(i -> "0")
+                    .collect(Collectors.joining());
+            binaryStr = prefix + binaryStr;
+        }
+
+        String result = binaryStr;
+        Byte[] array = IntStream.range(0, binaryStr.length() / 8)
+                .mapToObj(i -> result.substring(i * 8, i * 8 + 8))
+                .map(s -> Integer.parseInt(s, 2))
+                .map(Integer::byteValue)
+                .toArray(Byte[]::new);
+        byte[] bytes = new byte[binaryStr.length() / 8];
+        IntStream.range(0, bytes.length)
+                .forEach(i -> bytes[i] = array[i].byteValue());
+        return bytes;
     }
 
     public static String bytesToBinary(byte[] bytes) {
-        String binaryStr = new BigInteger(1, bytes).toString(2);
-        // 左补0
-        return padding(binaryStr);
+        return IntStream.range(0, bytes.length)
+                .mapToObj(i -> String.format("%8s", Integer.toBinaryString(bytes[i] & 0xFF)).replace(' ', '0'))
+                .collect(Collectors.joining());
     }
 
     public static byte[] hexToBytes(String hexStr) {
-        return toBytes(hexStr, 16);
+        int length = hexStr.length();
+        if (length % 2 != 0) {
+            hexStr = "0" + hexStr;
+        }
+
+        String result = hexStr;
+        Byte[] array = IntStream.range(0, length / 2)
+                .mapToObj(i -> result.substring(i * 2, i * 2 + 2))
+                .map(s -> Integer.parseInt(s, 16))
+                .map(Integer::byteValue)
+                .toArray(Byte[]::new);
+        byte[] bytes = new byte[length / 2];
+        IntStream.range(0, bytes.length)
+                .forEach(i -> bytes[i] = array[i].byteValue());
+        return bytes;
     }
 
     public static String bytesToHex(byte[] bytes) {
-        String str = new BigInteger(1, bytes).toString(16);
-        return str.length() % 2 == 0 ? str.toUpperCase() : "0".concat(str.toUpperCase());
+        String result = new BigInteger(1, bytes).toString(16);
+        String prefix = IntStream.range(0, bytes.length * 2 - result.length())
+                .mapToObj(i -> "0")
+                .collect(Collectors.joining());
+        return prefix + result.toUpperCase();
     }
 
     public static byte[] intToBytes(int i) {
@@ -83,18 +116,4 @@ public class BytesUtil {
         return Integer.toHexString(i).toUpperCase();
     }
 
-    private static String padding(String str) {
-        int count = str.length() % 8;
-        return count == 0 ? str :
-                IntStream.range(0, 8 - count).mapToObj(i -> "0").collect(Collectors.joining("")).concat(str);
-    }
-
-    private static byte[] toBytes(String str, int radix) {
-        // TODO bug str = "0011"时，bytes.length = 1
-        byte[] bytes = new BigInteger(str, radix).toByteArray();
-        if (bytes.length > 1 && bytes[0] == 0 && (bytes[1] & 0x80) == 0x80) {
-            return Arrays.copyOfRange(bytes, 1, bytes.length);
-        }
-        return bytes;
-    }
 }
