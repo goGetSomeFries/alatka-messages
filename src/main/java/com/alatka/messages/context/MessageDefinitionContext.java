@@ -2,9 +2,9 @@ package com.alatka.messages.context;
 
 import com.alatka.messages.annotation.MessageMeta;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -15,14 +15,19 @@ import java.util.stream.Collectors;
 public class MessageDefinitionContext {
 
     /**
+     * 蓝绿发布标识
+     */
+    private static volatile boolean SWITCH_FLAG = true;
+
+    /**
      * {@link MessageDefinition} context
      */
-    private final Map<String, MessageDefinition> messageDefinitionMap = new ConcurrentHashMap<>();
+    private final Map<String, MessageDefinition> messageDefinitionMap = new HashMap<>();
 
     /**
      * {@link FieldDefinition} context
      */
-    private final Map<MessageDefinition, List<FieldDefinition>> fieldDefinitionsMap = new ConcurrentHashMap<>();
+    private final Map<MessageDefinition, List<FieldDefinition>> fieldDefinitionsMap = new HashMap<>();
 
     private MessageDefinitionContext() {
     }
@@ -94,11 +99,41 @@ public class MessageDefinitionContext {
                 .findFirst().orElse(null);
     }
 
-    public static MessageDefinitionContext getInstance() {
-        return Inner.INSTANCE;
+    /**
+     * 清除
+     */
+    public void reset() {
+        this.messageDefinitionMap.clear();
+        this.fieldDefinitionsMap.clear();
     }
 
-    private static class Inner {
+    /**
+     * 蓝绿发布切换
+     */
+    public static void toggle() {
+        SWITCH_FLAG = !SWITCH_FLAG;
+    }
+
+    public static MessageDefinitionContext getInstance() {
+        return getInstance(true);
+    }
+
+    /**
+     * 获取Context实例，用于蓝绿发布
+     *
+     * @param mode 代表调用该方法得到Context实例的目的是配置还是使用<br>
+     *             true:使用模式 false:配置模式
+     * @return {@link MessageDefinitionContext}实例
+     */
+    public static MessageDefinitionContext getInstance(boolean mode) {
+        return mode == SWITCH_FLAG ? Inner1.INSTANCE : Inner2.INSTANCE;
+    }
+
+    private static class Inner1 {
+        private static final MessageDefinitionContext INSTANCE = new MessageDefinitionContext();
+    }
+
+    private static class Inner2 {
         private static final MessageDefinitionContext INSTANCE = new MessageDefinitionContext();
     }
 }
