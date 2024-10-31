@@ -302,6 +302,7 @@ public class MessageBuilderTest {
     void test15() {
         MessageDefinition definition = new MessageDefinition();
         definition.setKind(MessageDefinition.Kind.payload);
+        definition.setType(MessageDefinition.Type.iso);
         Assertions.assertTrue(MessageBuilder.init(definition) instanceof PayloadMessageBuilder);
 
         definition.setKind(MessageDefinition.Kind.subPayload);
