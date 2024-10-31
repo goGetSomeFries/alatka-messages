@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<alatka-messages xmlns="http://messages.alatka.com"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://messages.alatka.com alatka-messages.xsd">
+    <message type="fixed" group="9001" code="sms" remark="单笔固定格式交易">
+        <payload>
+            <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="java.lang.String"/>
+            <field domainNo="2" name="retCode" length="6" remark="响应码" clazz="java.lang.String"/>
+        </payload>
+    </message>
+</alatka-messages>

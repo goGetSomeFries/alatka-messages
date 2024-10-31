@@ -47,7 +47,7 @@ public abstract class MessageBuilder {
      * @return {@link MessageBuilder}
      */
     public static MessageBuilder init(MessageDefinition definition) {
-        if (definition.getKind() == MessageDefinition.Kind.payload) {
+        if (MessageDefinition.Type.iso == definition.getType() && definition.getKind() == MessageDefinition.Kind.payload) {
             return new PayloadMessageBuilder(definition);
         }
         if (definition.getDomainType() == MessageDefinition.DomainType.TV) {
