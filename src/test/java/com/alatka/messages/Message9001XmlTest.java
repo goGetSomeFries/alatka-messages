@@ -58,4 +58,12 @@ public class Message9001XmlTest {
         this.doTest(hex, key);
     }
 
+    @Test
+    @DisplayName("sms payload")
+    public void test05() {
+        String hex = "33303036303030303030";
+        String key = "fixed:9001:sms:payload";
+        this.doTest(hex, key);
+    }
+
 }

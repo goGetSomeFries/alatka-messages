@@ -83,7 +83,7 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
          */
         subPayload,
         /**
-         * 报文体（8583）
+         * 报文体（8583/固定格式）
          */
         payload,
         /**
