@@ -106,6 +106,16 @@ public class MessageHolder {
         return definition == null ? null : (T) this.valueMap.get(definition);
     }
 
+    public Map<String, Object> toMapByName() {
+        return this.valueMap.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().getName(), Map.Entry::getValue));
+    }
+
+    public Map<Integer, Object> toMapByDomainNo() {
+        return this.valueMap.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().getDomainNo(), Map.Entry::getValue));
+    }
+
     public MessageDefinition getMessageDefinition() {
         return this.messageDefinition;
     }
