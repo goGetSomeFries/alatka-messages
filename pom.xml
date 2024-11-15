@@ -9,54 +9,17 @@
         <version>1.15.0</version>
     </parent>
 
+    <groupId>com.alatka.messages</groupId>
     <artifactId>alatka-messages</artifactId>
-    <version>1.2.0</version>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>alatka-messages-spring-boot-starter</module>
+        <module>alatka-messages-core</module>
+    </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <!-- java8 datetime -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- yaml配置方式 -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- xml配置方式 -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- annotation配置方式 -->
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <properties>
+        <revision>1.2.0</revision>
+    </properties>
 
 </project>
