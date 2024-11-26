@@ -24,6 +24,10 @@ public class UsageSubdomain<T> {
         return holder;
     }
 
+    public void putAll(Map<String, Object> map) {
+        holder.putAll(map);
+    }
+
     public void put(String usage, T subdomain) {
         holder.put(usage, subdomain);
     }

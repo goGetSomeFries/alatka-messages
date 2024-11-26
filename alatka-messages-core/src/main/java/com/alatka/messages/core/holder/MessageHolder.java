@@ -31,7 +31,7 @@ public class MessageHolder {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> MessageHolder fromPojo(T object) {
+    public static MessageHolder fromPojo(Object object) {
         MessageHolder messageHolder = new MessageHolder();
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
         MessageDefinition messageDefinition = context.messageDefinition(object.getClass());
@@ -43,11 +43,49 @@ public class MessageHolder {
                     if (value == null) {
                         result = null;
                     } else if (value.getClass() == UsageSubdomain.class) {
-                        result = ((UsageSubdomain<Object>) value).getHolder().entrySet().stream()
+                        UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
+                        Map<String, Object> map = ((UsageSubdomain<Object>) value).getHolder().entrySet()
+                                .stream()
                                 .collect(Collectors.toMap(Map.Entry::getKey,
                                         entry -> entry.getValue() instanceof byte[] ? entry.getValue() : fromPojo(entry.getValue())));
+                        usageSubdomain.putAll(map);
+                        result = usageSubdomain;
                     } else if (value.getClass().isAnnotationPresent(MessageMeta.class)) {
                         result = fromPojo(value);
+                    } else {
+                        result = value;
+                    }
+                    messageHolder.valueMap.put(fieldDefinition, result);
+                });
+        return messageHolder;
+    }
+
+    public static MessageHolder fromMap(String key, Map<String, Object> params) {
+        MessageHolder messageHolder = new MessageHolder();
+        MessageDefinitionContext context = MessageDefinitionContext.getInstance();
+        MessageDefinition messageDefinition = context.messageDefinition(key);
+        messageHolder.messageDefinition = messageDefinition;
+        context.fieldDefinitions(messageDefinition)
+                .forEach(fieldDefinition -> {
+                    Object result = null;
+                    Object value = params.get(fieldDefinition.getName());
+                    if (fieldDefinition.getExistSubdomain() && value instanceof Map) {
+                        if (fieldDefinition.getStatus() == FieldDefinition.Status.RAW) {
+                            throw new IllegalArgumentException("类型错误：" + messageDefinition + " " + fieldDefinition);
+                        }
+
+                        Map<String, MessageDefinition> mapping = fieldDefinition.getMessageDefinitionMap();
+                        if (mapping.containsKey(FieldDefinition.SUBFIELD_KEY_DEFAULT)) {
+                            result = fromMap(mapping.get(FieldDefinition.SUBFIELD_KEY_DEFAULT).identity(), (Map<String, Object>) value);
+                        } else {
+                            UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
+                            Map<String, Object> map = ((Map<String, Object>) value).entrySet().stream()
+                                    .collect(Collectors.toMap(Map.Entry::getKey,
+                                            entry -> entry.getValue() instanceof byte[] ? entry.getValue() :
+                                                    fromMap(mapping.get(entry.getKey()).identity(), (Map<String, Object>) entry.getValue())));
+                            usageSubdomain.putAll(map);
+                            result = usageSubdomain;
+                        }
                     } else {
                         result = value;
                     }
@@ -108,12 +146,30 @@ public class MessageHolder {
 
     public Map<String, Object> toMapByName() {
         return this.valueMap.entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().getName(), Map.Entry::getValue));
+                .collect(HashMap::new,
+                        (map, item) -> map.put(item.getKey().getName(), this.ofValue(item.getValue(), true)),
+                        HashMap::putAll);
     }
 
-    public Map<Integer, Object> toMapByDomainNo() {
+    public Map<String, Object> toMapByDomainNo() {
         return this.valueMap.entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().getDomainNo(), Map.Entry::getValue));
+                .collect(HashMap::new,
+                        (map, item) -> map.put(item.getKey().getDomainNo().toString(), this.ofValue(item.getValue(), false)),
+                        HashMap::putAll);
+    }
+
+    private Object ofValue(Object value, boolean byName) {
+        if (value instanceof MessageHolder) {
+            return ((MessageHolder) value).valueMap.entrySet().stream()
+                    .collect(HashMap::new,
+                            (map, item) -> map.put(byName ? item.getKey().getName() : item.getKey().getDomainNo().toString(), this.ofValue(item.getValue(), byName)),
+                            HashMap::putAll);
+        }
+        if (value instanceof UsageSubdomain) {
+            return ((UsageSubdomain<Object>) value).getHolder().entrySet()
+                    .stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> this.ofValue(entry.getValue(), byName)));
+        }
+        return value;
     }
 
     public MessageDefinition getMessageDefinition() {
