@@ -21,11 +21,11 @@
  
 <img src="https://foruda.gitee.com/images/1716735852853560264/590b6fd0_2152177.png" width=60%>
 
-### [访问wiki查看更多教程](https://gitee.com/asuka2001/alatka-messages/wikis)
+### [ :point_right: 访问wiki查看更多教程](https://gitee.com/asuka2001/alatka-messages/wikis)
 
 ### github地址
 
-项目同步更新在github；如有需要，[点击我访问](https://github.com/goGetSomeFries/alatka-messages)
+项目同步更新在github；如有需要， :point_right: [点击我访问](https://github.com/goGetSomeFries/alatka-messages)
 
 ### 感谢支持
 
