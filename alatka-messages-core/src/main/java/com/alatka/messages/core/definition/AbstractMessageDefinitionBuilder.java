@@ -93,7 +93,7 @@ public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinit
                 .filter(fieldDefinition -> fieldDefinition.getStatus() != FieldDefinition.Status.CLOSE)
                 .peek(this::postBuildFieldDefinition)
                 .map(fieldDefinition -> map.getOrDefault(fieldDefinition, fieldDefinition))
-                .map(entity -> (FieldDefinition) entity)
+                .map(FieldDefinition.class::cast)
                 .collect(Collectors.toList());
     }
 
