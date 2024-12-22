@@ -46,7 +46,7 @@ public abstract class LVDomainParsed extends AbstractDomainParsed {
 
     protected boolean raw(FieldDefinition fieldDefinition) {
         return fieldDefinition.getParseType() == FieldDefinition.ParseType.BCD
-                && fieldDefinition.getClazz() == String.class;
+                && fieldDefinition.getClassType() == String.class;
     }
 
     /**

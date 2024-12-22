@@ -23,7 +23,7 @@ public class BigIntegerFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(BigInteger.class);
+        fieldDefinition.setClassType(BigInteger.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

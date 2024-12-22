@@ -41,7 +41,7 @@ public class AbstractFieldBuilderTest {
     void test05() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.fromObjectToAscii(null, definition));
     }
 
@@ -50,7 +50,7 @@ public class AbstractFieldBuilderTest {
     void test06() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.fromObjectToBinary(null, definition));
     }
 
@@ -59,7 +59,7 @@ public class AbstractFieldBuilderTest {
     void test07() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.fromObjectToBcd(null, definition));
     }
 
@@ -68,7 +68,7 @@ public class AbstractFieldBuilderTest {
     void test08() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.fromObjectToEbcdic(null, definition));
     }
 
@@ -77,7 +77,7 @@ public class AbstractFieldBuilderTest {
     void test09() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.fromObjectToNone(null, definition));
     }
 
@@ -86,7 +86,7 @@ public class AbstractFieldBuilderTest {
     void test10() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.toObjectWithAscii(null, definition));
     }
 
@@ -95,7 +95,7 @@ public class AbstractFieldBuilderTest {
     void test11() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.toObjectWithBinary(null, definition));
     }
 
@@ -104,7 +104,7 @@ public class AbstractFieldBuilderTest {
     void test12() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.toObjectWithBcd(null, definition));
     }
 
@@ -113,7 +113,7 @@ public class AbstractFieldBuilderTest {
     void test13() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.toObjectWithEbcdic(null, definition));
     }
 
@@ -122,7 +122,7 @@ public class AbstractFieldBuilderTest {
     void test14() {
         FieldDefinition definition = new FieldDefinition();
         definition.setParseType(FieldDefinition.ParseType.ASCII);
-        definition.setOriginClass(String.class);
+        definition.setClassType(String.class);
         Assertions.assertThrows(IllegalArgumentException.class, () -> fieldBuilder.toObjectWithNone(null, definition));
     }
 

@@ -48,7 +48,7 @@ public class TVDomainParsedTest {
         IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
         fieldDefinition.setAliasName("T01");
         fieldDefinition.setLength(9);
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
         fieldDefinition.setParseType(FieldDefinition.ParseType.ASCII);
         byte[] pack = domainParsed.pack(value.getBytes(), fieldDefinition);
         Assertions.assertEquals(BytesUtil.bytesToHex(pack), BytesUtil.bytesToHex(("T01" + value).getBytes()));

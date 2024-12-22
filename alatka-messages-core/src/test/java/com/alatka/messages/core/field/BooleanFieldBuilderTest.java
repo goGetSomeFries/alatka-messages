@@ -22,7 +22,7 @@ public class BooleanFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(Boolean.class);
+        fieldDefinition.setClassType(Boolean.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

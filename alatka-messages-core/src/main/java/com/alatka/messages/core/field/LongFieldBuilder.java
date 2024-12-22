@@ -64,6 +64,6 @@ public class LongFieldBuilder extends NumberFieldBuilder<Long> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == Long.class;
+        return definition.getClassType() == Long.class;
     }
 }

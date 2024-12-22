@@ -28,6 +28,6 @@ public class LocalDateFieldBuilder extends TimeFieldBuilder<LocalDate> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == LocalDate.class;
+        return definition.getClassType() == LocalDate.class;
     }
 }

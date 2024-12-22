@@ -65,7 +65,7 @@ public class BooleanFieldBuilder extends AbstractFieldBuilder<Boolean> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == Boolean.class;
+        return definition.getClassType() == Boolean.class;
     }
 
     private int convert(Boolean value) {

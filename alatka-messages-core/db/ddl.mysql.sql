@@ -10,7 +10,7 @@ CREATE TABLE `ALK_FIELD_DEFINITION`
     `F_FIXED`                   tinyint(1) NOT NULL COMMENT '是否定长',
     `F_LENGTH`                  int          NOT NULL COMMENT '域字节长度',
     `F_MAX_LENGTH`              int          NOT NULL COMMENT '域最大长度',
-    `F_CLAZZ`                   varchar(100) NOT NULL COMMENT '域java类型',
+    `F_CLAZZ`                   varchar(100) DEFAULT NULL COMMENT '域java类型',
     `F_PATTERN`                 varchar(20) DEFAULT NULL COMMENT '域值格式，日期类型使用',
     `F_REMARK`                  varchar(100) NOT NULL COMMENT '域描述',
     `F_STATUS`                  varchar(10)  NOT NULL COMMENT '状态',

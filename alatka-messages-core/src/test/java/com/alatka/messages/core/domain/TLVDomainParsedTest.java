@@ -51,7 +51,7 @@ public class TLVDomainParsedTest {
         fieldDefinition.setAliasName("9F11");
         fieldDefinition.setLength(129);
         fieldDefinition.setFixed(true);
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
         fieldDefinition.setParseType(FieldDefinition.ParseType.ASCII);
 
         byte[] pack = domainParsed.pack(BytesUtil.hexToBytes(hex), fieldDefinition);

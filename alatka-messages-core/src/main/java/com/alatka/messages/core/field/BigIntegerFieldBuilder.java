@@ -65,6 +65,6 @@ public class BigIntegerFieldBuilder extends NumberFieldBuilder<BigInteger> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == BigInteger.class;
+        return definition.getClassType() == BigInteger.class;
     }
 }

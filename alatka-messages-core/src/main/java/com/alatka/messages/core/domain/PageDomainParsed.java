@@ -27,7 +27,7 @@ public class PageDomainParsed extends AbstractDomainParsed implements MessageHol
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
-        return !fieldDefinition.getFixed() && List.class.isAssignableFrom(fieldDefinition.getClazz());
+        return !fieldDefinition.getFixed() && fieldDefinition.getSubdomainType() == MessageDefinition.DomainType.PAGE;
     }
 
     @Override

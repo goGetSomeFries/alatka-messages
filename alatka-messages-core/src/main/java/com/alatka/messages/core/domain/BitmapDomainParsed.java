@@ -23,10 +23,10 @@ public class BitmapDomainParsed extends AbstractDomainParsed {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
-        return Map.class.isAssignableFrom(fieldDefinition.getClazz())
-                && MessageDefinition.Type.iso == messageDefinition.getType()
+        return MessageDefinition.Type.iso == messageDefinition.getType()
                 && MessageDefinition.Kind.payload == messageDefinition.getKind()
-                && fieldDefinition.getDomainNo() == 1;
+                && fieldDefinition.getDomainNo() == 1
+                && Map.class.isAssignableFrom(fieldDefinition.getClassType());
     }
 
     @Override

@@ -24,7 +24,7 @@ public class LocalTimeFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(LocalTime.class);
+        fieldDefinition.setClassType(LocalTime.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 
