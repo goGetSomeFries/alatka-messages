@@ -2,7 +2,6 @@ package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.IsoFieldDefinition;
-import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +18,7 @@ public class LVDomainParsedTest {
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setParseType(FieldDefinition.ParseType.BCD);
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
 
         boolean matched = domainParsed.raw(fieldDefinition);
 
@@ -31,7 +30,7 @@ public class LVDomainParsedTest {
     void test03() {
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setParseType(FieldDefinition.ParseType.BCD);
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
         byte[] bytes = BytesUtil.hexToBytes("102E3849");
 
         byte[] pack = domainParsed.pack(bytes, fieldDefinition);
@@ -69,7 +68,7 @@ public class LVDomainParsedTest {
     void test06() {
         IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
         fieldDefinition.setParseType(FieldDefinition.ParseType.BCD);
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
         fieldDefinition.setFixed(false);
         fieldDefinition.setLength(1);
         fieldDefinition.setMaxLength(5);

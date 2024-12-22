@@ -1,7 +1,7 @@
 package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
-import com.alatka.messages.core.holder.MessageHolder;
+import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ public class PageDomainParsedTest {
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setFixed(false);
-        fieldDefinition.setOriginClass(ArrayList.class);
+        fieldDefinition.setSubdomainType(MessageDefinition.DomainType.PAGE);
 
         boolean matched = domainParsed.matched(null, fieldDefinition);
 

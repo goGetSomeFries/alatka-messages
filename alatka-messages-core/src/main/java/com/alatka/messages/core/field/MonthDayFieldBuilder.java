@@ -28,6 +28,6 @@ public class MonthDayFieldBuilder extends TimeFieldBuilder<MonthDay> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == MonthDay.class;
+        return definition.getClassType() == MonthDay.class;
     }
 }

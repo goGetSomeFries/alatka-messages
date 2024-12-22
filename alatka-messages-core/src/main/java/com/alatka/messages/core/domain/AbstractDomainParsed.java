@@ -34,25 +34,25 @@ public abstract class AbstractDomainParsed implements DomainParsed {
                 .mapToObj(i -> this.fillBytes(definition))
                 .reduce(new byte[0], BytesUtil::concat);
 
-        return isNumberType(definition.getClazz()) ?
+        return isNumberType(definition.getClassType()) ?
                 BytesUtil.concat(padding, bytes) : BytesUtil.concat(bytes, padding);
     }
 
     private byte[] fillBytes(FieldDefinition definition) {
         switch (definition.getParseType()) {
             case EBCDIC:
-                return isNumberType(definition.getClazz()) ? BytesUtil.toEBCDIC("0") : BytesUtil.toEBCDIC(" ");
+                return isNumberType(definition.getClassType()) ? BytesUtil.toEBCDIC("0") : BytesUtil.toEBCDIC(" ");
             case BCD:
                 return BytesUtil.intToBytes(0);
             default:
-                return isNumberType(definition.getClazz()) ? "0".getBytes() : " ".getBytes();
+                return isNumberType(definition.getClassType()) ? "0".getBytes() : " ".getBytes();
         }
     }
 
     /**
      * 数值类型
      *
-     * @param clazz {@link FieldDefinition#getClazz()}
+     * @param clazz {@link FieldDefinition#getClassType()}
      * @return 是否数值类型
      */
     private boolean isNumberType(Class<?> clazz) {

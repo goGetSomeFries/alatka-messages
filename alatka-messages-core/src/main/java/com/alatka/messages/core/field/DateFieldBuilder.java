@@ -61,6 +61,6 @@ public class DateFieldBuilder extends AbstractFieldBuilder<Date> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == Date.class;
+        return definition.getClassType() == Date.class;
     }
 }

@@ -26,7 +26,7 @@ public class DateFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(Date.class);
+        fieldDefinition.setClassType(Date.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

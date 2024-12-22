@@ -37,7 +37,7 @@ class AbstractDomainParsedTest {
         String str = "123";
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setLength(4);
-        fieldDefinition.setOriginClass(Integer.class);
+        fieldDefinition.setClassType(Integer.class);
         fieldDefinition.setParseType(FieldDefinition.ParseType.ASCII);
 
         byte[] padding = domainParsed.padding(str.getBytes(), fieldDefinition);
@@ -50,7 +50,7 @@ class AbstractDomainParsedTest {
         String str = "123";
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setLength(4);
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
         fieldDefinition.setParseType(FieldDefinition.ParseType.ASCII);
 
         byte[] padding = domainParsed.padding(str.getBytes(), fieldDefinition);
@@ -63,7 +63,7 @@ class AbstractDomainParsedTest {
         String hex = "F1F2F3";
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setLength(4);
-        fieldDefinition.setOriginClass(LocalDate.class);
+        fieldDefinition.setClassType(LocalDate.class);
         fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
 
         byte[] padding = domainParsed.padding(BytesUtil.hexToBytes(hex), fieldDefinition);
@@ -77,7 +77,7 @@ class AbstractDomainParsedTest {
         String hex = "F1F2F3";
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setLength(4);
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
         fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
 
         byte[] padding = domainParsed.padding(BytesUtil.hexToBytes(hex), fieldDefinition);
@@ -91,7 +91,7 @@ class AbstractDomainParsedTest {
         String hex = "112233";
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setLength(4);
-        fieldDefinition.setOriginClass(Date.class);
+        fieldDefinition.setClassType(Date.class);
         fieldDefinition.setParseType(FieldDefinition.ParseType.BCD);
 
         byte[] padding = domainParsed.padding(BytesUtil.hexToBytes(hex), fieldDefinition);

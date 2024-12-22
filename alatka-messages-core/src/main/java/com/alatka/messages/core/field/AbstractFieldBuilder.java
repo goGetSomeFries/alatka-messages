@@ -69,7 +69,7 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 break;
             default:
                 throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                        + " with class " + fieldDefinition.getClazz());
+                        + " with class " + fieldDefinition.getClassType());
         }
         return bytes;
     }
@@ -109,7 +109,7 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 break;
             default:
                 throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                        + " with class " + fieldDefinition.getClazz());
+                        + " with class " + fieldDefinition.getClassType());
         }
         return instance;
     }
@@ -146,52 +146,52 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
 
     protected byte[] fromObjectToAscii(T value, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected byte[] fromObjectToBinary(T value, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected byte[] fromObjectToBcd(T value, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected byte[] fromObjectToEbcdic(T value, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected byte[] fromObjectToNone(T value, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected T toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected T toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected T toObjectWithBcd(byte[] bytes, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected T toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     protected T toObjectWithNone(byte[] bytes, FieldDefinition fieldDefinition) {
         throw new IllegalArgumentException("illegal domainType: " + fieldDefinition.getParseType()
-                + " with class " + fieldDefinition.getClazz());
+                + " with class " + fieldDefinition.getClassType());
     }
 
     @Override

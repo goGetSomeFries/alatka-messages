@@ -47,7 +47,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
                     Map<String, Object> result = new HashMap<>();
                     result.put("domainNo", resultSet.getInt("F_DOMAIN_NO"));
                     result.put("name", resultSet.getString("F_NAME"));
-                    result.put("clazz", resultSet.getString("F_CLAZZ"));
+                    result.put("className", resultSet.getString("F_CLAZZ"));
                     result.put("pattern", resultSet.getString("F_PATTERN"));
                     result.put("fixed", resultSet.getBoolean("F_FIXED"));
                     result.put("length", resultSet.getInt("F_LENGTH"));
@@ -81,7 +81,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
 
         fieldDefinition.setDomainNo((Integer) result.get("domainNo"));
         fieldDefinition.setName(result.get("name").toString());
-        fieldDefinition.setClazz(result.get("clazz").toString());
+        fieldDefinition.setClassName(result.get("className") == null ? null : result.get("className").toString());
         fieldDefinition.setPattern(result.get("pattern") == null ?
                 null : result.get("pattern").toString());
         fieldDefinition.setFixed((boolean) result.get("fixed"));

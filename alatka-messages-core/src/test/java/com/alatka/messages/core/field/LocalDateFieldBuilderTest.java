@@ -24,7 +24,7 @@ public class LocalDateFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(LocalDate.class);
+        fieldDefinition.setClassType(LocalDate.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

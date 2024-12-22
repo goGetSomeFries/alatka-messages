@@ -2,7 +2,6 @@ package com.alatka.messages.core.field;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.util.BytesUtil;
-import com.alatka.messages.core.util.ClassUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class IntegerFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(Integer.class);
+        fieldDefinition.setClassType(Integer.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 
