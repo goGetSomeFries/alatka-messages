@@ -23,7 +23,7 @@ public class MonthDayFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(MonthDay.class);
+        fieldDefinition.setClassType(MonthDay.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

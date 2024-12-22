@@ -47,14 +47,11 @@ public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> ex
         }
         if (fieldDefinition.getParseType() == null) {
             FieldDefinition.ParseType parseType =
-                    fieldDefinition.getExistSubdomain() || fieldDefinition.getClazz() == byte[].class ?
+                    fieldDefinition.getExistSubdomain() || fieldDefinition.getClassType() == byte[].class ?
                             FieldDefinition.ParseType.NONE : FieldDefinition.ParseType.ASCII;
             fieldDefinition.setParseType(parseType);
         }
         if (fieldDefinition.getExistSubdomain()) {
-            if (fieldDefinition.getClazz() == null) {
-                fieldDefinition.setOriginClass(MessageHolder.class);
-            }
             List<MessageDefinition> list = MessageDefinitionContext.getInstance()
                     .childrenMessageDefinitions(definition, fieldDefinition);
             Map<String, MessageDefinition> messageDefinitionMap =

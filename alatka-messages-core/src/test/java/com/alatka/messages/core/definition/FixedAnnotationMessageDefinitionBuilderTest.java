@@ -52,7 +52,7 @@ public class FixedAnnotationMessageDefinitionBuilderTest {
 
         Assertions.assertEquals(1, definition.getDomainNo());
         Assertions.assertEquals("test", definition.getName());
-        Assertions.assertEquals(String.class, definition.getClazz());
+        Assertions.assertEquals(String.class, definition.getClassType());
         Assertions.assertEquals("yyyyMMdd", definition.getPattern());
         Assertions.assertFalse(definition.getFixed());
         Assertions.assertEquals(20, definition.getLength());

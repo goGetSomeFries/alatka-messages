@@ -67,6 +67,6 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == BigDecimal.class;
+        return definition.getClassType() == BigDecimal.class;
     }
 }

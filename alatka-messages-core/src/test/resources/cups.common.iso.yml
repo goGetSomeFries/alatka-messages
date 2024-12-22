@@ -191,7 +191,7 @@ alatka.messages:
       F59$QR:
         - { "domainNo": 1, "name": "currencyCode", "fixed": true, "length": 3, "remark": "卡账户货币代码", "clazz": "java.lang.String" }
         - { "domainNo": 2, "name": "counts", "fixed": true, "length": 3, "remark": "所有满足查询条件的记录数", "clazz": "java.lang.Integer" }
-        - { "domainNo": 3, "name": "elements", "fixed": false, "length": 50, "maxLength": 5000, "remark": "查询结果", "clazz": "java.util.ArrayList", "pageSizeName": "counts", "existSubdomain": true, "subdomainType": "PAGE" }
+        - { "domainNo": 3, "name": "elements", "fixed": false, "length": 50, "maxLength": 5000, "remark": "查询结果", "pageSizeName": "counts", "existSubdomain": true, "subdomainType": "PAGE" }
       F59$QR_F3:
         - { "domainNo": 1, "name": "number", "fixed": true, "length": 3, "remark": "明细顺序号", "clazz": "java.lang.Integer" }
         - { "domainNo": 2, "name": "transDate", "fixed": true, "length": 8, "remark": "交易日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }

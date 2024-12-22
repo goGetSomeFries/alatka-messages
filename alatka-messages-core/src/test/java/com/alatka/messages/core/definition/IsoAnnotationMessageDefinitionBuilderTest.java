@@ -55,7 +55,7 @@ public class IsoAnnotationMessageDefinitionBuilderTest {
 
         Assertions.assertEquals(1, definition.getDomainNo());
         Assertions.assertEquals("test", definition.getName());
-        Assertions.assertEquals(String.class, definition.getClazz());
+        Assertions.assertEquals(String.class, definition.getClassType());
         Assertions.assertEquals("yyyyMMdd", definition.getPattern());
         Assertions.assertTrue(definition.getFixed());
         Assertions.assertEquals(20, definition.getLength());

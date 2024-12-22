@@ -28,6 +28,6 @@ public class YearMonthFieldBuilder extends TimeFieldBuilder<YearMonth> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == YearMonth.class;
+        return definition.getClassType() == YearMonth.class;
     }
 }

@@ -36,7 +36,7 @@ public class FixedDomainParsedTest {
         String str = "12345";
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setLength(10);
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
         fieldDefinition.setParseType(FieldDefinition.ParseType.ASCII);
         byte[] pack = domainParsed.pack(str.getBytes(), fieldDefinition);
         Assertions.assertEquals(new String(pack), str + "     ");

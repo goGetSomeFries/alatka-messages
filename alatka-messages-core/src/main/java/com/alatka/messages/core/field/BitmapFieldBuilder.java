@@ -92,10 +92,10 @@ public class BitmapFieldBuilder extends AbstractFieldBuilder<Map<Integer, Boolea
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return Map.class.isAssignableFrom(definition.getClazz())
-                && MessageDefinition.Type.iso == messageDefinition.getType()
+        return MessageDefinition.Type.iso == messageDefinition.getType()
                 && MessageDefinition.Kind.payload == messageDefinition.getKind()
-                && definition.getDomainNo() == 1;
+                && definition.getDomainNo() == 1
+                && Map.class.isAssignableFrom(definition.getClassType());
     }
 
     @Override

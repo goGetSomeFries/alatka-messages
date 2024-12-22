@@ -64,6 +64,6 @@ public class IntegerFieldBuilder extends NumberFieldBuilder<Integer> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == Integer.class;
+        return definition.getClassType() == Integer.class;
     }
 }

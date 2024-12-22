@@ -21,7 +21,7 @@ public class BytesFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(byte[].class);
+        fieldDefinition.setClassType(byte[].class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

@@ -25,7 +25,7 @@ public class CustomDateTimeFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(LocalDateTime.class);
+        fieldDefinition.setClassType(LocalDateTime.class);
         fieldDefinition.setPattern("MMddHHmmss");
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }

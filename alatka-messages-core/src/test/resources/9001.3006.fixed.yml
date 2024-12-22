@@ -6,8 +6,8 @@ alatka.messages:
   message:
     request:
       - { "domainNo": 1, "name": "trxType", "length": 4, "remark": "交易代码", "clazz": "java.lang.String" }
-      - { "domainNo": 2, "name": "retCode", "length": 6, "remark": "响应码", "clazz": "java.lang.String" }
-      - { "domainNo": 3, "name": "bnkNbr", "length": 4, "remark": "银行代号", "clazz": "java.lang.String" }
+      - { "domainNo": 2, "name": "retCode", "length": 6, "remark": "响应码", "className": "String" }
+      - { "domainNo": 3, "name": "bnkNbr", "length": 4, "remark": "银行代号", "className": "java.lang.String" }
       - { "domainNo": 4, "name": "source", "length": 2, "remark": "交易来源", "clazz": "java.lang.String" }
       - { "domainNo": 5, "name": "brnNo", "length": 6, "remark": "网点代号", "clazz": "java.lang.String" }
       - { "domainNo": 6, "name": "opeNo", "length": 6, "remark": "操作员号", "clazz": "java.lang.String" }
@@ -37,7 +37,7 @@ alatka.messages:
       - { "domainNo": 10, "name": "option", "length": 1, "remark": "币种选项", "clazz": "java.lang.String" }
       - { "domainNo": 11, "name": "counts", "length": 2, "remark": "本次返回交易条数", "clazz": "java.lang.Integer" }
       - { "domainNo": 12, "name": "rtnInd", "length": 1, "remark": "翻页标志", "clazz": "java.lang.String" }
-      - { "domainNo": 13, "name": "elements", "fixed": false, "length": 141, "remark": "集合", "clazz": "java.util.ArrayList", "pageSizeName": "counts", "existSubdomain": true, "subdomainType": "PAGE" }
+      - { "domainNo": 13, "name": "elements", "fixed": false, "length": 141, "remark": "集合", "pageSizeName": "counts", "existSubdomain": true, "subdomainType": "PAGE" }
     subPayload:
       F13:
         - { "domainNo": 1, "name": "monthNbr", "length": 3, "remark": "月份序号", "clazz": "java.lang.Integer" }

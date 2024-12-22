@@ -30,7 +30,7 @@ public class BitmapDomainParsedTest {
 
         FieldDefinition fieldDefinition = new FieldDefinition();
         fieldDefinition.setDomainNo(1);
-        fieldDefinition.setOriginClass(Map.class);
+        fieldDefinition.setClassType(Map.class);
 
         boolean matched = domainParsed.matched(messageDefinition, fieldDefinition);
 

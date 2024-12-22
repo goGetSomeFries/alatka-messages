@@ -46,7 +46,7 @@ public abstract class AnnotationMessageDefinitionBuilder<S extends FieldDefiniti
 
     private void postBuildFieldDefinition(Field field, FieldDefinition fieldDefinition) {
         if (fieldDefinition.getExistSubdomain()) {
-            Class<?> clazz = fieldDefinition.getClazz();
+            Class<?> clazz = fieldDefinition.getClassType();
             if (UsageSubdomain.class == clazz) {
                 Reflections reflections = new Reflections(this.packageName);
                 Class<?> subdomainClass = ClassUtil.getGenericType(field);
@@ -65,7 +65,7 @@ public abstract class AnnotationMessageDefinitionBuilder<S extends FieldDefiniti
         }
 
         if (fieldDefinition.getParseType() == FieldDefinition.ParseType.ASCII &&
-                (fieldDefinition.getExistSubdomain() || fieldDefinition.getClazz() == byte[].class)) {
+                (fieldDefinition.getExistSubdomain() || fieldDefinition.getClassType() == byte[].class)) {
             fieldDefinition.setParseType(FieldDefinition.ParseType.NONE);
         }
     }
@@ -119,7 +119,7 @@ public abstract class AnnotationMessageDefinitionBuilder<S extends FieldDefiniti
     /**
      * 域注解类
      *
-     * @return {@link com.alatka.messages.annotation.IsoFieldMeta}/{@link com.alatka.messages.annotation.FixedFieldMeta}
+     * @return {@link com.alatka.messages.core.annotation.IsoFieldMeta}/{@link com.alatka.messages.core.annotation.FixedFieldMeta}
      */
     protected abstract Class<? extends Annotation> annotationClass();
 

@@ -84,6 +84,6 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == String.class;
+        return definition.getClassType() == String.class;
     }
 }

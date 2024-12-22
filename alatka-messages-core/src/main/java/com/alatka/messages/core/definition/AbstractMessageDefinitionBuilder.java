@@ -1,15 +1,14 @@
 package com.alatka.messages.core.definition;
 
+import com.alatka.messages.core.context.ClassAlias;
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.context.MessageDefinitionContext;
+import com.alatka.messages.core.util.ClassUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,6 +22,13 @@ import java.util.stream.Collectors;
 public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinition> implements MessageDefinitionBuilder {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private final Map<String, Class<?>> classAliasMap;
+
+    public AbstractMessageDefinitionBuilder() {
+        this.classAliasMap = Arrays.stream(ClassAlias.values())
+                .collect(HashMap::new, (k, v) -> k.put(v.name(), v.getClazz()), HashMap::putAll);
+    }
 
     @Override
     public void build() {
@@ -93,7 +99,7 @@ public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinit
                 .filter(fieldDefinition -> fieldDefinition.getStatus() != FieldDefinition.Status.CLOSE)
                 .peek(this::postBuildFieldDefinition)
                 .map(fieldDefinition -> map.getOrDefault(fieldDefinition, fieldDefinition))
-                .map(entity -> (FieldDefinition) entity)
+                .map(FieldDefinition.class::cast)
                 .collect(Collectors.toList());
     }
 
@@ -125,7 +131,16 @@ public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinit
      * @param definition {@link FieldDefinition}
      */
     private void postBuildFieldDefinition(FieldDefinition definition) {
-        if (definition.getClazz().isPrimitive()) {
+        if (definition.getExistSubdomain()) {
+            return;
+        }
+        if (definition.getClassType() == null) {
+            String className = definition.getClassName();
+            Class<?> classType = this.classAliasMap.containsKey(className) ?
+                    this.classAliasMap.get(className) : ClassUtil.forName(className);
+            definition.setClassType(classType);
+        }
+        if (definition.getClassType().isPrimitive()) {
             throw new IllegalArgumentException("fieldDefinition: " + definition + "不支持原始类型");
         }
     }

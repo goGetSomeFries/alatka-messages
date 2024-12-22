@@ -31,7 +31,7 @@ public class StringFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(String.class);
+        fieldDefinition.setClassType(String.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

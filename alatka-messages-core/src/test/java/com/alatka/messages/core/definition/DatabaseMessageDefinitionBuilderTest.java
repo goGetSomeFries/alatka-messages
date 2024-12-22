@@ -190,7 +190,7 @@ public class DatabaseMessageDefinitionBuilderTest {
 
         Assertions.assertEquals(1, list.get(0).getDomainNo());
         Assertions.assertEquals("test1", list.get(0).getName());
-        Assertions.assertEquals(String.class, list.get(0).getClazz());
+        Assertions.assertEquals(String.class.getName(), list.get(0).getClassName());
         Assertions.assertNull(list.get(0).getPattern());
         Assertions.assertTrue(list.get(0).getFixed());
         Assertions.assertEquals(20, list.get(0).getLength());
@@ -203,7 +203,7 @@ public class DatabaseMessageDefinitionBuilderTest {
 
         Assertions.assertEquals(2, list.get(1).getDomainNo());
         Assertions.assertEquals("test2", list.get(1).getName());
-        Assertions.assertEquals(LocalDate.class, list.get(1).getClazz());
+        Assertions.assertEquals(LocalDate.class.getName(), list.get(1).getClassName());
         Assertions.assertEquals("yyyyMMdd", list.get(1).getPattern());
         Assertions.assertFalse(list.get(1).getFixed());
         Assertions.assertEquals(8, list.get(1).getLength());

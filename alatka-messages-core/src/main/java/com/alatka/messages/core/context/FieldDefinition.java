@@ -1,6 +1,6 @@
 package com.alatka.messages.core.context;
 
-import com.alatka.messages.core.util.ClassUtil;
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.Map;
 import java.util.Objects;
@@ -27,7 +27,12 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
     /**
      * 域java类型
      */
-    private Class<?> clazz;
+    @JsonAlias({"clazz"})
+    private String className;
+    /**
+     * 域java类型
+     */
+    private Class<?> classType;
     /**
      * 域值格式，日期类型使用
      */
@@ -126,16 +131,20 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
         this.name = name;
     }
 
-    public Class<?> getClazz() {
-        return clazz;
+    public String getClassName() {
+        return className;
     }
 
-    public void setClazz(String clazz) {
-        this.clazz = ClassUtil.forName(clazz);
+    public void setClassName(String className) {
+        this.className = className;
     }
 
-    public void setOriginClass(Class<?> clazz) {
-        this.clazz = clazz;
+    public Class<?> getClassType() {
+        return classType;
+    }
+
+    public void setClassType(Class<?> classType) {
+        this.classType = classType;
     }
 
     public String getPattern() {

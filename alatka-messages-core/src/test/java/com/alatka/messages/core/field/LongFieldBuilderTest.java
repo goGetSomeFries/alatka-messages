@@ -21,7 +21,7 @@ public class LongFieldBuilderTest {
     @DisplayName("matched()")
     void test02() {
         FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setOriginClass(Long.class);
+        fieldDefinition.setClassType(Long.class);
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
     }
 

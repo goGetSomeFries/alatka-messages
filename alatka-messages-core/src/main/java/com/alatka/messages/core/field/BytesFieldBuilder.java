@@ -69,6 +69,6 @@ public class BytesFieldBuilder extends AbstractFieldBuilder<byte[]> {
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
-        return definition.getClazz() == byte[].class;
+        return definition.getClassType() == byte[].class;
     }
 }

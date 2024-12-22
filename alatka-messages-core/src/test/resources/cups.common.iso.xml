@@ -211,7 +211,7 @@
         <subPayload domain="F59" usage="QR">
             <field domainNo="1" name="currencyCode" fixed="true" length="3" remark="卡账户货币代码" clazz="java.lang.String"/>
             <field domainNo="2" name="counts" fixed="true" length="3" remark="所有满足查询条件的记录数" clazz="java.lang.Integer"/>
-            <field domainNo="3" name="elements" fixed="false" length="50" maxLength="5000" remark="查询结果" clazz="java.util.ArrayList" pageSizeName="counts" existSubdomain="true" subdomainType="PAGE"/>
+            <field domainNo="3" name="elements" fixed="false" length="50" maxLength="5000" remark="查询结果" pageSizeName="counts" existSubdomain="true" subdomainType="PAGE"/>
         </subPayload>
         <subPayload domain="F59$QR_F3">
             <field domainNo="1" name="number" fixed="true" length="3" remark="明细顺序号" clazz="java.lang.Integer"/>
