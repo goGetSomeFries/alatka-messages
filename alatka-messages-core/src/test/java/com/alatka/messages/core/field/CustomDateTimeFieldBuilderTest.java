@@ -28,6 +28,18 @@ public class CustomDateTimeFieldBuilderTest {
         fieldDefinition.setClassType(LocalDateTime.class);
         fieldDefinition.setPattern("MMddHHmmss");
         Assertions.assertTrue(fieldBuilder.matched(null, fieldDefinition));
+
+        fieldDefinition.setPattern("yyyyMMddHHmmss");
+        Assertions.assertFalse(fieldBuilder.matched(null, fieldDefinition));
+
+        fieldDefinition.setPattern("yyMMddHHmmss");
+        Assertions.assertFalse(fieldBuilder.matched(null, fieldDefinition));
+
+        fieldDefinition.setPattern("uuuuMMddHHmmss");
+        Assertions.assertFalse(fieldBuilder.matched(null, fieldDefinition));
+
+        fieldDefinition.setPattern("uuMMddHHmmss");
+        Assertions.assertFalse(fieldBuilder.matched(null, fieldDefinition));
     }
 
     @Test
