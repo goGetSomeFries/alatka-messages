@@ -20,7 +20,7 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
     /**
      * 字符串转日期类型
      *
-     * @param datetime 日期类型字符串
+     * @param datetime  日期类型字符串
      * @param formatter {@link DateTimeFormatter}
      * @return 日期类型对象
      */
@@ -45,6 +45,15 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
     }
 
     @Override
+    protected T toObjectWithEbcdic(byte[] bytes, FieldDefinition fieldDefinition) {
+        String datetime = BytesUtil.fromEBCDIC(bytes);
+        if (validate(datetime)) {
+            return null;
+        }
+        return this.parse(datetime, this.formatter(fieldDefinition.getPattern(), false));
+    }
+
+    @Override
     protected byte[] fromObjectToAscii(T value, FieldDefinition fieldDefinition) {
         String datetime = this.formatter(fieldDefinition.getPattern(), true).format((TemporalAccessor) value);
         return datetime.getBytes();
@@ -54,6 +63,12 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
     protected byte[] fromObjectToBcd(T value, FieldDefinition fieldDefinition) {
         String datetime = this.formatter(fieldDefinition.getPattern(), true).format((TemporalAccessor) value);
         return BytesUtil.toBCD(datetime);
+    }
+
+    @Override
+    protected byte[] fromObjectToEbcdic(T value, FieldDefinition fieldDefinition) {
+        String datetime = this.formatter(fieldDefinition.getPattern(), true).format((TemporalAccessor) value);
+        return BytesUtil.toEBCDIC(datetime);
     }
 
     private DateTimeFormatter formatter(String pattern, boolean serialized) {
