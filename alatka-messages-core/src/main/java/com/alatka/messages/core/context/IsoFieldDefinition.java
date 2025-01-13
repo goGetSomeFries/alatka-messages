@@ -16,6 +16,10 @@ import java.util.stream.Stream;
 public class IsoFieldDefinition extends FieldDefinition {
 
     /**
+     * 变长域长度域解析类型
+     */
+    private ParseType lenParseType;
+    /**
      * {@link TVDomainParsed}
      * {@link TLVDomainParsed}
      * {@link TLV2DomainParsed}
@@ -31,6 +35,14 @@ public class IsoFieldDefinition extends FieldDefinition {
      * 未配置子域异常
      */
     private Boolean nonSubdomainException = Boolean.TRUE;
+
+    public ParseType getLenParseType() {
+        return lenParseType;
+    }
+
+    public void setLenParseType(ParseType lenParseType) {
+        this.lenParseType = lenParseType;
+    }
 
     public String getAliasName() {
         return aliasName;

@@ -35,6 +35,6 @@ public class CustomDateTimeFieldBuilder extends LocalDateTimeFieldBuilder {
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition definition) {
         String pattern = definition.getPattern();
-        return super.matched(messageDefinition, definition) && !pattern.matches("^[y|u]{1,4}\\\\w+");
+        return super.matched(messageDefinition, definition) && !pattern.matches("^[y|u]{1,4}\\w+");
     }
 }

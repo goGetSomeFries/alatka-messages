@@ -64,7 +64,6 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 bytes = this.fromObjectToEbcdic(value, fieldDefinition);
                 break;
             case NONE:
-            case NONE_V2:
                 bytes = this.fromObjectToNone(value, fieldDefinition);
                 break;
             default:
@@ -104,7 +103,6 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
                 instance = this.toObjectWithEbcdic(bytes, fieldDefinition);
                 break;
             case NONE:
-            case NONE_V2:
                 instance = this.toObjectWithNone(bytes, fieldDefinition);
                 break;
             default:

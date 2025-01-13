@@ -3,7 +3,6 @@ package com.alatka.messages.core.definition;
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.context.MessageDefinitionContext;
-import com.alatka.messages.core.holder.MessageHolder;
 import com.alatka.messages.core.util.FileUtil;
 import com.alatka.messages.core.util.JsonUtil;
 

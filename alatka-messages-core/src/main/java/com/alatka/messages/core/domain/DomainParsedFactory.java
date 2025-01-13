@@ -26,6 +26,7 @@ public class DomainParsedFactory {
         init(new UnfixedDomainParsed());
         init(new BinaryLVDomainParsed());
         init(new AsciiLVDomainParsed());
+        init(new EbcdicLVDomainParsed());
         init(new PageDomainParsed());
         init(new FixedDomainParsed());
     }

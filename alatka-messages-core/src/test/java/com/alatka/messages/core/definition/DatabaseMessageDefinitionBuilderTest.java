@@ -157,6 +157,7 @@ public class DatabaseMessageDefinitionBuilderTest {
         doReturn("OPEN", "RAW").when(resultSet).getString("F_STATUS");
         doReturn(null, "counts").when(resultSet).getString("F_PAGE_SIZE_NAME");
         doReturn("ASCII", "BCD").when(resultSet).getString("F_PARSE_TYPE");
+        doReturn(null, "BCD").when(resultSet).getString("F_LEN_PARSE_TYPE");
         doReturn(false, true).when(resultSet).getBoolean("F_EXIST_SUBDOMAIN");
         doReturn("FIXED", "PAGE").when(resultSet).getString("F_SUBDOMAIN_TYPE");
         doReturn(null, "alias").when(resultSet).getString("F_ALIAS_NAME");
@@ -211,6 +212,7 @@ public class DatabaseMessageDefinitionBuilderTest {
         Assertions.assertEquals(FieldDefinition.Status.RAW, list.get(1).getStatus());
         Assertions.assertEquals("counts", list.get(1).getPageSizeName());
         Assertions.assertEquals(FieldDefinition.ParseType.BCD, list.get(1).getParseType());
+        Assertions.assertEquals(FieldDefinition.ParseType.BCD, ((IsoFieldDefinition) list.get(1)).getLenParseType());
         Assertions.assertTrue(list.get(1).getExistSubdomain());
         Assertions.assertEquals(MessageDefinition.DomainType.PAGE, list.get(1).getSubdomainType());
         Assertions.assertEquals("alias", ((IsoFieldDefinition) list.get(1)).getAliasName());

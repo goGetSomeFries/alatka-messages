@@ -69,7 +69,7 @@ public class RawDomainParsedTest {
     @DisplayName("unpack() 不定长域 L=BINARY")
     void test06() {
         IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
-        fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
+        fieldDefinition.setLenParseType(FieldDefinition.ParseType.BINARY);
         fieldDefinition.setFixed(false);
         fieldDefinition.setLength(1);
         fieldDefinition.setMaxLength(5);
@@ -83,7 +83,7 @@ public class RawDomainParsedTest {
     @DisplayName("unpack() 不定长域 L=ASCII")
     void test07() {
         IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
-        fieldDefinition.setParseType(FieldDefinition.ParseType.ASCII);
+        fieldDefinition.setLenParseType(FieldDefinition.ParseType.ASCII);
         fieldDefinition.setFixed(false);
         fieldDefinition.setLength(2);
         fieldDefinition.setMaxLength(5);
@@ -91,5 +91,19 @@ public class RawDomainParsedTest {
         AtomicInteger counter = new AtomicInteger(0);
         byte[] unpack = domainParsed.unpack(bytes, fieldDefinition, counter);
         Assertions.assertEquals(BytesUtil.bytesToHex(unpack), "30351E2E3E4E5E");
+    }
+
+    @Test
+    @DisplayName("unpack() 不定长域 L=EBCDIC")
+    void test08() {
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
+        fieldDefinition.setLenParseType(FieldDefinition.ParseType.EBCDIC);
+        fieldDefinition.setFixed(false);
+        fieldDefinition.setLength(2);
+        fieldDefinition.setMaxLength(5);
+        byte[] bytes = BytesUtil.hexToBytes("F0F51E2E3E4E5E");
+        AtomicInteger counter = new AtomicInteger(0);
+        byte[] unpack = domainParsed.unpack(bytes, fieldDefinition, counter);
+        Assertions.assertEquals(BytesUtil.bytesToHex(unpack), "F0F51E2E3E4E5E");
     }
 }

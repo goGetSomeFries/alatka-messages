@@ -19,7 +19,7 @@ public enum ClassAlias {
     Boolean(java.lang.Boolean.class),
     Subdomain(null);
 
-    private Class<?> clazz;
+    private final Class<?> clazz;
 
     ClassAlias(Class<?> clazz) {
         this.clazz = clazz;

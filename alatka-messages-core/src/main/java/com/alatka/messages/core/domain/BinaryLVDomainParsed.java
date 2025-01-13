@@ -1,6 +1,7 @@
 package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
+import com.alatka.messages.core.context.IsoFieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.util.BytesUtil;
 
@@ -16,29 +17,24 @@ public class BinaryLVDomainParsed extends LVDomainParsed {
 
     @Override
     public int getOrder() {
-        return 30;
+        return 20;
     }
 
     @Override
     public boolean matched(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
         return super.matched(messageDefinition, fieldDefinition)
-                && fieldDefinition.getParseType().getLenParseType() == FieldDefinition.ParseType.LPT.B;
+                && super.buildLenParseType(fieldDefinition) == FieldDefinition.ParseType.BINARY;
     }
 
     @Override
-    protected byte[] intToBytes(int length, FieldDefinition fieldDefinition) {
-        length = fieldDefinition.getParseType() == FieldDefinition.ParseType.BCD ? length * 2 : length;
+    protected byte[] intToBytes(int length, IsoFieldDefinition fieldDefinition) {
         byte[] lenBytes = BytesUtil.intToBytes(length);
-
         byte[] fillBytes = new byte[fieldDefinition.getLength() - lenBytes.length];
         return BytesUtil.concat(fillBytes, lenBytes);
     }
 
     @Override
-    protected int bytesToInt(byte[] lengthBytes, FieldDefinition fieldDefinition) {
-        int length = BytesUtil.bytesToInt(lengthBytes);
-        return fieldDefinition.getParseType() != FieldDefinition.ParseType.BCD ?
-                length :
-                length % 2 == 0 ? length / 2 : length / 2 + 1;
+    protected int bytesToInt(byte[] lengthBytes, IsoFieldDefinition fieldDefinition) {
+        return BytesUtil.bytesToInt(lengthBytes);
     }
 }

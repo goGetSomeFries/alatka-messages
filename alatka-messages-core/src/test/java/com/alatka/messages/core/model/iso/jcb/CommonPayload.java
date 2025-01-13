@@ -24,7 +24,7 @@ public class CommonPayload {
     private String messageType;
     @IsoFieldMeta(domainNo = 1, fixed = false, length = 16, remark = "位图", parseType = BINARY)
     private Map<Integer, Boolean> bitmap;
-    @IsoFieldMeta(domainNo = 2, fixed = false, length = 1, maxLength = 10, remark = "主账号", parseType = BCD)
+    @IsoFieldMeta(domainNo = 2, fixed = false, length = 1, maxLength = 10, remark = "主账号", parseType = BCD, lenParseType = BINARY)
     private String pan;
     @IsoFieldMeta(domainNo = 3, fixed = true, length = 3, remark = "交易处理码", parseType = BCD)
     private String processingCode;
@@ -62,13 +62,13 @@ public class CommonPayload {
     private String posPinCaptrCode;
     @IsoFieldMeta(domainNo = 28, fixed = true, length = 9, remark = "交易费", existSubdomain = true, subdomainType = FIXED)
     private Field28 amtTransFee;
-    @IsoFieldMeta(domainNo = 32, fixed = false, length = 1, maxLength = 6, remark = "代理机构标识码", parseType = BCD)
+    @IsoFieldMeta(domainNo = 32, fixed = false, length = 1, maxLength = 6, remark = "代理机构标识码", parseType = BCD, lenParseType = BINARY)
     private String acqInstIdCode;
-    @IsoFieldMeta(domainNo = 33, fixed = false, length = 1, maxLength = 6, remark = "发送机构标识码", parseType = BCD)
+    @IsoFieldMeta(domainNo = 33, fixed = false, length = 1, maxLength = 6, remark = "发送机构标识码", parseType = BCD, lenParseType = BINARY)
     private String fwdInstIdCode;
-    @IsoFieldMeta(domainNo = 35, fixed = false, length = 1, maxLength = 20, remark = "第二磁道数据", parseType = BCD, status = RAW)
+    @IsoFieldMeta(domainNo = 35, fixed = false, length = 1, maxLength = 20, remark = "第二磁道数据", parseType = BCD, status = RAW, lenParseType = BINARY)
     private byte[] tracK2Data;
-    @IsoFieldMeta(domainNo = 36, fixed = false, length = 1, maxLength = 54, remark = "第三磁道数据", parseType = BCD)
+    @IsoFieldMeta(domainNo = 36, fixed = false, length = 1, maxLength = 54, remark = "第三磁道数据", parseType = BCD, lenParseType = BINARY)
     private byte[] tracK3Data;
     @IsoFieldMeta(domainNo = 37, fixed = true, length = 12, remark = "检索参考号", parseType = EBCDIC)
     private String retrivlRefNum;
@@ -82,11 +82,11 @@ public class CommonPayload {
     private String cardAccptrId;
     @IsoFieldMeta(domainNo = 43, fixed = true, length = 40, remark = "受卡方名称地址", existSubdomain = true, subdomainType = FIXED)
     private Field43 cardAccptrNameLoc;
-    @IsoFieldMeta(domainNo = 44, fixed = false, length = 1, maxLength = 99, remark = "附加响应数据", existSubdomain = true, subdomainType = FIXED, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 44, fixed = false, length = 1, maxLength = 99, remark = "附加响应数据", existSubdomain = true, subdomainType = FIXED, lenParseType = BINARY)
     private Field44 addtnlRespCode;
-    @IsoFieldMeta(domainNo = 45, fixed = false, length = 1, maxLength = 76, remark = "第一磁道数据", parseType = EBCDIC)
+    @IsoFieldMeta(domainNo = 45, fixed = false, length = 1, maxLength = 76, remark = "第一磁道数据", parseType = EBCDIC, lenParseType = BINARY)
     private String tracK1Data;
-    @IsoFieldMeta(domainNo = 48, fixed = false, length = 1, maxLength = 255, remark = "附加数据——私有", existSubdomain = true, subdomainType = ULV2, parseType = NONE_V2, nonSubdomainException = false)
+    @IsoFieldMeta(domainNo = 48, fixed = false, length = 1, maxLength = 255, remark = "附加数据——私有", existSubdomain = true, subdomainType = ULV2, lenParseType = BINARY, nonSubdomainException = false)
     private UsageSubdomain<Field48> addtnlDataPrivate;
     @IsoFieldMeta(domainNo = 49, fixed = true, length = 3, remark = "交易货币代码", parseType = EBCDIC)
     private String currcyCodeTrans;
@@ -98,15 +98,15 @@ public class CommonPayload {
     private byte[] pinData;
     @IsoFieldMeta(domainNo = 53, fixed = true, length = 8, remark = "安全控制信息", existSubdomain = true, subdomainType = FIXED)
     private Field53 secRelatdCtrlInfo;
-    @IsoFieldMeta(domainNo = 54, fixed = false, length = 1, maxLength = 120, remark = "实际余额", existSubdomain = true, subdomainType = FIXED, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 54, fixed = false, length = 1, maxLength = 120, remark = "实际余额", existSubdomain = true, subdomainType = FIXED, lenParseType = BINARY)
     private Field54 addtnlAmt;
-    @IsoFieldMeta(domainNo = 55, fixed = false, length = 2, maxLength = 255, remark = "IC卡数据域", existSubdomain = true, subdomainType = TLV, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 55, fixed = false, length = 2, maxLength = 255, remark = "IC卡数据域", existSubdomain = true, subdomainType = TLV, lenParseType = BINARY)
     private Field55 iccData;
-    @IsoFieldMeta(domainNo = 60, fixed = false, length = 1, maxLength = 255, remark = "STIP related information", existSubdomain = true, subdomainType = ULV2, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 60, fixed = false, length = 1, maxLength = 255, remark = "STIP related information", existSubdomain = true, subdomainType = ULV2, lenParseType = BINARY)
     private UsageSubdomain<Field60> stipRelInfo;
-    @IsoFieldMeta(domainNo = 61, fixed = false, length = 1, maxLength = 255, remark = "point of service information", existSubdomain = true, subdomainType = FIXED, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 61, fixed = false, length = 1, maxLength = 255, remark = "point of service information", existSubdomain = true, subdomainType = FIXED, lenParseType = BINARY)
     private Field61 ponitOfServiceInfo;
-    @IsoFieldMeta(domainNo = 63, fixed = false, length = 1, maxLength = 255, remark = "transaction code", parseType = EBCDIC)
+    @IsoFieldMeta(domainNo = 63, fixed = false, length = 1, maxLength = 255, remark = "transaction code", parseType = EBCDIC, lenParseType = BINARY)
     private String finaclNetData;
     @IsoFieldMeta(domainNo = 70, fixed = true, length = 2, remark = "网络管理信息码", parseType = BCD)
     private String netwkMgmtInfoCode;
@@ -116,15 +116,15 @@ public class CommonPayload {
     private Field95 replacementAmt;
     @IsoFieldMeta(domainNo = 96, fixed = true, length = 8, remark = "报文安全码")
     private byte[] msgSecurityCode;
-    @IsoFieldMeta(domainNo = 100, fixed = false, length = 1, maxLength = 6, remark = "接收机构标识码", parseType = BCD)
+    @IsoFieldMeta(domainNo = 100, fixed = false, length = 1, maxLength = 6, remark = "接收机构标识码", parseType = BCD, lenParseType = BINARY)
     private String rcvgInstIdCode;
-    @IsoFieldMeta(domainNo = 101, fixed = false, length = 1, maxLength = 17, remark = "file name", parseType = EBCDIC)
+    @IsoFieldMeta(domainNo = 101, fixed = false, length = 1, maxLength = 17, remark = "file name", parseType = EBCDIC, lenParseType = BINARY)
     private String fileName;
     @IsoFieldMeta(domainNo = 105, fixed = true, length = 16, remark = "message security code for triple DES")
     private byte[] msgSecurityCodeForTriDes;
-    @IsoFieldMeta(domainNo = 120, fixed = false, length = 2, maxLength = 30, remark = "record data", existSubdomain = true, subdomainType = FIXED, parseType = NONE_V2)
+    @IsoFieldMeta(domainNo = 120, fixed = false, length = 2, maxLength = 30, remark = "record data", existSubdomain = true, subdomainType = FIXED, lenParseType = BINARY)
     private Field120 recordData;
-    @IsoFieldMeta(domainNo = 127, fixed = false, length = 2, maxLength = 6, remark = "negative data access code", parseType = EBCDIC)
+    @IsoFieldMeta(domainNo = 127, fixed = false, length = 2, maxLength = 6, remark = "negative data access code", parseType = EBCDIC, lenParseType = BINARY)
     private String negDataAccessCode;
 
     public String getMessageType() {

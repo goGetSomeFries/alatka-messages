@@ -43,6 +43,7 @@ public class IsoAnnotationMessageDefinitionBuilder extends AnnotationMessageDefi
         fieldDefinition.setRemark(annotation.remark());
         fieldDefinition.setStatus(annotation.status());
         fieldDefinition.setParseType(annotation.parseType());
+        fieldDefinition.setLenParseType(annotation.lenParseType());
         fieldDefinition.setExistSubdomain(annotation.existSubdomain());
         fieldDefinition.setSubdomainType(annotation.subdomainType());
         fieldDefinition.setPageSizeName(annotation.pageSizeName());

@@ -6,7 +6,6 @@ import com.alatka.messages.core.holder.MessageHolderAware;
 import com.alatka.messages.core.holder.MessageHolderUtil;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
