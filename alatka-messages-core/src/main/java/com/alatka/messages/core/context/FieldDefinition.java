@@ -94,25 +94,7 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
     }
 
     public enum ParseType {
-        ASCII(LPT.A), EBCDIC(LPT.B), BCD(LPT.B), BINARY(LPT.A), NONE(LPT.A), NONE_V2(LPT.B);
-
-        /**
-         * 变长域的长度域编码类型
-         */
-        private final LPT lenParseType;
-
-        ParseType(LPT lenParseType) {
-            this.lenParseType = lenParseType;
-        }
-
-        public LPT getLenParseType() {
-            return lenParseType;
-        }
-
-        public enum LPT {
-            /* ASCII */ A,
-            /* BINARY */ B
-        }
+        ASCII, EBCDIC, BCD, BINARY, NONE
     }
 
     public Integer getDomainNo() {

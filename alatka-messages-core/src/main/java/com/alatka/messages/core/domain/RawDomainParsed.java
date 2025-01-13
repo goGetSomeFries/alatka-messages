@@ -1,6 +1,7 @@
 package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
+import com.alatka.messages.core.context.IsoFieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,6 +18,13 @@ public class RawDomainParsed extends AbstractDomainParsed {
     private final AbstractDomainParsed fixedDomainParsed = new FixedDomainParsed();
 
     private final AbstractDomainParsed asciiLVDomainParsed = new AsciiLVDomainParsed() {
+        @Override
+        protected boolean raw(FieldDefinition fieldDefinition) {
+            return true;
+        }
+    };
+
+    private final AbstractDomainParsed ebcdicLVDomainParsed = new EbcdicLVDomainParsed() {
         @Override
         protected boolean raw(FieldDefinition fieldDefinition) {
             return true;
@@ -51,9 +59,19 @@ public class RawDomainParsed extends AbstractDomainParsed {
             return fixedDomainParsed.unpack(bytes, fieldDefinition, counter);
         }
 
-        return fieldDefinition.getParseType().getLenParseType() == FieldDefinition.ParseType.LPT.A ?
-                asciiLVDomainParsed.unpack(bytes, fieldDefinition, counter) :
-                binaryLVDomainParsed.unpack(bytes, fieldDefinition, counter);
+        if (fieldDefinition instanceof IsoFieldDefinition) {
+            IsoFieldDefinition definition = (IsoFieldDefinition) fieldDefinition;
+            if (definition.getLenParseType() == FieldDefinition.ParseType.ASCII) {
+                return asciiLVDomainParsed.unpack(bytes, definition, counter);
+            }
+            if (definition.getLenParseType() == FieldDefinition.ParseType.EBCDIC) {
+                return ebcdicLVDomainParsed.unpack(bytes, definition, counter);
+            }
+            if (definition.getLenParseType() == FieldDefinition.ParseType.BINARY) {
+                return binaryLVDomainParsed.unpack(bytes, definition, counter);
+            }
+        }
+        throw new IllegalArgumentException("不支持status=RAW");
     }
 
 }

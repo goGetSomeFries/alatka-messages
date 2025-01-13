@@ -55,6 +55,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
                     result.put("status", resultSet.getString("F_STATUS"));
                     result.put("pageSizeName", resultSet.getString("F_PAGE_SIZE_NAME"));
                     result.put("parseType", resultSet.getString("F_PARSE_TYPE"));
+                    result.put("lenParseType", resultSet.getString("F_LEN_PARSE_TYPE"));
                     result.put("existSubdomain", resultSet.getBoolean("F_EXIST_SUBDOMAIN"));
                     result.put("subdomainType", resultSet.getString("F_SUBDOMAIN_TYPE"));
                     result.put("aliasName", resultSet.getString("F_ALIAS_NAME"));
@@ -82,20 +83,19 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
         fieldDefinition.setDomainNo((Integer) result.get("domainNo"));
         fieldDefinition.setName(result.get("name").toString());
         fieldDefinition.setClassName(result.get("className") == null ? null : result.get("className").toString());
-        fieldDefinition.setPattern(result.get("pattern") == null ?
-                null : result.get("pattern").toString());
+        fieldDefinition.setPattern(result.get("pattern") == null ? null : result.get("pattern").toString());
         fieldDefinition.setFixed((boolean) result.get("fixed"));
         fieldDefinition.setLength((Integer) result.get("length"));
         fieldDefinition.setRemark(result.get("remark").toString());
         fieldDefinition.setStatus(FieldDefinition.Status.valueOf(result.get("status").toString()));
-        fieldDefinition.setPageSizeName(result.get("pageSizeName") == null ?
-                null : result.get("pageSizeName").toString());
-        fieldDefinition.setParseType(result.get("parseType") == null ?
-                null : FieldDefinition.ParseType.valueOf(result.get("parseType").toString()));
+        fieldDefinition.setPageSizeName(result.get("pageSizeName") == null ? null : result.get("pageSizeName").toString());
+        fieldDefinition.setParseType(FieldDefinition.ParseType.valueOf(result.get("parseType").toString()));
         fieldDefinition.setExistSubdomain((boolean) result.get("existSubdomain"));
         fieldDefinition.setSubdomainType(result.get("subdomainType") == null ?
                 null : MessageDefinition.DomainType.valueOf(result.get("subdomainType").toString()));
         if (fieldDefinition instanceof IsoFieldDefinition) {
+            ((IsoFieldDefinition) fieldDefinition).setLenParseType(result.get("lenParseType") == null ?
+                    null : FieldDefinition.ParseType.valueOf(result.get("lenParseType").toString()));
             ((IsoFieldDefinition) fieldDefinition).setMaxLength((Integer) result.get("maxLength"));
             ((IsoFieldDefinition) fieldDefinition).setAliasName(result.get("aliasName") == null ? null : result.get("aliasName").toString());
             ((IsoFieldDefinition) fieldDefinition).setNonSubdomainException((boolean) result.get("nonSubdomainException"));

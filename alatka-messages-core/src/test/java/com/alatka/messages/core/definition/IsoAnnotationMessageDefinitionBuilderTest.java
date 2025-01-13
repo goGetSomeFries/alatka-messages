@@ -38,6 +38,7 @@ public class IsoAnnotationMessageDefinitionBuilderTest {
         Mockito.doReturn("testing").when(annotation).remark();
         Mockito.doReturn(FieldDefinition.Status.OPEN).when(annotation).status();
         Mockito.doReturn(FieldDefinition.ParseType.ASCII).when(annotation).parseType();
+        Mockito.doReturn(FieldDefinition.ParseType.EBCDIC).when(annotation).lenParseType();
         Mockito.doReturn(false).when(annotation).existSubdomain();
         Mockito.doReturn(MessageDefinition.DomainType.FIXED).when(annotation).subdomainType();
         Mockito.doReturn("counts").when(annotation).pageSizeName();
@@ -62,6 +63,7 @@ public class IsoAnnotationMessageDefinitionBuilderTest {
         Assertions.assertEquals("testing", definition.getRemark());
         Assertions.assertEquals(FieldDefinition.Status.OPEN, definition.getStatus());
         Assertions.assertEquals(FieldDefinition.ParseType.ASCII, definition.getParseType());
+        Assertions.assertEquals(FieldDefinition.ParseType.EBCDIC, definition.getLenParseType());
         Assertions.assertFalse(definition.getExistSubdomain());
         Assertions.assertEquals(MessageDefinition.DomainType.FIXED, definition.getSubdomainType());
         Assertions.assertEquals("counts", definition.getPageSizeName());

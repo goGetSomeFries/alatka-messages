@@ -1,6 +1,7 @@
 package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
+import com.alatka.messages.core.context.IsoFieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
@@ -12,18 +13,18 @@ public class BinaryLVDomainParsedTest {
     private LVDomainParsed domainParsed = new BinaryLVDomainParsed();
 
     @Test
-    @DisplayName("getOrder() == 30")
+    @DisplayName("getOrder() == 20")
     void test01() {
         int order = domainParsed.getOrder();
-        Assertions.assertEquals(30, order);
+        Assertions.assertEquals(20, order);
     }
 
     @Test
     @DisplayName("matched()")
     void test02() {
-        FieldDefinition fieldDefinition = new FieldDefinition();
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
         fieldDefinition.setFixed(false);
-        fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
+        fieldDefinition.setParseType(FieldDefinition.ParseType.BINARY);
         MessageDefinition messageDefinition = new MessageDefinition();
         messageDefinition.setType(MessageDefinition.Type.iso);
 
@@ -33,21 +34,10 @@ public class BinaryLVDomainParsedTest {
     }
 
     @Test
-    @DisplayName("长度域int->bytes BCD")
+    @DisplayName("长度域int->bytes")
     void test03() {
         int length = 20;
-        FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setLength(2);
-        fieldDefinition.setParseType(FieldDefinition.ParseType.BCD);
-        byte[] bytes = domainParsed.intToBytes(length, fieldDefinition);
-        Assertions.assertArrayEquals(bytes, new byte[]{0, 40});
-    }
-
-    @Test
-    @DisplayName("长度域int->bytes !BCD")
-    void test04() {
-        int length = 20;
-        FieldDefinition fieldDefinition = new FieldDefinition();
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
         fieldDefinition.setLength(2);
         fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
         byte[] bytes = domainParsed.intToBytes(length, fieldDefinition);
@@ -55,27 +45,9 @@ public class BinaryLVDomainParsedTest {
     }
 
     @Test
-    @DisplayName("长度域bytes->int BCD length偶数")
-    void test05() {
-        FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setParseType(FieldDefinition.ParseType.BCD);
-        int length = domainParsed.bytesToInt(BytesUtil.hexToBytes("14"), fieldDefinition);
-        Assertions.assertEquals(length, 10);
-    }
-
-    @Test
-    @DisplayName("长度域bytes->int BCD length奇数")
-    void test06() {
-        FieldDefinition fieldDefinition = new FieldDefinition();
-        fieldDefinition.setParseType(FieldDefinition.ParseType.BCD);
-        int length = domainParsed.bytesToInt(BytesUtil.hexToBytes("15"), fieldDefinition);
-        Assertions.assertEquals(length, 11);
-    }
-
-    @Test
-    @DisplayName("长度域bytes->int !BCD")
+    @DisplayName("长度域bytes->int")
     void test07() {
-        FieldDefinition fieldDefinition = new FieldDefinition();
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
         fieldDefinition.setParseType(FieldDefinition.ParseType.EBCDIC);
         int length = domainParsed.bytesToInt(BytesUtil.hexToBytes("14"), fieldDefinition);
         Assertions.assertEquals(length, 20);

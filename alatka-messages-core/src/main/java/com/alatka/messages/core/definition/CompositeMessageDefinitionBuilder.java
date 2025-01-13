@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class CompositeMessageDefinitionBuilder implements MessageDefinitionBuilder {
 
-    private List<MessageDefinitionBuilder> builders = new ArrayList<>();
+    private final List<MessageDefinitionBuilder> builders = new ArrayList<>();
 
     @Override
     public void build() {
