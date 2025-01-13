@@ -52,6 +52,7 @@
                 <xs:attribute type="xs:string" name="status" use="optional"/>
                 <xs:attribute type="xs:string" name="pageSizeName" use="optional"/>
                 <xs:attribute type="xs:string" name="parseType" use="optional"/>
+                <xs:attribute type="xs:string" name="lenParseType" use="optional"/>
                 <xs:attribute type="xs:boolean" name="existSubdomain" use="optional"/>
                 <xs:attribute type="xs:string" name="subdomainType" use="optional"/>
                 <xs:attribute type="xs:string" name="aliasName" use="optional"/>

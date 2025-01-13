@@ -33,7 +33,7 @@ public class Cups0810 {
     @IsoFieldMeta(domainNo = 13, length = 2, remark = "受卡方所在地日期", fixed = true, pattern = "MMdd", parseType = FieldDefinition.ParseType.BCD)
     private MonthDay localDate;
 
-    @IsoFieldMeta(domainNo = 32, fixed = false, length = 1, maxLength = 6, remark = "受理方标识码", parseType = FieldDefinition.ParseType.BCD)
+    @IsoFieldMeta(domainNo = 32, fixed = false, length = 1, maxLength = 6, remark = "受理方标识码", parseType = FieldDefinition.ParseType.BCD, lenParseType = FieldDefinition.ParseType.BINARY)
     private String acceptorId;
 
     @IsoFieldMeta(domainNo = 37, fixed = true, length = 12, remark = "检索参考号", parseType = FieldDefinition.ParseType.ASCII)

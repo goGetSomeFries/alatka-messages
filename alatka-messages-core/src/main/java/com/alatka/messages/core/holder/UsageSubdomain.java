@@ -25,7 +25,7 @@ public class UsageSubdomain<T> {
     }
 
     public T get(String key) {
-        return (Tt ) this.holder.get(key);
+        return (T) this.holder.get(key);
     }
 
     public void putAll(Map<String, Object> map) {

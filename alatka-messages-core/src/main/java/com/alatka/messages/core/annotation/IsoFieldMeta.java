@@ -65,6 +65,11 @@ public @interface IsoFieldMeta {
     FieldDefinition.ParseType parseType() default FieldDefinition.ParseType.ASCII;
 
     /**
+     * {@link IsoFieldDefinition#setParseType(FieldDefinition.ParseType)}
+     */
+    FieldDefinition.ParseType lenParseType() default FieldDefinition.ParseType.ASCII;
+
+    /**
      * {@link IsoFieldDefinition#setPageSizeName(String)}
      */
     String pageSizeName() default "";

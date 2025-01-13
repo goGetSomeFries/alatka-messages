@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<alatka-messages xmlns="http://messages.alatka.com"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://messages.alatka.com alatka-messages.xsd">
+    <message type="iso" group="mastercard" code="common" remark="master 8583报文">
+        <payload>
+            <field domainNo="0" name="messageType" fixed="true" length="4" remark="报文类型" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="1" name="bitMap" fixed="false" length="16" remark="位图" clazz="java.util.HashMap" parseType="BINARY"/>
+            <field domainNo="2" name="pan" fixed="false" length="2" maxLength="19" remark="主账号" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="3" name="processingCode" fixed="true" length="6" remark="交易处理码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="4" name="amtTrans" fixed="true" length="12" remark="交易金额" clazz="java.math.BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="5" name="amtSettlmt" fixed="true" length="12" remark="清算金额" clazz="java.math.BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="6" name="amtCdhldrBil" fixed="true" length="12" remark="持卡人扣账金额" clazz="java.math.BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="7" name="transmsnDateTime" fixed="true" length="10" remark="交易传输时间" clazz="java.time.LocalDateTime" pattern="MMddHHmmss" parseType="EBCDIC"/>
+            <field domainNo="9" name="convRateSettlmt" fixed="true" length="8" remark="清算汇率" clazz="java.lang.Integer" parseType="EBCDIC"/>
+            <field domainNo="10" name="convRateCdhldrBil" fixed="true" length="8" remark="持卡人扣账汇率" clazz="java.lang.Integer" parseType="EBCDIC"/>
+            <field domainNo="11" name="sysTraceAuditNum" fixed="true" length="6" remark="系统跟踪号" clazz="java.lang.Integer" parseType="EBCDIC"/>
+            <field domainNo="12" name="timeLocalTrans" fixed="true" length="6" remark="受卡方所在地时间" clazz="java.time.LocalTime" pattern="HHmmss" parseType="EBCDIC"/>
+            <field domainNo="13" name="dateLocalTrans" fixed="true" length="4" remark="受卡方所在地日期" clazz="java.time.MonthDay" pattern="MMdd" parseType="EBCDIC"/>
+            <field domainNo="14" name="dateExpr" fixed="true" length="4" remark="卡有效期" clazz="java.time.YearMonth" pattern="yyMM" parseType="EBCDIC"/>
+            <field domainNo="15" name="dateSettlmt" fixed="true" length="4" remark="清算日期" clazz="java.time.MonthDay" pattern="MMdd" parseType="EBCDIC"/>
+            <field domainNo="16" name="dateConv" fixed="true" length="4" remark="兑换日期" clazz="java.time.MonthDay" pattern="MMdd" parseType="EBCDIC"/>
+            <field domainNo="17" name="dateCapture" fixed="true" length="4" remark="date Capture" clazz="java.time.MonthDay" pattern="MMdd" parseType="EBCDIC"/>
+            <field domainNo="18" name="mchntType" fixed="true" length="4" remark="商户类型" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="19" name="mchntCntryCode" fixed="true" length="3" remark="商户国家代码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="22" name="posEntryModeCode" fixed="true" length="3" remark="服务点输入方式码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="23" name="cardSeqId" fixed="true" length="3" remark="卡序列号" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="25" name="posCondCode" fixed="true" length="2" remark="服务点条件码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="26" name="posPinCaptrCode" fixed="true" length="2" remark="服务点PIN获取码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="28" name="amtTransFee" fixed="true" length="9" remark="交易费" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="32" name="acqInstIdCode" fixed="false" length="2" maxLength="11" remark="代理机构标识码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="33" name="fwdInstIdCode" fixed="false" length="2" maxLength="11" remark="发送机构标识码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="35" name="tracK2Data" fixed="false" length="2" maxLength="37" remark="第二磁道数据" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="36" name="tracK3Data" fixed="false" length="3" maxLength="104" remark="第三磁道数据" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="37" name="retrivlRefNum" fixed="true" length="12" remark="检索参考号" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="38" name="authrIdResp" fixed="true" length="6" remark="授权标识应答码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="39" name="respCode" fixed="true" length="2" remark="应答码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="41" name="cardAccptrTermnlId" fixed="true" length="8" remark="受卡机终端标识码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="42" name="cardAccptrId" fixed="true" length="15" remark="受卡方标识码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="43" name="cardAccptrNameLoc" fixed="true" length="40" remark="受卡方名称地址" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="44" name="addtnlRespCode" fixed="false" length="2" maxLength="25" remark="附加响应数据" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="45" name="tracK1Data" fixed="false" length="2" maxLength="76" remark="第一磁道数据" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="48" name="addtnlDataPrivate" fixed="false" length="3" maxLength="512" remark="附加数据——私有" existSubdomain="true" subdomainType="FIXED" lenParseType="EBCDIC"/>
+            <field domainNo="49" name="currcyCodeTrans" fixed="true" length="3" remark="交易货币代码" className="String" parseType="EBCDIC"/>
+            <field domainNo="61" name="chAuthInfo" fixed="false" length="3" maxLength="200" remark="持卡人身份认证信息" existSubdomain="true" subdomainType="FIXED" lenParseType="EBCDIC"/>
+        </payload>
+        <subPayload domain="F48">
+            <field domainNo="1" name="riskCode" fixed="true" length="1" remark="风险原因代码" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="2" name="riskLevel" fixed="false" length="-1" remark="风险等级" existSubdomain="true" subdomainType="ULV2"/>
+        </subPayload>
+        <subPayload domain="F48_F2" usage="42">
+            <field domainNo="1" name="f48f2f1" fixed="true" length="7" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F48_F2" usage="77">
+            <field domainNo="1" name="f48f2f1" fixed="true" length="3" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F61">
+            <field domainNo="1" name="f61f1" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f61f2" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="3" name="f61f3" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="4" name="f61f4" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="5" name="f61f5" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="6" name="f61f6" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="7" name="f61f7" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="8" name="f61f8" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="9" name="f61f9" fixed="true" length="1" remark="test" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="10" name="f61f10" fixed="true" length="1" remark="Use" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="11" name="f61f11" fixed="true" length="1" remark="Use" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="12" name="f61f12" fixed="true" length="2" remark="Use" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="13" name="f61f13" fixed="true" length="3" remark="Use" clazz="java.lang.String" parseType="EBCDIC"/>
+            <field domainNo="14" name="f61f14" fixed="true" length="10" remark="Use" clazz="java.lang.String" parseType="EBCDIC"/>
+        </subPayload>
+    </message>
+</alatka-messages>
