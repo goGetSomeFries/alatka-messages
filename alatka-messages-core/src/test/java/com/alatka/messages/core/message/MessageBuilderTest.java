@@ -53,7 +53,7 @@ public class MessageBuilderTest {
     @DisplayName("postProcess(FieldDefinition, Object, Object, boolean)")
     void test03() {
         // TODO
-        messageBuilder.postProcess(null, null, null, false);
+        messageBuilder.postProcess(null, null, false);
     }
 
     @Test
@@ -303,19 +303,22 @@ public class MessageBuilderTest {
         MessageDefinition definition = new MessageDefinition();
         definition.setKind(MessageDefinition.Kind.payload);
         definition.setType(MessageDefinition.Type.iso);
-        Assertions.assertTrue(MessageBuilder.init(definition) instanceof PayloadMessageBuilder);
+        Assertions.assertInstanceOf(IsoMessageBuilder.class, MessageBuilder.init(definition));
 
         definition.setKind(MessageDefinition.Kind.subPayload);
-        Assertions.assertTrue(MessageBuilder.init(definition) instanceof DefaultMessageBuilder);
+        Assertions.assertInstanceOf(DefaultMessageBuilder.class, MessageBuilder.init(definition));
 
         definition.setDomainType(MessageDefinition.DomainType.TLV);
-        Assertions.assertTrue(MessageBuilder.init(definition) instanceof TLVSubdomainMessageBuilder);
+        Assertions.assertInstanceOf(TLVSubdomainMessageBuilder.class, MessageBuilder.init(definition));
 
         definition.setDomainType(MessageDefinition.DomainType.TLV2);
-        Assertions.assertTrue(MessageBuilder.init(definition) instanceof TLV2SubdomainMessageBuilder);
+        Assertions.assertInstanceOf(TLV2SubdomainMessageBuilder.class, MessageBuilder.init(definition));
 
         definition.setDomainType(MessageDefinition.DomainType.TV);
-        Assertions.assertTrue(MessageBuilder.init(definition) instanceof TVSubdomainMessageBuilder);
+        Assertions.assertInstanceOf(TVSubdomainMessageBuilder.class, MessageBuilder.init(definition));
+
+        definition.setDomainType(MessageDefinition.DomainType.BITMAP);
+        Assertions.assertInstanceOf(BitmapSubdomainMessageBuilder.class, MessageBuilder.init(definition));
     }
 
     @Test

@@ -60,7 +60,7 @@ public class MessageHolder {
         return messageHolder;
     }
 
-    public static MessageHolder fromMap(String key, Map<String, Object> params) {
+    public static MessageHolder fromMap(String key, Map<String, Object> params, boolean byName) {
         MessageHolder messageHolder = new MessageHolder();
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
         MessageDefinition messageDefinition = context.messageDefinition(key);
@@ -68,7 +68,7 @@ public class MessageHolder {
         context.fieldDefinitions(messageDefinition)
                 .forEach(fieldDefinition -> {
                     Object result = null;
-                    Object value = params.get(fieldDefinition.getName());
+                    Object value = params.get(byName ? fieldDefinition.getName() : fieldDefinition.getDomainNo());
                     if (fieldDefinition.getExistSubdomain() && value instanceof Map) {
                         if (fieldDefinition.getStatus() == FieldDefinition.Status.RAW) {
                             throw new IllegalArgumentException("类型错误：" + messageDefinition + " " + fieldDefinition);
@@ -76,13 +76,13 @@ public class MessageHolder {
 
                         Map<String, MessageDefinition> mapping = fieldDefinition.getMessageDefinitionMap();
                         if (mapping.containsKey(FieldDefinition.SUBFIELD_KEY_DEFAULT)) {
-                            result = fromMap(mapping.get(FieldDefinition.SUBFIELD_KEY_DEFAULT).identity(), (Map<String, Object>) value);
+                            result = fromMap(mapping.get(FieldDefinition.SUBFIELD_KEY_DEFAULT).identity(), (Map<String, Object>) value, byName);
                         } else {
                             UsageSubdomain<MessageHolder> usageSubdomain = new UsageSubdomain<>();
                             Map<String, Object> map = ((Map<String, Object>) value).entrySet().stream()
                                     .collect(Collectors.toMap(Map.Entry::getKey,
                                             entry -> entry.getValue() instanceof byte[] ? entry.getValue() :
-                                                    fromMap(mapping.get(entry.getKey()).identity(), (Map<String, Object>) entry.getValue())));
+                                                    fromMap(mapping.get(entry.getKey()).identity(), (Map<String, Object>) entry.getValue(), byName)));
                             usageSubdomain.putAll(map);
                             result = usageSubdomain;
                         }

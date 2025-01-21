@@ -101,7 +101,7 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
     }
 
     public enum DomainType {
-        TLV, TLV2, TV, ULV, ULV2, UV, UVAS, PAGE, FIXED, NONE
+        TLV, TLV2, TV, ULV, ULV2, UV, UVAS, PAGE, FIXED, BITMAP, NONE
     }
 
     public Type getType() {
@@ -197,11 +197,11 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
 
     public String identity() {
         return Stream.of(this.type.name(),
-                this.group,
-                this.code,
-                this.kind.name(),
-                this.domain,
-                this.usage)
+                        this.group,
+                        this.code,
+                        this.kind.name(),
+                        this.domain,
+                        this.usage)
                 .filter(s -> s != null && !s.isEmpty())
                 .collect(Collectors.joining(":"));
     }

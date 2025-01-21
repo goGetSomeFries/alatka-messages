@@ -6,21 +6,24 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PayloadMessageBuilderTest {
+public class IsoMessageBuilderTest {
 
     @Test
     @DisplayName("构造器")
     void test01() {
         MessageDefinition definition = new MessageDefinition();
-        Assertions.assertDoesNotThrow(() -> new PayloadMessageBuilder(definition));
+        Assertions.assertDoesNotThrow(() -> new IsoMessageBuilder(definition));
     }
 
     @Test
     @DisplayName("filter() domain=1")
     void test02() {
         MessageDefinition definition = new MessageDefinition();
-        PayloadMessageBuilder messageBuilder = new PayloadMessageBuilder(definition);
+        IsoMessageBuilder messageBuilder = new IsoMessageBuilder(definition);
         FieldDefinition fieldDefinition = new FieldDefinition();
+        fieldDefinition.setDomainNo(0);
+        Assertions.assertTrue(messageBuilder.filter(fieldDefinition));
+
         fieldDefinition.setDomainNo(1);
         Assertions.assertTrue(messageBuilder.filter(fieldDefinition));
     }

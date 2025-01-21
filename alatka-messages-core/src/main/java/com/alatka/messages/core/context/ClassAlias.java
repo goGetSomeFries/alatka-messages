@@ -1,9 +1,11 @@
 package com.alatka.messages.core.context;
 
+import com.alatka.messages.core.holder.Bitmap;
+
 import java.util.HashMap;
 
 public enum ClassAlias {
-    BitMap(HashMap.class),
+    BitMap(Bitmap.class),
     LocalDateTime(java.time.LocalDateTime.class),
     LocalDate(java.time.LocalDate.class),
     LocalTime(java.time.LocalTime.class),

@@ -159,7 +159,7 @@ public class MessageDefinitionTest {
     @DisplayName("MessageDefinition.DomainType")
     void test10() {
         MessageDefinition.DomainType[] values = MessageDefinition.DomainType.values();
-        String[] array = {"TLV", "TLV2", "TV", "ULV", "ULV2", "UV", "UVAS", "PAGE", "FIXED", "NONE"};
+        String[] array = {"TLV", "TLV2", "TV", "ULV", "ULV2", "UV", "UVAS", "PAGE", "FIXED", "BITMAP", "NONE"};
         Assertions.assertEquals(array.length, values.length);
         for (int i = 0; i < array.length; i++) {
             Assertions.assertEquals(array[i], values[i].name());
