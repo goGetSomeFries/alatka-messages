@@ -25,6 +25,7 @@ public class FieldBuilderFactory {
         init(new UVSubdomainFieldBuilder());
         init(new UVASSubdomainFieldBuilder());
         init(new TLVSubdomainFieldBuilder());
+        init(new BitmapSubdomainFieldBuilder());
         init(new PageSubdomainFieldBuilder());
         // datetime
         init(new LocalDateTimeFieldBuilder());
@@ -47,6 +48,7 @@ public class FieldBuilderFactory {
         init(new BooleanFieldBuilder());
         // bitmap
         init(new BitmapFieldBuilder());
+        init(new SubdomainBitmapFieldBuilder());
         // raw
         init(new RawFieldBuilder());
     }

@@ -2,6 +2,7 @@ package com.alatka.messages.core.model.iso.cups;
 
 import com.alatka.messages.core.annotation.IsoFieldMeta;
 import com.alatka.messages.core.annotation.MessageMeta;
+import com.alatka.messages.core.holder.Bitmap;
 import com.alatka.messages.core.holder.UsageSubdomain;
 
 import java.math.BigDecimal;
@@ -9,7 +10,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.MonthDay;
 import java.time.YearMonth;
-import java.util.Map;
 
 import static com.alatka.messages.core.context.FieldDefinition.ParseType.BINARY;
 import static com.alatka.messages.core.context.MessageDefinition.DomainType.*;
@@ -21,7 +21,7 @@ public class CommonPayload {
     @IsoFieldMeta(domainNo = 0, fixed = true, length = 4, remark = "报文类型")
     private String messageType;
     @IsoFieldMeta(domainNo = 1, fixed = false, length = 16, remark = "位图", parseType = BINARY)
-    private Map<Integer, Boolean> bitMap;
+    private Bitmap bitMap;
     @IsoFieldMeta(domainNo = 2, fixed = false, length = 2, maxLength = 19, remark = "主账号")
     private String pan;
     @IsoFieldMeta(domainNo = 3, fixed = true, length = 6, remark = "交易处理码")
@@ -159,11 +159,11 @@ public class CommonPayload {
         this.messageType = messageType;
     }
 
-    public Map<Integer, Boolean> getBitMap() {
+    public Bitmap getBitMap() {
         return bitMap;
     }
 
-    public void setBitMap(Map<Integer, Boolean> bitMap) {
+    public void setBitMap(Bitmap bitMap) {
         this.bitMap = bitMap;
     }
 

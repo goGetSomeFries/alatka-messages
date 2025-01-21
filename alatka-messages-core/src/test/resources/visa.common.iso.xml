@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<alatka-messages xmlns="http://messages.alatka.com"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://messages.alatka.com alatka-messages.xsd">
+    <message type="iso" group="visa" code="common" remark="visa 8583报文">
+        <header>
+            <field domainNo="1" name="messageLength" fixed="true" length="1" remark="报文长度" className="Integer" parseType="BINARY"/>
+            <field domainNo="2" name="f2" fixed="true" length="1" remark="Header Flag and Format" className="String" parseType="BINARY"/>
+            <field domainNo="3" name="f3" fixed="true" length="1" remark="Text Format" className="String"/>
+            <field domainNo="4" name="f4" fixed="true" length="2" remark="Total Message Length" className="String"/>
+            <field domainNo="5" name="f5" fixed="true" length="2" remark="Destination Station ID" className="String"/>
+            <field domainNo="6" name="f6" fixed="true" length="2" remark="Source Station ID" className="String"/>
+            <field domainNo="7" name="f7" fixed="true" length="1" remark="Round-Trip Control Information" className="String"/>
+            <field domainNo="8" name="f8" fixed="true" length="2" remark="V.I.P. Flags" className="String"/>
+            <field domainNo="9" name="f9" fixed="true" length="2" remark="Message Status Flags" className="String"/>
+            <field domainNo="10" name="f10" fixed="true" length="1" remark="Batch Number" className="String"/>
+            <field domainNo="11" name="f11" fixed="true" length="2" remark="Reserved" className="String"/>
+            <field domainNo="12" name="f12" fixed="true" length="1" remark="User Information" className="String"/>
+            <field domainNo="13" name="f13" fixed="true" length="2" remark="Bitmap" className="BitMap" parseType="BINARY" pattern="13"/>
+            <field domainNo="14" name="f14" fixed="true" length="2" remark="Bitmap, Reject Data Group" className="Integer" parseType="BCD"/>
+        </header>
+        <payload>
+            <field domainNo="0" name="messageType" fixed="true" length="4" remark="报文类型" className="String" parseType="EBCDIC"/>
+            <field domainNo="1" name="bitMap" fixed="false" length="16" remark="位图" className="BitMap" parseType="BINARY"/>
+            <field domainNo="2" name="pan" fixed="false" length="1" maxLength="10" remark="主账号" className="String" parseType="BCD" lenParseType="BINARY"/>
+            <field domainNo="63" name="f63" fixed="false" length="1" maxLength="255" remark="VIP Private-Use Fields" existSubdomain="true" subdomainType="BITMAP" lenParseType="BINARY"/>
+        </payload>
+        <subPayload domain="F63">
+            <field domainNo="0" name="f63f0" fixed="true" length="3" remark="bitmap" className="BitMap" parseType="BINARY"/>
+            <field domainNo="1" name="f63f1" fixed="true" length="2" remark="Network Identification Code" className="String" parseType="BCD"/>
+            <field domainNo="2" name="f63f2" fixed="true" length="2" remark="Time (Preauth Time Limit)" className="String" parseType="BCD"/>
+            <field domainNo="3" name="f63f3" fixed="true" length="2" remark="Message Reason Code" className="String" parseType="BCD"/>
+            <field domainNo="4" name="f63f4" fixed="true" length="2" remark="STIP/Switch Reason Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="6" name="f63f6" fixed="true" length="7" remark="Chargeback Reduction/BASE II Flags" className="String" parseType="EBCDIC"/>
+            <field domainNo="8" name="f63f8" fixed="true" length="4" remark="Visa Acquirer's Business ID" className="String" parseType="BCD"/>
+            <field domainNo="9" name="f63f9" fixed="true" length="14" remark="Fraud Data" existSubdomain="true" subdomainType="FIXED"/>
+        </subPayload>
+        <subPayload domain="F63_F9">
+            <field domainNo="1" name="f63f9f1" fixed="true" length="1" remark="Fraud Type" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f63f9f2" fixed="true" length="1" remark="Fraud Notification Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="f63f9f3" fixed="true" length="2" remark="Fraud Type Classification cation" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="f63f9f4" fixed="true" length="1" remark="Fraud Reporting Entity" className="String" parseType="EBCDIC"/>
+            <field domainNo="5" name="f63f9f5" fixed="true" length="9" remark="Reserved" className="String" parseType="EBCDIC"/>
+        </subPayload>
+    </message>
+</alatka-messages>
