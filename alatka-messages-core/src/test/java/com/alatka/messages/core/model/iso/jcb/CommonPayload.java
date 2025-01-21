@@ -2,6 +2,7 @@ package com.alatka.messages.core.model.iso.jcb;
 
 import com.alatka.messages.core.annotation.IsoFieldMeta;
 import com.alatka.messages.core.annotation.MessageMeta;
+import com.alatka.messages.core.holder.Bitmap;
 import com.alatka.messages.core.holder.UsageSubdomain;
 
 import java.math.BigDecimal;
@@ -9,7 +10,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.MonthDay;
 import java.time.YearMonth;
-import java.util.Map;
 
 import static com.alatka.messages.core.context.FieldDefinition.ParseType.*;
 import static com.alatka.messages.core.context.FieldDefinition.Status.RAW;
@@ -23,7 +23,7 @@ public class CommonPayload {
     @IsoFieldMeta(domainNo = 0, fixed = true, length = 4, remark = "报文类型", parseType = EBCDIC)
     private String messageType;
     @IsoFieldMeta(domainNo = 1, fixed = false, length = 16, remark = "位图", parseType = BINARY)
-    private Map<Integer, Boolean> bitmap;
+    private Bitmap bitmap;
     @IsoFieldMeta(domainNo = 2, fixed = false, length = 1, maxLength = 10, remark = "主账号", parseType = BCD, lenParseType = BINARY)
     private String pan;
     @IsoFieldMeta(domainNo = 3, fixed = true, length = 3, remark = "交易处理码", parseType = BCD)
@@ -135,11 +135,11 @@ public class CommonPayload {
         this.messageType = messageType;
     }
 
-    public Map<Integer, Boolean> getBitmap() {
+    public Bitmap getBitmap() {
         return bitmap;
     }
 
-    public void setBitmap(Map<Integer, Boolean> bitmap) {
+    public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
 

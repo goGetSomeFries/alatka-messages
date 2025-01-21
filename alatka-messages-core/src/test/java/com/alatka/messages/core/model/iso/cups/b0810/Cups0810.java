@@ -4,10 +4,10 @@ import com.alatka.messages.core.annotation.IsoFieldMeta;
 import com.alatka.messages.core.annotation.MessageMeta;
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
+import com.alatka.messages.core.holder.Bitmap;
 
 import java.time.LocalTime;
 import java.time.MonthDay;
-import java.util.Map;
 
 @MessageMeta(
         type = MessageDefinition.Type.iso,
@@ -21,7 +21,7 @@ public class Cups0810 {
     private String type;
 
     @IsoFieldMeta(domainNo = 1, fixed = true, length = 8, remark = "位图", parseType = FieldDefinition.ParseType.BINARY)
-    private Map<Integer, Boolean> bitmap;
+    private Bitmap bitmap;
 
     @IsoFieldMeta(domainNo = 11, length = 3, remark = "终端交易流水", parseType = FieldDefinition.ParseType.BCD, fixed = true)
     private String traceNumber;
@@ -62,11 +62,11 @@ public class Cups0810 {
         this.type = type;
     }
 
-    public Map<Integer, Boolean> getBitmap() {
+    public Bitmap getBitmap() {
         return bitmap;
     }
 
-    public void setBitmap(Map<Integer, Boolean> bitmap) {
+    public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
 
