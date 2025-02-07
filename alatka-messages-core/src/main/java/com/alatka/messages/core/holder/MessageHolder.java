@@ -68,7 +68,7 @@ public class MessageHolder {
         context.fieldDefinitions(messageDefinition)
                 .forEach(fieldDefinition -> {
                     Object result = null;
-                    Object value = params.get(byName ? fieldDefinition.getName() : fieldDefinition.getDomainNo());
+                    Object value = params.get(byName ? fieldDefinition.getName() : String.valueOf(fieldDefinition.getDomainNo()));
                     if (fieldDefinition.getExistSubdomain() && value instanceof Map) {
                         if (fieldDefinition.getStatus() == FieldDefinition.Status.RAW) {
                             throw new IllegalArgumentException("类型错误：" + messageDefinition + " " + fieldDefinition);
