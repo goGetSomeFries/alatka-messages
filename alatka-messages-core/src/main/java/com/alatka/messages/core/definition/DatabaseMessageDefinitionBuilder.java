@@ -47,7 +47,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
                     Map<String, Object> result = new HashMap<>();
                     result.put("domainNo", resultSet.getInt("F_DOMAIN_NO"));
                     result.put("name", resultSet.getString("F_NAME"));
-                    result.put("className", resultSet.getString("F_CLAZZ"));
+                    result.put("className", resultSet.getString("F_CLASS_NAME"));
                     result.put("pattern", resultSet.getString("F_PATTERN"));
                     result.put("fixed", resultSet.getBoolean("F_FIXED"));
                     result.put("length", resultSet.getInt("F_LENGTH"));

@@ -16,6 +16,7 @@
     <modules>
         <module>alatka-messages-spring-boot-starter</module>
         <module>alatka-messages-core</module>
+        <module>alatka-messages-admin</module>
     </modules>
 
     <properties>
