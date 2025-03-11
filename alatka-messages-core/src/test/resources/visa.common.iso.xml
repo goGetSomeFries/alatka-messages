@@ -23,6 +23,20 @@
             <field domainNo="0" name="messageType" fixed="true" length="4" remark="报文类型" className="String" parseType="EBCDIC"/>
             <field domainNo="1" name="bitMap" fixed="false" length="16" remark="位图" className="BitMap" parseType="BINARY"/>
             <field domainNo="2" name="pan" fixed="false" length="1" maxLength="10" remark="主账号" className="String" parseType="BCD" lenParseType="BINARY"/>
+            <field domainNo="3" name="processingCode" fixed="true" length="3" remark="交易处理码" className="String" parseType="BCD"/>
+            <field domainNo="4" name="amtTrans" fixed="true" length="6" remark="交易金额" className="BigDecimal" parseType="BCD"/>
+            <field domainNo="5" name="amtSettlmt" fixed="true" length="6" remark="清算金额" className="BigDecimal" parseType="BCD"/>
+            <field domainNo="6" name="amtCdhldrBil" fixed="true" length="6 " remark="持卡人扣账金额" className="BigDecimal" parseType="BCD"/>
+            <field domainNo="7" name="transmsnDateTime" fixed="true" length="5" remark="交易传输时间" className="LocalDateTime" pattern="MMddHHmmss" parseType="BCD"/>
+            <field domainNo="9" name="convRateSettlmt" fixed="true" length="4" remark="清算汇率" className="Integer" parseType="BCD"/>
+            <field domainNo="10" name="convRateCdhldrBil" fixed="true" length="4" remark="持卡人扣账汇率" className="Integer" parseType="BCD"/>
+            <field domainNo="11" name="sysTraceAuditNum" fixed="true" length="3" remark="系统跟踪号" className="String" parseType="BCD"/>
+            <field domainNo="12" name="timeLocalTrans" fixed="true" length="3" remark="受卡方所在地时间" className="LocalTime" pattern="HHmmss" parseType="BCD"/>
+            <field domainNo="13" name="dateLocalTrans" fixed="true" length="2" remark="受卡方所在地日期" className="MonthDay" pattern="MMdd" parseType="BCD"/>
+            <field domainNo="14" name="dateExpr" fixed="true" length="2" remark="卡有效期" className="YearMonth" pattern="yyMM" parseType="BCD"/>
+            <field domainNo="15" name="dateSettle" fixed="true" length="2" remark="Settlement Date" className="MonthDay" pattern="MMdd" parseType="BCD"/>
+            <field domainNo="16" name="dateConv" fixed="true" length="2" remark="兑换日期" className="MonthDay" pattern="MMdd" parseType="BCD"/>
+            <field domainNo="18" name="mchntType" fixed="true" length="2" remark="商户类型" className="String" parseType="BCD"/>
             <field domainNo="63" name="f63" fixed="false" length="1" maxLength="255" remark="VIP Private-Use Fields" existSubdomain="true" subdomainType="BITMAP" lenParseType="BINARY"/>
         </payload>
         <subPayload domain="F63">
