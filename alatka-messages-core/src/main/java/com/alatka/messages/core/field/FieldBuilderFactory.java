@@ -22,6 +22,7 @@ public class FieldBuilderFactory {
         init(new FixedSubdomainFieldBuilder());
         init(new ULVSubdomainFieldBuilder());
         init(new ULV2SubdomainFieldBuilder());
+        init(new ULV3SubdomainFieldBuilder());
         init(new UVSubdomainFieldBuilder());
         init(new UVASSubdomainFieldBuilder());
         init(new TLVSubdomainFieldBuilder());
