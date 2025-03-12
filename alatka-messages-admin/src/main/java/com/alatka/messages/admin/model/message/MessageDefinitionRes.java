@@ -1,47 +1,41 @@
-package com.alatka.messages.admin.entity;
+package com.alatka.messages.admin.model.message;
 
-import javax.persistence.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@Entity
-@Table(name = "ALK_MESSAGE_DEFINITION")
-public class MessageDefinition {
+@Schema(description = "报文响应实体")
+public class MessageDefinitionRes {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "M_ID")
+    @Schema(description = "主键", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long id;
 
-    @Column(name = "F_ID")
-    private Long fieldId;
-
-    @Column(name = "M_TYPE")
+    @Schema(description = "类型", requiredMode = Schema.RequiredMode.REQUIRED)
     private String type;
 
-    @Column(name = "M_GROUP")
+    @Schema(description = "分组", requiredMode = Schema.RequiredMode.REQUIRED)
     private String group;
 
-    @Column(name = "M_CODE")
+    @Schema(description = "交易码", requiredMode = Schema.RequiredMode.REQUIRED)
     private String code;
 
-    @Column(name = "M_KIND")
+    @Schema(description = "种类", requiredMode = Schema.RequiredMode.REQUIRED)
     private String kind;
 
-    @Column(name = "M_DOMAIN")
+    @Schema(description = "子域名称")
     private String domain;
 
-    @Column(name = "M_USAGE")
+    @Schema(description = "8583报文子域usage")
     private String usage;
 
-    @Column(name = "M_DOMAIN_TYPE")
+    @Schema(description = "8583报文子域类型")
     private String domainType;
 
-    @Column(name = "M_HOLDER")
+    @Schema(description = "实体类")
     private String holder;
 
-    @Column(name = "M_CHARSET")
+    @Schema(description = "编码")
     private String charset;
 
-    @Column(name = "M_REMARK")
+    @Schema(description = "描述", requiredMode = Schema.RequiredMode.REQUIRED)
     private String remark;
 
     public Long getId() {
@@ -50,14 +44,6 @@ public class MessageDefinition {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(Long fieldId) {
-        this.fieldId = fieldId;
     }
 
     public String getType() {

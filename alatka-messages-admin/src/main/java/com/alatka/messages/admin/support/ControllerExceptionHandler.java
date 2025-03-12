@@ -1,4 +1,4 @@
-package com.alatka.messages.admin.controller;
+package com.alatka.messages.admin.support;
 
 import com.alatka.messages.admin.model.ResMessage;
 import org.slf4j.Logger;
