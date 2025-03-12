@@ -85,6 +85,7 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
         definition.setKind(kind);
         definition.setCharset(yaml.get("charset") == null ? Constant.DEFAULT_CHARSET : yaml.get("charset").toString());
         definition.setRemark(yaml.get("remark") == null ? "" : yaml.get("remark").toString());
+        definition.setEnabled(yaml.get("enabled") == null ? true : (boolean) yaml.get("enabled"));
 
         if (identity != null) {
             Matcher matcher = PATTERN.matcher(identity);

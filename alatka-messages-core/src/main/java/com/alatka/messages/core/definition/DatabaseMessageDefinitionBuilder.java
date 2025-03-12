@@ -133,6 +133,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
                     result.put("holder", resultSet.getString("M_HOLDER"));
                     result.put("charset", resultSet.getString("M_CHARSET"));
                     result.put("remark", resultSet.getString("M_REMARK"));
+                    result.put("enabled", resultSet.getBoolean("M_ENABLED"));
                     list.add(result);
                 }
             }
@@ -162,6 +163,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
         definition.setCharset(source.get("charset") == null ?
                 Constant.DEFAULT_CHARSET : source.get("charset").toString());
         definition.setRemark(source.get("remark").toString());
+        definition.setEnabled((boolean) source.get("enabled"));
         return definition;
     }
 

@@ -70,4 +70,9 @@ public @interface MessageMeta {
      * {@link MessageDefinition#setRemark(String)}
      */
     String remark() default "";
+
+    /**
+     * {@link MessageDefinition#setEnabled(boolean)}
+     */
+    boolean enabled() default true;
 }

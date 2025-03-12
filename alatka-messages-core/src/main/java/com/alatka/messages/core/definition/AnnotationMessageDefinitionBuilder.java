@@ -100,6 +100,7 @@ public abstract class AnnotationMessageDefinitionBuilder<S extends FieldDefiniti
         definition.setHolder(annotation.customize() ? MessageHolder.class : clazz);
         definition.setCharset(annotation.charset());
         definition.setRemark(annotation.remark());
+        definition.setEnabled(annotation.enabled());
         return definition;
     }
 

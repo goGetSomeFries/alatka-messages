@@ -45,9 +45,6 @@ public class MessageDefinitionService {
     private Specification<MessageDefinition> condition(MessageDefinition condition) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
-            if (condition.getId() != null) {
-                list.add(criteriaBuilder.equal(root.get("id").as(Long.class), condition.getId()));
-            }
             if (condition.getType() != null) {
                 list.add(criteriaBuilder.equal(root.get("type").as(String.class), condition.getType()));
             }
@@ -60,14 +57,19 @@ public class MessageDefinitionService {
             if (condition.getKind() != null) {
                 list.add(criteriaBuilder.equal(root.get("kind").as(String.class), condition.getKind()));
             }
+/*
             if (condition.getDomain() != null) {
                 list.add(criteriaBuilder.like(root.get("domain").as(String.class), "%" + condition.getDomain() + "%"));
             }
             if (condition.getUsage() != null) {
                 list.add(criteriaBuilder.equal(root.get("usage").as(String.class), condition.getUsage()));
             }
+*/
             if (condition.getRemark() != null) {
                 list.add(criteriaBuilder.like(root.get("remark").as(String.class), "%" + condition.getRemark() + "%"));
+            }
+            if (condition.getEnabled() != null) {
+                list.add((criteriaBuilder.equal(root.get("enabled").as(Boolean.class), condition.getEnabled())));
             }
 
             return criteriaBuilder.and(list.toArray(new Predicate[0]));

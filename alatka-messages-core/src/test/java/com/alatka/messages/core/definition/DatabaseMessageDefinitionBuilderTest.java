@@ -113,6 +113,7 @@ public class DatabaseMessageDefinitionBuilderTest {
         doReturn(null, "com.alatka.messages.core.holder.MessageHolder").when(source).get("holder");
         doReturn(null, "GBK").when(source).get("charset");
         doReturn("fixed testing", "8583 testing").when(source).get("remark");
+        doReturn(true, false).when(source).get("enabled");
 
         FixedDatabaseMessageDefinitionBuilder builder = new FixedDatabaseMessageDefinitionBuilder(null);
         List<MessageDefinition> list1 = builder.buildMessageDefinitions(source);
@@ -127,6 +128,7 @@ public class DatabaseMessageDefinitionBuilderTest {
         Assertions.assertEquals(MessageHolder.class, list1.get(0).getHolder());
         Assertions.assertEquals(Charset.forName("GB18030"), list1.get(0).getCharset());
         Assertions.assertEquals("fixed testing", list1.get(0).getRemark());
+        Assertions.assertTrue(list1.get(0).isEnabled());
 
         List<MessageDefinition> list2 = builder.buildMessageDefinitions(source);
         Assertions.assertEquals(1, list2.size());
@@ -140,6 +142,7 @@ public class DatabaseMessageDefinitionBuilderTest {
         Assertions.assertEquals(MessageHolder.class, list2.get(0).getHolder());
         Assertions.assertEquals(Charset.forName("GBK"), list2.get(0).getCharset());
         Assertions.assertEquals("8583 testing", list2.get(0).getRemark());
+        Assertions.assertFalse(list2.get(0).isEnabled());
     }
 
     @Test
@@ -149,7 +152,7 @@ public class DatabaseMessageDefinitionBuilderTest {
         doReturn(true, true, false).when(resultSet).next();
         doReturn(1, 2).when(resultSet).getInt("F_DOMAIN_NO");
         doReturn("test1", "test2").when(resultSet).getString("F_NAME");
-        doReturn("java.lang.String", "java.time.LocalDate").when(resultSet).getString("F_CLAZZ");
+        doReturn("java.lang.String", "java.time.LocalDate").when(resultSet).getString("F_CLASS_NAME");
         doReturn(null, "yyyyMMdd").when(resultSet).getString("F_PATTERN");
         doReturn(true, false).when(resultSet).getBoolean("F_FIXED");
         doReturn(20, 8).when(resultSet).getInt("F_LENGTH");

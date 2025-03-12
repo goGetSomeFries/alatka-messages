@@ -27,6 +27,9 @@ public class MessageDefinitionPageReq extends PageReqMessage {
     @Schema(description = "描述")
     private String remark;
 
+    @Schema(description = "是否可用")
+    private Boolean enabled;
+
     public String getType() {
         return type;
     }
@@ -81,5 +84,13 @@ public class MessageDefinitionPageReq extends PageReqMessage {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

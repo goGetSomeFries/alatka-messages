@@ -2,6 +2,8 @@ package com.alatka.messages.admin.model.message;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import javax.validation.constraints.NotNull;
+
 @Schema(description = "报文响应实体")
 public class MessageDefinitionRes {
 
@@ -37,6 +39,9 @@ public class MessageDefinitionRes {
 
     @Schema(description = "描述", requiredMode = Schema.RequiredMode.REQUIRED)
     private String remark;
+
+    @Schema(description = "是否可用", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Boolean enabled;
 
     public Long getId() {
         return id;
@@ -124,5 +129,13 @@ public class MessageDefinitionRes {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

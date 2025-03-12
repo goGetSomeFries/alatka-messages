@@ -44,6 +44,9 @@ public class MessageDefinition {
     @Column(name = "M_REMARK")
     private String remark;
 
+    @Column(name = "M_ENABLED")
+    private Boolean enabled;
+
     public Long getId() {
         return id;
     }
@@ -138,5 +141,13 @@ public class MessageDefinition {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }
