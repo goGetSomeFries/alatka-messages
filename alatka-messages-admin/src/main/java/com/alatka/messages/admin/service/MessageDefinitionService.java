@@ -12,10 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class MessageDefinitionService {
+
+    private FieldDefinitionService fieldDefinitionService;
 
     private MessageDefinitionRepository messageDefinitionRepository;
 
@@ -25,20 +28,36 @@ public class MessageDefinitionService {
 
     public void update(MessageDefinition messageDefinition) {
         if (!messageDefinitionRepository.existsById(messageDefinition.getId())) {
-            throw new IllegalArgumentException("Message definition with id " + messageDefinition.getId() + " does not exist");
+            throw new IllegalArgumentException("MessageDefinition with id " + messageDefinition.getId() + " does not exist");
         }
         messageDefinitionRepository.save(messageDefinition);
     }
 
-    public void delete(Long id) {
-        MessageDefinition entity = messageDefinitionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("id: " + id + " not found"));
-        // TODO
-        messageDefinitionRepository.delete(entity);
+    public void deleteByFieldId(Long fieldId) {
+        MessageDefinition condition = new MessageDefinition();
+        condition.setFieldId(fieldId);
+        List<Long> ids = messageDefinitionRepository.findAll(this.condition(condition))
+                .stream().map(MessageDefinition::getId).collect(Collectors.toList());
+        this.delete(ids);
+    }
+
+    public void delete(List<Long> ids) {
+        ids.forEach(fieldDefinitionService::deleteByMessageId);
+        messageDefinitionRepository.deleteAllById(ids);
+    }
+
+    public MessageDefinition queryById(Long id) {
+        return messageDefinitionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("MessageDefinition with id " + id + " does not exist"));
+    }
+
+    public List<MessageDefinition> queryByFieldId(Long fieldId) {
+        MessageDefinition condition = new MessageDefinition();
+        condition.setFieldId(fieldId);
+        return messageDefinitionRepository.findAll(this.condition(condition));
     }
 
     public Page<MessageDefinition> queryPage(MessageDefinition condition, Pageable pageable) {
-
         return messageDefinitionRepository.findAll(this.condition(condition), pageable);
     }
 
@@ -56,6 +75,9 @@ public class MessageDefinitionService {
             }
             if (condition.getKind() != null) {
                 list.add(criteriaBuilder.equal(root.get("kind").as(String.class), condition.getKind()));
+            }
+            if (condition.getFieldId() != null) {
+                list.add(criteriaBuilder.equal(root.get("fieldId").as(Long.class), condition.getFieldId()));
             }
 /*
             if (condition.getDomain() != null) {
@@ -77,7 +99,12 @@ public class MessageDefinitionService {
     }
 
     @Autowired
-    public void setMessageRepository(MessageDefinitionRepository messageDefinitionRepository) {
+    public void MessageDefinitionRepository(MessageDefinitionRepository messageDefinitionRepository) {
         this.messageDefinitionRepository = messageDefinitionRepository;
+    }
+
+    @Autowired
+    public void setFieldDefinitionService(FieldDefinitionService fieldDefinitionService) {
+        this.fieldDefinitionService = fieldDefinitionService;
     }
 }
