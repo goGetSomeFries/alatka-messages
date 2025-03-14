@@ -4,7 +4,7 @@ import com.alatka.messages.admin.model.PageReqMessage;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "报文分页请求实体")
-public class MessageDefinitionPageReq extends PageReqMessage {
+public class MessagePageReq extends PageReqMessage {
 
     @Schema(description = "类型")
     private String type;

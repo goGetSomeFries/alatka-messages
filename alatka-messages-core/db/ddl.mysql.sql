@@ -29,7 +29,7 @@ CREATE TABLE `ALK_FIELD_DEFINITION`
 CREATE TABLE `ALK_MESSAGE_DEFINITION`
 (
     `M_ID`          int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-    `F_ID`          int unsigned NOT NULL COMMENT 'ALK_FIELD_DEFINITION主键',
+    `F_ID`          int unsigned DEFAULT NULL COMMENT 'ALK_FIELD_DEFINITION主键',
     `M_TYPE`        varchar(10)  NOT NULL COMMENT '报文类型 iso: 8583 fixed: 固定格式',
     `M_GROUP`       varchar(20)  NOT NULL COMMENT '报文分组',
     `M_CODE`        varchar(20)  NOT NULL COMMENT '报文交易码',

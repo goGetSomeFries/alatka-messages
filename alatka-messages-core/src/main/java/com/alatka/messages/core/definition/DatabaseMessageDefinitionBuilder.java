@@ -100,6 +100,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
             ((IsoFieldDefinition) fieldDefinition).setAliasName(result.get("aliasName") == null ? null : result.get("aliasName").toString());
             ((IsoFieldDefinition) fieldDefinition).setNonSubdomainException((boolean) result.get("nonSubdomainException"));
         }
+        // TODO 使用fieldId关联
         if (fieldDefinition.getExistSubdomain()) {
             List<MessageDefinition> list = MessageDefinitionContext.getInstance()
                     .childrenMessageDefinitions(definition, fieldDefinition);

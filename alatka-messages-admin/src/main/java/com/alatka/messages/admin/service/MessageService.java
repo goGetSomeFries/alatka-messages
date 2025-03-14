@@ -1,64 +1,89 @@
 package com.alatka.messages.admin.service;
 
+import com.alatka.messages.admin.AutoConfiguration;
 import com.alatka.messages.admin.entity.MessageDefinition;
-import com.alatka.messages.admin.repository.MessageDefinitionRepository;
+import com.alatka.messages.admin.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class MessageDefinitionService {
+public class MessageService {
 
-    private FieldDefinitionService fieldDefinitionService;
+    private RestTemplate restTemplate;
 
-    private MessageDefinitionRepository messageDefinitionRepository;
+    private TaskExecutor taskExecutor;
+
+    private FieldService fieldService;
+
+    private MessageRepository messageRepository;
+
+    public Map<String, String> build(List<String> uris, String path) {
+        Map<String, String> resultMap = new HashMap<>(uris.size());
+
+        CompletableFuture<Void> completableFuture = uris.stream()
+                .map(uri -> uri.concat(path))
+                .map(url -> this.doBuild(url, resultMap))
+                .collect(Collectors.collectingAndThen(Collectors.toList(),
+                        list -> CompletableFuture.allOf(list.toArray(new CompletableFuture[0]))));
+        completableFuture.join();
+        return resultMap;
+    }
+
+    private CompletableFuture<Void> doBuild(String url, Map<String, String> resultMap) {
+        return CompletableFuture.supplyAsync(() -> restTemplate.postForObject(url, null, String.class), taskExecutor)
+                .handleAsync((result, ex) -> "ok".equalsIgnoreCase(result) ? "success" : "fail")
+                .thenAccept(result -> resultMap.put(url, result));
+    }
 
     public Long create(MessageDefinition messageDefinition) {
-        return messageDefinitionRepository.save(messageDefinition).getId();
+        return messageRepository.save(messageDefinition).getId();
     }
 
     public void update(MessageDefinition messageDefinition) {
-        if (!messageDefinitionRepository.existsById(messageDefinition.getId())) {
+        if (!messageRepository.existsById(messageDefinition.getId())) {
             throw new IllegalArgumentException("MessageDefinition with id " + messageDefinition.getId() + " does not exist");
         }
-        messageDefinitionRepository.save(messageDefinition);
+        messageRepository.save(messageDefinition);
     }
 
     public void deleteByFieldId(Long fieldId) {
         MessageDefinition condition = new MessageDefinition();
         condition.setFieldId(fieldId);
-        List<Long> ids = messageDefinitionRepository.findAll(this.condition(condition))
+        List<Long> ids = messageRepository.findAll(this.condition(condition))
                 .stream().map(MessageDefinition::getId).collect(Collectors.toList());
         this.delete(ids);
     }
 
     public void delete(List<Long> ids) {
-        ids.forEach(fieldDefinitionService::deleteByMessageId);
-        messageDefinitionRepository.deleteAllById(ids);
-    }
-
-    public MessageDefinition queryById(Long id) {
-        return messageDefinitionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("MessageDefinition with id " + id + " does not exist"));
+        ids.forEach(fieldService::deleteByMessageId);
+        messageRepository.deleteAllById(ids);
     }
 
     public List<MessageDefinition> queryByFieldId(Long fieldId) {
         MessageDefinition condition = new MessageDefinition();
         condition.setFieldId(fieldId);
-        return messageDefinitionRepository.findAll(this.condition(condition));
+        return messageRepository.findAll(this.condition(condition));
     }
 
     public Page<MessageDefinition> queryPage(MessageDefinition condition, Pageable pageable) {
-        return messageDefinitionRepository.findAll(this.condition(condition), pageable);
+        return messageRepository.findAll(this.condition(condition), pageable);
     }
 
     private Specification<MessageDefinition> condition(MessageDefinition condition) {
@@ -79,14 +104,6 @@ public class MessageDefinitionService {
             if (condition.getFieldId() != null) {
                 list.add(criteriaBuilder.equal(root.get("fieldId").as(Long.class), condition.getFieldId()));
             }
-/*
-            if (condition.getDomain() != null) {
-                list.add(criteriaBuilder.like(root.get("domain").as(String.class), "%" + condition.getDomain() + "%"));
-            }
-            if (condition.getUsage() != null) {
-                list.add(criteriaBuilder.equal(root.get("usage").as(String.class), condition.getUsage()));
-            }
-*/
             if (condition.getRemark() != null) {
                 list.add(criteriaBuilder.like(root.get("remark").as(String.class), "%" + condition.getRemark() + "%"));
             }
@@ -99,12 +116,25 @@ public class MessageDefinitionService {
     }
 
     @Autowired
-    public void MessageDefinitionRepository(MessageDefinitionRepository messageDefinitionRepository) {
-        this.messageDefinitionRepository = messageDefinitionRepository;
+    public void setMessageRepository(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
+
+    @Lazy
+    @Autowired
+    public void setFieldService(FieldService fieldService) {
+        this.fieldService = fieldService;
     }
 
     @Autowired
-    public void setFieldDefinitionService(FieldDefinitionService fieldDefinitionService) {
-        this.fieldDefinitionService = fieldDefinitionService;
+    @Qualifier(AutoConfiguration.REST_TEMPLATE_NAME)
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    @Autowired
+    @Qualifier(AutoConfiguration.TASK_EXECUTOR_NAME)
+    public void setTaskExecutor(TaskExecutor taskExecutor) {
+        this.taskExecutor = taskExecutor;
     }
 }

@@ -3,13 +3,15 @@ package com.alatka.messages.admin.support;
 import com.alatka.messages.admin.model.ResMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackages = "com.alatka.rule.admin")
+@Component("messagesControllerExceptionHandler")
+@RestControllerAdvice(basePackages = "com.alatka.messages.admin")
 public class ControllerExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);

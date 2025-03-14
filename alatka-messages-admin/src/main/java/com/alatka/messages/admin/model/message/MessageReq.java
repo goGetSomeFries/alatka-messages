@@ -2,24 +2,32 @@ package com.alatka.messages.admin.model.message;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@Schema(description = "报文响应实体")
-public class MessageDefinitionRes {
+@Schema(description = "报文请求实体")
+public class MessageReq {
 
-    @Schema(description = "主键", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "报文域主键")
+    private Long fieldId;
+
+    @Schema(description = "主键")
     private Long id;
 
     @Schema(description = "类型", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "type 不能为空")
     private String type;
 
     @Schema(description = "分组", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "group 不能为空")
     private String group;
 
     @Schema(description = "交易码", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "code 不能为空")
     private String code;
 
     @Schema(description = "种类", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "kind 不能为空")
     private String kind;
 
     @Schema(description = "子域名称")
@@ -38,10 +46,20 @@ public class MessageDefinitionRes {
     private String charset;
 
     @Schema(description = "描述", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "remark 不能为空")
     private String remark;
 
     @Schema(description = "是否可用", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "enabled 不能为空")
     private Boolean enabled;
+
+    public Long getFieldId() {
+        return fieldId;
+    }
+
+    public void setFieldId(Long fieldId) {
+        this.fieldId = fieldId;
+    }
 
     public Long getId() {
         return id;
