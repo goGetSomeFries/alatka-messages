@@ -41,7 +41,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, Integer.parseInt(source.get("id").toString()));
+            statement.setLong(1, (Long) source.get("id"));
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Map<String, Object> result = new HashMap<>();
@@ -123,7 +123,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Map<String, Object> result = new HashMap<>();
-                    result.put("id", resultSet.getInt("M_ID"));
+                    result.put("id", resultSet.getLong("M_ID"));
                     result.put("type", resultSet.getString("M_TYPE"));
                     result.put("group", resultSet.getString("M_GROUP"));
                     result.put("code", resultSet.getString("M_CODE"));

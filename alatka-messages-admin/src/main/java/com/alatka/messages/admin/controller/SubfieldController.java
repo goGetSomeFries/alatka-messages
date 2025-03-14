@@ -6,6 +6,7 @@ import com.alatka.messages.admin.model.ResMessage;
 import com.alatka.messages.admin.model.field.FieldRes;
 import com.alatka.messages.admin.model.message.MessageRes;
 import com.alatka.messages.admin.model.subfield.SubfieldReq;
+import com.alatka.messages.admin.model.subfield.SubfieldRes;
 import com.alatka.messages.admin.service.SubfieldService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Tag(name = "报文子域")
@@ -41,21 +41,25 @@ public class SubfieldController {
 
     @Operation(summary = "查询报文子域")
     @GetMapping("/list")
-    // TODO
-    public ResMessage<Map<MessageRes, List<FieldRes>>> queryList(@RequestParam Long fieldId) {
-        Map<MessageRes, List<FieldRes>> result = subfieldService.queryByFieldId(fieldId).entrySet()
+    public ResMessage<List<SubfieldRes>> queryList(@RequestParam Long fieldId) {
+        List<SubfieldRes> result = subfieldService.queryByFieldId(fieldId).entrySet()
                 .stream()
-                .collect(Collectors.toMap(
-                        entry -> {
-                            MessageRes res = new MessageRes();
-                            BeanUtils.copyProperties(entry.getKey(), res);
-                            return res;
-                        },
-                        entry -> entry.getValue().stream().map(e -> {
-                            FieldRes res = new FieldRes();
-                            BeanUtils.copyProperties(e, res);
-                            return res;
-                        }).collect(Collectors.toList())));
+                .map(entry -> {
+                    SubfieldRes res = new SubfieldRes();
+
+                    MessageRes subMessage = new MessageRes();
+                    BeanUtils.copyProperties(entry.getKey(), subMessage);
+                    res.setSubMessage(subMessage);
+
+                    List<FieldRes> subfields = entry.getValue().stream().map(e -> {
+                        FieldRes subfield = new FieldRes();
+                        BeanUtils.copyProperties(e, subfield);
+                        return subfield;
+                    }).collect(Collectors.toList());
+                    res.setSubfields(subfields);
+
+                    return res;
+                }).collect(Collectors.toList());
 
         return ResMessage.success(result);
     }
