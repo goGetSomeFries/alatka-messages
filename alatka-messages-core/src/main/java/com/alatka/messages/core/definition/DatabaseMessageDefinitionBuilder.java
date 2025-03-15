@@ -1,6 +1,9 @@
 package com.alatka.messages.core.definition;
 
-import com.alatka.messages.core.context.*;
+import com.alatka.messages.core.context.FieldDefinition;
+import com.alatka.messages.core.context.FixedFieldDefinition;
+import com.alatka.messages.core.context.IsoFieldDefinition;
+import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.holder.MessageHolder;
 import com.alatka.messages.core.support.Constant;
 import com.alatka.messages.core.util.ClassUtil;
@@ -24,6 +27,8 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
 
     private final DataSource dataSource;
 
+    private Map<Long, List<MessageDefinition>> fieldMessageMapping;
+
     public DatabaseMessageDefinitionBuilder(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -41,13 +46,14 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, Integer.parseInt(source.get("id").toString()));
+            statement.setLong(1, (Long) source.get("id"));
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Map<String, Object> result = new HashMap<>();
+                    result.put("id", resultSet.getLong("F_ID"));
                     result.put("domainNo", resultSet.getInt("F_DOMAIN_NO"));
                     result.put("name", resultSet.getString("F_NAME"));
-                    result.put("className", resultSet.getString("F_CLAZZ"));
+                    result.put("className", resultSet.getString("F_CLASS_NAME"));
                     result.put("pattern", resultSet.getString("F_PATTERN"));
                     result.put("fixed", resultSet.getBoolean("F_FIXED"));
                     result.put("length", resultSet.getInt("F_LENGTH"));
@@ -71,13 +77,13 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
         }
 
         return list.stream()
-                .map(map -> this.buildFieldDefinition(map, definition))
+                .map(map -> this.buildFieldDefinition(map, definition.getType()))
                 .sorted()
                 .collect(Collectors.toList());
     }
 
-    private FieldDefinition buildFieldDefinition(Map<String, Object> result, MessageDefinition definition) {
-        FieldDefinition fieldDefinition = definition.getType() == MessageDefinition.Type.fixed ?
+    private FieldDefinition buildFieldDefinition(Map<String, Object> result, MessageDefinition.Type type) {
+        FieldDefinition fieldDefinition = type == MessageDefinition.Type.fixed ?
                 new FixedFieldDefinition() : new IsoFieldDefinition();
 
         fieldDefinition.setDomainNo((Integer) result.get("domainNo"));
@@ -101,8 +107,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
             ((IsoFieldDefinition) fieldDefinition).setNonSubdomainException((boolean) result.get("nonSubdomainException"));
         }
         if (fieldDefinition.getExistSubdomain()) {
-            List<MessageDefinition> list = MessageDefinitionContext.getInstance()
-                    .childrenMessageDefinitions(definition, fieldDefinition);
+            List<MessageDefinition> list = this.fieldMessageMapping.get(result.get("id"));
             Map<String, MessageDefinition> messageDefinitionMap =
                     list.stream().collect(Collectors.toMap(d ->
                             d.getUsage().isEmpty() ? FieldDefinition.SUBFIELD_KEY_DEFAULT : d.getUsage(), Function.identity()));
@@ -122,7 +127,8 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Map<String, Object> result = new HashMap<>();
-                    result.put("id", resultSet.getInt("M_ID"));
+                    result.put("fieldId", resultSet.getLong("F_ID"));
+                    result.put("id", resultSet.getLong("M_ID"));
                     result.put("type", resultSet.getString("M_TYPE"));
                     result.put("group", resultSet.getString("M_GROUP"));
                     result.put("code", resultSet.getString("M_CODE"));
@@ -133,6 +139,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
                     result.put("holder", resultSet.getString("M_HOLDER"));
                     result.put("charset", resultSet.getString("M_CHARSET"));
                     result.put("remark", resultSet.getString("M_REMARK"));
+                    result.put("enabled", resultSet.getBoolean("M_ENABLED"));
                     list.add(result);
                 }
             }
@@ -140,9 +147,18 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
             throw new RuntimeException("查询ALK_MESSAGE_DEFINITION失败", e);
         }
 
+        this.fieldMessageMapping = fieldMessageMapping(list);
+
         return list.stream()
                 .sorted(Comparator.comparing(this::buildMessageDefinition))
                 .collect(Collectors.toList());
+    }
+
+    private Map<Long, List<MessageDefinition>> fieldMessageMapping(List<Map<String, Object>> sources) {
+        return sources.stream()
+                .filter(map -> map.get("fieldId") != null)
+                .collect(Collectors.groupingBy(map -> Long.valueOf(map.get("fieldId").toString()),
+                        Collectors.mapping(this::buildMessageDefinition, Collectors.toList())));
     }
 
     private MessageDefinition buildMessageDefinition(Map<String, Object> source) {
@@ -162,6 +178,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
         definition.setCharset(source.get("charset") == null ?
                 Constant.DEFAULT_CHARSET : source.get("charset").toString());
         definition.setRemark(source.get("remark").toString());
+        definition.setEnabled((boolean) source.get("enabled"));
         return definition;
     }
 
