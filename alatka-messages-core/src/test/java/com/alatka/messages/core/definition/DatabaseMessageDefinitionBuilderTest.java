@@ -5,6 +5,7 @@ import com.alatka.messages.core.context.IsoFieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.context.MessageDefinitionContext;
 import com.alatka.messages.core.holder.MessageHolder;
+import com.alatka.messages.core.util.ClassUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class DatabaseMessageDefinitionBuilderTest {
     void test01() throws SQLException {
         ResultSet resultSet = Mockito.mock(ResultSet.class);
         doReturn(true, true, false).when(resultSet).next();
-        doReturn(2, 1).when(resultSet).getInt("M_ID");
+        doReturn(2L, 1L).when(resultSet).getLong("M_ID");
         doReturn("fixed", "iso").when(resultSet).getString("M_TYPE");
         doReturn("0901", "visa").when(resultSet).getString("M_GROUP");
         doReturn("3006", "common").when(resultSet).getString("M_CODE");
@@ -60,7 +61,7 @@ public class DatabaseMessageDefinitionBuilderTest {
 
         Assertions.assertEquals(2, sources.size());
 
-        Assertions.assertEquals(1, sources.get(0).get("id"));
+        Assertions.assertEquals(1L, sources.get(0).get("id"));
         Assertions.assertEquals("iso", sources.get(0).get("type"));
         Assertions.assertEquals("visa", sources.get(0).get("group"));
         Assertions.assertEquals("common", sources.get(0).get("code"));
@@ -72,7 +73,7 @@ public class DatabaseMessageDefinitionBuilderTest {
         Assertions.assertEquals("GB18030", sources.get(0).get("charset"));
         Assertions.assertEquals("8583 testing", sources.get(0).get("remark"));
 
-        Assertions.assertEquals(2, sources.get(1).get("id"));
+        Assertions.assertEquals(2L, sources.get(1).get("id"));
         Assertions.assertEquals("fixed", sources.get(1).get("type"));
         Assertions.assertEquals("0901", sources.get(1).get("group"));
         Assertions.assertEquals("3006", sources.get(1).get("code"));
@@ -150,6 +151,7 @@ public class DatabaseMessageDefinitionBuilderTest {
     void test04() throws SQLException {
         ResultSet resultSet = Mockito.mock(ResultSet.class);
         doReturn(true, true, false).when(resultSet).next();
+        doReturn(1L, 2L).when(resultSet).getLong("F_ID");
         doReturn(1, 2).when(resultSet).getInt("F_DOMAIN_NO");
         doReturn("test1", "test2").when(resultSet).getString("F_NAME");
         doReturn("java.lang.String", "java.time.LocalDate").when(resultSet).getString("F_CLASS_NAME");
@@ -179,16 +181,13 @@ public class DatabaseMessageDefinitionBuilderTest {
         MessageDefinition subdomain = new MessageDefinition();
         subdomain.setUsage("");
 
-        List<MessageDefinition> definitions = Collections.singletonList(subdomain);
-        MessageDefinitionContext mock = Mockito.mock(MessageDefinitionContext.class);
-        doReturn(definitions).when(mock).childrenMessageDefinitions(any(), any());
-        MockedStatic<MessageDefinitionContext> mockedStatic = mockStatic(MessageDefinitionContext.class);
-        mockedStatic.when(MessageDefinitionContext::getInstance).thenReturn(mock);
+        Map<Long, List<MessageDefinition>> definitions = Collections.singletonMap(2L, Collections.singletonList(subdomain));
+        ClassUtil.setFieldValue(builder, "fieldMessageMapping", definitions);
 
         MessageDefinition definition = Mockito.mock(MessageDefinition.class);
         doReturn(MessageDefinition.Type.fixed, MessageDefinition.Type.iso).when(definition).getType();
 
-        List<FieldDefinition> list = builder.buildFieldDefinitions(definition, Collections.singletonMap("id", 1));
+        List<FieldDefinition> list = builder.buildFieldDefinitions(definition, Collections.singletonMap("id", 1L));
 
         Assertions.assertEquals(2, list.size());
 
@@ -225,7 +224,6 @@ public class DatabaseMessageDefinitionBuilderTest {
         Assertions.assertEquals(1, messageDefinitionMap.size());
         Assertions.assertEquals(subdomain, messageDefinitionMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT));
 
-        mockedStatic.close();
     }
 
     @Test
