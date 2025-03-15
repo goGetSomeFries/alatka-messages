@@ -79,6 +79,7 @@ public abstract class XmlMessageDefinitionBuilder<S extends FieldDefinition> ext
         definition.setCharset(message.get("charset") == null ? Constant.DEFAULT_CHARSET : message.get("charset").toString());
         definition.setRemark(message.get("remark").toString());
         definition.setHolder(message.get("clazz") == null ? MessageHolder.class : ClassUtil.forName(message.get("clazz").toString()));
+        definition.setEnabled(message.get("enabled") == null ? true : (boolean) message.get("enabled"));
 
         if (subPayload != null) {
             definition.setDomain(subPayload.get("domain").toString());

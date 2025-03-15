@@ -10,7 +10,7 @@ CREATE TABLE `ALK_FIELD_DEFINITION`
     `F_FIXED`                   tinyint(1) NOT NULL COMMENT '是否定长',
     `F_LENGTH`                  int          NOT NULL COMMENT '域字节长度',
     `F_MAX_LENGTH`              int          NOT NULL COMMENT '域最大长度',
-    `F_CLAZZ`                   varchar(100) DEFAULT NULL COMMENT '域java类型',
+    `F_CLASS_NAME`              varchar(100) DEFAULT NULL COMMENT '域java类型',
     `F_PATTERN`                 varchar(20)  DEFAULT NULL COMMENT '域值格式，日期类型使用',
     `F_REMARK`                  varchar(100) NOT NULL COMMENT '域描述',
     `F_STATUS`                  varchar(10)  NOT NULL COMMENT '状态',
@@ -21,7 +21,7 @@ CREATE TABLE `ALK_FIELD_DEFINITION`
     `F_SUBDOMAIN_TYPE`          varchar(10)  DEFAULT NULL COMMENT '子域类型',
     `F_NON_SUBDOMAIN_EXCEPTION` tinyint(1) DEFAULT NULL COMMENT '未配置子域异常',
     PRIMARY KEY (`F_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=468 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='报文域定义表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='报文域定义表';
 
 
 -- alatka.ALK_MESSAGE_DEFINITION definition
@@ -29,6 +29,7 @@ CREATE TABLE `ALK_FIELD_DEFINITION`
 CREATE TABLE `ALK_MESSAGE_DEFINITION`
 (
     `M_ID`          int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `F_ID`          int unsigned DEFAULT NULL COMMENT 'ALK_FIELD_DEFINITION主键',
     `M_TYPE`        varchar(10)  NOT NULL COMMENT '报文类型 iso: 8583 fixed: 固定格式',
     `M_GROUP`       varchar(20)  NOT NULL COMMENT '报文分组',
     `M_CODE`        varchar(20)  NOT NULL COMMENT '报文交易码',
@@ -39,5 +40,7 @@ CREATE TABLE `ALK_MESSAGE_DEFINITION`
     `M_HOLDER`      varchar(100) DEFAULT NULL COMMENT '报文实体类',
     `M_CHARSET`     varchar(100) DEFAULT NULL COMMENT '报文编码',
     `M_REMARK`      varchar(100) NOT NULL COMMENT '报文描述',
-    PRIMARY KEY (`M_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='报文定义表';
+    `M_ENABLED`     tinyint(1)   NOT NULL COMMENT '是否可用',
+    PRIMARY KEY (`M_ID`),
+    UNIQUE KEY `ALK_MESSAGE_DEFINITION_UNIQUE` (`M_TYPE`, `M_GROUP`, `M_CODE`, `M_KIND`, `M_DOMAIN`, `M_USAGE`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='报文定义表';

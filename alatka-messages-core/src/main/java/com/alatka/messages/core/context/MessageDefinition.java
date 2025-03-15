@@ -61,6 +61,8 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
      */
     private String remark;
 
+    private boolean enabled;
+
     public enum Type {
         /**
          * 8583
@@ -182,6 +184,14 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public MessageDefinition copy() {

@@ -41,6 +41,7 @@ public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinit
                 .peek(source -> this.logger.info("scan source: {}", source))
                 .flatMap(source -> this.buildMessageDefinitions(source).stream()
                         .map(definition -> new Wrapper<>(definition, source)))
+                .filter(wrapper -> wrapper.definition.isEnabled())
                 .peek(wrapper -> this.logger.debug("build {}", wrapper.definition))
                 .peek(wrapper -> messageDefinitions.add(wrapper.definition))
                 .peek(wrapper -> {
