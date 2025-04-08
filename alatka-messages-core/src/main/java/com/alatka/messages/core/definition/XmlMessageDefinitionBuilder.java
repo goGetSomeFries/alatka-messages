@@ -28,7 +28,7 @@ public abstract class XmlMessageDefinitionBuilder<S extends FieldDefinition> ext
     @Override
     @SuppressWarnings("unchecked")
     protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, Path source) {
-        Map<String, Object> xml = XmlUtil.getMap(source.toFile(), Object.class);
+        Map<String, Object> xml = XmlUtil.getMap(source, Object.class);
         Map<String, Object> message = this.getValueWithMap(xml, "message");
         MessageDefinition.Kind kind = definition.getKind();
 
@@ -52,7 +52,7 @@ public abstract class XmlMessageDefinitionBuilder<S extends FieldDefinition> ext
     @Override
     @SuppressWarnings("unchecked")
     protected List<MessageDefinition> buildMessageDefinitions(Path source) {
-        Map<String, Object> xml = XmlUtil.getMap(source.toFile(), Object.class);
+        Map<String, Object> xml = XmlUtil.getMap(source, Object.class);
         Map<String, Object> message = this.getValueWithMap(xml, "message");
 
         return Arrays.stream(MessageDefinition.Kind.values())

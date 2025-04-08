@@ -75,7 +75,9 @@ public class FileUtil {
             }
             if (url.toURI().getScheme().equals("jar")) {
                 try (FileSystem fs = FileSystems.newFileSystem(url.toURI(), Collections.emptyMap(), classLoader)) {
-                    return buildPaths(fs.getPath("/BOOT-INF/classes", classpath), suffix);
+                    Path path = Files.exists(fs.getPath("/BOOT-INF/classes")) && !classpath.startsWith("META-INF") ?
+                            fs.getPath("/BOOT-INF/classes", classpath) : fs.getPath(classpath);
+                    return buildPaths(path, suffix);
                 }
             }
             throw new IllegalArgumentException("illegal scheme, classpath: " + classpath);

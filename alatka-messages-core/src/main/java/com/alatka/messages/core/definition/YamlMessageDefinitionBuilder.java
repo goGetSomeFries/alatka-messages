@@ -42,7 +42,7 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
 
     @Override
     protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, Path source) {
-        Map<String, Object> yaml = YamlUtil.getMap(source.toFile(), YAML_ROOT_NAME, Object.class);
+        Map<String, Object> yaml = YamlUtil.getMap(source, YAML_ROOT_NAME, Object.class);
         Map<String, Object> message = this.getValueWithMap(yaml, "message");
         MessageDefinition.Kind kind = definition.getKind();
 
@@ -60,7 +60,7 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
 
     @Override
     protected List<MessageDefinition> buildMessageDefinitions(Path source) {
-        Map<String, Object> yaml = YamlUtil.getMap(source.toFile(), YAML_ROOT_NAME, Object.class);
+        Map<String, Object> yaml = YamlUtil.getMap(source, YAML_ROOT_NAME, Object.class);
         Map<String, Object> message = this.getValueWithMap(yaml, "message");
 
         return Arrays.stream(MessageDefinition.Kind.values())
