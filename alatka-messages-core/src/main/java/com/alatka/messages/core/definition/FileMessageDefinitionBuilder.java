@@ -67,7 +67,7 @@ public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> ex
 
     @Override
     protected List<Path> getSources() {
-        return FileUtil.getClasspathFiles(this.classpath, "*." + this.type() + this.fileSuffix());
+        return FileUtil.getClasspathFiles(this.classpath, "." + this.type() + this.fileSuffix());
     }
 
     /**

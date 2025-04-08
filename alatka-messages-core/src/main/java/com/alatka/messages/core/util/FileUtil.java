@@ -7,14 +7,13 @@ import org.springframework.core.io.support.ResourcePatternUtils;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 文件工具类
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
 public class FileUtil {
 
     public static List<Path> getClasspathFiles(String classpath, String suffix) {
-        return getClasspathFiles_v1(classpath, suffix);
+        return getClasspathFiles_temp(classpath, suffix, FileUtil.class.getClassLoader());
 //        return getClasspathFiles(classpath, suffix, FileUtil.class.getClassLoader());
     }
 
@@ -32,7 +31,7 @@ public class FileUtil {
 
         try {
             Resource[] resources = ResourcePatternUtils.getResourcePatternResolver(null)
-                    .getResources(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + classpath + (classpath.endsWith("/") ? "" : "/") + suffix);
+                    .getResources(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + classpath + (classpath.endsWith("/") ? "*" : "/*") + suffix);
             return Arrays.stream(resources)
                     .map(resource -> {
                         try {
@@ -55,7 +54,7 @@ public class FileUtil {
             }
 
             List<Path> list = new ArrayList<>();
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(url.toURI()), suffix)) {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(url.toURI()), "*" + suffix)) {
                 stream.forEach(list::add);
             }
             return list;
@@ -63,4 +62,35 @@ public class FileUtil {
             throw new RuntimeException(e);
         }
     }
+
+    public static List<Path> getClasspathFiles_temp(String classpath, String suffix, ClassLoader classLoader) {
+        URL url = classLoader.getResource(classpath);
+        if (url == null) {
+            throw new IllegalArgumentException("can not find classpath: " + classpath);
+        }
+
+        try {
+            if (url.toURI().getScheme().equals("file")) {
+                return buildPaths(Paths.get(url.toURI()), suffix);
+            }
+            if (url.toURI().getScheme().equals("jar")) {
+                try (FileSystem fs = FileSystems.newFileSystem(url.toURI(), Collections.emptyMap(), classLoader)) {
+                    return buildPaths(fs.getPath("/BOOT-INF/classes", classpath), suffix);
+                }
+            }
+            throw new IllegalArgumentException("illegal scheme, classpath: " + classpath);
+
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static List<Path> buildPaths(Path path, String suffix) throws IOException {
+        try (Stream<Path> stream = Files.walk(path)) {
+            return stream.filter(Files::isRegularFile)
+                    .filter(p -> p.getFileName().toString().endsWith(suffix))
+                    .collect(Collectors.toList());
+        }
+    }
+
 }
