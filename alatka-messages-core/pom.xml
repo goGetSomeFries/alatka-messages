@@ -32,6 +32,11 @@
             <artifactId>jackson-dataformat-xml</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- 后续删除 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
         <!-- annotation配置方式 -->
         <dependency>
             <groupId>org.reflections</groupId>
