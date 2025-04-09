@@ -27,7 +27,7 @@ public class FileUtilTest {
 
         AtomicInteger index = new AtomicInteger(0);
         fileWrappers.stream()
-                .map(FileWrapper::getFileName)
+                .map(FileWrapper::getName)
                 .sorted()
                 .forEach(name -> Assertions.assertEquals(fileNames[index.getAndIncrement()], name));
 

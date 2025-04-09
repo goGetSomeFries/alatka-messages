@@ -4,18 +4,18 @@ public class FileWrapper {
 
     private final byte[] content;
 
-    private final String fileName;
+    private final String name;
 
-    public FileWrapper(byte[] content, String fileName) {
+    public FileWrapper(byte[] content, String name) {
         this.content = content;
-        this.fileName = fileName;
+        this.name = name;
     }
 
     public byte[] getContent() {
         return content;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 }

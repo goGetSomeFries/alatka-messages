@@ -20,7 +20,7 @@
     </modules>
 
     <properties>
-        <revision>3.0.1-SNAPSHOT</revision>
+        <revision>3.1.0-SNAPSHOT</revision>
     </properties>
 
 </project>
