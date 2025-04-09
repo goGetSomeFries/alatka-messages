@@ -2,6 +2,7 @@ package com.alatka.messages.core.definition;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
+import com.alatka.messages.core.holder.FileWrapper;
 import com.alatka.messages.core.holder.MessageHolder;
 import com.alatka.messages.core.support.Constant;
 import com.alatka.messages.core.util.ClassUtil;
@@ -40,8 +41,8 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
     }
 
     @Override
-    protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, byte[] source) {
-        Map<String, Object> yaml = YamlUtil.getMap(source, YAML_ROOT_NAME, Object.class);
+    protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, FileWrapper source) {
+        Map<String, Object> yaml = YamlUtil.getMap(source.getContent(), YAML_ROOT_NAME, Object.class);
         Map<String, Object> message = this.getValueWithMap(yaml, "message");
         MessageDefinition.Kind kind = definition.getKind();
 
@@ -58,8 +59,8 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
     }
 
     @Override
-    protected List<MessageDefinition> buildMessageDefinitions(byte[] source) {
-        Map<String, Object> yaml = YamlUtil.getMap(source, YAML_ROOT_NAME, Object.class);
+    protected List<MessageDefinition> buildMessageDefinitions(FileWrapper source) {
+        Map<String, Object> yaml = YamlUtil.getMap(source.getContent(), YAML_ROOT_NAME, Object.class);
         Map<String, Object> message = this.getValueWithMap(yaml, "message");
 
         return Arrays.stream(MessageDefinition.Kind.values())

@@ -1,11 +1,13 @@
 package com.alatka.messages.core.util;
 
+import com.alatka.messages.core.holder.FileWrapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FileUtilTest {
 
@@ -20,8 +22,15 @@ public class FileUtilTest {
     @DisplayName("getClasspathFiles(String, String, ClassLoader)")
     void test02() {
         String[] fileNames = {"a.log", "b.log"};
-        List<byte[]> contents = FileUtil.getFilesContent("test", ".log", this.getClass().getClassLoader());
-        Assertions.assertEquals(fileNames.length, contents.size());
+        List<FileWrapper> fileWrappers = FileUtil.getFilesContent("test", ".log", this.getClass().getClassLoader());
+        Assertions.assertEquals(fileNames.length, fileWrappers.size());
+
+        AtomicInteger index = new AtomicInteger(0);
+        fileWrappers.stream()
+                .map(FileWrapper::getFileName)
+                .sorted()
+                .forEach(name -> Assertions.assertEquals(fileNames[index.getAndIncrement()], name));
+
     }
 
     @Disabled
