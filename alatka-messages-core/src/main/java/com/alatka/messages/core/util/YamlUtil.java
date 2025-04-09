@@ -6,9 +6,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Map;
 
 public class YamlUtil {
@@ -31,11 +28,11 @@ public class YamlUtil {
         }
     }
 
-    public static <T> Map<String, T> getMap(Path path, String rootName, Class<T> clazz) {
+    public static <T> Map<String, T> getMap(byte[] content, String rootName, Class<T> clazz) {
         try {
-            return OBJECT_MAPPER.readerForMapOf(clazz).withRootName(rootName).readValue(Files.readAllBytes(path));
+            return OBJECT_MAPPER.readerForMapOf(clazz).withRootName(rootName).readValue(content);
         } catch (IOException e) {
-            throw new RuntimeException("获取yaml文件错误: " + path.getFileName(), e);
+            throw new RuntimeException("获取yaml文件错误", e);
         }
     }
 }

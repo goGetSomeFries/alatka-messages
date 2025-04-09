@@ -7,7 +7,6 @@ import com.alatka.messages.core.support.Constant;
 import com.alatka.messages.core.util.ClassUtil;
 import com.alatka.messages.core.util.YamlUtil;
 
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
     }
 
     @Override
-    protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, Path source) {
+    protected List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, byte[] source) {
         Map<String, Object> yaml = YamlUtil.getMap(source, YAML_ROOT_NAME, Object.class);
         Map<String, Object> message = this.getValueWithMap(yaml, "message");
         MessageDefinition.Kind kind = definition.getKind();
@@ -59,7 +58,7 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
     }
 
     @Override
-    protected List<MessageDefinition> buildMessageDefinitions(Path source) {
+    protected List<MessageDefinition> buildMessageDefinitions(byte[] source) {
         Map<String, Object> yaml = YamlUtil.getMap(source, YAML_ROOT_NAME, Object.class);
         Map<String, Object> message = this.getValueWithMap(yaml, "message");
 

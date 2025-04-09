@@ -6,7 +6,6 @@ import com.alatka.messages.core.context.MessageDefinitionContext;
 import com.alatka.messages.core.util.FileUtil;
 import com.alatka.messages.core.util.JsonUtil;
 
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
  * @author ybliu
  * @see AbstractMessageDefinitionBuilder
  */
-public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> extends AbstractMessageDefinitionBuilder<Path, S> {
+public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> extends AbstractMessageDefinitionBuilder<byte[], S> {
 
     private final String classpath;
 
@@ -27,7 +26,7 @@ public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> ex
     }
 
     @Override
-    protected List<S> buildFieldDefinitions(MessageDefinition definition, Path source) {
+    protected List<S> buildFieldDefinitions(MessageDefinition definition, byte[] source) {
         List<Map<String, Object>> list = this.doBuildFieldDefinitions(definition, source);
 
         return list.stream()
@@ -66,8 +65,8 @@ public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> ex
     }
 
     @Override
-    protected List<Path> getSources() {
-        return FileUtil.getClasspathFiles(this.classpath, "." + this.type() + this.fileSuffix());
+    protected List<byte[]> getSources() {
+        return FileUtil.getFilesContent(this.classpath, "." + this.type() + this.fileSuffix());
     }
 
     /**
@@ -77,7 +76,7 @@ public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> ex
      */
     protected abstract String fileSuffix();
 
-    protected abstract List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, Path source);
+    protected abstract List<Map<String, Object>> doBuildFieldDefinitions(MessageDefinition definition, byte[] source);
 
     /**
      * {@link FieldDefinition}后处理器
