@@ -1,14 +1,15 @@
 package com.alatka.messages.core.util;
 
+import com.alatka.messages.core.holder.FileWrapper;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.nio.file.*;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 文件工具类
@@ -17,24 +18,49 @@ import java.util.List;
  */
 public class FileUtil {
 
-    public static List<Path> getClasspathFiles(String classpath, String suffix) {
-        return getClasspathFiles(classpath, suffix, FileUtil.class.getClassLoader());
+    public static List<FileWrapper> getFilesContent(String classpath, String suffix) {
+        return getFilesContent(classpath, suffix, FileUtil.class.getClassLoader());
     }
 
-    public static List<Path> getClasspathFiles(String classpath, String suffix, ClassLoader classLoader) {
+    public static List<FileWrapper> getFilesContent(String classpath, String suffix, ClassLoader classLoader) {
+        URL url = classLoader.getResource(classpath);
+        if (url == null) {
+            throw new IllegalArgumentException("can not find classpath: " + classpath);
+        }
+
         try {
-            URL url = classLoader.getResource(classpath);
-            if (url == null) {
-                throw new IllegalArgumentException("can not find classpath: " + classpath);
+            if (url.toURI().getScheme().equals("file")) {
+                return buildFilesContent(Paths.get(url.toURI()), suffix);
             }
 
-            List<Path> list = new ArrayList<>();
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(url.toURI()), suffix)) {
-                stream.forEach(list::add);
+            if (url.toURI().getScheme().equals("jar")) {
+                try (FileSystem fs = FileSystems.newFileSystem(url.toURI(), Collections.emptyMap(), classLoader)) {
+                    // springboot '/BOOT-INF/classes'
+                    Path path = Files.exists(fs.getPath("/BOOT-INF/classes")) && !classpath.startsWith("META-INF") ?
+                            fs.getPath("/BOOT-INF/classes", classpath) : fs.getPath(classpath);
+                    return buildFilesContent(path, suffix);
+                }
             }
-            return list;
-        } catch (IOException | URISyntaxException e) {
+            throw new IllegalArgumentException("illegal scheme, classpath: " + classpath);
+
+        } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    private static List<FileWrapper> buildFilesContent(Path path, String suffix) throws IOException {
+        try (Stream<Path> stream = Files.list(path)) {
+            return stream.filter(Files::isRegularFile)
+                    .filter(p -> p.getFileName().toString().endsWith(suffix))
+                    .map(p -> {
+                        try {
+                            return new FileWrapper(Files.readAllBytes(p), p.getFileName().toString());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .collect(Collectors.toList());
+        }
+    }
+
 }

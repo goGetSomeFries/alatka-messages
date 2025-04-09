@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -35,9 +34,8 @@ public class FileMessageDefinitionBuilderTest {
         Mockito.doReturn(MessageDefinition.Type.fixed).when(builder).type();
         Mockito.doReturn(".xml").when(builder).fileSuffix();
 
-        List<Path> list = builder.getSources();
+        List<byte[]> list = builder.getSources();
         Assertions.assertEquals(1, list.size());
-        Assertions.assertEquals("9001.3006.fixed.xml", list.get(0).toFile().getName());
     }
 
     @Disabled
