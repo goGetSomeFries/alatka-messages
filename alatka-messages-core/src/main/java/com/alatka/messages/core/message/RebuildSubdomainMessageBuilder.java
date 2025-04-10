@@ -18,11 +18,18 @@ public abstract class RebuildSubdomainMessageBuilder extends MessageBuilder {
     @Override
     protected List<FieldDefinition> buildFieldDefinitions(byte[] bytes) {
         Map<String, IsoFieldDefinition> tagMap = super.buildFieldDefinitions(bytes).stream()
-                .map(s -> (IsoFieldDefinition) s)
+                .map(IsoFieldDefinition.class::cast)
                 .collect(Collectors.toMap(IsoFieldDefinition::getAliasName, Function.identity()));
 
         List<String> list = doBuildFieldDefinitions(bytes, tagMap);
-        return list.stream().filter(tagMap::containsKey).map(tagMap::get).collect(Collectors.toList());
+        return list.stream()
+                .peek(s -> {
+                    if (!tagMap.containsKey(s)) {
+                        throw new IllegalArgumentException("Unknown tag: " + s);
+                    }
+                })
+                .map(tagMap::get)
+                .collect(Collectors.toList());
     }
 
     protected abstract List<String> doBuildFieldDefinitions(byte[] bytes, Map<String, IsoFieldDefinition> tagMap);
