@@ -26,6 +26,7 @@ public class FieldBuilderFactory {
         init(new UVSubdomainFieldBuilder());
         init(new UVASSubdomainFieldBuilder());
         init(new TLVSubdomainFieldBuilder());
+        init(new TLV2SubdomainFieldBuilder());
         init(new BitmapSubdomainFieldBuilder());
         init(new PageSubdomainFieldBuilder());
         // datetime
