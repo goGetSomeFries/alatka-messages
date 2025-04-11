@@ -2,7 +2,7 @@ package com.alatka.messages.core.definition;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
-import com.alatka.messages.core.holder.FileWrapper;
+import com.alatka.messages.core.support.FileWrapper;
 import com.alatka.messages.core.holder.MessageHolder;
 import com.alatka.messages.core.support.Constant;
 import com.alatka.messages.core.util.ClassUtil;

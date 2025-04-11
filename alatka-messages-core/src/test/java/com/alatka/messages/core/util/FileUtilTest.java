@@ -1,6 +1,6 @@
 package com.alatka.messages.core.util;
 
-import com.alatka.messages.core.holder.FileWrapper;
+import com.alatka.messages.core.support.FileWrapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
