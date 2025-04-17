@@ -1,10 +1,16 @@
 package com.alatka.messages;
 
 import com.alatka.messages.core.definition.*;
+import com.alatka.messages.core.domain.DomainParsed;
+import com.alatka.messages.core.domain.DomainParsedFactory;
+import com.alatka.messages.core.field.FieldBuilder;
+import com.alatka.messages.core.field.FieldBuilderFactory;
 import com.alatka.messages.definition.SpringMessageDefinitionBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +20,7 @@ import java.util.Optional;
 @Configuration
 @EnableConfigurationProperties(AlatkaMessagesProperties.class)
 @ConditionalOnProperty(value = "alatka.messages.enabled", havingValue = "true", matchIfMissing = true)
-public class AlatkaMessagesAutoConfiguration {
+public class AlatkaMessagesAutoConfiguration implements ApplicationContextAware {
 
     public static final String BEAN_NAME = "messageDefinitionBuilder";
 
@@ -98,5 +104,11 @@ public class AlatkaMessagesAutoConfiguration {
                 builder.addBuilder(new FixedDatabaseMessageDefinitionBuilder(dataSource));
         }
         return builder;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        applicationContext.getBeansOfType(DomainParsed.class).values().forEach(DomainParsedFactory::init);
+        applicationContext.getBeansOfType(FieldBuilder.class).values().forEach(FieldBuilderFactory::init);
     }
 }
