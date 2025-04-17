@@ -1,6 +1,6 @@
 package com.alatka.messages.core.util;
 
-import com.alatka.messages.core.holder.FileWrapper;
+import com.alatka.messages.core.support.FileWrapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
