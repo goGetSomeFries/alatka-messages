@@ -1,4 +1,4 @@
-package com.alatka.messages.core.holder;
+package com.alatka.messages.core.support;
 
 public class FileWrapper {
 
