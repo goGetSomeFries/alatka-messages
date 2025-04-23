@@ -5,52 +5,52 @@ alatka.messages:
   code: common
   message:
     header:
-      - { "domainNo": 1, "name": "headerLength", "fixed": true, "length": 1, "remark": "报文头长度", "clazz": "java.lang.Integer", "parseType": "BINARY" }
-      - { "domainNo": 2, "name": "version", "fixed": true, "length": 1, "remark": "头标识和版本号", "clazz": "java.lang.String", "parseType": "BINARY" }
-      - { "domainNo": 3, "name": "messageLength", "fixed": true, "length": 4, "remark": "报文长度", "clazz": "java.lang.Integer" }
-      - { "domainNo": 4, "name": "destinationId", "fixed": true, "length": 11, "remark": "目的ID", "clazz": "java.lang.String" }
-      - { "domainNo": 5, "name": "sourceId", "fixed": true, "length": 11, "remark": "源ID", "clazz": "java.lang.String" }
-      - { "domainNo": 6, "name": "messageStatus", "fixed": true, "length": 3, "remark": "保留使用", "clazz": "[B" }
-      - { "domainNo": 7, "name": "batchNum", "fixed": true, "length": 1, "remark": "批次号", "clazz": "java.lang.String", "parseType": "BINARY" }
-      - { "domainNo": 8, "name": "reserved", "fixed": true, "length": 8, "remark": "保留使用", "clazz": "[B" }
-      - { "domainNo": 9, "name": "userInfo", "fixed": true, "length": 1, "remark": "用户信息", "clazz": "java.lang.String", "parseType": "BINARY" }
+      - { "domainNo": 1, "name": "headerLength", "fixed": true, "length": 1, "remark": "报文头长度", "className": "Integer", "parseType": "BINARY" }
+      - { "domainNo": 2, "name": "version", "fixed": true, "length": 1, "remark": "头标识和版本号", "className": "String", "parseType": "BINARY" }
+      - { "domainNo": 3, "name": "messageLength", "fixed": true, "length": 4, "remark": "报文长度", "clazz": "Integer" }
+      - { "domainNo": 4, "name": "destinationId", "fixed": true, "length": 11, "remark": "目的ID", "className": "String" }
+      - { "domainNo": 5, "name": "sourceId", "fixed": true, "length": 11, "remark": "源ID", "className": "String" }
+      - { "domainNo": 6, "name": "messageStatus", "fixed": true, "length": 3, "remark": "保留使用", "className": "Bytes" }
+      - { "domainNo": 7, "name": "batchNum", "fixed": true, "length": 1, "remark": "批次号", "className": "String", "parseType": "BINARY" }
+      - { "domainNo": 8, "name": "reserved", "fixed": true, "length": 8, "remark": "保留使用", "className": "Bytes" }
+      - { "domainNo": 9, "name": "userInfo", "fixed": true, "length": 1, "remark": "用户信息", "className": "String", "parseType": "BINARY" }
     payload:
-      - { "domainNo": 0, "name": "messageType", "fixed": true, "length": 4, "remark": "报文类型", "clazz": "java.lang.String" }
-      - { "domainNo": 1, "name": "bitMap", "fixed": false, "length": 16, "remark": "位图", "clazz": "java.util.HashMap", "parseType": "BINARY" }
-      - { "domainNo": 2, "name": "pan", "fixed": false, "length": 2, "maxLength": 19, "remark": "主账号", "clazz": "java.lang.String" }
-      - { "domainNo": 3, "name": "processingCode", "fixed": true, "length": 6, "remark": "交易处理码", "clazz": "java.lang.String" }
-      - { "domainNo": 4, "name": "amtTrans", "fixed": true, "length": 12, "remark": "交易金额", "clazz": "java.math.BigDecimal" }
-      - { "domainNo": 6, "name": "amtCdhldrBil", "fixed": true, "length": 12,  "remark": "持卡人扣账金额", "clazz": "java.math.BigDecimal" }
-      - { "domainNo": 7, "name": "transmsnDateTime", "fixed": true, "length": 10, "remark": "交易传输时间", "clazz": "java.time.LocalDateTime", "pattern": "MMddHHmmss" }
-      - { "domainNo": 10, "name": "convRateCdhldrBil", "fixed": true, "length": 8, "remark": "持卡人扣账汇率", "clazz": "java.lang.Integer" }
-      - { "domainNo": 11, "name": "sysTraceAuditNum", "fixed": true, "length": 6, "remark": "系统跟踪号", "clazz": "java.lang.Integer" }
-      - { "domainNo": 12, "name": "timeLocalTrans", "fixed": true, "length": 6, "remark": "受卡方所在地时间", "clazz": "java.time.LocalTime", "pattern": "HHmmss" }
-      - { "domainNo": 13, "name": "dateLocalTrans", "fixed": true, "length": 4, "remark": "受卡方所在地日期", "clazz": "java.time.MonthDay", "pattern": "MMdd" }
-      - { "domainNo": 14, "name": "dateExpr", "fixed": true, "length": 4, "remark": "卡有效期", "clazz": "java.time.YearMonth", "pattern": "yyMM" }
-      - { "domainNo": 15, "name": "dateSettlmt", "fixed": true, "length": 4, "remark": "清算日期", "clazz": "java.time.MonthDay", "pattern": "MMdd" }
-      - { "domainNo": 18, "name": "mchntType", "fixed": true, "length": 4, "remark": "商户类型", "clazz": "java.lang.String" }
-      - { "domainNo": 19, "name": "mchntCntryCode", "fixed": true, "length": 3, "remark": "商户国家代码", "clazz": "java.lang.String" }
-      - { "domainNo": 22, "name": "posEntryModeCode", "fixed": true, "length": 3, "remark": "服务点输入方式码", "clazz": "java.lang.String" }
-      - { "domainNo": 23, "name": "cardSeqId", "fixed": true, "length": 3, "remark": "卡序列号", "clazz": "java.lang.String" }
-      - { "domainNo": 25, "name": "posCondCode", "fixed": true, "length": 2, "remark": "服务点条件码", "clazz": "java.lang.String" }
-      - { "domainNo": 26, "name": "posPinCaptrCode", "fixed": true, "length": 2, "remark": "服务点PIN获取码", "clazz": "java.lang.String" }
-      - { "domainNo": 28, "name": "amtTransFee", "fixed": true, "length": 9, "remark": "交易费", "clazz": "java.lang.String" }
-      - { "domainNo": 32, "name": "acqInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "代理机构标识码", "clazz": "java.lang.String" }
-      - { "domainNo": 33, "name": "fwdInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "发送机构标识码", "clazz": "java.lang.String" }
-      - { "domainNo": 35, "name": "tracK2Data", "fixed": false, "length": 2, "maxLength": 37, "remark": "第二磁道数据", "clazz": "java.lang.String" }
-      - { "domainNo": 36, "name": "tracK3Data", "fixed": false, "length": 3, "maxLength": 104,  "remark": "第三磁道数据", "clazz": "java.lang.String" }
-      - { "domainNo": 37, "name": "retrivlRefNum", "fixed": true, "length": 12, "remark": "检索参考号", "clazz": "java.lang.String" }
-      - { "domainNo": 38, "name": "authrIdResp", "fixed": true, "length": 6, "remark": "授权标识应答码", "clazz": "java.lang.String" }
-      - { "domainNo": 39, "name": "respCode", "fixed": true, "length": 2, "remark": "应答码", "clazz": "java.lang.String" }
-      - { "domainNo": 41, "name": "cardAccptrTermnlId", "fixed": true, "length": 8, "remark": "受卡机终端标识码", "clazz": "java.lang.String" }
-      - { "domainNo": 42, "name": "cardAccptrId", "fixed": true, "length": 15, "remark": "受卡方标识码", "clazz": "java.lang.String" }
-      - { "domainNo": 43, "name": "cardAccptrNameLoc", "fixed": true, "length": 40, "remark": "受卡方名称地址", "clazz": "java.lang.String" }
-      - { "domainNo": 44, "name": "addtnlRespCode", "fixed": false, "length": 2, "maxLength": 25, "remark": "附加响应数据", "clazz": "java.lang.String" }
+      - { "domainNo": 0, "name": "messageType", "fixed": true, "length": 4, "remark": "报文类型", "className": "String" }
+      - { "domainNo": 1, "name": "bitMap", "fixed": false, "length": 16, "remark": "位图", "className": "BitMap", "parseType": "BINARY" }
+      - { "domainNo": 2, "name": "pan", "fixed": false, "length": 2, "maxLength": 19, "remark": "主账号", "className": "String" }
+      - { "domainNo": 3, "name": "processingCode", "fixed": true, "length": 6, "remark": "交易处理码", "className": "String" }
+      - { "domainNo": 4, "name": "amtTrans", "fixed": true, "length": 12, "remark": "交易金额", "className": "BigDecimal" }
+      - { "domainNo": 6, "name": "amtCdhldrBil", "fixed": true, "length": 12,  "remark": "持卡人扣账金额", "className": "BigDecimal" }
+      - { "domainNo": 7, "name": "transmsnDateTime", "fixed": true, "length": 10, "remark": "交易传输时间", "className": "LocalDateTime", "pattern": "MMddHHmmss" }
+      - { "domainNo": 10, "name": "convRateCdhldrBil", "fixed": true, "length": 8, "remark": "持卡人扣账汇率", "className": "Integer" }
+      - { "domainNo": 11, "name": "sysTraceAuditNum", "fixed": true, "length": 6, "remark": "系统跟踪号", "className": "Integer" }
+      - { "domainNo": 12, "name": "timeLocalTrans", "fixed": true, "length": 6, "remark": "受卡方所在地时间", "className": "LocalTime", "pattern": "HHmmss" }
+      - { "domainNo": 13, "name": "dateLocalTrans", "fixed": true, "length": 4, "remark": "受卡方所在地日期", "className": "MonthDay", "pattern": "MMdd" }
+      - { "domainNo": 14, "name": "dateExpr", "fixed": true, "length": 4, "remark": "卡有效期", "className": "java.time.YearMonth", "pattern": "yyMM" }
+      - { "domainNo": 15, "name": "dateSettlmt", "fixed": true, "length": 4, "remark": "清算日期", "className": "MonthDay", "pattern": "MMdd" }
+      - { "domainNo": 18, "name": "mchntType", "fixed": true, "length": 4, "remark": "商户类型", "className": "String" }
+      - { "domainNo": 19, "name": "mchntCntryCode", "fixed": true, "length": 3, "remark": "商户国家代码", "className": "String" }
+      - { "domainNo": 22, "name": "posEntryModeCode", "fixed": true, "length": 3, "remark": "服务点输入方式码", "className": "String" }
+      - { "domainNo": 23, "name": "cardSeqId", "fixed": true, "length": 3, "remark": "卡序列号", "className": "String" }
+      - { "domainNo": 25, "name": "posCondCode", "fixed": true, "length": 2, "remark": "服务点条件码", "className": "String" }
+      - { "domainNo": 26, "name": "posPinCaptrCode", "fixed": true, "length": 2, "remark": "服务点PIN获取码", "className": "String" }
+      - { "domainNo": 28, "name": "amtTransFee", "fixed": true, "length": 9, "remark": "交易费", "className": "String" }
+      - { "domainNo": 32, "name": "acqInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "代理机构标识码", "className": "String" }
+      - { "domainNo": 33, "name": "fwdInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "发送机构标识码", "className": "String" }
+      - { "domainNo": 35, "name": "tracK2Data", "fixed": false, "length": 2, "maxLength": 37, "remark": "第二磁道数据", "className": "String" }
+      - { "domainNo": 36, "name": "tracK3Data", "fixed": false, "length": 3, "maxLength": 104,  "remark": "第三磁道数据", "className": "String" }
+      - { "domainNo": 37, "name": "retrivlRefNum", "fixed": true, "length": 12, "remark": "检索参考号", "className": "String" }
+      - { "domainNo": 38, "name": "authrIdResp", "fixed": true, "length": 6, "remark": "授权标识应答码", "className": "String" }
+      - { "domainNo": 39, "name": "respCode", "fixed": true, "length": 2, "remark": "应答码", "className": "String" }
+      - { "domainNo": 41, "name": "cardAccptrTermnlId", "fixed": true, "length": 8, "remark": "受卡机终端标识码", "className": "String" }
+      - { "domainNo": 42, "name": "cardAccptrId", "fixed": true, "length": 15, "remark": "受卡方标识码", "className": "String" }
+      - { "domainNo": 43, "name": "cardAccptrNameLoc", "fixed": true, "length": 40, "remark": "受卡方名称地址", "className": "String" }
+      - { "domainNo": 44, "name": "addtnlRespCode", "fixed": false, "length": 2, "maxLength": 25, "remark": "附加响应数据", "className": "String" }
       - { "domainNo": 47, "name": "channelAddInfo", "fixed": false, "length": 3, "maxLength": 100, "remark": "渠道附加信息", "existSubdomain": true, "subdomainType": "UV" }
       - { "domainNo": 48, "name": "addtnlDataPrivate", "fixed": false, "length": 3, "maxLength": 400, "remark": "附加数据——私有", "existSubdomain": true, "subdomainType": "UV" }
-      - { "domainNo": 49, "name": "currcyCodeTrans", "fixed": true, "length": 3, "remark": "交易货币代码", "clazz": "java.lang.String" }
-      - { "domainNo": 51, "name": "currcyCodeCdhldrBil", "fixed": true, "length": 3, "remark": "持卡人帐户货币代码", "clazz": "java.lang.String" }
-      - { "domainNo": 52, "name": "pinData", "fixed": true, "length": 8, "remark": "个人标识码数据", "clazz": "[B" }
+      - { "domainNo": 49, "name": "currcyCodeTrans", "fixed": true, "length": 3, "remark": "交易货币代码", "className": "String" }
+      - { "domainNo": 51, "name": "currcyCodeCdhldrBil", "fixed": true, "length": 3, "remark": "持卡人帐户货币代码", "className": "String" }
+      - { "domainNo": 52, "name": "pinData", "fixed": true, "length": 8, "remark": "个人标识码数据", "className": "Bytes" }
       - { "domainNo": 53, "name": "secRelatdCtrlInfo", "fixed": true, "length": 16, "remark": "安全控制信息", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 54, "name": "addtnlAmt", "fixed": false, "length": 3, "maxLength": 40, "remark": "实际余额", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 55, "name": "iccData", "fixed": false, "length": 3, "maxLength": 300, "remark": "IC卡数据域", "existSubdomain": true, "subdomainType": "TLV" }
@@ -59,176 +59,176 @@ alatka.messages:
       - { "domainNo": 61, "name": "chAuthInfo", "fixed": false, "length": 3, "maxLength": 200, "remark": "持卡人身份认证信息", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 62, "name": "switchingData", "fixed": false, "length": 3, "maxLength": 200, "remark": "交换中心数据", "existSubdomain": true, "subdomainType": "UV" }
       - { "domainNo": 63, "name": "finaclNetData", "fixed": false, "length": 3, "maxLength": 512, "remark": "金融网络数据", "existSubdomain": true, "subdomainType": "ULV" }
-      - { "domainNo": 70, "name": "netwkMgmtInfoCode", "fixed": true, "length": 3, "remark": "网络管理信息码", "clazz": "java.lang.String" }
+      - { "domainNo": 70, "name": "netwkMgmtInfoCode", "fixed": true, "length": 3, "remark": "网络管理信息码", "className": "String" }
       - { "domainNo": 90, "name": "origDataElemts", "fixed": true, "length": 42, "remark": "原始数据元", "existSubdomain": true, "subdomainType": "FIXED" }
-      - { "domainNo": 91, "name": "overDraftFlag", "fixed": true, "length": 1, "remark": "自定义域", "clazz": "java.lang.String" }
-      - { "domainNo": 96, "name": "msgSecurityCode", "fixed": true, "length": 8, "remark": "报文安全码", "clazz": "[B" }
-      - { "domainNo": 100, "name": "rcvgInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "接收机构标识码", "clazz": "java.lang.String" }
-      - { "domainNo": 102, "name": "acctId1", "fixed": false, "length": 2, "maxLength": 32, "remark": "帐户标识1", "clazz": "java.lang.String" }
-      - { "domainNo": 103, "name": "acctId2", "fixed": false, "length": 2, "maxLength": 32, "remark": "帐户标识2", "clazz": "java.lang.String" }
+      - { "domainNo": 91, "name": "overDraftFlag", "fixed": true, "length": 1, "remark": "自定义域", "className": "String" }
+      - { "domainNo": 96, "name": "msgSecurityCode", "fixed": true, "length": 8, "remark": "报文安全码", "className": "Bytes" }
+      - { "domainNo": 100, "name": "rcvgInstIdCode", "fixed": false, "length": 2, "maxLength": 11, "remark": "接收机构标识码", "className": "String" }
+      - { "domainNo": 102, "name": "acctId1", "fixed": false, "length": 2, "maxLength": 32, "remark": "帐户标识1", "className": "String" }
+      - { "domainNo": 103, "name": "acctId2", "fixed": false, "length": 2, "maxLength": 32, "remark": "帐户标识2", "className": "String" }
       - { "domainNo": 104, "name": "addtnlData104", "fixed": false, "length": 3, "maxLength": 512, "remark": "业务行业应用信息域", "existSubdomain": true, "subdomainType": "ULV" }
       - { "domainNo": 108, "name": "addReqInfo", "fixed": false, "length": 3, "maxLength": 32, "remark": "附加请求信息", "existSubdomain": true, "subdomainType": "FIXED" }
       - { "domainNo": 117, "name": "addtnlData117", "fixed": false, "length": 3, "maxLength": 256, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
-      - { "domainNo": 121, "name": "nationalSwResved", "fixed": false, "length": 3, "maxLength": 100, "remark": "保留", "clazz": "[B" }
+      - { "domainNo": 121, "name": "nationalSwResved", "fixed": false, "length": 3, "maxLength": 100, "remark": "保留", "className": "Bytes" }
       - { "domainNo": 122, "name": "acqInstResvd", "fixed": false, "length": 3, "maxLength": 50, "remark": "受理方保留", "existSubdomain": true, "subdomainType": "FIXED" }
-      - { "domainNo": 123, "name": "issrInstResvd", "fixed": false, "length": 3, "maxLength": 999, "remark": "发卡方保留", "clazz": "[B" }
+      - { "domainNo": 123, "name": "issrInstResvd", "fixed": false, "length": 3, "maxLength": 999, "remark": "发卡方保留", "className": "Bytes" }
       - { "domainNo": 127, "name": "addtnlData127", "fixed": false, "length": 3, "maxLength": 999, "remark": "附加信息", "existSubdomain": true, "subdomainType": "ULV" }
-      - { "domainNo": 128, "name": "msgAuthnCode", "fixed": true, "length": 8, "remark": "报文鉴别码", "clazz": "java.lang.String" }
+      - { "domainNo": 128, "name": "msgAuthnCode", "fixed": true, "length": 8, "remark": "报文鉴别码", "className": "String" }
     subPayload:
       F53:
-        - { "domainNo": 1, "name": "keyType", "fixed": true, "length": 1, "remark": "重置密钥的类型/PIN格式", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "encryptionMethodUsed", "fixed": true, "length": 1, "remark": "加密算法标志", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 14, "remark": "保留使用", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "keyType", "fixed": true, "length": 1, "remark": "重置密钥的类型/PIN格式", "className": "String" }
+        - { "domainNo": 2, "name": "encryptionMethodUsed", "fixed": true, "length": 1, "remark": "加密算法标志", "className": "String" }
+        - { "domainNo": 3, "name": "reserved", "fixed": true, "length": 14, "remark": "保留使用", "className": "String" }
       F54:
-        - { "domainNo": 1, "name": "accountType1", "fixed": true, "length": 2, "remark": "账户类型", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "balanceType1", "fixed": true, "length": 2, "remark": "余额类型", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "currencyCode1", "fixed": true, "length": 3, "remark": "货币代码", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "name": "balanceCode1", "fixed": true, "length": 1, "remark": "余额符号", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "name": "balance1", "fixed": true, "length": 12, "remark": "余额", "clazz": "java.math.BigDecimal" }
-        - { "domainNo": 6, "name": "accountType2", "fixed": true, "length": 2, "remark": "账户类型", "clazz": "java.lang.String" }
-        - { "domainNo": 7, "name": "balanceType2", "fixed": true, "length": 2, "remark": "余额类型", "clazz": "java.lang.String" }
-        - { "domainNo": 8, "name": "currencyCode2", "fixed": true, "length": 3, "remark": "货币代码", "clazz": "java.lang.String" }
-        - { "domainNo": 9, "name": "balanceCode2", "fixed": true, "length": 1, "remark": "余额符号", "clazz": "java.lang.String" }
-        - { "domainNo": 10, "name": "balance2", "fixed": true, "length": 12, "remark": "余额", "clazz": "java.math.BigDecimal" }
+        - { "domainNo": 1, "name": "accountType1", "fixed": true, "length": 2, "remark": "账户类型", "className": "String" }
+        - { "domainNo": 2, "name": "balanceType1", "fixed": true, "length": 2, "remark": "余额类型", "className": "String" }
+        - { "domainNo": 3, "name": "currencyCode1", "fixed": true, "length": 3, "remark": "货币代码", "className": "String" }
+        - { "domainNo": 4, "name": "balanceCode1", "fixed": true, "length": 1, "remark": "余额符号", "className": "String" }
+        - { "domainNo": 5, "name": "balance1", "fixed": true, "length": 12, "remark": "余额", "className": "BigDecimal" }
+        - { "domainNo": 6, "name": "accountType2", "fixed": true, "length": 2, "remark": "账户类型", "className": "String" }
+        - { "domainNo": 7, "name": "balanceType2", "fixed": true, "length": 2, "remark": "余额类型", "className": "String" }
+        - { "domainNo": 8, "name": "currencyCode2", "fixed": true, "length": 3, "remark": "货币代码", "className": "String" }
+        - { "domainNo": 9, "name": "balanceCode2", "fixed": true, "length": 1, "remark": "余额符号", "className": "String" }
+        - { "domainNo": 10, "name": "balance2", "fixed": true, "length": 12, "remark": "余额", "className": "BigDecimal" }
       F55@TLV:
-        - { "domainNo": 1, "aliasName": "9F26", "name": "crypt", "fixed": true, "length": 8, "remark": "应用密文", "clazz": "[B" }
-        - { "domainNo": 2, "aliasName": "9F27", "name": "cryptInfoData", "fixed": true, "length": 1, "remark": "密文信息数据", "clazz": "[B" }
-        - { "domainNo": 3, "aliasName": "9F10", "name": "issuerAppData", "fixed": false, "maxLength": 32, "remark": "发卡行应用数据", "clazz": "[B" }
-        - { "domainNo": 4, "aliasName": "9F37", "name": "unpredictableNumber", "fixed": true, "length": 4, "remark": "不可预知数", "clazz": "[B" }
-        - { "domainNo": 5, "aliasName": "9F36", "name": "appTransCounter", "fixed": true, "length": 2, "remark": "应用交易计数器", "clazz": "[B" }
-        - { "domainNo": 6, "aliasName": "95", "name": "termVerificationResult", "fixed": true, "length": 5, "remark": "终端验证结果", "clazz": "[B" }
-        - { "domainNo": 7, "aliasName": "9A", "name": "transDate", "fixed": true, "length": 3, "remark": "交易日期", "clazz": "java.time.LocalDate", "pattern": "yyMMdd", "parseType": "BCD" }
-        - { "domainNo": 8, "aliasName": "9C", "name": "transType", "fixed": true, "length": 1, "remark": "交易类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 9, "aliasName": "9F02", "name": "transAmt", "fixed": true, "length": 6, "remark": "授权金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
-        - { "domainNo": 10, "aliasName": "5F2A", "name": "transCurrencyCode", "fixed": true, "length": 2, "remark": "交易货币代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 11, "aliasName": "82", "name": "appInterchangeProfile", "fixed": true, "length": 2, "remark": "应用交互特征", "clazz": "[B" }
-        - { "domainNo": 12, "aliasName": "9F1A", "name": "termCountryCode", "fixed": true, "length": 2, "remark": "终端国家代码", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 13, "aliasName": "9F03", "name": "otherAmt", "fixed": true, "length": 6, "remark": "其它金额", "clazz": "java.math.BigDecimal", "parseType": "BCD" }
-        - { "domainNo": 14, "aliasName": "9F33", "name": "termCap", "fixed": true, "length": 3, "remark": "终端性能", "clazz": "[B" }
-        - { "domainNo": 15, "aliasName": "9F34", "name": "cardholderVerificationMethodResults", "fixed": true, "length": 3, "remark": "持卡人验证方法结果", "clazz": "[B" }
-        - { "domainNo": 16, "aliasName": "9F35", "name": "termType", "fixed": true, "length": 1, "remark": "终端类型", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 17, "aliasName": "9F1E", "name": "interfaceDeviceSerialNumber", "fixed": true, "length": 8, "remark": "接口设备序列号", "clazz": "java.lang.String" }
-        - { "domainNo": 18, "aliasName": "84", "name": "dedicatedFileName", "fixed": false, "maxLength": 16, "remark": "专用文件名称", "clazz": "[B" }
-        - { "domainNo": 19, "aliasName": "9F09", "name": "termAppVersionNumber", "fixed": true, "length": 2, "remark": "应用版本号", "clazz": "[B" }
-        - { "domainNo": 20, "aliasName": "9F41", "name": "transSequenceCounter", "fixed": false, "maxLength": 4, "remark": "交易序列计数器", "clazz": "java.lang.Integer", "parseType": "BCD" }
-        - { "domainNo": 21, "aliasName": "91", "name": "issuerAuthenticationData", "fixed": false, "maxLength": 16, "remark": "发卡行认证数据", "clazz": "[B" }
-        - { "domainNo": 22, "aliasName": "71", "name": "issuerScriptTemplate1", "fixed": false, "maxLength": 128, "remark": "发卡行脚本1", "clazz": "[B" }
-        - { "domainNo": 23, "aliasName": "72", "name": "issuerScriptTemplate2", "fixed": false, "maxLength": 128, "remark": "发卡行脚本2", "clazz": "[B" }
-        - { "domainNo": 24, "aliasName": "DF31", "name": "issuerScriptResults", "fixed": false, "maxLength": 21, "remark": "发卡方脚本结果", "clazz": "[B" }
-        - { "domainNo": 25, "aliasName": "9F74", "name": "issuerAuthorizationCode", "fixed": true, "length": 6, "remark": "电子现金发卡行授权码", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "aliasName": "9F26", "name": "crypt", "fixed": true, "length": 8, "remark": "应用密文", "className": "Bytes" }
+        - { "domainNo": 2, "aliasName": "9F27", "name": "cryptInfoData", "fixed": true, "length": 1, "remark": "密文信息数据", "className": "Bytes" }
+        - { "domainNo": 3, "aliasName": "9F10", "name": "issuerAppData", "fixed": false, "maxLength": 32, "remark": "发卡行应用数据", "className": "Bytes" }
+        - { "domainNo": 4, "aliasName": "9F37", "name": "unpredictableNumber", "fixed": true, "length": 4, "remark": "不可预知数", "className": "Bytes" }
+        - { "domainNo": 5, "aliasName": "9F36", "name": "appTransCounter", "fixed": true, "length": 2, "remark": "应用交易计数器", "className": "Bytes" }
+        - { "domainNo": 6, "aliasName": "95", "name": "termVerificationResult", "fixed": true, "length": 5, "remark": "终端验证结果", "className": "Bytes" }
+        - { "domainNo": 7, "aliasName": "9A", "name": "transDate", "fixed": true, "length": 3, "remark": "交易日期", "className": "LocalDate", "pattern": "yyMMdd", "parseType": "BCD" }
+        - { "domainNo": 8, "aliasName": "9C", "name": "transType", "fixed": true, "length": 1, "remark": "交易类型", "className": "Integer", "parseType": "BCD" }
+        - { "domainNo": 9, "aliasName": "9F02", "name": "transAmt", "fixed": true, "length": 6, "remark": "授权金额", "className": "BigDecimal", "parseType": "BCD" }
+        - { "domainNo": 10, "aliasName": "5F2A", "name": "transCurrencyCode", "fixed": true, "length": 2, "remark": "交易货币代码", "className": "Integer", "parseType": "BCD" }
+        - { "domainNo": 11, "aliasName": "82", "name": "appInterchangeProfile", "fixed": true, "length": 2, "remark": "应用交互特征", "className": "Bytes" }
+        - { "domainNo": 12, "aliasName": "9F1A", "name": "termCountryCode", "fixed": true, "length": 2, "remark": "终端国家代码", "className": "Integer", "parseType": "BCD" }
+        - { "domainNo": 13, "aliasName": "9F03", "name": "otherAmt", "fixed": true, "length": 6, "remark": "其它金额", "className": "BigDecimal", "parseType": "BCD" }
+        - { "domainNo": 14, "aliasName": "9F33", "name": "termCap", "fixed": true, "length": 3, "remark": "终端性能", "className": "Bytes" }
+        - { "domainNo": 15, "aliasName": "9F34", "name": "cardholderVerificationMethodResults", "fixed": true, "length": 3, "remark": "持卡人验证方法结果", "className": "Bytes" }
+        - { "domainNo": 16, "aliasName": "9F35", "name": "termType", "fixed": true, "length": 1, "remark": "终端类型", "className": "Integer", "parseType": "BCD" }
+        - { "domainNo": 17, "aliasName": "9F1E", "name": "interfaceDeviceSerialNumber", "fixed": true, "length": 8, "remark": "接口设备序列号", "className": "String" }
+        - { "domainNo": 18, "aliasName": "84", "name": "dedicatedFileName", "fixed": false, "maxLength": 16, "remark": "专用文件名称", "className": "Bytes" }
+        - { "domainNo": 19, "aliasName": "9F09", "name": "termAppVersionNumber", "fixed": true, "length": 2, "remark": "应用版本号", "className": "Bytes" }
+        - { "domainNo": 20, "aliasName": "9F41", "name": "transSequenceCounter", "fixed": false, "maxLength": 4, "remark": "交易序列计数器", "className": "Integer", "parseType": "BCD" }
+        - { "domainNo": 21, "aliasName": "91", "name": "issuerAuthenticationData", "fixed": false, "maxLength": 16, "remark": "发卡行认证数据", "className": "Bytes" }
+        - { "domainNo": 22, "aliasName": "71", "name": "issuerScriptTemplate1", "fixed": false, "maxLength": 128, "remark": "发卡行脚本1", "className": "Bytes" }
+        - { "domainNo": 23, "aliasName": "72", "name": "issuerScriptTemplate2", "fixed": false, "maxLength": 128, "remark": "发卡行脚本2", "className": "Bytes" }
+        - { "domainNo": 24, "aliasName": "DF31", "name": "issuerScriptResults", "fixed": false, "maxLength": 21, "remark": "发卡方脚本结果", "className": "Bytes" }
+        - { "domainNo": 25, "aliasName": "9F74", "name": "issuerAuthorizationCode", "fixed": true, "length": 6, "remark": "电子现金发卡行授权码", "className": "String" }
       F60:
-        - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 4, "remark": "报文原因码", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 4, "remark": "报文原因码", "className": "String" }
         - { "domainNo": 2, "name": "f60f2", "fixed": true, "length": 11, "remark": "服务点附加信息", "existSubdomain": true, "subdomainType": "FIXED" }
         - { "domainNo": 3, "name": "f60f3", "fixed": true, "length": 15, "remark": "服务点附加信息", "existSubdomain": true, "subdomainType": "FIXED" }
       F60_F2:
-        - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 1, "remark": "账户所有人类型", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f60f2", "fixed": true, "length": 1, "remark": "终端读取能力", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "f60f3", "fixed": true, "length": 1, "remark": "IC卡条件代码", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "name": "f60f4", "fixed": true, "length": 1, "remark": "保留使用", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "name": "f60f5", "fixed": true, "length": 2, "remark": "终端类型", "clazz": "java.lang.String" }
-        - { "domainNo": 6, "name": "f60f6", "fixed": true, "length": 1, "remark": "受理免验密码标志", "clazz": "java.lang.String" }
-        - { "domainNo": 7, "name": "f60f7", "fixed": true, "length": 1, "remark": "IC卡验证可靠性标志", "clazz": "java.lang.String" }
-        - { "domainNo": 8, "name": "f60f8", "fixed": true, "length": 2, "remark": "电子商务标志", "clazz": "java.lang.String" }
-        - { "domainNo": 9, "name": "f60f9", "fixed": true, "length": 1, "remark": "交互方式标志", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f60f1", "fixed": true, "length": 1, "remark": "账户所有人类型", "className": "String" }
+        - { "domainNo": 2, "name": "f60f2", "fixed": true, "length": 1, "remark": "终端读取能力", "className": "String" }
+        - { "domainNo": 3, "name": "f60f3", "fixed": true, "length": 1, "remark": "IC卡条件代码", "className": "String" }
+        - { "domainNo": 4, "name": "f60f4", "fixed": true, "length": 1, "remark": "保留使用", "className": "String" }
+        - { "domainNo": 5, "name": "f60f5", "fixed": true, "length": 2, "remark": "终端类型", "className": "String" }
+        - { "domainNo": 6, "name": "f60f6", "fixed": true, "length": 1, "remark": "受理免验密码标志", "className": "String" }
+        - { "domainNo": 7, "name": "f60f7", "fixed": true, "length": 1, "remark": "IC卡验证可靠性标志", "className": "String" }
+        - { "domainNo": 8, "name": "f60f8", "fixed": true, "length": 2, "remark": "电子商务标志", "className": "String" }
+        - { "domainNo": 9, "name": "f60f9", "fixed": true, "length": 1, "remark": "交互方式标志", "className": "String" }
       F60_F3:
-        - { "domainNo": 1, "name": "f60f11f1", "fixed": true, "length": 2, "remark": "保留使用", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f60f11f2", "fixed": true, "length": 1, "remark": "保留使用", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "f60f11f3", "fixed": true, "length": 3, "remark": "保留使用（第3位为MAC算法标识）", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "name": "f60f11f4", "fixed": true, "length": 9, "remark": "保留使用", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f60f11f1", "fixed": true, "length": 2, "remark": "保留使用", "className": "String" }
+        - { "domainNo": 2, "name": "f60f11f2", "fixed": true, "length": 1, "remark": "保留使用", "className": "String" }
+        - { "domainNo": 3, "name": "f60f11f3", "fixed": true, "length": 3, "remark": "保留使用（第3位为MAC算法标识）", "className": "String" }
+        - { "domainNo": 4, "name": "f60f11f4", "fixed": true, "length": 9, "remark": "保留使用", "className": "String" }
       F62$DA@TLV2:
-        - { "domainNo": 1, "aliasName": "T00", "name": "f104f1", "fixed": false, "maxLength": 6, "remark": "渠道编码", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "aliasName": "T01", "name": "f104f2", "fixed": false, "maxLength": 4, "remark": "账务代码", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "aliasName": "T02", "name": "f104f3", "fixed": false, "maxLength": 32, "remark": "渠道流水号", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "aliasName": "T00", "name": "f104f1", "fixed": false, "maxLength": 6, "remark": "渠道编码", "className": "String" }
+        - { "domainNo": 2, "aliasName": "T01", "name": "f104f2", "fixed": false, "maxLength": 4, "remark": "账务代码", "className": "String" }
+        - { "domainNo": 3, "aliasName": "T02", "name": "f104f3", "fixed": false, "maxLength": 32, "remark": "渠道流水号", "className": "String" }
         - { "domainNo": 4, "aliasName": "T03", "name": "f104f4", "fixed": true, "length": 71, "remark": "反洗钱相关", "existSubdomain": true, "subdomainType": "FIXED" }
-        - { "domainNo": 5, "aliasName": "T94", "name": "f104f5", "fixed": true, "length": 8, "remark": "原始交易信息", "clazz": "java.lang.String" }
+        - { "domainNo": 5, "aliasName": "T94", "name": "f104f5", "fixed": true, "length": 8, "remark": "原始交易信息", "className": "String" }
         - { "domainNo": 6, "aliasName": "T95", "name": "f104f6", "fixed": true, "length": 15, "remark": "第三方支付信息", "existSubdomain": true, "subdomainType": "FIXED" }
-        - { "domainNo": 7, "aliasName": "T96", "name": "f104f7", "fixed": true, "length": 67, "remark": "无卡平台信息", "clazz": "java.lang.String" }
+        - { "domainNo": 7, "aliasName": "T96", "name": "f104f7", "fixed": true, "length": 67, "remark": "无卡平台信息", "className": "String" }
         - { "domainNo": 8, "aliasName": "T97", "name": "f104f8", "fixed": true, "length": 51, "remark": "总帐系统配套会计平台", "existSubdomain": true, "subdomainType": "FIXED" }
-        - { "domainNo": 9, "aliasName": "T98", "name": "f104f9", "fixed": false, "maxLength": 19, "remark": "联盟流水号", "clazz": "java.lang.String" }
-        - { "domainNo": 10, "aliasName": "T99", "name": "f104f10", "fixed": true, "length": 134, "remark": "行内信息", "clazz": "java.lang.String" }
+        - { "domainNo": 9, "aliasName": "T98", "name": "f104f9", "fixed": false, "maxLength": 19, "remark": "联盟流水号", "className": "String" }
+        - { "domainNo": 10, "aliasName": "T99", "name": "f104f10", "fixed": true, "length": 134, "remark": "行内信息", "className": "String" }
       F62$DA_F4:
-        - { "domainNo": 1, "name": "f62f4f1", "fixed": true, "length": 34, "remark": "订单号", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f62f4f2", "fixed": true, "length": 17, "remark": "IP地址和MAC地址", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "f62f4f3", "fixed": true, "length": 8, "remark": "机具终端编号（ATM/POS）", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "name": "f62f4f4", "fixed": true, "length": 12, "remark": "电话交易电话号码", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f62f4f1", "fixed": true, "length": 34, "remark": "订单号", "className": "String" }
+        - { "domainNo": 2, "name": "f62f4f2", "fixed": true, "length": 17, "remark": "IP地址和MAC地址", "className": "String" }
+        - { "domainNo": 3, "name": "f62f4f3", "fixed": true, "length": 8, "remark": "机具终端编号（ATM/POS）", "className": "String" }
+        - { "domainNo": 4, "name": "f62f4f4", "fixed": true, "length": 12, "remark": "电话交易电话号码", "className": "String" }
       F62$DA_F6:
-        - { "domainNo": 1, "name": "f62f6f1", "fixed": true, "length": 1, "remark": "第三方渠道", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f62f6f2", "fixed": true, "length": 14, "remark": "第三方机构号", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f62f6f1", "fixed": true, "length": 1, "remark": "第三方渠道", "className": "String" }
+        - { "domainNo": 2, "name": "f62f6f2", "fixed": true, "length": 14, "remark": "第三方机构号", "className": "String" }
       F62$DA_F7:
-        - { "domainNo": 1, "name": "f62f7f1", "fixed": true, "length": 31, "remark": "无卡平台交易流水号", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f62f7f2", "fixed": true, "length": 20, "remark": "无卡平台清算信息", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "f62f7f3", "fixed": true, "length": 4, "remark": "无卡平台交易类型", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "name": "f62f7f4", "fixed": true, "length": 6, "remark": "业务种类编码", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "name": "f62f7f5", "fixed": true, "length": 1, "remark": "无卡平台商户境内外标识", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f62f7f1", "fixed": true, "length": 31, "remark": "无卡平台交易流水号", "className": "String" }
+        - { "domainNo": 2, "name": "f62f7f2", "fixed": true, "length": 20, "remark": "无卡平台清算信息", "className": "String" }
+        - { "domainNo": 3, "name": "f62f7f3", "fixed": true, "length": 4, "remark": "无卡平台交易类型", "className": "String" }
+        - { "domainNo": 4, "name": "f62f7f4", "fixed": true, "length": 6, "remark": "业务种类编码", "className": "String" }
+        - { "domainNo": 5, "name": "f62f7f5", "fixed": true, "length": 1, "remark": "无卡平台商户境内外标识", "className": "String" }
       F62$DA_F8:
-        - { "domainNo": 1, "name": "f62f8f1", "fixed": true, "length": 1, "remark": "交易性质", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f62f8f2", "fixed": true, "length": 20, "remark": "系统间流水号", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "f62f8f3", "fixed": true, "length": 8, "remark": "交易发起系统日期", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
-        - { "domainNo": 4, "name": "f62f8f4", "fixed": true, "length": 11, "remark": "交易发起系统代码", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "name": "f62f8f5", "fixed": true, "length": 11, "remark": "交易接收系统代码", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f62f8f1", "fixed": true, "length": 1, "remark": "交易性质", "className": "String" }
+        - { "domainNo": 2, "name": "f62f8f2", "fixed": true, "length": 20, "remark": "系统间流水号", "className": "String" }
+        - { "domainNo": 3, "name": "f62f8f3", "fixed": true, "length": 8, "remark": "交易发起系统日期", "className": "LocalDate", "pattern": "yyyyMMdd" }
+        - { "domainNo": 4, "name": "f62f8f4", "fixed": true, "length": 11, "remark": "交易发起系统代码", "className": "String" }
+        - { "domainNo": 5, "name": "f62f8f5", "fixed": true, "length": 11, "remark": "交易接收系统代码", "className": "String" }
       F63$SM:
-        - { "domainNo": 1, "name": "pin", "fixed": true, "length": 16, "remark": "SM4算法加密的PIN数据", "clazz": "[B" }
+        - { "domainNo": 1, "name": "pin", "fixed": true, "length": 16, "remark": "SM4算法加密的PIN数据", "className": "Bytes" }
       F90:
-        - { "domainNo": 1, "name": "messageType", "fixed": true, "length": 4, "remark": "原始交易的报文类型", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "sysTraceAuditNum", "fixed": true, "length": 6, "remark": "原始系统跟踪号", "clazz": "java.lang.Integer" }
-        - { "domainNo": 3, "name": "transmsnDateTime", "fixed": true, "length": 10, "remark": "原始交易传输时间", "clazz": "java.time.LocalDateTime", "pattern": "MMddHHmmss" }
-        - { "domainNo": 4, "name": "acqInstIdCode", "fixed": true, "length": 11, "remark": "代理机构标识码", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "name": "fwdInstIdCode", "fixed": true, "length": 11, "remark": "发送机构标识码", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "messageType", "fixed": true, "length": 4, "remark": "原始交易的报文类型", "className": "String" }
+        - { "domainNo": 2, "name": "sysTraceAuditNum", "fixed": true, "length": 6, "remark": "原始系统跟踪号", "className": "Integer" }
+        - { "domainNo": 3, "name": "transmsnDateTime", "fixed": true, "length": 10, "remark": "原始交易传输时间", "className": "LocalDateTime", "pattern": "MMddHHmmss" }
+        - { "domainNo": 4, "name": "acqInstIdCode", "fixed": true, "length": 11, "remark": "代理机构标识码", "className": "String" }
+        - { "domainNo": 5, "name": "fwdInstIdCode", "fixed": true, "length": 11, "remark": "发送机构标识码", "className": "String" }
       F104$TR@TLV:
-        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": true, "length": 1, "remark": "转账结果", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": true, "length": 1, "remark": "转账结果", "className": "String" }
       F104$PI@TLV:
-        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": false, "maxLength": 10, "remark": "经度信息", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "aliasName": "02", "name": "f104f2", "fixed": false, "maxLength": 10, "remark": "纬度信息", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "aliasName": "05", "name": "f104f3", "fixed": false, "maxLength": 50, "remark": "终端序列号", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "aliasName": "06", "name": "f104f4", "fixed": false, "maxLength": 10, "remark": "加密随机因子", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "aliasName": "07", "name": "f104f5", "fixed": true, "length": 8, "remark": "硬件序列号密文数据", "clazz": "[B" }
-        - { "domainNo": 6, "aliasName": "08", "name": "f104f6", "fixed": true, "length": 8, "remark": "应用程序版本号", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": false, "maxLength": 10, "remark": "经度信息", "className": "String" }
+        - { "domainNo": 2, "aliasName": "02", "name": "f104f2", "fixed": false, "maxLength": 10, "remark": "纬度信息", "className": "String" }
+        - { "domainNo": 3, "aliasName": "05", "name": "f104f3", "fixed": false, "maxLength": 50, "remark": "终端序列号", "className": "String" }
+        - { "domainNo": 4, "aliasName": "06", "name": "f104f4", "fixed": false, "maxLength": 10, "remark": "加密随机因子", "className": "String" }
+        - { "domainNo": 5, "aliasName": "07", "name": "f104f5", "fixed": true, "length": 8, "remark": "硬件序列号密文数据", "className": "Bytes" }
+        - { "domainNo": 6, "aliasName": "08", "name": "f104f6", "fixed": true, "length": 8, "remark": "应用程序版本号", "className": "String" }
       F104$CD@TLV:
-        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": true, "length": 2, "remark": "IP版本号", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "aliasName": "02", "name": "f104f2", "fixed": false, "maxLength": 39, "remark": "客户端IP地址", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "aliasName": "03", "name": "f104f3", "fixed": true, "length": 17, "remark": "MAC地址", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "aliasName": "04", "name": "f104f4", "fixed": true, "length": 40, "remark": "持卡人设备ID", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "aliasName": "05", "name": "f104f5", "fixed": true, "length": 20, "remark": "持卡人设备SIM卡号码", "clazz": "java.lang.String" }
-        - { "domainNo": 6, "aliasName": "06", "name": "f104f6", "fixed": true, "length": 32, "remark": "LBS信息", "clazz": "java.lang.String" }
-        - { "domainNo": 7, "aliasName": "07", "name": "f104f7", "fixed": true, "length": 2, "remark": "持卡人设备SIM卡数量", "clazz": "java.lang.String" }
-        - { "domainNo": 8, "aliasName": "08", "name": "f104f8", "fixed": true, "length": 2, "remark": "持卡人设备类型", "clazz": "java.lang.String" }
-        - { "domainNo": 9, "aliasName": "09", "name": "f104f9", "fixed": true, "length": 64, "remark": "持卡人设备型号", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": true, "length": 2, "remark": "IP版本号", "className": "String" }
+        - { "domainNo": 2, "aliasName": "02", "name": "f104f2", "fixed": false, "maxLength": 39, "remark": "客户端IP地址", "className": "String" }
+        - { "domainNo": 3, "aliasName": "03", "name": "f104f3", "fixed": true, "length": 17, "remark": "MAC地址", "className": "String" }
+        - { "domainNo": 4, "aliasName": "04", "name": "f104f4", "fixed": true, "length": 40, "remark": "持卡人设备ID", "className": "String" }
+        - { "domainNo": 5, "aliasName": "05", "name": "f104f5", "fixed": true, "length": 20, "remark": "持卡人设备SIM卡号码", "className": "String" }
+        - { "domainNo": 6, "aliasName": "06", "name": "f104f6", "fixed": true, "length": 32, "remark": "LBS信息", "className": "String" }
+        - { "domainNo": 7, "aliasName": "07", "name": "f104f7", "fixed": true, "length": 2, "remark": "持卡人设备SIM卡数量", "className": "String" }
+        - { "domainNo": 8, "aliasName": "08", "name": "f104f8", "fixed": true, "length": 2, "remark": "持卡人设备类型", "className": "String" }
+        - { "domainNo": 9, "aliasName": "09", "name": "f104f9", "fixed": true, "length": 64, "remark": "持卡人设备型号", "className": "String" }
       F104$EM@TLV:
-        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": false, "maxLength": 40, "remark": "二级商户名称", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "aliasName": "02", "name": "f104f2", "fixed": true, "length": 4, "remark": "二级商户类别", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "aliasName": "03", "name": "f104f3", "fixed": false, "maxLength": 50, "remark": "二级商户编码", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "aliasName": "04", "name": "f104f4", "fixed": false, "maxLength": 40, "remark": "交易地址（或网络地址）", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "aliasName": "05", "name": "f104f5", "fixed": false, "maxLength": 40, "remark": "商品订单号", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": false, "maxLength": 40, "remark": "二级商户名称", "className": "String" }
+        - { "domainNo": 2, "aliasName": "02", "name": "f104f2", "fixed": true, "length": 4, "remark": "二级商户类别", "className": "String" }
+        - { "domainNo": 3, "aliasName": "03", "name": "f104f3", "fixed": false, "maxLength": 50, "remark": "二级商户编码", "className": "String" }
+        - { "domainNo": 4, "aliasName": "04", "name": "f104f4", "fixed": false, "maxLength": 40, "remark": "交易地址（或网络地址）", "className": "String" }
+        - { "domainNo": 5, "aliasName": "05", "name": "f104f5", "fixed": false, "maxLength": 40, "remark": "商品订单号", "className": "String" }
       F104$SI@TLV:
-        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": false, "maxLength": 19, "remark": "发送方账号", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "aliasName": "02", "name": "f104f2", "fixed": true, "length": 30, "remark": "发送方名称", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "aliasName": "03", "name": "f104f3", "fixed": true, "length": 8, "remark": "发送方生日", "clazz": "java.time.LocalDate", "pattern": "yyyyMMdd" }
-        - { "domainNo": 4, "aliasName": "04", "name": "f104f4", "fixed": true, "length": 1, "remark": "发送方性别", "clazz": "java.lang.String" }
-        - { "domainNo": 5, "aliasName": "05", "name": "f104f5", "fixed": true, "length": 3, "remark": "发送方所属国籍", "clazz": "java.lang.String" }
-        - { "domainNo": 6, "aliasName": "06", "name": "f104f6", "fixed": true, "length": 3, "remark": "发送方常住地所在的国家", "clazz": "java.lang.String" }
-        - { "domainNo": 7, "aliasName": "07", "name": "f104f7", "fixed": false, "maxLength": 40, "remark": "发送方常住地所在的城市", "clazz": "java.lang.String" }
-        - { "domainNo": 8, "aliasName": "08", "name": "f104f8", "fixed": false, "maxLength": 80, "remark": "发送方常住街道地址", "clazz": "java.lang.String" }
-        - { "domainNo": 9, "aliasName": "09", "name": "f104f9", "fixed": true, "length": 1, "remark": "发送方和接收方是否为同一人标识", "clazz": "java.lang.String" }
-        - { "domainNo": 10, "aliasName": "10", "name": "f104f10", "fixed": true, "length": 1, "remark": "汇款资金来源", "clazz": "java.lang.String" }
-        - { "domainNo": 11, "aliasName": "11", "name": "f104f11", "fixed": false, "maxLength": 50, "remark": "附加信息（仅境外）", "clazz": "java.lang.String" }
-        - { "domainNo": 12, "aliasName": "12", "name": "f104f12", "fixed": false, "maxLength": 50, "remark": "多语言附言（仅境外）", "clazz": "java.lang.String" }
-        - { "domainNo": 13, "aliasName": "13", "name": "f104f13", "fixed": false, "maxLength": 90, "remark": "发送方名称（扩展）", "clazz": "java.lang.String" }
-        - { "domainNo": 14, "aliasName": "14", "name": "f104f14", "fixed": false, "maxLength": 40, "remark": "发起发起机构中文简称", "clazz": "java.lang.String" }
-        - { "domainNo": 15, "aliasName": "15", "name": "f104f15", "fixed": false, "maxLength": 32, "remark": "发送方账户号", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "aliasName": "01", "name": "f104f1", "fixed": false, "maxLength": 19, "remark": "发送方账号", "className": "String" }
+        - { "domainNo": 2, "aliasName": "02", "name": "f104f2", "fixed": true, "length": 30, "remark": "发送方名称", "className": "String" }
+        - { "domainNo": 3, "aliasName": "03", "name": "f104f3", "fixed": true, "length": 8, "remark": "发送方生日", "className": "LocalDate", "pattern": "yyyyMMdd" }
+        - { "domainNo": 4, "aliasName": "04", "name": "f104f4", "fixed": true, "length": 1, "remark": "发送方性别", "className": "String" }
+        - { "domainNo": 5, "aliasName": "05", "name": "f104f5", "fixed": true, "length": 3, "remark": "发送方所属国籍", "className": "String" }
+        - { "domainNo": 6, "aliasName": "06", "name": "f104f6", "fixed": true, "length": 3, "remark": "发送方常住地所在的国家", "className": "String" }
+        - { "domainNo": 7, "aliasName": "07", "name": "f104f7", "fixed": false, "maxLength": 40, "remark": "发送方常住地所在的城市", "className": "String" }
+        - { "domainNo": 8, "aliasName": "08", "name": "f104f8", "fixed": false, "maxLength": 80, "remark": "发送方常住街道地址", "className": "String" }
+        - { "domainNo": 9, "aliasName": "09", "name": "f104f9", "fixed": true, "length": 1, "remark": "发送方和接收方是否为同一人标识", "className": "String" }
+        - { "domainNo": 10, "aliasName": "10", "name": "f104f10", "fixed": true, "length": 1, "remark": "汇款资金来源", "className": "String" }
+        - { "domainNo": 11, "aliasName": "11", "name": "f104f11", "fixed": false, "maxLength": 50, "remark": "附加信息（仅境外）", "className": "String" }
+        - { "domainNo": 12, "aliasName": "12", "name": "f104f12", "fixed": false, "maxLength": 50, "remark": "多语言附言（仅境外）", "className": "String" }
+        - { "domainNo": 13, "aliasName": "13", "name": "f104f13", "fixed": false, "maxLength": 90, "remark": "发送方名称（扩展）", "className": "String" }
+        - { "domainNo": 14, "aliasName": "14", "name": "f104f14", "fixed": false, "maxLength": 40, "remark": "发起发起机构中文简称", "className": "String" }
+        - { "domainNo": 15, "aliasName": "15", "name": "f104f15", "fixed": false, "maxLength": 32, "remark": "发送方账户号", "className": "String" }
       F108:
-        - { "domainNo": 1, "name": "f108f1", "fixed": true, "length": 1, "remark": "交易密码验证选项", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f108f2", "fixed": true, "length": 1, "remark": "联机退货不强制匹配原始交易选项", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "f108f3", "fixed": true, "length": 1, "remark": "验证持卡人姓名选项", "clazz": "java.lang.String" }
-        - { "domainNo": 4, "name": "f108f4", "fixed": true, "length": 1, "remark": "保留域", "clazz": "[B" }
-        - { "domainNo": 5, "name": "f108f5", "fixed": true, "length": 1, "remark": "渠道标志", "clazz": "java.lang.String" }
-        - { "domainNo": 6, "name": "f108f6", "fixed": true, "length": 2, "remark": "“借贷合一交换平台”用法标志", "clazz": "java.lang.String" }
-        - { "domainNo": 7, "name": "f108f7", "fixed": true, "length": 1, "remark": "“借贷合一交换平台”渠道标志", "clazz": "java.lang.String" }
-        - { "domainNo": 8, "name": "f108f8", "fixed": true, "length": 1, "remark": "密码校验规则选项", "clazz": "java.lang.String" }
-        - { "domainNo": 9, "name": "f108f9", "fixed": true, "length": 1, "remark": "替换账单交易描述标识", "clazz": "java.lang.String" }
-        - { "domainNo": 10, "name": "f108f10", "fixed": true, "length": 2, "remark": "独立密钥索引值", "clazz": "java.lang.String" }
-        - { "domainNo": 11, "name": "f108f11", "fixed": true, "length": 1, "remark": "强制授权通过", "clazz": "java.lang.String" }
-        - { "domainNo": 12, "name": "f108f12", "fixed": true, "length": 4, "remark": "XML无卡快捷交易交易类型", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f108f1", "fixed": true, "length": 1, "remark": "交易密码验证选项", "className": "String" }
+        - { "domainNo": 2, "name": "f108f2", "fixed": true, "length": 1, "remark": "联机退货不强制匹配原始交易选项", "className": "String" }
+        - { "domainNo": 3, "name": "f108f3", "fixed": true, "length": 1, "remark": "验证持卡人姓名选项", "className": "String" }
+        - { "domainNo": 4, "name": "f108f4", "fixed": true, "length": 1, "remark": "保留域", "className": "[B" }
+        - { "domainNo": 5, "name": "f108f5", "fixed": true, "length": 1, "remark": "渠道标志", "className": "String" }
+        - { "domainNo": 6, "name": "f108f6", "fixed": true, "length": 2, "remark": "“借贷合一交换平台”用法标志", "className": "String" }
+        - { "domainNo": 7, "name": "f108f7", "fixed": true, "length": 1, "remark": "“借贷合一交换平台”渠道标志", "className": "String" }
+        - { "domainNo": 8, "name": "f108f8", "fixed": true, "length": 1, "remark": "密码校验规则选项", "className": "String" }
+        - { "domainNo": 9, "name": "f108f9", "fixed": true, "length": 1, "remark": "替换账单交易描述标识", "className": "String" }
+        - { "domainNo": 10, "name": "f108f10", "fixed": true, "length": 2, "remark": "独立密钥索引值", "className": "String" }
+        - { "domainNo": 11, "name": "f108f11", "fixed": true, "length": 1, "remark": "强制授权通过", "className": "String" }
+        - { "domainNo": 12, "name": "f108f12", "fixed": true, "length": 4, "remark": "XML无卡快捷交易交易类型", "className": "String" }
       F122:
-        - { "domainNo": 1, "name": "f122f1", "fixed": true, "length": 6, "remark": "银行网点号", "clazz": "java.lang.String" }
-        - { "domainNo": 2, "name": "f122f2", "fixed": true, "length": 6, "remark": "操作员号", "clazz": "java.lang.String" }
-        - { "domainNo": 3, "name": "f122f3", "fixed": true, "length": 30, "remark": "持卡人姓名", "clazz": "java.lang.String" }
+        - { "domainNo": 1, "name": "f122f1", "fixed": true, "length": 6, "remark": "银行网点号", "className": "String" }
+        - { "domainNo": 2, "name": "f122f2", "fixed": true, "length": 6, "remark": "操作员号", "className": "String" }
+        - { "domainNo": 3, "name": "f122f3", "fixed": true, "length": 30, "remark": "持卡人姓名", "className": "String" }

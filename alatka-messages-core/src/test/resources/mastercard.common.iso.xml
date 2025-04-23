@@ -5,7 +5,7 @@
     <message type="iso" group="mastercard" code="common" remark="master 8583报文">
         <payload>
             <field domainNo="0" name="messageType" fixed="true" length="4" remark="报文类型" clazz="java.lang.String" parseType="EBCDIC"/>
-            <field domainNo="1" name="bitMap" fixed="false" length="16" remark="位图" clazz="java.util.HashMap" parseType="BINARY"/>
+            <field domainNo="1" name="bitMap" fixed="false" length="16" remark="位图" clazz="BitMap" parseType="BINARY"/>
             <field domainNo="2" name="pan" fixed="false" length="2" maxLength="19" remark="主账号" clazz="java.lang.String" parseType="EBCDIC"/>
             <field domainNo="3" name="processingCode" fixed="true" length="6" remark="交易处理码" clazz="java.lang.String" parseType="EBCDIC"/>
             <field domainNo="4" name="amtTrans" fixed="true" length="12" remark="交易金额" clazz="java.math.BigDecimal" parseType="EBCDIC"/>

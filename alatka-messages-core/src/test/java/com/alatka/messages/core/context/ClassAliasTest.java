@@ -10,7 +10,7 @@ public class ClassAliasTest {
         ClassAlias[] values = ClassAlias.values();
         String[] array = {"BitMap", "LocalDateTime", "LocalDate", "LocalTime",
                 "Date", "YearMonth", "MonthDay", "Bytes", "Integer", "BigDecimal", "BigInteger",
-                "Long", "String", "Boolean", "Subdomain"};
+                "Long", "String", "Boolean", "List", "MessageHolder", "UsageSubdomain"};
         Assertions.assertEquals(array.length, values.length);
         for (int i = 0; i < array.length; i++) {
             Assertions.assertEquals(array[i], values[i].name());
