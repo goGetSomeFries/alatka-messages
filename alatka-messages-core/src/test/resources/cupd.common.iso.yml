@@ -7,7 +7,7 @@ alatka.messages:
     header:
       - { "domainNo": 1, "name": "headerLength", "fixed": true, "length": 1, "remark": "报文头长度", "className": "Integer", "parseType": "BINARY" }
       - { "domainNo": 2, "name": "version", "fixed": true, "length": 1, "remark": "头标识和版本号", "className": "String", "parseType": "BINARY" }
-      - { "domainNo": 3, "name": "messageLength", "fixed": true, "length": 4, "remark": "报文长度", "clazz": "Integer" }
+      - { "domainNo": 3, "name": "messageLength", "fixed": true, "length": 4, "remark": "报文长度", "className": "Integer" }
       - { "domainNo": 4, "name": "destinationId", "fixed": true, "length": 11, "remark": "目的ID", "className": "String" }
       - { "domainNo": 5, "name": "sourceId", "fixed": true, "length": 11, "remark": "源ID", "className": "String" }
       - { "domainNo": 6, "name": "messageStatus", "fixed": true, "length": 3, "remark": "保留使用", "className": "Bytes" }
@@ -26,7 +26,7 @@ alatka.messages:
       - { "domainNo": 11, "name": "sysTraceAuditNum", "fixed": true, "length": 6, "remark": "系统跟踪号", "className": "Integer" }
       - { "domainNo": 12, "name": "timeLocalTrans", "fixed": true, "length": 6, "remark": "受卡方所在地时间", "className": "LocalTime", "pattern": "HHmmss" }
       - { "domainNo": 13, "name": "dateLocalTrans", "fixed": true, "length": 4, "remark": "受卡方所在地日期", "className": "MonthDay", "pattern": "MMdd" }
-      - { "domainNo": 14, "name": "dateExpr", "fixed": true, "length": 4, "remark": "卡有效期", "className": "java.time.YearMonth", "pattern": "yyMM" }
+      - { "domainNo": 14, "name": "dateExpr", "fixed": true, "length": 4, "remark": "卡有效期", "className": "YearMonth", "pattern": "yyMM" }
       - { "domainNo": 15, "name": "dateSettlmt", "fixed": true, "length": 4, "remark": "清算日期", "className": "MonthDay", "pattern": "MMdd" }
       - { "domainNo": 18, "name": "mchntType", "fixed": true, "length": 4, "remark": "商户类型", "className": "String" }
       - { "domainNo": 19, "name": "mchntCntryCode", "fixed": true, "length": 3, "remark": "商户国家代码", "className": "String" }
@@ -219,7 +219,7 @@ alatka.messages:
         - { "domainNo": 1, "name": "f108f1", "fixed": true, "length": 1, "remark": "交易密码验证选项", "className": "String" }
         - { "domainNo": 2, "name": "f108f2", "fixed": true, "length": 1, "remark": "联机退货不强制匹配原始交易选项", "className": "String" }
         - { "domainNo": 3, "name": "f108f3", "fixed": true, "length": 1, "remark": "验证持卡人姓名选项", "className": "String" }
-        - { "domainNo": 4, "name": "f108f4", "fixed": true, "length": 1, "remark": "保留域", "className": "[B" }
+        - { "domainNo": 4, "name": "f108f4", "fixed": true, "length": 1, "remark": "保留域", "className": "Bytes" }
         - { "domainNo": 5, "name": "f108f5", "fixed": true, "length": 1, "remark": "渠道标志", "className": "String" }
         - { "domainNo": 6, "name": "f108f6", "fixed": true, "length": 2, "remark": "“借贷合一交换平台”用法标志", "className": "String" }
         - { "domainNo": 7, "name": "f108f7", "fixed": true, "length": 1, "remark": "“借贷合一交换平台”渠道标志", "className": "String" }

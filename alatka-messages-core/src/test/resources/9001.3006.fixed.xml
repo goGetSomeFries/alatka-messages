@@ -4,60 +4,61 @@
                  xsi:schemaLocation="http://messages.alatka.com alatka-messages.xsd">
     <message type="fixed" group="9001" code="3006" remark="明细查询">
         <request>
-            <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="String"/>
+            <field domainNo="1" name="trxType" length="4" remark="交易代码" className="String"/>
             <field domainNo="2" name="retCode" length="6" remark="响应码" className="String"/>
-            <field domainNo="3" name="bnkNbr" length="4" remark="银行代号" className="java.lang.String"/>
-            <field domainNo="4" name="source" length="2" remark="交易来源" clazz="java.lang.String"/>
-            <field domainNo="5" name="brnNo" length="6" remark="网点代号" clazz="java.lang.String"/>
-            <field domainNo="6" name="opeNo" length="6" remark="操作员号" clazz="java.lang.String"/>
-            <field domainNo="7" name="seqNo" length="6" remark="流水号" clazz="Integer"/>
-            <field domainNo="8" name="cardNbr" length="19" remark="卡号" clazz="java.lang.String"/>
-            <field domainNo="9" name="tranYM" length="4" remark="账单年月" clazz="YearMonth" pattern="yyMM"/>
-            <field domainNo="10" name="option" length="1" remark="币种选项" clazz="java.lang.String"/>
-            <field domainNo="11" name="rtnInd" length="1" remark="翻页标志" clazz="java.lang.String"/>
-            <field domainNo="12" name="valDate" length="8" remark="入账日期" clazz="java.time.LocalDate" pattern="yyyyMMdd"/>
-            <field domainNo="13" name="purDate" length="8" remark="记录日期" clazz="LocalDate" pattern="yyyyMMdd"/>
-            <field domainNo="14" name="purTime" length="8" remark="消费时间" clazz="LocalTime" pattern="HHmmssSS"/>
-            <field domainNo="15" name="tranNo" length="6" remark="交易流水号" clazz="java.lang.Integer"/>
-            <field domainNo="16" name="pinFlag" length="1" remark="是否检查密码标志" clazz="java.lang.String"/>
-            <field domainNo="17" name="pin" length="8" remark="密码" clazz="[B"/>
-            <field domainNo="18" name="enqFlag" length="1" remark="查询条件" clazz="java.lang.String"/>
-            <field domainNo="19" name="orderFlag" length="1" remark="显示顺序标志" clazz="java.lang.String"/>
+            <field domainNo="3" name="bnkNbr" length="4" remark="银行代号" className="String"/>
+            <field domainNo="4" name="source" length="2" remark="交易来源" className="String"/>
+            <field domainNo="5" name="brnNo" length="6" remark="网点代号" className="String"/>
+            <field domainNo="6" name="opeNo" length="6" remark="操作员号" className="String"/>
+            <field domainNo="7" name="seqNo" length="6" remark="流水号" className="Integer"/>
+            <field domainNo="8" name="cardNbr" length="19" remark="卡号" className="String"/>
+            <field domainNo="9" name="tranYM" length="4" remark="账单年月" className="YearMonth" pattern="yyMM"/>
+            <field domainNo="10" name="option" length="1" remark="币种选项" className="String"/>
+            <field domainNo="11" name="rtnInd" length="1" remark="翻页标志" className="String"/>
+            <field domainNo="12" name="valDate" length="8" remark="入账日期" className="LocalDate" pattern="yyyyMMdd"/>
+            <field domainNo="13" name="purDate" length="8" remark="记录日期" className="LocalDate" pattern="yyyyMMdd"/>
+            <field domainNo="14" name="purTime" length="8" remark="消费时间" className="LocalTime" pattern="HHmmssSS"/>
+            <field domainNo="15" name="tranNo" length="6" remark="交易流水号" className="Integer"/>
+            <field domainNo="16" name="pinFlag" length="1" remark="是否检查密码标志" className="String"/>
+            <field domainNo="17" name="pin" length="8" remark="密码" className="Bytes"/>
+            <field domainNo="18" name="enqFlag" length="1" remark="查询条件" className="String"/>
+            <field domainNo="19" name="orderFlag" length="1" remark="显示顺序标志" className="String"/>
         </request>
         <response>
-            <field domainNo="1" name="trxType" length="4" remark="交易代码" clazz="java.lang.String"/>
-            <field domainNo="2" name="retCode" length="6" remark="响应码" clazz="java.lang.String"/>
-            <field domainNo="3" name="bnkNbr" length="4" remark="银行代号" clazz="java.lang.String"/>
-            <field domainNo="4" name="source" length="2" remark="交易来源" clazz="java.lang.String"/>
-            <field domainNo="5" name="brnNo" length="6" remark="网点代号" clazz="java.lang.String"/>
-            <field domainNo="6" name="opeNo" length="6" remark="操作员号" clazz="java.lang.String"/>
-            <field domainNo="7" name="seqNo" length="6" remark="流水号" clazz="java.lang.Integer"/>
-            <field domainNo="8" name="cardNbr" length="19" remark="卡号" clazz="java.lang.String"/>
-            <field domainNo="9" name="tranYM" length="4" remark="账单年月" clazz="YearMonth" pattern="yyMM"/>
-            <field domainNo="10" name="option" length="1" remark="币种选项" clazz="java.lang.String"/>
-            <field domainNo="11" name="counts" length="2" remark="本次返回交易条数" clazz="java.lang.Integer"/>
-            <field domainNo="12" name="rtnInd" length="1" remark="翻页标志" clazz="java.lang.String"/>
-            <field domainNo="13" name="elements" fixed="false" length="141" remark="集合" pageSizeName="counts" existSubdomain="true" subdomainType="PAGE"/>
+            <field domainNo="1" name="trxType" length="4" remark="交易代码" className="String"/>
+            <field domainNo="2" name="retCode" length="6" remark="响应码" className="String"/>
+            <field domainNo="3" name="bnkNbr" length="4" remark="银行代号" className="String"/>
+            <field domainNo="4" name="source" length="2" remark="交易来源" className="String"/>
+            <field domainNo="5" name="brnNo" length="6" remark="网点代号" className="String"/>
+            <field domainNo="6" name="opeNo" length="6" remark="操作员号" className="String"/>
+            <field domainNo="7" name="seqNo" length="6" remark="流水号" className="Integer"/>
+            <field domainNo="8" name="cardNbr" length="19" remark="卡号" className="String"/>
+            <field domainNo="9" name="tranYM" length="4" remark="账单年月" className="YearMonth" pattern="yyMM"/>
+            <field domainNo="10" name="option" length="1" remark="币种选项" className="String"/>
+            <field domainNo="11" name="counts" length="2" remark="本次返回交易条数" className="Integer"/>
+            <field domainNo="12" name="rtnInd" length="1" remark="翻页标志" className="String"/>
+            <field domainNo="13" name="elements" fixed="false" length="141" remark="集合" pageSizeName="counts"
+                   existSubdomain="true" subdomainType="PAGE"/>
         </response>
         <subPayload domain="F13">
-            <field domainNo="1" name="monthNbr" length="3" remark="月份序号" clazz="java.lang.Integer"/>
-            <field domainNo="2" name="valDate" length="8" remark="入账日期" clazz="java.time.LocalDate" pattern="yyyyMMdd"/>
-            <field domainNo="3" name="purDate" length="8" remark="记录日期" clazz="java.time.LocalDate" pattern="yyyyMMdd"/>
-            <field domainNo="4" name="purTime" length="8" remark="消费时间" clazz="java.time.LocalTime" pattern="HHmmssSS"/>
-            <field domainNo="5" name="tranNo" length="6" remark="交易流水号" clazz="java.lang.Integer"/>
-            <field domainNo="6" name="tranType" length="4" remark="交易类型" clazz="java.lang.String"/>
-            <field domainNo="7" name="amount" length="12" remark="交易金额" clazz="java.math.BigDecimal"/>
-            <field domainNo="8" name="amountFl" length="1" remark="交易金额符号" clazz="java.lang.String"/>
-            <field domainNo="9" name="authCode" length="6" remark="授权代码" clazz="java.lang.String"/>
-            <field domainNo="10" name="desline1" length="42" remark="交易描述1" clazz="java.lang.String"/>
-            <field domainNo="11" name="desline2" length="25" remark="交易描述2" clazz="java.lang.String"/>
-            <field domainNo="12" name="cardEnd" length="4" remark="卡号后四位" clazz="java.lang.String"/>
-            <field domainNo="13" name="currNum" length="3" remark="货币代码" clazz="java.lang.String"/>
-            <field domainNo="14" name="mpFlag" length="1" remark="保留字段1" clazz="java.lang.String"/>
-            <field domainNo="15" name="purDate1" length="4" remark="消费日期" clazz="java.time.MonthDay" pattern="MMdd"/>
-            <field domainNo="16" name="revInd" length="1" remark="撤销冲正标志" clazz="java.lang.String"/>
-            <field domainNo="17" name="mcc" length="4" remark="商户类别" clazz="java.lang.String"/>
-            <field domainNo="18" name="facePayFlag" length="1" remark="人脸支付标志" clazz="java.lang.String"/>
+            <field domainNo="1" name="monthNbr" length="3" remark="月份序号" className="Integer"/>
+            <field domainNo="2" name="valDate" length="8" remark="入账日期" className="LocalDate" pattern="yyyyMMdd"/>
+            <field domainNo="3" name="purDate" length="8" remark="记录日期" className="LocalDate" pattern="yyyyMMdd"/>
+            <field domainNo="4" name="purTime" length="8" remark="消费时间" className="LocalTime" pattern="HHmmssSS"/>
+            <field domainNo="5" name="tranNo" length="6" remark="交易流水号" className="Integer"/>
+            <field domainNo="6" name="tranType" length="4" remark="交易类型" className="String"/>
+            <field domainNo="7" name="amount" length="12" remark="交易金额" className="BigDecimal"/>
+            <field domainNo="8" name="amountFl" length="1" remark="交易金额符号" className="String"/>
+            <field domainNo="9" name="authCode" length="6" remark="授权代码" className="String"/>
+            <field domainNo="10" name="desline1" length="42" remark="交易描述1" className="String"/>
+            <field domainNo="11" name="desline2" length="25" remark="交易描述2" className="String"/>
+            <field domainNo="12" name="cardEnd" length="4" remark="卡号后四位" className="String"/>
+            <field domainNo="13" name="currNum" length="3" remark="货币代码" className="String"/>
+            <field domainNo="14" name="mpFlag" length="1" remark="保留字段1" className="String"/>
+            <field domainNo="15" name="purDate1" length="4" remark="消费日期" className="MonthDay" pattern="MMdd"/>
+            <field domainNo="16" name="revInd" length="1" remark="撤销冲正标志" className="String"/>
+            <field domainNo="17" name="mcc" length="4" remark="商户类别" className="String"/>
+            <field domainNo="18" name="facePayFlag" length="1" remark="人脸支付标志" className="String"/>
         </subPayload>
     </message>
 </alatka-messages>
