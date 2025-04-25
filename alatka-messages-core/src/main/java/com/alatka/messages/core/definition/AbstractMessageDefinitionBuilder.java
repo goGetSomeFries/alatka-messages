@@ -58,7 +58,7 @@ public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinit
                 .collect(Collectors.toMap(this::buildTemplateKey,
                         definition -> {
                             List<S> list = this.buildFieldDefinitions(definition, mapping.get(definition));
-                            list.forEach(this::postBuildFieldDefinition);
+                            list.forEach(fieldDefinition -> this.postBuildFieldDefinition(definition, fieldDefinition));
                             return list;
                         }));
 
@@ -98,7 +98,7 @@ public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinit
         // 如果模板对象存在，使用该对象，减少FieldDefinition对象创建
         return this.buildFieldDefinitions(definition, source).stream()
                 .filter(fieldDefinition -> fieldDefinition.getStatus() != FieldDefinition.Status.CLOSE)
-                .peek(this::postBuildFieldDefinition)
+                .peek(fieldDefinition -> this.postBuildFieldDefinition(definition, fieldDefinition))
                 .map(fieldDefinition -> map.getOrDefault(fieldDefinition, fieldDefinition))
                 .map(FieldDefinition.class::cast)
                 .collect(Collectors.toList());
@@ -131,9 +131,25 @@ public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinit
      *
      * @param definition {@link FieldDefinition}
      */
-    private void postBuildFieldDefinition(FieldDefinition definition) {
-        if (definition.getExistSubdomain()) {
-            return;
+    private void postBuildFieldDefinition(MessageDefinition messageDefinition, FieldDefinition definition) {
+        if (definition.getExistSubdomain() && definition.getClassName() == null) {
+            switch (definition.getSubdomainType()) {
+                case PAGE:
+                    definition.setClassName(ClassAlias.List.name());
+                    break;
+                case ULV:
+                case ULV2:
+                case ULV3:
+                case UV:
+                case UVAS:
+                    definition.setClassName(ClassAlias.UsageSubdomain.name());
+                    break;
+                default:
+                    List<MessageDefinition> definitions =
+                            MessageDefinitionContext.getInstance().childrenMessageDefinitions(messageDefinition, definition);
+                    String className = definitions.isEmpty() ? ClassAlias.MessageHolder.name() : definitions.get(0).getHolder().getName();
+                    definition.setClassName(className);
+            }
         }
         if (definition.getClassType() == null) {
             String className = definition.getClassName();

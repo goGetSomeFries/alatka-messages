@@ -2,8 +2,6 @@ package com.alatka.messages.core.context;
 
 import com.alatka.messages.core.holder.Bitmap;
 
-import java.util.HashMap;
-
 public enum ClassAlias {
     BitMap(Bitmap.class),
     LocalDateTime(java.time.LocalDateTime.class),
@@ -19,7 +17,9 @@ public enum ClassAlias {
     Long(java.lang.Long.class),
     String(java.lang.String.class),
     Boolean(java.lang.Boolean.class),
-    Subdomain(null);
+    List(java.util.ArrayList.class),
+    MessageHolder(com.alatka.messages.core.holder.MessageHolder.class),
+    UsageSubdomain(com.alatka.messages.core.holder.UsageSubdomain.class);
 
     private final Class<?> clazz;
 

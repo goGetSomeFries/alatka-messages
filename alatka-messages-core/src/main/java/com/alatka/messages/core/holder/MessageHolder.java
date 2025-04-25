@@ -129,6 +129,10 @@ public class MessageHolder {
     }
 
     public void put(FieldDefinition definition, Object value) {
+        if (value != null && value.getClass() != definition.getClassType()) {
+            throw new IllegalArgumentException(definition + "类型不匹配，" +
+                    "value=" + value + " <" + value.getClass().getName() + ">，配置类型: " + definition.getClassType().getName());
+        }
         this.valueMap.put(definition, value);
     }
 
