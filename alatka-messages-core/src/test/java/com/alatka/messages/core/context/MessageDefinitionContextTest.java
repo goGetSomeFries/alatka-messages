@@ -13,4 +13,12 @@ public class MessageDefinitionContextTest {
         MessageDefinitionContext instance2 = MessageDefinitionContext.getInstance();
         Assertions.assertSame(instance1, instance2);
     }
+
+    @Test
+    @DisplayName("messageDefinition(Class<?>)")
+    void test02() {
+        MessageDefinitionContext instance = MessageDefinitionContext.getInstance();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> instance.messageDefinition(Object.class), "class: 'Object' is not annotation by '@MessageMeta'");
+    }
+
 }

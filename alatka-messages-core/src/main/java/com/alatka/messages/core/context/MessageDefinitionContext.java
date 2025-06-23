@@ -33,7 +33,7 @@ public class MessageDefinitionContext {
 
     public MessageDefinition messageDefinition(Class<?> clazz) {
         if (!clazz.isAnnotationPresent(MessageMeta.class)) {
-            throw new RuntimeException("class: '" + clazz + "' is not annotation by 'MessageMeta'");
+            throw new IllegalArgumentException("class: '" + clazz + "' is not annotation by '@MessageMeta'");
         }
         MessageMeta annotation = clazz.getAnnotation(MessageMeta.class);
         MessageDefinition definition = new MessageDefinition();
