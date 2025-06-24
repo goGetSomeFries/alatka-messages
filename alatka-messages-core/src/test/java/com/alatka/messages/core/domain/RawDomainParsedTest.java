@@ -1,6 +1,7 @@
 package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
+import com.alatka.messages.core.context.FixedFieldDefinition;
 import com.alatka.messages.core.context.IsoFieldDefinition;
 import com.alatka.messages.core.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
@@ -105,5 +106,29 @@ public class RawDomainParsedTest {
         AtomicInteger counter = new AtomicInteger(0);
         byte[] unpack = domainParsed.unpack(bytes, fieldDefinition, counter);
         Assertions.assertEquals(BytesUtil.bytesToHex(unpack), "F0F51E2E3E4E5E");
+    }
+
+    @Test
+    @DisplayName("unpack() 不定长域 L!=EBCDIC/ASCII/BINARY")
+    void test09() {
+        IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
+        fieldDefinition.setLenParseType(FieldDefinition.ParseType.BCD);
+        fieldDefinition.setFixed(false);
+        fieldDefinition.setLength(1);
+        fieldDefinition.setMaxLength(5);
+        byte[] bytes = BytesUtil.hexToBytes("051E2E3E4E5E");
+        AtomicInteger counter = new AtomicInteger(0);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> domainParsed.unpack(bytes, fieldDefinition, counter), "不支持status=RAW");
+    }
+
+    @Test
+    @DisplayName("unpack() 不定长域 Fixed")
+    void test10() {
+        FixedFieldDefinition fieldDefinition = new FixedFieldDefinition();
+        fieldDefinition.setFixed(false);
+        fieldDefinition.setLength(1);
+        byte[] bytes = BytesUtil.hexToBytes("051E2E3E4E5E");
+        AtomicInteger counter = new AtomicInteger(0);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> domainParsed.unpack(bytes, fieldDefinition, counter), "不支持status=RAW");
     }
 }
