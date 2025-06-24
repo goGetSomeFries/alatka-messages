@@ -30,5 +30,8 @@ public class IsoYamlMessageDefinitionBuilderTest {
         builder.postBuildFieldDefinition(null, definition);
         Assertions.assertEquals(0, definition.getLength());
         Assertions.assertEquals(0, definition.getMaxLength());
+
+        definition.setMaxLength(5);
+        Assertions.assertEquals(5, definition.getMaxLength());
     }
 }

@@ -64,4 +64,10 @@ public class FixedAnnotationMessageDefinitionBuilderTest {
         Assertions.assertEquals("counts", definition.getPageSizeName());
 
     }
+
+    @Test
+    @DisplayName("refresh()")
+    void test04() {
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> builder.refresh(), "注解不支持动态加载");
+    }
 }
