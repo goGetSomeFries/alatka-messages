@@ -2,8 +2,7 @@ package com.alatka.messages.admin.model.field;
 
 import com.alatka.messages.admin.model.PageReqMessage;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Schema(description = "报文域分页请求实体")
 public class FieldPageReq extends PageReqMessage {
