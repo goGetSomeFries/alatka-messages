@@ -15,7 +15,7 @@ import com.alatka.messages.core.context.MessageDefinition;
 public class IsoXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder<IsoFieldDefinition> {
 
     public IsoXmlMessageDefinitionBuilder() {
-        this("");
+        this(DEFAULT_CLASSPATH);
     }
 
     public IsoXmlMessageDefinitionBuilder(String classpath) {

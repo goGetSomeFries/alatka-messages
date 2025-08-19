@@ -15,7 +15,7 @@ import com.alatka.messages.core.context.MessageDefinition;
 public class FixedXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder<FixedFieldDefinition> {
 
     public FixedXmlMessageDefinitionBuilder() {
-        this("");
+        this(DEFAULT_CLASSPATH);
     }
 
     public FixedXmlMessageDefinitionBuilder(String classpath) {

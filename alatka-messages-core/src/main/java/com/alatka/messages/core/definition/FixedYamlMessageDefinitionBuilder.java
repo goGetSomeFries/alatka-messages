@@ -15,7 +15,7 @@ import com.alatka.messages.core.context.MessageDefinition;
 public class FixedYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilder<FixedFieldDefinition> {
 
     public FixedYamlMessageDefinitionBuilder() {
-        this("");
+        this(DEFAULT_CLASSPATH);
     }
 
     public FixedYamlMessageDefinitionBuilder(String classpath) {

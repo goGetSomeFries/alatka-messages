@@ -15,7 +15,7 @@ public class MessageVisaXmlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoXmlMessageDefinitionBuilder().build();
+        new IsoXmlMessageDefinitionBuilder("messages").build();
     }
 
     private void doTest(String hex) {

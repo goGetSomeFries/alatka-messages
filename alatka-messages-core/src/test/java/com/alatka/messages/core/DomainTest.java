@@ -21,8 +21,8 @@ public class DomainTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoYamlMessageDefinitionBuilder().build();
-        new FixedYamlMessageDefinitionBuilder().build();
+        new IsoYamlMessageDefinitionBuilder("messages").build();
+        new FixedYamlMessageDefinitionBuilder("messages").build();
     }
 
     private void doTest(Object instance, String key) {

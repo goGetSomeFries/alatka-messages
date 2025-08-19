@@ -14,7 +14,7 @@ public class MessageJcbXmlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoXmlMessageDefinitionBuilder().build();
+        new IsoXmlMessageDefinitionBuilder("messages").build();
     }
 
     private void doTest(String hex) {

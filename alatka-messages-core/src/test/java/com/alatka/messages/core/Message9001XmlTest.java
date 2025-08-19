@@ -13,7 +13,7 @@ public class Message9001XmlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new FixedXmlMessageDefinitionBuilder().build();
+        new FixedXmlMessageDefinitionBuilder("messages/").build();
     }
 
     private void doTest(String hex, String key) {
