@@ -3,10 +3,10 @@ package com.alatka.messages.admin.model.subfield;
 import com.alatka.messages.admin.model.field.FieldReq;
 import com.alatka.messages.admin.model.message.MessageReq;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Schema(description = "报文子域请求实体")

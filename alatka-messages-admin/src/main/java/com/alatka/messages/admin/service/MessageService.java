@@ -3,6 +3,7 @@ package com.alatka.messages.admin.service;
 import com.alatka.messages.admin.AutoConfiguration;
 import com.alatka.messages.admin.entity.MessageDefinition;
 import com.alatka.messages.admin.repository.MessageRepository;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

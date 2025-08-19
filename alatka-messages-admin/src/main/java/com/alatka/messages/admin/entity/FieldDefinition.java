@@ -1,6 +1,6 @@
 package com.alatka.messages.admin.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "ALK_FIELD_DEFINITION")

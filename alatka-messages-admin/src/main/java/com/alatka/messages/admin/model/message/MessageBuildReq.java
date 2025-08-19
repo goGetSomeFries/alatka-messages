@@ -1,8 +1,8 @@
 package com.alatka.messages.admin.model.message;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Schema(description = "报文部署请求实体")
