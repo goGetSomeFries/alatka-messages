@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
  */
 public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> extends AbstractMessageDefinitionBuilder<FileWrapper, S> {
 
+    protected static final String DEFAULT_CLASSPATH = "META-INF/messages";
+
     private final String classpath;
 
     public FileMessageDefinitionBuilder(String classpath) {

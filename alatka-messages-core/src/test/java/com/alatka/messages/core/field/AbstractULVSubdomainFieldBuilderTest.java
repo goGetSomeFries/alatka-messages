@@ -22,7 +22,7 @@ public class AbstractULVSubdomainFieldBuilderTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoYamlMessageDefinitionBuilder("").build();
+        new IsoYamlMessageDefinitionBuilder("messages/").build();
     }
 
     @Test

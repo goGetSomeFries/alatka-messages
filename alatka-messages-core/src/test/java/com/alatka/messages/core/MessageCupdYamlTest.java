@@ -11,7 +11,7 @@ public class MessageCupdYamlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoYamlMessageDefinitionBuilder().build();
+        new IsoYamlMessageDefinitionBuilder("messages").build();
     }
 
     private void doTest(String hex, String key) {

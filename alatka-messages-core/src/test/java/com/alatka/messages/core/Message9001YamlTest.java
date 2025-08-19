@@ -13,7 +13,7 @@ public class Message9001YamlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new FixedYamlMessageDefinitionBuilder().build();
+        new FixedYamlMessageDefinitionBuilder("messages/").build();
     }
 
     private void doTest(String hex, String key) {

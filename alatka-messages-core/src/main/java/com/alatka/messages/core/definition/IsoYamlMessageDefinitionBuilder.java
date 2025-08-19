@@ -15,7 +15,7 @@ import com.alatka.messages.core.context.MessageDefinition;
 public class IsoYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilder<IsoFieldDefinition> {
 
     public IsoYamlMessageDefinitionBuilder() {
-        this("");
+        this(DEFAULT_CLASSPATH);
     }
 
     public IsoYamlMessageDefinitionBuilder(String classpath) {

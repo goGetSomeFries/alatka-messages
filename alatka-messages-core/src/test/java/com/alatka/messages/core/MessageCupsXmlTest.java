@@ -10,7 +10,7 @@ public class MessageCupsXmlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoXmlMessageDefinitionBuilder().build();
+        new IsoXmlMessageDefinitionBuilder("messages/").build();
     }
 
     private void doTest(String hex, String key) {

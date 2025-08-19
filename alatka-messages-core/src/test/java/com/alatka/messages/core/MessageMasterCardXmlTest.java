@@ -11,7 +11,7 @@ public class MessageMasterCardXmlTest {
 
     @BeforeAll
     public static void beforeAll() {
-        new IsoXmlMessageDefinitionBuilder().build();
+        new IsoXmlMessageDefinitionBuilder("messages").build();
     }
 
     @Test
