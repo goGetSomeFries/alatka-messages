@@ -2,9 +2,9 @@ package com.alatka.messages.core.definition;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
-import com.alatka.messages.core.support.FileWrapper;
 import com.alatka.messages.core.holder.MessageHolder;
 import com.alatka.messages.core.support.Constant;
+import com.alatka.messages.core.support.FileWrapper;
 import com.alatka.messages.core.util.ClassUtil;
 import com.alatka.messages.core.util.XmlUtil;
 
@@ -78,7 +78,6 @@ public abstract class XmlMessageDefinitionBuilder<S extends FieldDefinition> ext
         definition.setKind(kind);
         definition.setCharset(message.get("charset") == null ? Constant.DEFAULT_CHARSET : message.get("charset").toString());
         definition.setRemark(message.get("remark").toString());
-        definition.setHolder(message.get("clazz") == null ? MessageHolder.class : ClassUtil.forName(message.get("clazz").toString()));
         definition.setEnabled(message.get("enabled") == null || (boolean) message.get("enabled"));
 
         if (subPayload != null) {
@@ -86,10 +85,14 @@ public abstract class XmlMessageDefinitionBuilder<S extends FieldDefinition> ext
             definition.setUsage(subPayload.get("usage") == null ? "" : subPayload.get("usage").toString());
             definition.setDomainType(subPayload.get("domainType") == null ? MessageDefinition.DomainType.NONE :
                     MessageDefinition.DomainType.valueOf(subPayload.get("domainType").toString()));
+            String clazz = this.getValueWithMap(subPayload, "clazz");
+            definition.setHolder(clazz == null ? MessageHolder.class : ClassUtil.forName(clazz));
         } else {
             definition.setDomain("");
             definition.setUsage("");
             definition.setDomainType(MessageDefinition.DomainType.NONE);
+            Map<String, String> clazzMap = this.getValueWithMap(message, kind.name());
+            definition.setHolder(clazzMap.get("clazz") == null ? MessageHolder.class : ClassUtil.forName(clazzMap.get("clazz")));
         }
 
         return definition;
