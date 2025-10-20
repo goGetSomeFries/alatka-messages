@@ -18,12 +18,6 @@ public class MessagePageReq extends PageReqMessage {
     @Schema(description = "种类")
     private String kind;
 
-    @Schema(description = "子域名称")
-    private String domain;
-
-    @Schema(description = "8583报文子域usage")
-    private String usage;
-
     @Schema(description = "描述")
     private String remark;
 
@@ -60,22 +54,6 @@ public class MessagePageReq extends PageReqMessage {
 
     public void setKind(String kind) {
         this.kind = kind;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public String getUsage() {
-        return usage;
-    }
-
-    public void setUsage(String usage) {
-        this.usage = usage;
     }
 
     public String getRemark() {

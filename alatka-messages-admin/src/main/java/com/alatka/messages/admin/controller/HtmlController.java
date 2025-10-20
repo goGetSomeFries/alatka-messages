@@ -17,4 +17,9 @@ public class HtmlController {
         return "message";
     }
 
+    @Operation(summary = "报文域")
+    @GetMapping("/field")
+    public String field() {
+        return "field";
+    }
 }

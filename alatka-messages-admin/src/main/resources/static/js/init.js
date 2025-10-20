@@ -1,4 +1,12 @@
 function initTable() {
+    $("#resetButton").click(function () {
+        $("#searchForm")[0].reset();
+    })
+
+    $("#searchButton").click(function () {
+        refresh();
+    })
+
     $("#dataTable").bootstrapTable({
         onLoadError: function (status) {
             showErrorToast("接口请求失败, http code: " + status)
@@ -17,6 +25,11 @@ function initTable() {
                     searchData[key] = value;
                 }
             });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            for (let [key, value] of urlParams) {
+                searchData[key] = value;
+            }
 
             return {
                 pageNo: params.offset / params.limit + 1,
@@ -42,14 +55,6 @@ function initTable() {
         }
     })
 }
-
-$("#resetButton").click(function () {
-    $("#searchForm")[0].reset();
-})
-
-$("#searchButton").click(function () {
-    refresh();
-})
 
 function showEditModal(url, created) {
     if (created) {

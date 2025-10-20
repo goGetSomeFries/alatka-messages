@@ -12,7 +12,7 @@
 <div class="container mt-4">
     <div class="card mb-3">
         <div class="card-header bg-light d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">报文查询</h5>
+            <h5 class="mb-0">报文域查询</h5>
             <button class="btn btn-sm btn-outline-secondary"
                     type="button"
                     data-bs-toggle="collapse"
@@ -24,32 +24,6 @@
         </div>
         <div class="card-body collapse show" id="cardCollapse">
             <form id="searchForm" class="row g-3">
-                <div class="col-md-3">
-                    <label for="type" class="form-label">类型</label>
-                    <select class="form-select" id="type" name="type">
-                        <option value="">全部</option>
-                        <option value="iso">8583</option>
-                        <option value="fixed">固定格式</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="group" class="form-label">分组</label>
-                    <input type="text" class="form-control" id="group" name="group" placeholder="输入分组">
-                </div>
-                <div class="col-md-3">
-                    <label for="code" class="form-label">交易码</label>
-                    <input type="text" class="form-control" id="code" name="code" placeholder="输入交易码">
-                </div>
-                <div class="col-md-3">
-                    <label for="kind" class="form-label">种类</label>
-                    <select class="form-select" id="kind" name="kind">
-                        <option value="">全部</option>
-                        <option value="header">header</option>
-                        <option value="payload">payload</option>
-                        <option value="request">request</option>
-                        <option value="response">response</option>
-                    </select>
-                </div>
                 <div class="col-md-3">
                     <label for="remark" class="form-label">描述</label>
                     <input type="text" class="form-control" id="remark" name="remark" placeholder="输入描述">
@@ -75,15 +49,15 @@
     </div>
     <div class="col-12 text-end mb-3">
         <button type="button" class="btn btn-sm btn-outline-info" id="addButton"
-                onclick="showEditModal('/message/create', true)">
+                onclick="showEditModal('/field/create', true)">
             <i class="bi bi-plus-lg"></i> 新增
         </button>
         <button type="button" class="btn btn-sm btn-outline-warning" id="editButton"
-                onclick="showEditModal('/message/update', false)">
+                onclick="showEditModal('/field/update', false)">
             <i class="bi bi-pencil-square"></i> 更新
         </button>
         <button type="button" class="btn btn-sm btn-danger" id="deleteButton"
-                onclick="showDeleteModal('/message/delete')">
+                onclick="showDeleteModal('/field/delete')">
             <i class="bi bi-trash"></i> 删除
         </button>
     </div>
@@ -91,9 +65,9 @@
     <table id="dataTable"
            data-toggle="table"
            data-method="get"
-           data-url="/message/page"
-           data-sort-name="id"
-           data-sort-order="desc"
+           data-url="/field/page"
+           data-sort-name="domainNo"
+           data-sort-order="asc"
            data-striped="true"
            data-pagination="true"
            data-pagination-loop="false"
@@ -103,15 +77,22 @@
         <thead>
         <tr>
             <th data-radio="true"></th>
-            <th data-field="id">ID</th>
-            <th data-field="type" data-formatter="typeFormatter">类型</th>
-            <th data-field="group">分组</th>
-            <th data-field="code" data-sortable="true">交易码</th>
-            <th data-field="kind" data-sortable="true">种类</th>
-            <th data-field="holder">实体类</th>
-            <th data-field="charset">编码</th>
+            <th data-field="id" data-sortable="true">ID</th>
+            <th data-field="domainNo">序号</th>
+            <th data-field="name">名称</th>
+            <th data-field="fixed" data-formatter="fixedFormatter">是否定长</th>
+            <th data-field="length">字节长度</th>
+            <th data-field="maxLength">最大长度</th>
+            <th data-field="className">java类型</th>
+            <th data-field="pattern">域值格式</th>
+            <th data-field="pageSizeName">分页记录数字段名称</th>
+            <th data-field="parseType">域解析类型</th>
+            <th data-field="lenParseType">变长域解析类型</th>
+            <th data-field="existSubdomain">是否存在子域</th>
+            <th data-field="subdomainType">子域类型</th>
+            <th data-field="nonSubdomainException">未配置子域异常</th>
             <th data-field="remark">描述</th>
-            <th data-field="enabled" data-formatter="enabledFormatter">是否可用</th>
+            <th data-field="status" data-formatter="enabledFormatter">是否可用</th>
         </tr>
         </thead>
     </table>
@@ -121,7 +102,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">编辑报文</h5>
+                <h5 class="modal-title">编辑报文域</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -202,7 +183,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">删除报文</h5>
+                <h5 class="modal-title">删除报文域</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -232,6 +213,15 @@
         return keyValuePairs[arg];
     }
 
+    function fixedFormatter(arg) {
+        if (arg === true) {
+            return "定长";
+        }
+        if (arg === false) {
+            return "变长";
+        }
+        return "/";
+    }
 </script>
 </body>
 </html>
