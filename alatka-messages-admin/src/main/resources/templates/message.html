@@ -223,6 +223,14 @@
 <script th:src="@{/js/init.js}"></script>
 <script>
     initTable();
+    initTableRowEvent();
+
+    function initTableRowEvent() {
+        $('#dataTable').on('dbl-click-row.bs.table', function (event, row, $element) {
+            const messageId = row.id;
+            window.location.href = `field?messageId=${messageId}`;
+        });
+    }
 
     function typeFormatter(arg) {
         const keyValuePairs = {};

@@ -80,18 +80,18 @@
             <th data-field="id" data-sortable="true">ID</th>
             <th data-field="domainNo">序号</th>
             <th data-field="name">名称</th>
+            <th data-field="remark">描述</th>
+            <th data-field="className">java类型</th>
             <th data-field="fixed" data-formatter="fixedFormatter">是否定长</th>
             <th data-field="length">字节长度</th>
             <th data-field="maxLength">最大长度</th>
-            <th data-field="className">java类型</th>
-            <th data-field="pattern">域值格式</th>
-            <th data-field="pageSizeName">分页记录数字段名称</th>
             <th data-field="parseType">域解析类型</th>
-            <th data-field="lenParseType">变长域解析类型</th>
+            <th data-field="lenParseType">变长域长度域解析类型</th>
             <th data-field="existSubdomain">是否存在子域</th>
             <th data-field="subdomainType">子域类型</th>
             <th data-field="nonSubdomainException">未配置子域异常</th>
-            <th data-field="remark">描述</th>
+            <th data-field="pattern">域值格式</th>
+            <th data-field="pageSizeName">分页记录数字段名称</th>
             <th data-field="status" data-formatter="enabledFormatter">是否可用</th>
         </tr>
         </thead>
@@ -99,7 +99,7 @@
 </div>
 
 <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">编辑报文域</h5>
@@ -109,64 +109,82 @@
                 <form id="editForm">
                     <input type="hidden" id="editId" name="id">
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="editType" class="form-label">类型</label>
-                            <select class="form-select" id="editType" name="type" required>
-                                <option value="iso">8583</option>
-                                <option value="fixed">固定格式</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="editGroup" class="form-label">分组</label>
-                            <input type="text" class="form-control" id="editGroup" name="group" placeholder="输入分组"
+                        <div class="col-md-2">
+                            <label for="editDomainNo" class="form-label">序号</label>
+                            <input type="number" class="form-control" id="editDomainNo" name="domainNo" value="0"
                                    required>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="editCode" class="form-label">交易码</label>
-                            <input type="text" class="form-control" id="editCode" name="code" placeholder="输入交易码"
-                                   required>
+                        <div class="col-md-3">
+                            <label for="editName" class="form-label">名称</label>
+                            <input type="text" class="form-control" id="editName" name="name" required>
                         </div>
-                        <div class="col-md-6">
-                            <label for="editKind" class="form-label">种类</label>
-                            <select class="form-select" id="editKind" name="kind" required>
-                                <option value="header">header</option>
-                                <option value="payload">payload</option>
-                                <option value="request">request</option>
-                                <option value="response">response</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <label for="editRemark" class="form-label">描述</label>
-                            <input type="text" class="form-control" id="editRemark" name="remark"
-                                   placeholder="输入描述" required>
+                            <input type="text" class="form-control" id="editRemark" name="remark" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="editClassName" class="form-label">java类型</label>
+                            <input type="text" class="form-control" id="editClassName" name="className" required>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-12">
-                            <label for="editHolder" class="form-label">实体类</label>
-                            <input type="text" class="form-control" id="editHolder" name="holder"
-                                   placeholder="输入实体类" value="com.alatka.messages.core.holder.MessageHolder">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="editCharset" class="form-label">编码</label>
-                            <select class="form-select" id="editCharset" name="charset">
-                                <option value="UTF-8">UTF-8</option>
-                                <option value="GB18030">GB18030</option>
-                                <option value="GBK">GBK</option>
+                        <div class="col-md-2">
+                            <label for="editFixed" class="form-label">是否定长</label>
+                            <select class="form-select" id="editFixed" name="fixed" required>
                             </select>
                         </div>
-                        <div class="col-md-6">
-                            <label for="editEnabled" class="form-label">是否可用</label>
-                            <select class="form-select" id="editEnabled" name="enabled" required>
-                                <option value="">全部</option>
-                                <option value="true" selected>正常</option>
-                                <option value="false">禁用</option>
+                        <div class="col-md-2">
+                            <label for="editLength" class="form-label">字节长度</label>
+                            <input type="number" class="form-control" id="editLength" name="length" value="0"
+                                   required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="editMaxLength" class="form-label">最大长度</label>
+                            <input type="number" class="form-control" id="editMaxLength" name="maxLength" value="0"
+                                   required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="editParseType" class="form-label">域解析类型</label>
+                            <select class="form-select" id="editParseType" name="parseType" required>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="editLenParseType" class="form-label">变长域长度域解析类型</label>
+                            <select class="form-select" id="editLenParseType" name="lenParseType" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="editExistSubdomain" class="form-label">是否存在子域</label>
+                            <select class="form-select" id="editExistSubdomain" name="existSubdomain" required>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="editSubdomainType" class="form-label">子域类型</label>
+                            <select class="form-select" id="editSubdomainType" name="subdomainType"
+                                    required>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="editNonSubdomainException" class="form-label">未配置子域异常</label>
+                            <select class="form-select" id="editNonSubdomainException" name="nonSubdomainException"
+                                    required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="editPattern" class="form-label">域值格式</label>
+                            <input type="text" class="form-control" id="editPattern" name="pattern" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="editPageSizeName" class="form-label">分页记录数字段名称</label>
+                            <input type="text" class="form-control" id="editPageSizeName" name="pageSizeName" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="editStatus" class="form-label">状态</label>
+                            <select class="form-select" id="editStatus" name="status" required>
                             </select>
                         </div>
                     </div>
@@ -204,14 +222,6 @@
 <script th:src="@{/js/init.js}"></script>
 <script>
     initTable();
-
-    function typeFormatter(arg) {
-        const keyValuePairs = {};
-        $('select#type option').each(function () {
-            keyValuePairs[$(this).val()] = $(this).text();
-        });
-        return keyValuePairs[arg];
-    }
 
     function fixedFormatter(arg) {
         if (arg === true) {

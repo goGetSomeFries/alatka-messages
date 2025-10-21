@@ -7,7 +7,7 @@ function initTable() {
         refresh();
     })
 
-    $("#dataTable").bootstrapTable({
+    return $("#dataTable").bootstrapTable({
         onLoadError: function (status) {
             showErrorToast("接口请求失败, http code: " + status)
         },
@@ -59,6 +59,7 @@ function initTable() {
 function showEditModal(url, created) {
     if (created) {
         $('#editForm')[0]?.reset();
+        $('#editForm input[type="hidden"]').val('');
     } else {
         const selection = $('#dataTable').bootstrapTable('getSelections');
         if (selection.length !== 1) {
