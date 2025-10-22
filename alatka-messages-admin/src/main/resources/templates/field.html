@@ -23,6 +23,35 @@
             </button>
         </div>
         <div class="card-body collapse show" id="cardCollapse">
+            <div id="displayContainer" class="row mb-3">
+                <div class="col-md-2">
+                    <label for="type" class="form-label">类型</label>
+                    <select class="form-select" id="type" name="type" disabled>
+                        <option value="iso">8583</option>
+                        <option value="fixed">固定格式</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="group" class="form-label">分组</label>
+                    <input type="text" class="form-control" id="group" name="group" disabled>
+                </div>
+                <div class="col-md-2">
+                    <label for="code" class="form-label">交易码</label>
+                    <input type="text" class="form-control" id="code" name="code" disabled>
+                </div>
+                <div class="col-md-2">
+                    <label for="kind" class="form-label">种类</label>
+                    <input type="text" class="form-control" id="kind" name="kind" disabled>
+                </div>
+                <div class="col-md-2">
+                    <label for="domain" class="form-label">子域名称</label>
+                    <input type="text" class="form-control" id="domain" name="domain" disabled>
+                </div>
+                <div class="col-md-2">
+                    <label for="usage" class="form-label">子域用法</label>
+                    <input type="text" class="form-control" id="usage" name="usage" disabled>
+                </div>
+            </div>
             <form id="searchForm" class="row g-3">
                 <div class="col-md-3">
                     <label for="remark" class="form-label">描述</label>
@@ -72,12 +101,15 @@
            data-pagination="true"
            data-pagination-loop="false"
            data-side-pagination="server"
+           data-detail-view="true"
+           data-detail-filter="detailFilter"
+           data-detail-formatter="detailFormatter"
            data-click-to-select="true"
            data-maintain-selected="true">
         <thead>
         <tr>
             <th data-radio="true"></th>
-            <th data-field="id" data-sortable="true">ID</th>
+            <th data-field="id" data-visible="false">ID</th>
             <th data-field="domainNo">序号</th>
             <th data-field="name">名称</th>
             <th data-field="remark">描述</th>
@@ -87,12 +119,9 @@
             <th data-field="maxLength">最大长度</th>
             <th data-field="parseType">域解析类型</th>
             <th data-field="lenParseType">变长域长度域解析类型</th>
-            <th data-field="existSubdomain">是否存在子域</th>
-            <th data-field="subdomainType">子域类型</th>
-            <th data-field="nonSubdomainException">未配置子域异常</th>
             <th data-field="pattern">域值格式</th>
-            <th data-field="pageSizeName">分页记录数字段名称</th>
-            <th data-field="status" data-formatter="enabledFormatter">是否可用</th>
+            <th data-field="pageSizeName">分页记录数字段</th>
+            <th data-field="status">状态</th>
         </tr>
         </thead>
     </table>
@@ -107,6 +136,7 @@
             </div>
             <div class="modal-body">
                 <form id="editForm">
+                    <input type="hidden" id="editMessageId" name="messageId">
                     <input type="hidden" id="editId" name="id">
                     <div class="row mb-3">
                         <div class="col-md-2">
@@ -124,13 +154,15 @@
                         </div>
                         <div class="col-md-3">
                             <label for="editClassName" class="form-label">java类型</label>
-                            <input type="text" class="form-control" id="editClassName" name="className" required>
+                            <input type="text" class="form-control" id="editClassName" name="className">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-2">
                             <label for="editFixed" class="form-label">是否定长</label>
                             <select class="form-select" id="editFixed" name="fixed" required>
+                                <option value="true">定长</option>
+                                <option value="false">变长</option>
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -146,11 +178,21 @@
                         <div class="col-md-3">
                             <label for="editParseType" class="form-label">域解析类型</label>
                             <select class="form-select" id="editParseType" name="parseType" required>
+                                <option value="ASCII" selected>ASCII</option>
+                                <option value="BINARY">BINARY</option>
+                                <option value="BCD">BCD</option>
+                                <option value="EBCDIC">EBCDIC</option>
+                                <option value="NONE">NONE</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label for="editLenParseType" class="form-label">变长域长度域解析类型</label>
                             <select class="form-select" id="editLenParseType" name="lenParseType" required>
+                                <option value="ASCII">ASCII</option>
+                                <option value="BINARY">BINARY</option>
+                                <option value="BCD">BCD</option>
+                                <option value="EBCDIC">EBCDIC</option>
+                                <option value="NONE" selected>NONE</option>
                             </select>
                         </div>
                     </div>
@@ -158,33 +200,52 @@
                         <div class="col-md-4">
                             <label for="editExistSubdomain" class="form-label">是否存在子域</label>
                             <select class="form-select" id="editExistSubdomain" name="existSubdomain" required>
+                                <option value="true">存在</option>
+                                <option value="false" selected>不存在</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label for="editSubdomainType" class="form-label">子域类型</label>
                             <select class="form-select" id="editSubdomainType" name="subdomainType"
                                     required>
+                                <option value="TLV">TLV</option>
+                                <option value="TLV2">TLV2</option>
+                                <option value="TV">TV</option>
+                                <option value="ULV">ULV</option>
+                                <option value="ULV2">ULV2</option>
+                                <option value="ULV3">ULV3</option>
+                                <option value="UV">UV</option>
+                                <option value="UVAS">UVAS</option>
+                                <option value="PAGE">PAGE</option>
+                                <option value="FIXED">FIXED</option>
+                                <option value="BITMAP">BITMAP</option>
+                                <option value="NONE">NONE</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label for="editNonSubdomainException" class="form-label">未配置子域异常</label>
                             <select class="form-select" id="editNonSubdomainException" name="nonSubdomainException"
                                     required>
+                                <option value="true">抛出异常</option>
+                                <option value="false" selected>不抛出异常</option>
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="editPattern" class="form-label">域值格式</label>
-                            <input type="text" class="form-control" id="editPattern" name="pattern" required>
+                            <input type="text" class="form-control" id="editPattern" name="pattern">
                         </div>
                         <div class="col-md-4">
                             <label for="editPageSizeName" class="form-label">分页记录数字段名称</label>
-                            <input type="text" class="form-control" id="editPageSizeName" name="pageSizeName" required>
+                            <input type="text" class="form-control" id="editPageSizeName" name="pageSizeName">
                         </div>
                         <div class="col-md-4">
                             <label for="editStatus" class="form-label">状态</label>
                             <select class="form-select" id="editStatus" name="status" required>
+                                <option value="OPEN">OPEN</option>
+                                <option value="CLOSE">CLOSE</option>
+                                <option value="RAW">RAW</option>
                             </select>
                         </div>
                     </div>
@@ -222,6 +283,63 @@
 <script th:src="@{/js/init.js}"></script>
 <script>
     initTable();
+    initDisplay();
+
+    function initDisplay() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const map = new Map();
+        for (const pair of urlParams.get('display').split(',')) {
+            const arr = pair.split(':');
+            map.set(arr[0], arr[1]);
+        }
+        $('#type').val(map.get('type'));
+        $('#group').val(map.get('group'));
+        $('#code').val(map.get('code'));
+        $('#kind').val(map.get('kind'));
+        $('#domain').val(map.get('domain'));
+        $('#usage').val(map.get('usage'));
+    }
+
+    function refresh() {
+        $('#dataTable').bootstrapTable('refreshOptions', {
+            pageNumber: 1,
+            sortOrder: "asc",
+            sortName: "domainNo"
+        });
+    }
+
+    function detailFilter(index, row) {
+        return row.existSubdomain;
+    }
+
+    function detailFormatter(index, row) {
+        const html = [];
+        httpClient(`/message/listSub?fieldId=${row.id}`, 'GET', null, function (list) {
+            list.forEach(res => {
+                html.push(`<button type="button" class="btn btn-outline-success me-2"
+                onclick="redirectToFieldPage('${res.id}','${res.type}','${res.group}','${res.code}','${res.kind}','${res.domain}','${res.usage}')">${res.usage ?? res.domain}</button>`);
+            });
+        });
+
+        return `
+            <div class="row ms-5">
+                <div class="col-md-2">
+                    <label for="detailSubdomainType" class="form-label">子域类型</label>
+                    <input type="text" class="form-control" id="detailSubdomainType" name="subdomainType" value="${row.subdomainType}" disabled>
+                </div>
+                <div class="col-md-2">
+                    <label for="detailNonSubdomainException" class="form-label">未配置子域异常</label>
+                    <input type="text" class="form-control" id="detailNonSubdomainException" name="nonSubdomainException" value="${row.nonSubdomainException}" disabled>
+                </div>
+                <div class="col-md-8">
+                    <label for="detailSubdomainRef" class="form-label">子域</label>
+                    <div id="detailSubdomainRef" class="d-flex align-items-center">
+                        ${html.join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 
     function fixedFormatter(arg) {
         if (arg === true) {
@@ -232,6 +350,7 @@
         }
         return "/";
     }
+
 </script>
 </body>
 </html>

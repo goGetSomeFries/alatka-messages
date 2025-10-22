@@ -79,6 +79,7 @@ public class MessageService {
     public List<MessageDefinition> queryByFieldId(Long fieldId) {
         MessageDefinition condition = new MessageDefinition();
         condition.setFieldId(fieldId);
+        condition.setEnabled(true);
         return messageRepository.findAll(this.condition(condition));
     }
 

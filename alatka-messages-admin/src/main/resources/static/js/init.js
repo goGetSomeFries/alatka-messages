@@ -9,7 +9,7 @@ function initTable() {
 
     return $("#dataTable").bootstrapTable({
         onLoadError: function (status) {
-            showErrorToast("接口请求失败, http code: " + status)
+            showErrorToast(`接口请求失败, http code: ${status}`)
         },
 
         queryParams: function (params) {
@@ -28,6 +28,9 @@ function initTable() {
 
             const urlParams = new URLSearchParams(window.location.search);
             for (let [key, value] of urlParams) {
+                if (key === 'display') {
+                    continue;
+                }
                 searchData[key] = value;
             }
 
@@ -42,7 +45,7 @@ function initTable() {
 
         responseHandler: function (res) {
             if (res.code !== "0000") {
-                showErrorToast("接口响应失败: " + res.msg);
+                showErrorToast(`接口响应失败: ${res.msg}`);
                 return {
                     total: 0,
                     rows: []
@@ -92,6 +95,15 @@ function showEditModal(url, created) {
             $editForm.serializeArray().forEach(item => {
                 formData[item.name] = item.value;
             });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            for (let [key, value] of urlParams) {
+                if (key === 'display') {
+                    continue;
+                }
+                formData[key] = value;
+            }
+
             submitFunction(url, created ? 'POST' : 'PUT', formData, created ? '新增' : '更新');
             $('#editModal').modal('hide');
         }
@@ -108,20 +120,25 @@ function showDeleteModal(url) {
     $('#deleteModal').modal('show');
     $('#saveDeleteBtn').off('click').on('click', function () {
         const ids = selections.map(row => row.id).join(",");
-        submitFunction(url + '?ids=' + ids, 'DELETE', null, '删除');
+        submitFunction(`${url}?ids=${ids}`, 'DELETE', null, '删除');
         $('#deleteModal').modal('hide');
     });
 }
 
 function submitFunction(url, methodType, data, actionName) {
     httpClient(url, methodType, data, function (data) {
-        showSuccessToast(actionName + "成功");
+        showSuccessToast(`${actionName}成功`);
         refresh();
     });
 }
 
+function redirectToFieldPage(messageId, type, group, code, kind, domain, usage) {
+    const display = `type:${type},group:${group},code:${code},kind:${kind},domain:${domain ?? ''},usage:${usage ?? ''}`;
+    window.location.href = `field?messageId=${messageId}&display=${display}`;
+}
+
 function httpClient(url, methodType, data, success, error = function (msg) {
-    showErrorToast("接口响应失败: " + msg);
+    showErrorToast(`接口响应失败: ${msg}`);
 }) {
     $.ajax({
         url: url,
@@ -136,7 +153,7 @@ function httpClient(url, methodType, data, success, error = function (msg) {
             }
         },
         error: function (xhr) {
-            showErrorToast("接口请求失败: " + xhr.responseJSON?.message || "未知错误");
+            showErrorToast(`接口请求失败: ${xhr.responseJSON?.message || "未知错误"}`);
         }
     });
 }

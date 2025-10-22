@@ -227,8 +227,7 @@
 
     function initTableRowEvent() {
         $('#dataTable').on('dbl-click-row.bs.table', function (event, row, $element) {
-            const messageId = row.id;
-            window.location.href = `field?messageId=${messageId}`;
+            redirectToFieldPage(row.id, row.type, row.group, row.code, row.kind);
         });
     }
 
