@@ -23,33 +23,40 @@
             </button>
         </div>
         <div class="card-body collapse show" id="cardCollapse">
-            <div id="displayContainer" class="row mb-3">
+            <div class="row mb-3">
+                <input type="hidden" id="displayMessageId" name="messageId">
+                <input type="hidden" id="displayCharset" name="charset">
+                <input type="hidden" id="displayRemark" name="remark">
                 <div class="col-md-2">
-                    <label for="type" class="form-label">类型</label>
-                    <select class="form-select" id="type" name="type" disabled>
+                    <label for="displayType" class="form-label">类型</label>
+                    <select class="form-select" id="displayType" name="type" disabled>
                         <option value="iso">8583</option>
                         <option value="fixed">固定格式</option>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <label for="group" class="form-label">分组</label>
-                    <input type="text" class="form-control" id="group" name="group" disabled>
+                    <label for="displayGroup" class="form-label">分组</label>
+                    <input type="text" class="form-control" id="displayGroup" name="group" disabled>
                 </div>
                 <div class="col-md-2">
-                    <label for="code" class="form-label">交易码</label>
-                    <input type="text" class="form-control" id="code" name="code" disabled>
+                    <label for="displayCode" class="form-label">交易码</label>
+                    <input type="text" class="form-control" id="displayCode" name="code" disabled>
                 </div>
                 <div class="col-md-2">
-                    <label for="kind" class="form-label">种类</label>
-                    <input type="text" class="form-control" id="kind" name="kind" disabled>
+                    <label for="displayKind" class="form-label">种类</label>
+                    <input type="text" class="form-control" id="displayKind" name="kind" disabled>
                 </div>
                 <div class="col-md-2">
-                    <label for="domain" class="form-label">子域名称</label>
-                    <input type="text" class="form-control" id="domain" name="domain" disabled>
+                    <label for="displayDomain" class="form-label">子域名称</label>
+                    <input type="text" class="form-control" id="displayDomain" name="domain" disabled>
                 </div>
-                <div class="col-md-2">
-                    <label for="usage" class="form-label">子域用法</label>
-                    <input type="text" class="form-control" id="usage" name="usage" disabled>
+                <div class="col-md-1">
+                    <label for="displayUsage" class="form-label">子域用法</label>
+                    <input type="text" class="form-control" id="displayUsage" name="usage" disabled>
+                </div>
+                <div class="col-md-1">
+                    <label for="displayDomainType" class="form-label">子域类型</label>
+                    <input type="text" class="form-control" id="displayDomainType" name="domainType" disabled>
                 </div>
             </div>
             <form id="searchForm" class="row g-3">
@@ -275,6 +282,67 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editSubMessageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">配置子域</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editSubMessageForm">
+                    <input type="hidden" id="editSubMessageFieldId" name="fieldId">
+                    <input type="hidden" id="editSubMessageId" name="id">
+                    <input type="hidden" id="editSubMessageType" name="type">
+                    <input type="hidden" id="editSubMessageGroup" name="group">
+                    <input type="hidden" id="editSubMessageCode" name="code">
+                    <input type="hidden" id="editSubMessageKind" name="kind">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="editSubMessageDomain" class="form-label">子域名称</label>
+                            <input type="text" class="form-control" id="editSubMessageDomain" name="domain"
+                                   placeholder="输入分组" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editSubMessageUsage" class="form-label">子域用法</label>
+                            <input type="text" class="form-control" id="editSubMessageUsage" name="usage"
+                                   placeholder="输入分组" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="editSubMessageDomainType" class="form-label">子域类型</label>
+                            <select class="form-select" id="editSubMessageDomainType" name="domainType"
+                                    required>
+                                <option value="TLV">TLV</option>
+                                <option value="TLV2">TLV2</option>
+                                <option value="TV">TV</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="editSubMessageRemark" class="form-label">描述</label>
+                            <input type="text" class="form-control" id="editSubMessageRemark" name="remark"
+                                   placeholder="输入描述" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="editSubMessageHolder" class="form-label">实体类</label>
+                            <input type="text" class="form-control" id="editSubMessageHolder" name="holder"
+                                   placeholder="输入实体类" value="com.alatka.messages.core.holder.MessageHolder">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveEditSubMessageBtn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script th:src="@{/webjars/jquery/jquery.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
@@ -316,29 +384,80 @@
         const html = [];
         httpClient(`/message/listSub?fieldId=${row.id}`, 'GET', null, function (list) {
             list.forEach(res => {
-                html.push(`<button type="button" class="btn btn-outline-success me-2"
+                html.push(`<button type="button" class="btn btn-sm btn-outline-success me-2"
                 onclick="redirectToFieldPage('${res.id}','${res.type}','${res.group}','${res.code}','${res.kind}','${res.domain}','${res.usage}')">${res.usage ?? res.domain}</button>`);
             });
         });
 
         return `
-            <div class="row ms-5">
+            <div class="row ms-5 mb-3">
                 <div class="col-md-2">
-                    <label for="detailSubdomainType" class="form-label">子域类型</label>
-                    <input type="text" class="form-control" id="detailSubdomainType" name="subdomainType" value="${row.subdomainType}" disabled>
-                </div>
-                <div class="col-md-2">
-                    <label for="detailNonSubdomainException" class="form-label">未配置子域异常</label>
-                    <input type="text" class="form-control" id="detailNonSubdomainException" name="nonSubdomainException" value="${row.nonSubdomainException}" disabled>
-                </div>
-                <div class="col-md-8">
-                    <label for="detailSubdomainRef" class="form-label">子域</label>
-                    <div id="detailSubdomainRef" class="d-flex align-items-center">
-                        ${html.join('')}
+                    <div class="d-flex align-items-center">
+                        <label for="detailSubdomainType" class="form-label text-nowrap me-3">子域类型</label>
+                        <input type="text" class="form-control" id="detailSubdomainType" name="subdomainType" value="${row.subdomainType}" disabled>
                     </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-flex align-items-center">
+                        <label for="detailNonSubdomainException" class="form-label text-nowrap me-3">未配置子域异常</label>
+                        <input type="text" class="form-control" id="detailNonSubdomainException" name="nonSubdomainException" value="${row.nonSubdomainException}" disabled>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-sm btn-success ms-3" onclick="showEditSubMessageModal(${row.id})"><i class="bi bi-plus-lg"></i>配置子域</button>
                 </div>
             </div>
         `;
+    }
+
+    function showEditSubMessageModal(parentFieldId, created) {
+        if (created) {
+            $('#editSubMessageForm')[0]?.reset();
+        } else {
+            const selection = $('#dataTable').bootstrapTable('getSelections');
+            if (selection.length !== 1) {
+                showWarningToast("请选择一条记录进行编辑");
+                return;
+            }
+
+            const row = selection[0];
+            Object.keys(row).forEach(field => {
+                const $input = $(`#editForm [name="${field}"], #editForm #${field}`);
+                if ($input.length) {
+                    let value = row[field];
+                    if (typeof value === 'boolean') {
+                        value = value ? 'true' : 'false';
+                    }
+                    $input.val(value);
+                }
+            });
+        }
+
+        $('#editSubMessageModal').modal('show');
+        $('#saveEditSubMessageBtn').off('click').on('click', function (event) {
+            const formData = {};
+            const $editForm = $('#editSubMessageForm');
+            if (!$editForm[0].checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                $editForm.addClass('was-validated');
+            } else {
+                $editForm.serializeArray().forEach(item => {
+                    formData[item.name] = item.value;
+                });
+
+                const urlParams = new URLSearchParams(window.location.search);
+                for (let [key, value] of urlParams) {
+                    if (key === 'display') {
+                        continue;
+                    }
+                    formData[key] = value;
+                }
+
+                submitFunction(url, created ? 'POST' : 'PUT', formData, created ? '新增' : '更新');
+                $('#editSubMessageModal').modal('hide');
+            }
+        });
     }
 
     function fixedFormatter(arg) {
