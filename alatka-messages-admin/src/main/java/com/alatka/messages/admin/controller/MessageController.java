@@ -72,6 +72,15 @@ public class MessageController {
         return ResMessage.success(list);
     }
 
+    @Operation(summary = "查询报文信息")
+    @GetMapping("/query")
+    public ResMessage<MessageRes> query(@RequestParam Long id) {
+        MessageDefinition entity = messageService.queryById(id);
+        MessageRes res = new MessageRes();
+        BeanUtils.copyProperties(entity, res);
+        return ResMessage.success(res);
+    }
+
     @Operation(summary = "分页查询报文")
     @GetMapping("/page")
     public PageResMessage<MessageRes> queryPage(@Valid MessagePageReq req) {

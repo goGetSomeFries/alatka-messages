@@ -297,26 +297,34 @@
                     <input type="hidden" id="editSubMessageGroup" name="group">
                     <input type="hidden" id="editSubMessageCode" name="code">
                     <input type="hidden" id="editSubMessageKind" name="kind">
+                    <input type="hidden" id="editSubMessageCharset" name="charset">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="editSubMessageDomain" class="form-label">子域名称</label>
                             <input type="text" class="form-control" id="editSubMessageDomain" name="domain"
-                                   placeholder="输入分组" required>
+                                   placeholder="输入子域名称" required>
                         </div>
                         <div class="col-md-6">
                             <label for="editSubMessageUsage" class="form-label">子域用法</label>
                             <input type="text" class="form-control" id="editSubMessageUsage" name="usage"
-                                   placeholder="输入分组" required>
+                                   placeholder="输入子域用法">
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="editSubMessageDomainType" class="form-label">子域类型</label>
-                            <select class="form-select" id="editSubMessageDomainType" name="domainType"
-                                    required>
+                            <select class="form-select" id="editSubMessageDomainType" name="domainType">
+                                <option value="">无</option>
                                 <option value="TLV">TLV</option>
                                 <option value="TLV2">TLV2</option>
                                 <option value="TV">TV</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editSubMessageEnabled" class="form-label">是否可用</label>
+                            <select class="form-select" id="editSubMessageEnabled" name="enabled" required>
+                                <option value="true" selected>正常</option>
+                                <option value="false">禁用</option>
                             </select>
                         </div>
                     </div>
@@ -355,17 +363,18 @@
 
     function initDisplay() {
         const urlParams = new URLSearchParams(window.location.search);
-        const map = new Map();
-        for (const pair of urlParams.get('display').split(',')) {
-            const arr = pair.split(':');
-            map.set(arr[0], arr[1]);
-        }
-        $('#type').val(map.get('type'));
-        $('#group').val(map.get('group'));
-        $('#code').val(map.get('code'));
-        $('#kind').val(map.get('kind'));
-        $('#domain').val(map.get('domain'));
-        $('#usage').val(map.get('usage'));
+        const messageId = urlParams.get('messageId');
+        httpClient(`/message/query?id=${messageId}`, 'GET', null, function (data) {
+            $('#displayType').val(data.type);
+            $('#displayGroup').val(data.group);
+            $('#displayCode').val(data.code);
+            $('#displayKind').val(data.kind);
+            $('#displayDomain').val(data.domain);
+            $('#displayUsage').val(data.usage);
+            $('#displayMessageId').val(data.id);
+            $('#displayCharset').val(data.charset);
+            $('#displayRemark').val(data.remark);
+        });
     }
 
     function refresh() {
@@ -385,7 +394,7 @@
         httpClient(`/message/listSub?fieldId=${row.id}`, 'GET', null, function (list) {
             list.forEach(res => {
                 html.push(`<button type="button" class="btn btn-sm btn-outline-success me-2"
-                onclick="redirectToFieldPage('${res.id}','${res.type}','${res.group}','${res.code}','${res.kind}','${res.domain}','${res.usage}')">${res.usage ?? res.domain}</button>`);
+                onclick="redirectToFieldPage('${res.id}')">${res.usage ?? res.domain}</button>`);
             });
         });
 
@@ -404,33 +413,25 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-sm btn-success ms-3" onclick="showEditSubMessageModal(${row.id})"><i class="bi bi-plus-lg"></i>配置子域</button>
+                    <button type="button" class="btn btn-sm btn-success ms-3" onclick="showEditSubMessageModal(${row.id}, ${row.domainNo}, '/message/create', true)"><i class="bi bi-plus-lg"></i>配置子域</button>
                 </div>
             </div>
         `;
     }
 
-    function showEditSubMessageModal(parentFieldId, created) {
+    function showEditSubMessageModal(parentFieldId, domainNo, url, created) {
+        $("#editSubMessageFieldId").val(parentFieldId);
         if (created) {
             $('#editSubMessageForm')[0]?.reset();
-        } else {
-            const selection = $('#dataTable').bootstrapTable('getSelections');
-            if (selection.length !== 1) {
-                showWarningToast("请选择一条记录进行编辑");
-                return;
-            }
 
-            const row = selection[0];
-            Object.keys(row).forEach(field => {
-                const $input = $(`#editForm [name="${field}"], #editForm #${field}`);
-                if ($input.length) {
-                    let value = row[field];
-                    if (typeof value === 'boolean') {
-                        value = value ? 'true' : 'false';
-                    }
-                    $input.val(value);
-                }
-            });
+            $('#editSubMessageType').val($('#displayType').val());
+            $("#editSubMessageGroup").val($('#displayGroup').val());
+            $("#editSubMessageCode").val($('#displayCode').val());
+            $("#editSubMessageKind").val($('#displayKind').val());
+            $("#editSubMessageCharset").val($('#displayCharset').val());
+            const domain = $('#displayDomain').val();
+            $("#editSubMessageDomain").val(domain ? `${domain}_F${domainNo}` : `F${domainNo}`);
+            $("#editSubMessageRemark").val($('#displayRemark').val() + `F${domainNo}子域`);
         }
 
         $('#editSubMessageModal').modal('show');
@@ -443,18 +444,11 @@
                 $editForm.addClass('was-validated');
             } else {
                 $editForm.serializeArray().forEach(item => {
-                    formData[item.name] = item.value;
+                    formData[item.name] = item.value === '' ? null : item.value;
                 });
-
-                const urlParams = new URLSearchParams(window.location.search);
-                for (let [key, value] of urlParams) {
-                    if (key === 'display') {
-                        continue;
-                    }
-                    formData[key] = value;
-                }
-
-                submitFunction(url, created ? 'POST' : 'PUT', formData, created ? '新增' : '更新');
+                httpClient(url, created ? 'POST' : 'PUT', formData, function (data) {
+                    showSuccessToast(`${created ? '新增' : '更新'}成功`);
+                });
                 $('#editSubMessageModal').modal('hide');
             }
         });

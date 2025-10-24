@@ -28,9 +28,6 @@ function initTable() {
 
             const urlParams = new URLSearchParams(window.location.search);
             for (let [key, value] of urlParams) {
-                if (key === 'display') {
-                    continue;
-                }
                 searchData[key] = value;
             }
 
@@ -98,9 +95,6 @@ function showEditModal(url, created) {
 
             const urlParams = new URLSearchParams(window.location.search);
             for (let [key, value] of urlParams) {
-                if (key === 'display') {
-                    continue;
-                }
                 formData[key] = value;
             }
 
@@ -132,9 +126,8 @@ function submitFunction(url, methodType, data, actionName) {
     });
 }
 
-function redirectToFieldPage(messageId, type, group, code, kind, domain, usage) {
-    const display = `type:${type},group:${group},code:${code},kind:${kind},domain:${domain ?? ''},usage:${usage ?? ''}`;
-    window.location.href = `field?messageId=${messageId}&display=${display}`;
+function redirectToFieldPage(messageId) {
+    window.location.href = `field?messageId=${messageId}`;
 }
 
 function httpClient(url, methodType, data, success, error = function (msg) {
