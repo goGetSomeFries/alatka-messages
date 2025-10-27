@@ -351,6 +351,23 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="deleteSubMessageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">删除报文子域</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>确定要删除选中的记录？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="saveDeleteSubMessageBtn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script th:src="@{/webjars/jquery/jquery.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
@@ -390,48 +407,130 @@
     }
 
     function detailFormatter(index, row) {
-        const html = [];
-        httpClient(`/message/listSub?fieldId=${row.id}`, 'GET', null, function (list) {
-            list.forEach(res => {
-                html.push(`<button type="button" class="btn btn-sm btn-outline-success me-2"
-                onclick="redirectToFieldPage('${res.id}')">${res.usage ?? res.domain}</button>`);
-            });
-        });
+        const containerId = `subdomain-container-${row.id}`;
+
+        setTimeout(() => {
+            loadSubdomainData(row.id, containerId);
+        }, 0);
 
         return `
-            <div class="row ms-5 mb-3">
-                <div class="col-md-2">
-                    <div class="d-flex align-items-center">
-                        <label for="detailSubdomainType" class="form-label text-nowrap me-3">子域类型</label>
-                        <input type="text" class="form-control" id="detailSubdomainType" name="subdomainType" value="${row.subdomainType}" disabled>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="d-flex align-items-center">
-                        <label for="detailNonSubdomainException" class="form-label text-nowrap me-3">未配置子域异常</label>
-                        <input type="text" class="form-control" id="detailNonSubdomainException" name="nonSubdomainException" value="${row.nonSubdomainException}" disabled>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-sm btn-success ms-3" onclick="showEditSubMessageModal(${row.id}, ${row.domainNo}, '/message/create', true)"><i class="bi bi-plus-lg"></i>配置子域</button>
+        <div class="row ms-3 mb-3">
+            <div class="col-md-3">
+                <div class="d-flex align-items-center">
+                    <label for="detailSubdomainType" class="form-label text-nowrap me-3">子域类型</label>
+                    <input type="text" class="form-control" id="detailSubdomainType" name="subdomainType" value="${row.subdomainType}" disabled>
                 </div>
             </div>
-        `;
+            <div class="col-md-4">
+                <div class="d-flex align-items-center">
+                    <label for="detailNonSubdomainException" class="form-label text-nowrap me-3">未配置子域异常</label>
+                    <input type="text" class="form-control" id="detailNonSubdomainException" name="nonSubdomainException" value="${row.nonSubdomainException}" disabled>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <button type="button" class="btn btn-sm btn-outline-info ms-3" onclick="showEditSubMessageModal(${row.id}, '${containerId}', '/message/create', true, ${row.domainNo})"><i class="bi bi-plus-lg"></i>新增</button>
+                <button type="button" class="btn btn-sm btn-outline-warning" onclick="showEditSubMessageModal(${row.id}, '${containerId}', '/message/update', false)"><i class="bi bi-pencil-square"></i> 更新</button>
+                <button type="button" class="btn btn-sm btn-danger" onclick="showDeleteSubMessageModal(${row.id}, '${containerId}')"><i class="bi bi-trash"></i> 删除</button>
+            </div>
+        </div>
+        <div id="${containerId}" class="ms-3 me-3">加载中...</div>
+    `;
     }
 
-    function showEditSubMessageModal(parentFieldId, domainNo, url, created) {
+    function loadSubdomainData(fieldId, containerId) {
+        httpClient(`/message/listSub?fieldId=${fieldId}`, 'GET', null, function (list) {
+            const html = [];
+            const navs = [];
+            const tabs = [];
+            let tabIndex = 0;
+
+            list.forEach(res => {
+                const tabId = `tab-${res.id}`;
+                const navId = `nav-${res.id}`;
+                navs.push(`
+                <button class="nav-link ${tabIndex === 0 ? 'active' : ''}" id="${navId}" data-bs-toggle="tab" data-bs-target="#${tabId}" type="button" role="tab" aria-controls="${tabId}" aria-selected="${tabIndex}">${res.usage ?? res.domain}</button>
+            `);
+                tabs.push(`
+                <div class="tab-pane fade ${tabIndex++ === 0 ? 'show active' : ''}" id="${tabId}" role="tabpanel" aria-labelledby="${navId}" tabindex="0">
+                    <input type="hidden" name="subMessageId" value="${res.id}">
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <label class="form-label">子域名称</label>
+                            <input type="text" class="form-control" name="domain" value="${res.domain}" disabled>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">子域用法</label>
+                            <input type="text" class="form-control" name="usage" value="${res.usage ?? ''}" disabled>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">子域类型</label>
+                            <input type="text" class="form-control" name="domainType" value="${res.domainType ?? ''}" disabled>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">是否可用</label>
+                            <input type="text" class="form-control" name="enabled" value="${res.enabled ? '正常' : '禁用'}" disabled>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-5">
+                            <label class="form-label">实体类</label>
+                            <input type="text" class="form-control" name="holder" value="${res.holder}" disabled>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">描述</label>
+                            <input type="text" class="form-control" name="remark" value="${res.remark}" disabled>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">操作</label><br>
+                            <button type="button" class="me-2 btn btn-sm btn-outline-success" onclick="redirectToFieldPage('${res.id}')"><i class="bi bi-ticket-detailed"></i> 跳转子域字段</button>
+                        </div>
+                    </div>
+                </div>
+            `);
+            });
+
+            if (list.length !== 0) {
+                html.push(`
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">${navs.join('')}</div>
+                </nav>
+                <div class="tab-content border border-top-0 rounded-bottom p-3" id="tabContent">${tabs.join('')}</div>
+            `);
+            } else {
+                html.push('暂无子域配置');
+            }
+
+            $('#' + containerId).html(html.join(''));
+        });
+    }
+
+    function showEditSubMessageModal(parentFieldId, containerId, url, created, domainNo) {
         $("#editSubMessageFieldId").val(parentFieldId);
+        $('#editSubMessageType').val($('#displayType').val());
+        $("#editSubMessageGroup").val($('#displayGroup').val());
+        $("#editSubMessageCode").val($('#displayCode').val());
+        $("#editSubMessageKind").val('subPayload');
+        $("#editSubMessageCharset").val($('#displayCharset').val());
+
         if (created) {
             $('#editSubMessageForm')[0]?.reset();
 
-            $('#editSubMessageType').val($('#displayType').val());
-            $("#editSubMessageGroup").val($('#displayGroup').val());
-            $("#editSubMessageCode").val($('#displayCode').val());
-            $("#editSubMessageKind").val($('#displayKind').val());
-            $("#editSubMessageCharset").val($('#displayCharset').val());
             const domain = $('#displayDomain').val();
             $("#editSubMessageDomain").val(domain ? `${domain}_F${domainNo}` : `F${domainNo}`);
             $("#editSubMessageRemark").val($('#displayRemark').val() + `F${domainNo}子域`);
+        } else {
+            const $tabContent = $('#tabContent');
+            if (!$tabContent.length) {
+                showWarningToast("未有选中的子域");
+                return;
+            }
+            const $activePane = $tabContent.children('.tab-pane.active');
+            $("#editSubMessageDomain").val($activePane.find('input[name="domain"]').val());
+            $("#editSubMessageUsage").val($activePane.find('input[name="usage"]').val());
+            $("#editSubMessageDomainType").val($activePane.find('input[name="domainType"]').val());
+            $("#editSubMessageHolder").val($activePane.find('input[name="holder"]').val());
+            $("#editSubMessageRemark").val($activePane.find('input[name="remark"]').val());
+            $("#editSubMessageId").val($activePane.find('input[name="subMessageId"]').val());
         }
 
         $('#editSubMessageModal').modal('show');
@@ -448,9 +547,30 @@
                 });
                 httpClient(url, created ? 'POST' : 'PUT', formData, function (data) {
                     showSuccessToast(`${created ? '新增' : '更新'}成功`);
+                    loadSubdomainData(parentFieldId, containerId);
                 });
                 $('#editSubMessageModal').modal('hide');
             }
+        });
+    }
+
+    function showDeleteSubMessageModal(parentFieldId, containerId) {
+        const $tabContent = $('#tabContent');
+        if (!$tabContent.length) {
+            showWarningToast("未有选中的子域");
+            return;
+        }
+        const $activePane = $tabContent.children('.tab-pane.active');
+        const domain = $activePane.find('input[name="domain"]').val();
+        const subMessageId = $activePane.find('input[name="subMessageId"]').val();
+
+        $('#deleteSubMessageModal').modal('show');
+        $('#saveDeleteSubMessageBtn').off('click').on('click', function () {
+            httpClient(`/message/delete?ids=${subMessageId}`, 'DELETE', null, function (data) {
+                showSuccessToast(`删除子域${domain}成功`);
+                loadSubdomainData(parentFieldId, containerId);
+            });
+            $('#deleteSubMessageModal').modal('hide');
         });
     }
 
