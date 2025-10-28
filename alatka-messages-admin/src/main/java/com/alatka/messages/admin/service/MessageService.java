@@ -92,7 +92,10 @@ public class MessageService {
     }
 
     public Page<MessageDefinition> queryPage(MessageDefinition condition, Pageable pageable) {
-        return messageRepository.findAll(this.condition(condition), pageable);
+        Specification<MessageDefinition> specification =
+                this.condition(condition).and((root, query, criteriaBuilder) ->
+                        criteriaBuilder.notEqual(root.get("kind").as(String.class), "subPayload"));
+        return messageRepository.findAll(specification, pageable);
     }
 
     private Specification<MessageDefinition> condition(MessageDefinition condition) {
@@ -108,7 +111,7 @@ public class MessageService {
                 list.add(criteriaBuilder.equal(root.get("group").as(String.class), condition.getGroup()));
             }
             if (condition.getCode() != null) {
-                list.add(criteriaBuilder.equal(root.get("code").as(String.class), condition.getCode()));
+                list.add(criteriaBuilder.like(root.get("code").as(String.class), condition.getCode() + "%"));
             }
             if (condition.getKind() != null) {
                 list.add(criteriaBuilder.equal(root.get("kind").as(String.class), condition.getKind()));
