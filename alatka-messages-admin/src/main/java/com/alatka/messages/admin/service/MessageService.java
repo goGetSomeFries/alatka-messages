@@ -76,19 +76,34 @@ public class MessageService {
         messageRepository.deleteAllById(ids);
     }
 
+    public MessageDefinition queryById(Long id) {
+        MessageDefinition condition = new MessageDefinition();
+        condition.setId(id);
+        condition.setEnabled(true);
+        return messageRepository.findOne(this.condition(condition))
+                .orElseThrow(() -> new IllegalArgumentException("id " + id + " does not exist"));
+    }
+
     public List<MessageDefinition> queryByFieldId(Long fieldId) {
         MessageDefinition condition = new MessageDefinition();
         condition.setFieldId(fieldId);
+        condition.setEnabled(true);
         return messageRepository.findAll(this.condition(condition));
     }
 
     public Page<MessageDefinition> queryPage(MessageDefinition condition, Pageable pageable) {
-        return messageRepository.findAll(this.condition(condition), pageable);
+        Specification<MessageDefinition> specification =
+                this.condition(condition).and((root, query, criteriaBuilder) ->
+                        criteriaBuilder.notEqual(root.get("kind").as(String.class), "subPayload"));
+        return messageRepository.findAll(specification, pageable);
     }
 
     private Specification<MessageDefinition> condition(MessageDefinition condition) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
+            if (condition.getId() != null) {
+                list.add(criteriaBuilder.equal(root.get("id").as(Long.class), condition.getId()));
+            }
             if (condition.getType() != null) {
                 list.add(criteriaBuilder.equal(root.get("type").as(String.class), condition.getType()));
             }
@@ -96,7 +111,7 @@ public class MessageService {
                 list.add(criteriaBuilder.equal(root.get("group").as(String.class), condition.getGroup()));
             }
             if (condition.getCode() != null) {
-                list.add(criteriaBuilder.equal(root.get("code").as(String.class), condition.getCode()));
+                list.add(criteriaBuilder.like(root.get("code").as(String.class), condition.getCode() + "%"));
             }
             if (condition.getKind() != null) {
                 list.add(criteriaBuilder.equal(root.get("kind").as(String.class), condition.getKind()));
