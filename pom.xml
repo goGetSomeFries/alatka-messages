@@ -6,7 +6,7 @@
     <parent>
         <artifactId>alatka</artifactId>
         <groupId>com.alatka</groupId>
-        <version>1.58.0</version>
+        <version>1.60.0</version>
     </parent>
 
     <groupId>com.alatka.messages</groupId>
@@ -20,7 +20,7 @@
     </modules>
 
     <properties>
-        <revision>3.7.1</revision>
+        <revision>3.8.0</revision>
     </properties>
 
 </project>
