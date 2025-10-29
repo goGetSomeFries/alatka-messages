@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alatka-rule-admin</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-table/dist/bootstrap-table.min.css}"/>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="card mb-3">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">报文查询</h5>
+            <button class="btn btn-sm btn-outline-secondary"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#cardCollapse"
+                    aria-expanded="true"
+                    aria-controls="cardCollapse">
+                <i class="bi bi-arrows-angle-contract"></i>
+            </button>
+        </div>
+        <div class="card-body collapse show" id="cardCollapse">
+            <form id="searchForm" class="row g-3">
+                <div class="col-md-3">
+                    <label for="type" class="form-label">类型</label>
+                    <select class="form-select" id="type" name="type">
+                        <option value="">全部</option>
+                        <option value="iso">8583</option>
+                        <option value="fixed">固定格式</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="group" class="form-label">分组</label>
+                    <input type="text" class="form-control" id="group" name="group" placeholder="输入分组">
+                </div>
+                <div class="col-md-3">
+                    <label for="code" class="form-label">交易码</label>
+                    <input type="text" class="form-control" id="code" name="code" placeholder="输入交易码">
+                </div>
+                <div class="col-md-3">
+                    <label for="kind" class="form-label">种类</label>
+                    <select class="form-select" id="kind" name="kind">
+                        <option value="">全部</option>
+                        <option value="header">header</option>
+                        <option value="payload">payload</option>
+                        <option value="request">request</option>
+                        <option value="response">response</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="remark" class="form-label">描述</label>
+                    <input type="text" class="form-control" id="remark" name="remark" placeholder="输入描述">
+                </div>
+                <div class="col-md-3">
+                    <label for="enabled" class="form-label">是否可用</label>
+                    <select class="form-select" id="enabled" name="enabled">
+                        <option value="">全部</option>
+                        <option value="true" selected>正常</option>
+                        <option value="false">禁用</option>
+                    </select>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-secondary me-2" id="resetButton">
+                        <i class="bi bi-arrow-counterclockwise"></i> 重置
+                    </button>
+                    <button type="button" class="btn btn-primary" id="searchButton">
+                        <i class="bi bi-search"></i> 查询
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-12 text-end mb-3">
+        <button type="button" class="btn btn-sm btn-outline-info" id="addButton"
+                onclick="showEditModal('/message/create', true)">
+            <i class="bi bi-plus-lg"></i> 新增
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-warning" id="editButton"
+                onclick="showEditModal('/message/update', false)">
+            <i class="bi bi-pencil-square"></i> 更新
+        </button>
+        <button type="button" class="btn btn-sm btn-danger" id="deleteButton"
+                onclick="showDeleteModal('/message/delete')">
+            <i class="bi bi-trash"></i> 删除
+        </button>
+    </div>
+
+    <table id="dataTable"
+           data-toggle="table"
+           data-method="get"
+           data-url="/message/page"
+           data-sort-name="id"
+           data-sort-order="desc"
+           data-striped="true"
+           data-pagination="true"
+           data-pagination-loop="false"
+           data-side-pagination="server"
+           data-click-to-select="true"
+           data-maintain-selected="true">
+        <thead>
+        <tr>
+            <th data-radio="true"></th>
+            <th data-field="id" data-sortable="true">ID</th>
+            <th data-field="type" data-formatter="typeFormatter">类型</th>
+            <th data-field="group">分组</th>
+            <th data-field="code" data-sortable="true">交易码</th>
+            <th data-field="kind" data-sortable="true">种类</th>
+            <th data-field="holder">实体类</th>
+            <th data-field="charset">编码</th>
+            <th data-field="remark">描述</th>
+            <th data-field="enabled" data-formatter="enabledFormatter">是否可用</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑报文</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" id="editId" name="id">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="editType" class="form-label">类型</label>
+                            <select class="form-select" id="editType" name="type" required>
+                                <option value="iso">8583</option>
+                                <option value="fixed">固定格式</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editGroup" class="form-label">分组</label>
+                            <input type="text" class="form-control" id="editGroup" name="group" placeholder="输入分组"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="editCode" class="form-label">交易码</label>
+                            <input type="text" class="form-control" id="editCode" name="code" placeholder="输入交易码"
+                                   required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editKind" class="form-label">种类</label>
+                            <select class="form-select" id="editKind" name="kind" required>
+                                <option value="header">header</option>
+                                <option value="payload">payload</option>
+                                <option value="request">request</option>
+                                <option value="response">response</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="editRemark" class="form-label">描述</label>
+                            <input type="text" class="form-control" id="editRemark" name="remark"
+                                   placeholder="输入描述" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="editHolder" class="form-label">实体类</label>
+                            <input type="text" class="form-control" id="editHolder" name="holder"
+                                   placeholder="输入实体类" value="com.alatka.messages.core.holder.MessageHolder">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="editCharset" class="form-label">编码</label>
+                            <select class="form-select" id="editCharset" name="charset">
+                                <option value="UTF-8">UTF-8</option>
+                                <option value="GB18030">GB18030</option>
+                                <option value="GBK">GBK</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="editEnabled" class="form-label">是否可用</label>
+                            <select class="form-select" id="editEnabled" name="enabled" required>
+                                <option value="">全部</option>
+                                <option value="true" selected>正常</option>
+                                <option value="false">禁用</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveEditBtn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">删除报文</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>确定要删除选中的记录？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="saveDeleteBtn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-table/dist/bootstrap-table.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js}"></script>
+<script th:src="@{/js/init.js}"></script>
+<script>
+    initTable();
+    initTableRowEvent();
+
+    function initTableRowEvent() {
+        $('#dataTable').on('dbl-click-row.bs.table', function (event, row, $element) {
+            redirectToFieldPage(row.id);
+        });
+    }
+
+    function typeFormatter(arg) {
+        const keyValuePairs = {};
+        $('select#type option').each(function () {
+            keyValuePairs[$(this).val()] = $(this).text();
+        });
+        return keyValuePairs[arg];
+    }
+
+</script>
+</body>
+</html>
