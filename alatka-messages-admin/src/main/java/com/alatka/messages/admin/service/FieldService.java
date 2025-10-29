@@ -59,6 +59,21 @@ public class FieldService {
             if (condition.getMessageId() != null) {
                 list.add(criteriaBuilder.equal(root.get("messageId").as(Long.class), condition.getMessageId()));
             }
+            if (condition.getDomainNo() != null) {
+                list.add(criteriaBuilder.equal(root.get("domainNo").as(Integer.class), condition.getDomainNo()));
+            }
+            if (condition.getName() != null) {
+                list.add(criteriaBuilder.like(root.get("name").as(String.class), "%" + condition.getRemark() + "%"));
+            }
+            if (condition.getRemark() != null) {
+                list.add(criteriaBuilder.like(root.get("remark").as(String.class), "%" + condition.getRemark() + "%"));
+            }
+            if (condition.getExistSubdomain() != null) {
+                list.add((criteriaBuilder.equal(root.get("existSubdomain").as(Boolean.class), condition.getExistSubdomain())));
+            }
+            if (condition.getStatus() != null) {
+                list.add((criteriaBuilder.equal(root.get("status").as(String.class), condition.getStatus())));
+            }
 
             return criteriaBuilder.and(list.toArray(new Predicate[0]));
         };
