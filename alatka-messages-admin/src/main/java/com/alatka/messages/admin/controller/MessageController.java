@@ -60,6 +60,27 @@ public class MessageController {
         return ResMessage.success(() -> messageService.update(entity));
     }
 
+    @Operation(summary = "查询子域报文列表")
+    @GetMapping("/listSub")
+    public ResMessage<List<MessageRes>> listSub(@RequestParam Long fieldId) {
+        List<MessageRes> list = messageService.queryByFieldId(fieldId).stream()
+                .map(entity -> {
+                    MessageRes res = new MessageRes();
+                    BeanUtils.copyProperties(entity, res);
+                    return res;
+                }).collect(Collectors.toList());
+        return ResMessage.success(list);
+    }
+
+    @Operation(summary = "查询报文信息")
+    @GetMapping("/query")
+    public ResMessage<MessageRes> query(@RequestParam Long id) {
+        MessageDefinition entity = messageService.queryById(id);
+        MessageRes res = new MessageRes();
+        BeanUtils.copyProperties(entity, res);
+        return ResMessage.success(res);
+    }
+
     @Operation(summary = "分页查询报文")
     @GetMapping("/page")
     public PageResMessage<MessageRes> queryPage(@Valid MessagePageReq req) {
