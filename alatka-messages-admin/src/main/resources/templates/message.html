@@ -74,6 +74,14 @@
         </div>
     </div>
     <div class="col-12 text-end mb-3">
+        <button type="button" class="btn btn-sm btn-outline-secondary" id="fallbackButton"
+                onclick="showBuildModal('/message/build', 'fallback')">
+            <i class="bi bi-arrow-left"></i> 回退
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-primary me-5" id="deployButton"
+                onclick="showBuildModal('/message/build', 'deploy')">
+            <i class="bi bi-rocket"></i> 部署
+        </button>
         <button type="button" class="btn btn-sm btn-outline-info" id="addButton"
                 onclick="showEditModal('/message/create', true)">
             <i class="bi bi-plus-lg"></i> 新增
@@ -215,8 +223,46 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="buildModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">部署报文</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="buildForm">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="buildPath" class="form-label">路径</label>
+                            <input type="text" class="form-control" id="buildPath" name="path"
+                                   aria-describedby="pathDesc" required>
+                            <div id="pathDesc" class="form-text">
+                                例如：/deploy 或 /fallback 或 /message/build
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="buildUris" class="form-label">uris</label>
+                            <textarea class="form-control" rows="3" id="buildUris" name="uris"
+                                      aria-describedby="buildUrisDesc" required></textarea>
+                            <div id="buildUrisDesc" class="form-text">
+                                多个用逗号分割，例如：192.x.xx.xx:8000,192.xxx.xxx.xxx:8001
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveBuildBtn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<script th:src="@{/webjars/jquery/jquery.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/bootstrap-table/dist/bootstrap-table.min.js}"></script>
 <script th:src="@{/webjars/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js}"></script>
@@ -239,6 +285,31 @@
         return keyValuePairs[arg];
     }
 
+    function showBuildModal(url, type) {
+        $('#buildPath').val('');
+        $('#buildUris').val('');
+
+        const $buildModal = $('#buildModal');
+        $buildModal.find('.modal-title').text(type === 'fallback' ? '回退报文' : '部署报文');
+
+        $buildModal.modal('show');
+        $('#saveBuildBtn').off('click').on('click', function (event) {
+            const formData = {};
+            const $buildForm = $('#buildForm');
+            if (!$buildForm[0].checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                $buildForm.addClass('was-validated');
+            } else {
+                formData['path'] = $('#buildPath').val();
+                formData['uris'] = $('#buildUris').val().split(",").map(item => item.trim());
+                httpClient(url, 'POST', formData, function (data) {
+                    showWarningToast(JSON.stringify(data, null, 2));
+                    $buildModal.modal('hide');
+                });
+            }
+        });
+    }
 </script>
 </body>
 </html>
