@@ -7,6 +7,26 @@ function initTable() {
         refresh();
     })
 
+    interact('.modal-dialog').draggable({
+        allowFrom: '.modal-header',
+        modifiers: [
+            interact.modifiers.restrictRect({
+                restriction: 'parent'
+            })
+        ],
+        listeners: {
+            move: function (event) {
+                const target = event.target;
+                const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+                const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+                target.style.transform = `translate(${x}px, ${y}px)`;
+                target.setAttribute('data-x', x);
+                target.setAttribute('data-y', y);
+            }
+        }
+    });
+
     return $("#dataTable").bootstrapTable({
         onLoadError: function (status) {
             showErrorToast(`接口请求失败, http code: ${status}`)
