@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: alatka-messages-example
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:${user.dir}/alatka-messages/alatka-messages-example/db/example.db
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.community.dialect.SQLiteDialect
+server:
+  port: 8089
+alatka:
+  messages:
+    enabled: true
+    type: database
