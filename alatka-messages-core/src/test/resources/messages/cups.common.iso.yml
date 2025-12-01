@@ -108,7 +108,7 @@ alatka.messages:
         - { "domainNo": 6, "name": "MerchantFeeRate", "fixed": true, "length": 6, "remark": "商户补贴手续费率", "className": "Integer" }
         - { "domainNo": 7, "name": "reversed3", "fixed": true, "length": 16, "remark": "保留使用", "className": "String" }
       F48$RA:
-        - { "domainNo": 1, "name": "price", "fixed": true, "length": 12, "remark": "折扣前标价", "className": "Integer" }
+        - { "domainNo": 1, "name": "price", "fixed": true, "length": 12, "remark": "折扣前标价", "className": "BigDecimal" }
       F48$RP:
         - { "domainNo": 1, "name": "productCode", "fixed": true, "length": 30, "remark": "商品代码", "className": "String" }
         - { "domainNo": 2, "name": "reversed", "fixed": true, "length": 30, "remark": "保留使用", "className": "String" }
