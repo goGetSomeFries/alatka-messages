@@ -21,11 +21,21 @@
 
 <img src="https://foruda.gitee.com/images/1716735852853560264/590b6fd0_2152177.png" width=60%>
 
+### 项目结构
+
+| 模块                                | 描述                                                              |
+|-------------------------------------|-------------------------------------------------------------------|
+| alatka-messages-core                | 核心模块，包括报文配置解析和执行                                      |
+| alatka-messages-spring-boot-starter | alatka-messages-core模块包装的SpringBoot Starter，支持自动装配       |
+| alatka-messages-admin               | 后台管理模块                                                       |
+| alatka-messages-example             | alatka-messages-admin & alatka-messages-spring-boot-starter 示例  |
+
 ### 版本对应关系
 
 | alatka-messages | alatka-dependencies       | alatka                    |
 |-----------------|---------------------------|---------------------------|
-| 3.9.0-jdk17     | 1.62.0-jdk17              | 1.62.0-jdk17              |
+| 3.10.0-jdk17    | 1.65.0-jdk17              | 1.65.0-jdk17              |
+| 3.9.0-jdk17     | 1.62.0-jdk17-1.64.0-jdk17 | 1.62.0-jdk17-1.64.0-jdk17 |
 | 3.8.0-jdk17     | 1.60.0-jdk17-1.61.0-jdk17 | 1.60.0-jdk17-1.61.0-jdk17 |
 | 3.7.1-jdk17     | 1.58.0-jdk17-1.59.0-jdk17 | 1.58.0-jdk17-1.59.0-jdk17 |
 | 3.7.0-jdk17     | 1.56.0-jdk17-1.57.0-jdk17 | 1.56.0-jdk17-1.57.0-jdk17 |
