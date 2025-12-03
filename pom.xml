@@ -6,7 +6,7 @@
     <parent>
         <artifactId>alatka</artifactId>
         <groupId>com.alatka</groupId>
-        <version>1.62.0</version>
+        <version>1.65.0</version>
     </parent>
 
     <groupId>com.alatka.messages</groupId>
@@ -17,10 +17,11 @@
         <module>alatka-messages-spring-boot-starter</module>
         <module>alatka-messages-core</module>
         <module>alatka-messages-admin</module>
+        <module>alatka-messages-example</module>
     </modules>
 
     <properties>
-        <revision>3.9.0</revision>
+        <revision>3.10.0</revision>
     </properties>
 
 </project>

@@ -38,6 +38,7 @@ public class MessageService {
         Map<String, String> resultMap = new HashMap<>(uris.size());
 
         CompletableFuture<Void> completableFuture = uris.stream()
+                .map(uri -> uri.startsWith("http://") || uri.startsWith("https://") ? uri : "http://" + uri)
                 .map(uri -> uri.concat(path))
                 .map(url -> this.doBuild(url, resultMap))
                 .collect(Collectors.collectingAndThen(Collectors.toList(),
