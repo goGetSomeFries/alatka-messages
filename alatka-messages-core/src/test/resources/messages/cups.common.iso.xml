@@ -115,7 +115,7 @@
             <field domainNo="7" name="reversed3" fixed="true" length="16" remark="保留使用" className="String"/>
         </subPayload>
         <subPayload domain="F48" usage="RA">
-            <field domainNo="1" name="price" fixed="true" length="12" remark="折扣前标价" className="Integer"/>
+            <field domainNo="1" name="price" fixed="true" length="12" remark="折扣前标价" className="BigDecimal"/>
         </subPayload>
         <subPayload domain="F48" usage="RP">
             <field domainNo="1" name="productCode" fixed="true" length="30" remark="商品代码" className="String"/>

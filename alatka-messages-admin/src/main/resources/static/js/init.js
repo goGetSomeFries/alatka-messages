@@ -28,6 +28,8 @@ function initTable() {
     });
 
     return $("#dataTable").bootstrapTable({
+        undefinedText: '',
+        pageList: [10, 25, 50, 100],
         onLoadError: function (status) {
             showErrorToast(`接口请求失败, http code: ${status}`)
         },
@@ -110,7 +112,7 @@ function showEditModal(url, created) {
             $editForm.addClass('was-validated');
         } else {
             $editForm.serializeArray().forEach(item => {
-                formData[item.name] = item.value;
+                formData[item.name] = item.value === '' ? null : item.value;
             });
 
             const urlParams = new URLSearchParams(window.location.search);

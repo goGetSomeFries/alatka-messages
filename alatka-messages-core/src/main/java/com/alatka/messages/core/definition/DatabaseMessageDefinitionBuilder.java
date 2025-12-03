@@ -107,7 +107,8 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
             ((IsoFieldDefinition) fieldDefinition).setNonSubdomainException((boolean) result.get("nonSubdomainException"));
         }
         if (fieldDefinition.getExistSubdomain()) {
-            List<MessageDefinition> list = this.fieldMessageMapping.get(result.get("id"));
+            List<MessageDefinition> list = this.fieldMessageMapping.get(Long.valueOf(result.get(("id")).toString()));
+            list = list == null ? Collections.emptyList() : list;
             Map<String, MessageDefinition> messageDefinitionMap =
                     list.stream().collect(Collectors.toMap(d ->
                             d.getUsage().isEmpty() ? FieldDefinition.SUBFIELD_KEY_DEFAULT : d.getUsage(), Function.identity()));
