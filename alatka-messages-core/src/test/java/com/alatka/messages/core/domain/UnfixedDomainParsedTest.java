@@ -52,9 +52,17 @@ public class UnfixedDomainParsedTest {
     }
 
     @Test
-    @DisplayName("unpack() exception")
+    @DisplayName("unpack()")
     void test07() {
         byte[] bytes = BytesUtil.hexToBytes("010203040506070809");
+        AtomicInteger counter = new AtomicInteger(9);
+        Assertions.assertArrayEquals(new byte[0], domainParsed.unpack(bytes, null, counter));
+    }
+
+    @Test
+    @DisplayName("unpack() exception")
+    void test08() {
+        byte[] bytes = BytesUtil.hexToBytes("0102030405060708");
         AtomicInteger counter = new AtomicInteger(9);
         Assertions.assertThrows(IllegalArgumentException.class, () -> domainParsed.unpack(bytes, null, counter));
     }
