@@ -53,7 +53,8 @@
             <field domainNo="46" name="expAddtnlAmt" fixed="false" length="3" maxLength="999" remark="Expanded Additional Amounts" className="String" parseType="EBCDIC"/>
             <field domainNo="47" name="addtnlDataNation" fixed="false" length="3" maxLength="999" remark="Additional Data: National Use" className="String" parseType="EBCDIC"/>
             <!-- 48 -->
-            <field domainNo="48" name="addtnlDataPrivate" fixed="false" length="3" maxLength="999" remark="Additional Data: Private Use" existSubdomain="true" subdomainType="ULV2" lenParseType="EBCDIC" nonSubdomainException="false"/>
+            <field domainNo="48" name="addtnlDataPrivate" fixed="false" length="3" maxLength="999" remark="Additional Data: Private Use" className="Bytes" lenParseType="EBCDIC"/>
+<!--            existSubdomain="true" subdomainType="ULV2" lenParseType="EBCDIC" nonSubdomainException="false"/>-->
             <field domainNo="49" name="currcyCodeTrans" fixed="true" length="3" remark="Currency Code, Transaction" className="String" parseType="EBCDIC"/>
             <field domainNo="50" name="currcyCodeSettlmt" fixed="true" length="3" remark="Currency Code, Settlement" className="String" parseType="EBCDIC"/>
             <field domainNo="51" name="currcyCodeCdhldrBil" fixed="true" length="3" remark="Currency Code, Cardholder Billing" className="String" parseType="EBCDIC"/>
