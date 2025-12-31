@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<alatka-messages xmlns="http://messages.alatka.com"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://messages.alatka.com alatka-messages.xsd">
+    <message type="iso" group="mc" code="common" remark="万事达8583报文">
+        <payload>
+            <field domainNo="0" name="messageType" fixed="true" length="4" remark="报文类型" className="String" parseType="EBCDIC"/>
+            <field domainNo="1" name="bitMap" fixed="false" length="16" remark="位图" className="BitMap" parseType="BINARY"/>
+            <field domainNo="2" name="pan" fixed="false" length="2" maxLength="19" remark="Primary Account Number" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="processingCode" fixed="true" length="6" remark="Processing Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="amtTrans" fixed="true" length="12" remark="Amount, Transaction" className="BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="5" name="amtSettlmt" fixed="true" length="12" remark="Amount, Settlement" className="BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="6" name="amtCdhldrBil" fixed="true" length="12" remark="Amount, Cardholder Billing" className="BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="7" name="transmsnDateTime" fixed="true" length="10" remark="Transmission Date and Time" className="LocalDateTime" pattern="MMddHHmmss" parseType="EBCDIC"/>
+            <field domainNo="8" name="amtCdhldrBilFee" fixed="true" length="8" remark="Amount, Cardholder Billing Fee" className="Integer" parseType="EBCDIC"/>
+            <field domainNo="9" name="convRateSettlmt" fixed="true" length="8" remark="Conversion Rate, Settlement" className="Integer" parseType="EBCDIC"/>
+            <field domainNo="10" name="convRateCdhldrBil" fixed="true" length="8" remark="Conversion Rate, Cardholder Billing" className="Integer" parseType="EBCDIC"/>
+            <field domainNo="11" name="sysTraceAuditNum" fixed="true" length="6" remark="System Trace Audit Number [STAN]" className="Integer" parseType="EBCDIC"/>
+            <field domainNo="12" name="timeLocalTrans" fixed="true" length="6" remark="Time, Local Transaction" className="LocalTime" pattern="HHmmss" parseType="EBCDIC"/>
+            <field domainNo="13" name="dateLocalTrans" fixed="true" length="4" remark="Date, Local Transaction" className="MonthDay" pattern="MMdd" parseType="EBCDIC"/>
+            <field domainNo="14" name="dateExpr" fixed="true" length="4" remark="Date, Expiration" className="YearMonth" pattern="yyMM" parseType="EBCDIC"/>
+            <field domainNo="15" name="dateSettlmt" fixed="true" length="4" remark="Date, Settlement" className="MonthDay" pattern="MMdd" parseType="EBCDIC"/>
+            <field domainNo="16" name="dateConv" fixed="true" length="4" remark="Date, Conversion" className="MonthDay" pattern="MMdd" parseType="EBCDIC"/>
+            <field domainNo="17" name="dateCapture" fixed="true" length="4" remark="Date Capture" className="MonthDay" pattern="MMdd" parseType="EBCDIC"/>
+            <field domainNo="18" name="mchntType" fixed="true" length="4" remark="Merchant Type" className="String" parseType="EBCDIC"/>
+            <field domainNo="19" name="mchntCntryCode" fixed="true" length="3" remark="Acquiring Institution Country Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="20" name="panCntryCode" fixed="true" length="3" remark="PAN Country Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="21" name="fwdInstCntryCode" fixed="true" length="3" remark="Forwarding Institution Country Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="22" name="posEntryModeCode" fixed="true" length="3" remark="Point-of-Service [POS] Entry Mode" className="String" parseType="EBCDIC"/>
+            <field domainNo="23" name="cardSeqId" fixed="true" length="3" remark="Card Sequence Number" className="String" parseType="EBCDIC"/>
+            <field domainNo="24" name="netInterId" fixed="true" length="3" remark="Network International ID" className="String" parseType="EBCDIC"/>
+            <field domainNo="25" name="posCondCode" fixed="true" length="2" remark="Point-of-Service [POS] Condition Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="26" name="posPinCaptrCode" fixed="true" length="2" remark="Point-of-Service (POS) Personal ID Number [PIN] Capture Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="27" name="authIdResLen" fixed="true" length="1" remark="Authorization ID Response Length" className="String" parseType="EBCDIC"/>
+            <field domainNo="28" name="amtTransFee" fixed="true" length="9" remark="Amount, Transaction Fee" className="String" parseType="EBCDIC"/>
+            <field domainNo="29" name="amtSettlmtFee" fixed="true" length="9" remark="Amount, Settlement Fee" className="String" parseType="EBCDIC"/>
+            <field domainNo="30" name="amtTransPrcssFee" fixed="true" length="9" remark="Amount, Transaction Processing Fee" className="String" parseType="EBCDIC"/>
+            <field domainNo="31" name="amtSettlmtPrcssFee" fixed="true" length="9" remark="Amount, Settlement Processing Fee" className="String" parseType="EBCDIC"/>
+            <field domainNo="32" name="acqInstIdCode" fixed="false" length="2" maxLength="6" remark="Acquiring Institution ID Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="33" name="fwdInstIdCode" fixed="false" length="2" maxLength="6" remark="Forwarding Institution ID Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="34" name="panExt" fixed="false" length="2" maxLength="28" remark="PAN Extended" className="String" parseType="EBCDIC"/>
+            <field domainNo="35" name="tracK2Data" fixed="false" length="2" maxLength="37" remark="Track 2 Data" className="String" parseType="EBCDIC"/>
+            <field domainNo="36" name="tracK3Data" fixed="false" length="3" maxLength="104" remark="Track 3 Data" className="String" parseType="EBCDIC"/>
+            <field domainNo="37" name="retrivlRefNum" fixed="true" length="12" remark="Retrieval Reference Number" className="String" parseType="EBCDIC"/>
+            <field domainNo="38" name="authrIdResp" fixed="true" length="6" remark="Authorization ID Response" className="String" parseType="EBCDIC"/>
+            <field domainNo="39" name="respCode" fixed="true" length="2" remark="Response Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="40" name="serRestrCode" fixed="true" length="3" remark="Service Restriction Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="41" name="cardAccptrTermnlId" fixed="true" length="8" remark="Acceptor Terminal ID" className="String" parseType="EBCDIC"/>
+            <field domainNo="42" name="cardAccptrId" fixed="true" length="15" remark="Acceptor ID" className="String" parseType="EBCDIC"/>
+            <field domainNo="43" name="cardAccptrNameLoc" fixed="true" length="40" remark="Card Acceptor Name/Location" existSubdomain="true" subdomainType="FIXED"/>
+            <field domainNo="44" name="addtnlRespCode" fixed="false" length="2" maxLength="25" remark="Additional Response Data" className="String" parseType="EBCDIC"/>
+            <field domainNo="45" name="tracK1Data" fixed="false" length="2" maxLength="76" remark="Track 1 Data" className="String" parseType="EBCDIC"/>
+            <field domainNo="46" name="expAddtnlAmt" fixed="false" length="3" maxLength="999" remark="Expanded Additional Amounts" className="String" parseType="EBCDIC"/>
+            <field domainNo="47" name="addtnlDataNation" fixed="false" length="3" maxLength="999" remark="Additional Data: National Use" className="String" parseType="EBCDIC"/>
+            <!-- 48 -->
+            <field domainNo="48" name="addtnlDataPrivate" fixed="false" length="3" maxLength="999" remark="Additional Data: Private Use" existSubdomain="true" subdomainType="ULV2" lenParseType="EBCDIC" nonSubdomainException="false"/>
+            <field domainNo="49" name="currcyCodeTrans" fixed="true" length="3" remark="Currency Code, Transaction" className="String" parseType="EBCDIC"/>
+            <field domainNo="50" name="currcyCodeSettlmt" fixed="true" length="3" remark="Currency Code, Settlement" className="String" parseType="EBCDIC"/>
+            <field domainNo="51" name="currcyCodeCdhldrBil" fixed="true" length="3" remark="Currency Code, Cardholder Billing" className="String" parseType="EBCDIC"/>
+            <field domainNo="52" name="pinData" fixed="true" length="8" remark="PIN Data" className="Bytes" parseType="BINARY"/>
+            <field domainNo="53" name="secrRelCtrlInfo" fixed="true" length="16" remark="Security-Related Control Information" existSubdomain="true" subdomainType="FIXED"/>
+            <field domainNo="54" name="addtnlAmts" fixed="false" length="3" maxLength="240" remark="Additional Amounts" existSubdomain="true" subdomainType="FIXED" lenParseType="EBCDIC"/>
+            <!-- 55 -->
+            <field domainNo="55" name="iccData" fixed="false" length="3" maxLength="255" remark="ICC System-Related Data" existSubdomain="true" subdomainType="TLV" lenParseType="EBCDIC"/>
+            <field domainNo="56" name="payAccData" fixed="false" length="3" maxLength="37" remark="Payment Account Data" existSubdomain="true" subdomainType="ULV2" lenParseType="EBCDIC"/>
+            <field domainNo="60" name="advReasCode" fixed="false" length="3" maxLength="60" remark="Advice Reason Code" existSubdomain="true" subdomainType="FIXED" lenParseType="EBCDIC"/>
+            <field domainNo="61" name="posData" fixed="false" length="3" maxLength="26" remark="Point-of-Service [POS] Data" existSubdomain="true" subdomainType="FIXED" lenParseType="EBCDIC"/>
+            <field domainNo="62" name="infData" fixed="false" length="3" maxLength="100" remark="Intermediate Network Facility [INF] Data" className="String" parseType="EBCDIC"/>
+            <field domainNo="63" name="netData" fixed="false" length="3" maxLength="50" remark="Network Data" existSubdomain="true" subdomainType="FIXED" lenParseType="EBCDIC"/>
+            <field domainNo="64" name="messAuthCode" fixed="true" length="8" remark="Message Authentication Code" className="Bytes" parseType="BINARY"/>
+            <!-- 65 -->
+            <field domainNo="65" name="bitMap2" fixed="true" length="8" remark="Bit Map, Extended" className="BitMap" parseType="BINARY"/>
+            <field domainNo="66" name="settlmtCode" fixed="true" length="1" remark="Settlement Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="67" name="extPayCode" fixed="true" length="2" remark="Extended Payment Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="68" name="revInstCntryCode" fixed="true" length="3" remark="Receiving Institution Country Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="69" name="settlmtInstCntryCode" fixed="true" length="3" remark="Settlement Institution Country Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="70" name="netMangmntInfoCode" fixed="true" length="3" remark="Network Management Information Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="71" name="messNum" fixed="true" length="4" remark="Message Number" className="String" parseType="EBCDIC"/>
+            <field domainNo="72" name="messNumLast" fixed="true" length="4" remark="Message Number Last" className="String" parseType="EBCDIC"/>
+            <field domainNo="90" name="origDataElemnt" fixed="true" length="42" remark="Original Data Elements" existSubdomain="true" subdomainType="FIXED"/>
+            <field domainNo="91" name="issrFleUpdCode" fixed="true" length="1" remark="Issuer File Update Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="94" name="servIndicator" fixed="true" length="7" remark="Service Indicator" existSubdomain="true" subdomainType="FIXED"/>
+            <field domainNo="95" name="replcemntAmt" fixed="true" length="42" remark="Replacement Amounts" existSubdomain="true" subdomainType="FIXED"/>
+            <field domainNo="96" name="messSectyCode" fixed="true" length="8" remark="Message Security Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="100" name="rervInstIdCode" fixed="false" length="2" maxLength="11" remark="Receiving Institution ID Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="101" name="fileName" fixed="false" length="2" maxLength="17" remark="File Name" className="String" parseType="EBCDIC"/>
+            <field domainNo="102" name="acctId1" fixed="false" length="2" maxLength="28" remark="Account ID 1" className="String" parseType="EBCDIC"/>
+            <field domainNo="103" name="acctId2" fixed="false" length="2" maxLength="28" remark="Account ID 2" className="String" parseType="EBCDIC"/>
+            <field domainNo="104" name="digPayData" fixed="false" length="3" maxLength="999" remark="Digital Payment Data" existSubdomain="true" subdomainType="ULV4" lenParseType="EBCDIC"/>
+            <!-- 106 -->
+            <field domainNo="106" name="fleetServiceData" fixed="false" length="3" maxLength="999" remark="Fleet Service Data" existSubdomain="true" subdomainType="ULV" lenParseType="EBCDIC"/>
+            <field domainNo="108" name="addTransRefData" fixed="false" length="3" maxLength="999" remark="Additional Transaction Reference Data" existSubdomain="true" subdomainType="ULV5" lenParseType="EBCDIC"/>
+            <field domainNo="110" name="addData2" fixed="false" length="3" maxLength="999" remark="Additional Data–2" existSubdomain="true" subdomainType="ULV5" lenParseType="EBCDIC"/>
+            <field domainNo="112" name="addDataNational" fixed="false" length="3" maxLength="999" remark="Additional Data [National Use]" existSubdomain="true" subdomainType="ULV4" lenParseType="EBCDIC"/>
+            <!-- 113~119 -->
+            <field domainNo="120" name="recordData" fixed="false" length="3" maxLength="999" remark="Record Data" existSubdomain="true" subdomainType="ULV2" lenParseType="EBCDIC"/>
+            <field domainNo="121" name="authAgentIdCode" fixed="false" length="3" maxLength="6" remark="Authorizing Agent ID Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="122" name="addRecordData" fixed="false" length="3" maxLength="999" remark="Additional Record Data" existSubdomain="true" subdomainType="ULV4" lenParseType="EBCDIC"/>
+            <field domainNo="123" name="receiptFreeText" fixed="false" length="3" maxLength="512" remark="Receipt Free Text" className="String" parseType="EBCDIC"/>
+            <!-- 124 -->
+            <field domainNo="124" name="memberDefData" fixed="false" length="3" maxLength="299" remark="Member-Defined Data" existSubdomain="true" subdomainType="ULV2" lenParseType="EBCDIC"/>
+            <field domainNo="125" name="newPinData" fixed="true" length="8" remark="New PIN Data" className="Bytes" parseType="BINARY"/>
+            <field domainNo="126" name="privateData1" fixed="false" length="3" maxLength="100" remark="Private Data" className="String" parseType="EBCDIC"/>
+            <field domainNo="127" name="privateData2" fixed="false" length="3" maxLength="100" remark="Private Data" className="String" parseType="EBCDIC"/>
+            <field domainNo="128" name="messAuthCode" fixed="true" length="8" remark="Message Authentication Code" className="Bytes" parseType="BINARY"/>
+        </payload>
+        <subPayload domain="F43">
+            <field domainNo="1" name="acceptorName" fixed="true" length="22" remark="Acceptor Name" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="space" fixed="true" length="1" remark="Space" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="acceptorCity" fixed="true" length="13" remark="Acceptor City" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="space" fixed="true" length="1" remark="Space" className="String" parseType="EBCDIC"/>
+            <field domainNo="5" name="acceptorCntryCode" fixed="true" length="3" remark="Acceptor Country Code" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F48" usage="09" domainType="TLV4">
+            <field domainNo="1" name="f48f1" aliasName="01" fixed="true" length="1" remark="Virtual Card Number Indicator" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f48f2" aliasName="02" fixed="false" maxLength="19" remark="Virtual Card Number" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="f48f3" aliasName="03" fixed="true" maxLength="4" remark="Virtual Card Number Expiration Date" className="YearMonth" parseType="EBCDIC" pattern="yyMM"/>
+        </subPayload>
+        <subPayload domain="F53">
+            <field domainNo="1" name="pinSertyTypeCode" fixed="true" length="2" remark="PIN Security Type Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="pinEncryTypeCode" fixed="true" length="2" remark="PIN Encryption Type Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="pinBlkFrmtCode" fixed="true" length="2" remark="PIN Block Format Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="pinKeyIndNum" fixed="true" length="4" remark="PIN Key Index Number" className="String" parseType="EBCDIC"/>
+            <field domainNo="5" name="reserved1" fixed="true" length="2" remark="Reserved for Future Use" className="String" parseType="EBCDIC"/>
+            <field domainNo="6" name="reserved2" fixed="true" length="4" remark="Reserved for Future Use" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F54">
+            <field domainNo="1" name="accountType" fixed="true" length="2" remark="Account Type" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="amountType" fixed="true" length="2" remark="Amount Type" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="currencyCode" fixed="true" length="3" remark="Currency Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="amountFlag" fixed="true" length="1" remark="Amount Flag" className="String" parseType="EBCDIC"/>
+            <field domainNo="5" name="amount" fixed="true" length="12" remark="Amount" className="BigDecimal" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F55" domainType="TLV">
+            <field domainNo="1" aliasName="9F26" name="crypt" fixed="true" length="8" remark="应用密文" className="Bytes"/>
+            <field domainNo="2" aliasName="9F27" name="cryptInfoData" fixed="true" length="1" remark="密文信息数据" className="Bytes"/>
+            <field domainNo="3" aliasName="9F10" name="issuerAppData" fixed="false" maxLength="32" remark="发卡行应用数据" className="Bytes"/>
+            <field domainNo="4" aliasName="9F37" name="unpredictableNumber" fixed="true" length="4" remark="不可预知数" className="Bytes"/>
+            <field domainNo="5" aliasName="9F36" name="appTransCounter" fixed="true" length="2" remark="应用交易计数器" className="Bytes"/>
+            <field domainNo="6" aliasName="95" name="termVerificationResult" fixed="true" length="5" remark="终端验证结果" className="Bytes"/>
+            <field domainNo="7" aliasName="9A" name="transDate" fixed="true" length="3" remark="交易日期" className="LocalDate" pattern="yyMMdd" parseType="BCD"/>
+            <field domainNo="8" aliasName="9C" name="transType" fixed="true" length="1" remark="交易类型" className="Integer" parseType="BCD"/>
+            <field domainNo="9" aliasName="9F02" name="transAmt" fixed="true" length="6" remark="授权金额" className="BigDecimal" parseType="BCD"/>
+            <field domainNo="10" aliasName="5F2A" name="transCurrencyCode" fixed="true" length="2" remark="交易货币代码" className="Integer" parseType="BCD"/>
+            <field domainNo="11" aliasName="82" name="appInterchangeProfile" fixed="true" length="2" remark="应用交互特征" className="Bytes"/>
+            <field domainNo="12" aliasName="9F1A" name="termCountryCode" fixed="true" length="2" remark="终端国家代码" className="Integer" parseType="BCD"/>
+            <field domainNo="13" aliasName="9F03" name="otherAmt" fixed="true" length="6" remark="其它金额" className="BigDecimal" parseType="BCD"/>
+            <field domainNo="14" aliasName="9F34" name="cardholderVerificationMethodResults" fixed="true" length="3" remark="持卡人验证方法结果" className="Bytes"/>
+            <field domainNo="15" aliasName="9F35" name="termType" fixed="true" length="1" remark="终端类型" className="Integer" parseType="BCD"/>
+            <field domainNo="16" aliasName="9F09" name="termAppVersionNumber" fixed="true" length="2" remark="应用版本号" className="Bytes"/>
+            <field domainNo="17" aliasName="9F33" name="termCap" fixed="true" length="3" remark="终端性能" className="Bytes"/>
+            <field domainNo="18" aliasName="9F1E" name="interfaceDeviceSerialNumber" fixed="true" length="8" remark="接口设备序列号" className="String"/>
+            <field domainNo="19" aliasName="4F" name="iccAppId" fixed="false" maxLength="16" remark="icc application ID" className="Bytes"/>
+            <field domainNo="20" aliasName="9F41" name="transSequenceCounter" fixed="false" maxLength="4" remark="交易序列计数器" className="Integer" parseType="BCD"/>
+            <field domainNo="21" aliasName="9F7C" name="pdd" fixed="false" maxLength="32" remark="Partner Discretionary Data" className="Bytes"/>
+            <field domainNo="22" aliasName="84" name="dedicatedFileName" fixed="false" maxLength="16" remark="专用文件名称" className="Bytes"/>
+            <field domainNo="23" aliasName="91" name="issuerAuthenticationData" fixed="false" maxLength="16" remark="发卡行认证数据" className="Bytes"/>
+            <field domainNo="24" aliasName="71" name="issuerScriptTemplate1" fixed="false" maxLength="128" remark="发卡行脚本1" className="Bytes"/>
+            <field domainNo="25" aliasName="72" name="issuerScriptTemplate2" fixed="false" maxLength="128" remark="发卡行脚本2" className="Bytes"/>
+        </subPayload>
+        <subPayload domain="F56" usage="01" domainType="TLV4">
+            <field domainNo="1" name="f56f1f1" aliasName="01" fixed="false" maxLength="29" remark="Payment Account Reference" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F56$01_F1">
+            <field domainNo="1" name="f56f1f1" fixed="true" length="4" remark="BIN Controller Identifier" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f56f1f2" fixed="true" length="25" remark="A unique 25-character alphanumeric uppercase value" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F60">
+            <field domainNo="1" name="adviceReasonCode" fixed="true" length="3" remark="Advice Reason Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="adviceDetailCode" fixed="true" length="4" remark="Advice Detail Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="adviceDetailText" fixed="true" length="53" remark="Advice Detail Text" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F61">
+            <field domainNo="1" name="posTerminalAttendance" fixed="true" length="1" remark="POS Terminal Attendance" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="reserved1" fixed="true" length="1" remark="Reserved for Future Use" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="posTerminalLocation" fixed="true" length="1" remark="POS Terminal Location" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="posCardholderPresence" fixed="true" length="1" remark="POS Cardholder Presence" className="String" parseType="EBCDIC"/>
+            <field domainNo="5" name="posCardPresence" fixed="true" length="1" remark="POS Card Presence" className="String" parseType="EBCDIC"/>
+            <field domainNo="6" name="posCardCaptureCapabilities" fixed="true" length="1" remark="POS Card Capture Capabilities" className="String" parseType="EBCDIC"/>
+            <field domainNo="7" name="posTransactionStatus" fixed="true" length="1" remark="POS Transaction Status" className="String" parseType="EBCDIC"/>
+            <field domainNo="8" name="posTransactionSecurity" fixed="true" length="1" remark="POS Transaction Security" className="String" parseType="EBCDIC"/>
+            <field domainNo="9" name="reserved2" fixed="true" length="1" remark="Reserved for Future Use" className="String" parseType="EBCDIC"/>
+            <field domainNo="10" name="cardholderActivatedTerminalLevel" fixed="true" length="1" remark="Cardholder-Activated Terminal Level" className="String" parseType="EBCDIC"/>
+            <field domainNo="11" name="posCardDataTerminalInputCapabilityIndicator" fixed="true" length="1" remark="POS Card Data Terminal Input Capability Indicator" className="String" parseType="EBCDIC"/>
+            <field domainNo="12" name="posAuthorizationLifeCycle" fixed="true" length="1" remark="POS Authorization Life Cycle" className="String" parseType="EBCDIC"/>
+            <field domainNo="13" name="posCountryCode" fixed="true" length="3" remark="POS Country Code [or Sponsored Merchant Information, if applicable]" className="String" parseType="EBCDIC"/>
+            <field domainNo="14" name="acceptorPostalCode" fixed="false" length="-1" maxLength="10" remark="Acceptor Postal Code" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F63">
+            <field domainNo="1" name="financialNetworkCode" fixed="true" length="3" remark="Financial Network Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="banknetReferenceNumber" fixed="true" length="9" remark="Banknet Reference Number" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F90">
+            <field domainNo="1" name="f90f1" fixed="true" length="4" remark="Original Message Type Identifier" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f90f2" fixed="true" length="6" remark="Original DE 11 [Systems Trace Audit Number]" className="Integer" parseType="EBCDIC"/>
+            <field domainNo="3" name="f90f3" fixed="true" length="6" remark="Original DE 7 [Transmission Date and Time]" className="LocalDateTime" pattern="MMddHHmmss" parseType="EBCDIC"/>
+            <field domainNo="4" name="f90f4" fixed="true" length="11" remark="Original DE 32 [Acquiring Institution ID Code]" className="String" parseType="EBCDIC"/>
+            <field domainNo="5" name="f90f5" fixed="true" length="11" remark="Original DE 33 [Forwarding Institution ID Code]" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F94">
+            <field domainNo="1" name="f94f1" fixed="true" length="1" remark="Reserved for Future Use" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f94f2" fixed="true" length="1" remark="Acquirer/Issuer Indicator" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="f94f3" fixed="true" length="1" remark="Address Data Indicator" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="f94f4" fixed="true" length="4" remark="Reserved for Future Use" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F95">
+            <field domainNo="1" name="f95f1" fixed="true" length="12" remark="Actual Amount, Transaction" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f95f2" fixed="true" length="12" remark="Actual Amount, Settlement" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="f95f3" fixed="true" length="12" remark="Actual Amount, Cardholder Billing" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="f95f4" fixed="true" length="6" remark="Zero Fill" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F104" usage="001">
+            <field domainNo="1" name="f104f1" fixed="true" length="28" remark="Digital Payment Cryptogram" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F104" usage="002">
+            <field domainNo="1" name="f104f1" fixed="true" length="12" remark="Estimated Amount" className="BigDecimal" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F104" usage="003">
+            <field domainNo="1" name="f104f1" fixed="false" length="-1" maxLength="150" remark="Remote Commerce Acceptor Identifier" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F104" usage="004" domainType="TLV3">
+            <field domainNo="1" name="f104f1f1" aliasName="001" fixed="true" length="5" remark="Digital Service Provider ID 1" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f104f1f2" aliasName="002" fixed="true" length="5" remark="Digital Service Provider ID 2" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F104" usage="005" domainType="TLV3">
+            <field domainNo="1" name="f104f1f1" aliasName="001" fixed="true" length="5" remark="Cardholder Verification" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f104f1f2" aliasName="002" fixed="true" length="5" remark="Authentication Factors" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F108" usage="03" domainType="TLV4">
+            <field domainNo="1" name="f108f1" aliasName="01" fixed="true" length="19" remark="Unique Transaction Reference" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f108f2" aliasName="02" fixed="false" maxLength="65" remark="Additional Message" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="f108f3" aliasName="03" fixed="true" length="2" remark="Funding Source" className="String" parseType="EBCDIC"/>
+            <field domainNo="4" name="f108f4" aliasName="04" fixed="false" maxLength="30" remark="Participation ID" className="String" parseType="EBCDIC"/>
+            <field domainNo="5" name="f108f5" aliasName="05" fixed="true" length="2" remark="Transaction Purpose" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F108" usage="04" domainType="TLV4">
+            <field domainNo="1" name="f108f1" aliasName="01" fixed="true" length="3" remark="Language Identification" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f108f2" aliasName="02" fixed="false" maxLength="50" remark="Language Data" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F108" usage="05" domainType="TLV4">
+            <field domainNo="1" name="f108f1" aliasName="01" fixed="false" maxLength="19" remark="Digital Account Reference Number" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f108f2" aliasName="02" fixed="false" maxLength="34" remark="Mastercard Merchant Presented QR Receiving Account Number" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F108" usage="06">
+            <field domainNo="1" name="f108f1" aliasName="01" fixed="false" length="-1" maxLength="237" remark="QR Dynamic Code Data" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F110" usage="09">
+            <field domainNo="1" name="f110f1" fixed="false" length="-1" maxLength="96" remark="ANSI X9 TR-31 Key Block Key" className="Bytes" parseType="BINARY"/>
+        </subPayload>
+        <subPayload domain="F110" usage="10">
+            <field domainNo="1" name="f110f1" fixed="true" length="6" remark="Key Check Value" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F112" usage="042">
+            <field domainNo="1" name="f112f1" fixed="false" length="-1" maxLength="12" remark="Acceptor Tax ID" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F112" usage="045" domainType="TLV4">
+            <field domainNo="1" name="f112f1" aliasName="01" fixed="false" maxLength="3" remark="Taxpayer Country Code" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f112f2" aliasName="02" fixed="false" maxLength="30" remark="Taxpayer Identification Number" className="String" parseType="EBCDIC"/>
+            <field domainNo="3" name="f112f3" aliasName="03" fixed="false" maxLength="30" remark="Tax Registration Reason Code" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F112" usage="060">
+            <field domainNo="1" name="f112f1" fixed="true" length="399" remark="Mastercard Network Gateway Services Platform [MNGS] Transport Data)" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F112" usage="021">
+            <field domainNo="1" name="f112f1" fixed="true" length="2" remark="Installment Type" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="f112f2" fixed="true" length="1" remark="Payment Options" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F112" usage="022">
+            <field domainNo="1" name="f112f1" fixed="true" length="2" remark="Number of Installments" className="Integer" parseType="EBCDIC"/>
+            <field domainNo="2" name="f112f2" fixed="true" length="5" remark="Interest Rate" className="Integer" parseType="EBCDIC"/>
+            <field domainNo="3" name="f112f3" fixed="true" length="12" remark="Installment Fee" className="BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="4" name="f112f4" fixed="true" length="5" remark="Annual Percentage Rate" className="Integer" parseType="EBCDIC"/>
+            <field domainNo="6" name="f112f6" fixed="true" length="12" remark="First Installment Amount" className="BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="7" name="f112f7" fixed="true" length="12" remark="Subsequent Installment Amount" className="BigDecimal" parseType="EBCDIC"/>
+            <field domainNo="8" name="f112f8" fixed="true" length="12" remark="Total Amount Due" className="BigDecimal" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F120" usage="01">
+            <field domainNo="1" name="postalCode" fixed="true" length="9" remark="Cardholder postal/ZIP code" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="address" fixed="true" length="20" remark="Cardholder address" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F120" usage="02">
+            <field domainNo="1" name="postalCode" fixed="true" length="9" remark="Cardholder postal/ZIP code" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="address" fixed="true" length="5" remark="Cardholder address" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F120" usage="03">
+            <field domainNo="1" name="postalCode" fixed="true" length="9" remark="Cardholder postal/ZIP code" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="address" fixed="true" length="5" remark="Cardholder address" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F120" usage="04">
+            <field domainNo="1" name="postalCode" fixed="true" length="9" remark="Cardholder postal/ZIP code" className="String" parseType="EBCDIC"/>
+            <field domainNo="2" name="address" fixed="true" length="5" remark="Cardholder address" className="String" parseType="EBCDIC"/>
+        </subPayload>
+        <subPayload domain="F122" usage="001" domainType="TLV3">
+            <field domainNo="1" name="f122f1" aliasName="001" fixed="false" maxLength="48" remark="Acceptor Street Address" className="String"/>
+            <field domainNo="2" name="f122f2" aliasName="002" fixed="true" length="3" remark="Acceptor Country Subdivision Code" className="String"/>
+            <field domainNo="3" name="f122f3" aliasName="003" fixed="false" maxLength="255" remark="Acceptor URL address" className="String"/>
+            <field domainNo="4" name="f122f4" aliasName="004" fixed="false" maxLength="16" remark="Acceptor Customer Service Phone Number" className="String"/>
+            <field domainNo="5" name="f122f5" aliasName="005" fixed="false" maxLength="16" remark="Acceptor Phone Number" className="String"/>
+            <field domainNo="6" name="f122f6" aliasName="006" fixed="false" maxLength="25" remark="Acceptor Additional Contact Information" className="String"/>
+            <field domainNo="7" name="f122f7" aliasName="007" fixed="true" length="21" remark="Acceptor Tax ID" className="String"/>
+            <field domainNo="8" name="f122f8" aliasName="008" fixed="false" maxLength="6" remark="Partner ID Code" className="String"/>
+            <field domainNo="9" name="f122f9" aliasName="009" fixed="false" maxLength="13" remark="Service Location City Name" className="String"/>
+            <field domainNo="10" name="f122f10" aliasName="010" fixed="true" length="3" remark="Service Location Country Subdivision Code" className="String"/>
+            <field domainNo="11" name="f122f11" aliasName="011" fixed="true" length="3" remark="Service Location Country Code" className="String"/>
+            <field domainNo="12" name="f122f12" aliasName="012" fixed="false" maxLength="10" remark="Service Location Postal Code" className="String"/>
+        </subPayload>
+    </message>
+</alatka-messages>
