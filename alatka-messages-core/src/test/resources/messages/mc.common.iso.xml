@@ -5,7 +5,7 @@
     <message type="iso" group="mc" code="common" remark="万事达8583报文">
         <payload>
             <field domainNo="0" name="messageType" fixed="true" length="4" remark="报文类型" className="String" parseType="EBCDIC"/>
-            <field domainNo="1" name="bitMap" fixed="false" length="16" remark="位图" className="BitMap" parseType="BINARY"/>
+            <field domainNo="1" name="bitMap" fixed="false" length="16" remark="Bit Map" className="BitMap" parseType="BINARY"/>
             <field domainNo="2" name="pan" fixed="false" length="2" maxLength="19" remark="Primary Account Number" className="String" parseType="EBCDIC"/>
             <field domainNo="3" name="processingCode" fixed="true" length="6" remark="Processing Code" className="String" parseType="EBCDIC"/>
             <field domainNo="4" name="amtTrans" fixed="true" length="12" remark="Amount, Transaction" className="BigDecimal" parseType="EBCDIC"/>
