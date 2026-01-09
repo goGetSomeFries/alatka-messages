@@ -34,7 +34,7 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
      * 子域key Pattern<br>
      * e.g. F61$SM@TLV F59$SM_F3 F60@TLV
      */
-    private static final Pattern PATTERN = Pattern.compile("^([$\\w]+?)(\\$[0-9A-Z]{2})?(@\\w+)?$");
+    private static final Pattern PATTERN = Pattern.compile("^([$\\w]+?)(\\$[0-9A-Z]{2,3})?(@\\w+)?$");
 
     public YamlMessageDefinitionBuilder(String classpath) {
         super(classpath);

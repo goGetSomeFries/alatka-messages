@@ -140,6 +140,8 @@ public abstract class AbstractMessageDefinitionBuilder<T, S extends FieldDefinit
                 case ULV:
                 case ULV2:
                 case ULV3:
+                case ULV4:
+                case ULV5:
                 case UV:
                 case UVAS:
                     definition.setClassName(ClassAlias.UsageSubdomain.name());

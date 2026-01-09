@@ -103,7 +103,7 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
     }
 
     public enum DomainType {
-        TLV, TLV2, TV, ULV, ULV2, ULV3, UV, UVAS, PAGE, FIXED, BITMAP, NONE
+        TLV, TLV2, TLV3, TLV4, TV, ULV, ULV2, ULV3, ULV4, ULV5, UV, UVAS, PAGE, FIXED, BITMAP, NONE
     }
 
     public Type getType() {

@@ -314,6 +314,9 @@ public class MessageBuilderTest {
         definition.setDomainType(MessageDefinition.DomainType.TLV2);
         Assertions.assertInstanceOf(TLV2SubdomainMessageBuilder.class, MessageBuilder.init(definition));
 
+        definition.setDomainType(MessageDefinition.DomainType.TLV3);
+        Assertions.assertInstanceOf(TLV3SubdomainMessageBuilder.class, MessageBuilder.init(definition));
+
         definition.setDomainType(MessageDefinition.DomainType.TV);
         Assertions.assertInstanceOf(TVSubdomainMessageBuilder.class, MessageBuilder.init(definition));
 
