@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TLV2DomainParsedTest {
+public class TLV4DomainParsedTest {
 
-    private TLV2DomainParsed domainParsed = new TLV2DomainParsed();
+    private TLV4DomainParsed domainParsed = new TLV4DomainParsed();
 
     @Test
     @DisplayName("getOrder() == 70")
@@ -25,7 +25,7 @@ public class TLV2DomainParsedTest {
     void test02() {
         MessageDefinition messageDefinition = new MessageDefinition();
         messageDefinition.setType(MessageDefinition.Type.iso);
-        messageDefinition.setDomainType(MessageDefinition.DomainType.TLV2);
+        messageDefinition.setDomainType(MessageDefinition.DomainType.TLV4);
 
         boolean matched = domainParsed.matched(messageDefinition, null);
 
@@ -45,49 +45,49 @@ public class TLV2DomainParsedTest {
     void test04() {
         String value = "WLZF";
         IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
-        fieldDefinition.setAliasName("T00");
-        byte[] pack = domainParsed.pack(value.getBytes(), fieldDefinition);
-        Assertions.assertEquals(new String(pack), "T00004WLZF");
+        fieldDefinition.setAliasName("02");
+        byte[] pack = domainParsed.pack(BytesUtil.toEBCDIC(value), fieldDefinition);
+        Assertions.assertEquals(BytesUtil.fromEBCDIC(pack), "0204WLZF");
     }
 
     @Test
     @DisplayName("unpack()")
     void test06() {
-        String str = "T00004WLZF";
+        String str = "0204WLZF";
         AtomicInteger counter = new AtomicInteger(0);
 
-        byte[] pack = domainParsed.unpack(str.getBytes(), null, counter);
-        Assertions.assertEquals(BytesUtil.bytesToHex(pack), "574C5A46");
+        byte[] pack = domainParsed.unpack(BytesUtil.toEBCDIC(str), null, counter);
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), "E6D3E9C6");
     }
 
     @Test
     @DisplayName("tagLength()")
     void test07() {
-        Assertions.assertEquals(3, domainParsed.tagLength());
+        Assertions.assertEquals(2, domainParsed.tagLength());
     }
 
     @Test
     @DisplayName("lenLength()")
     void test08() {
-        Assertions.assertEquals(3, domainParsed.lenLength());
+        Assertions.assertEquals(2, domainParsed.lenLength());
     }
 
     @Test
     @DisplayName("buildTagBytes()")
     void test9() {
-        Assertions.assertArrayEquals(BytesUtil.hexToBytes("303033"), domainParsed.buildTagBytes("003"));
+        Assertions.assertArrayEquals(BytesUtil.hexToBytes("F0F3"), domainParsed.buildTagBytes("03"));
     }
 
     @Test
     @DisplayName("buildLenBytes()")
     void test10() {
-        Assertions.assertArrayEquals(BytesUtil.hexToBytes("303033"), domainParsed.buildLenBytes("003"));
+        Assertions.assertArrayEquals(BytesUtil.hexToBytes("F0F3"), domainParsed.buildLenBytes("03"));
     }
 
     @Test
     @DisplayName("buildLen()")
     void test11() {
-        String hex = "3530";
+        String hex = "F5F0";
         Assertions.assertEquals(50, domainParsed.buildLen(BytesUtil.hexToBytes(hex)));
     }
 }

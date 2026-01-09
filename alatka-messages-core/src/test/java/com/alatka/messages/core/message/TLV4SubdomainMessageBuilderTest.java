@@ -8,24 +8,24 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TLV2SubdomainMessageBuilderTest {
+public class TLV4SubdomainMessageBuilderTest {
 
     @Test
     @DisplayName("构造器")
     void test01() {
         MessageDefinition definition = new MessageDefinition();
-        Assertions.assertDoesNotThrow(() -> new TLV2SubdomainMessageBuilder(definition));
+        Assertions.assertDoesNotThrow(() -> new TLV4SubdomainMessageBuilder(definition));
     }
 
     @Test
     @DisplayName("doBuildFieldDefinitions()")
     void test02() {
         MessageDefinition definition = new MessageDefinition();
-        TLV2SubdomainMessageBuilder messageBuilder = new TLV2SubdomainMessageBuilder(definition);
+        TLV4SubdomainMessageBuilder messageBuilder = new TLV4SubdomainMessageBuilder(definition);
 
-        byte[] bytes = "T01003ABAT03002B2".getBytes();
+        byte[] bytes = BytesUtil.toEBCDIC("0103ABA0302B2");
         List<String> list = messageBuilder.doBuildFieldDefinitions(bytes, null);
-        String[] array = {"T01", "T03"};
+        String[] array = {"01", "03"};
         Assertions.assertEquals(array.length, list.size());
         for (int i = 0; i < array.length; i++) {
             Assertions.assertEquals(array[i], list.get(i));
@@ -34,35 +34,33 @@ public class TLV2SubdomainMessageBuilderTest {
 
     @Test
     @DisplayName("tagLength()")
-    void test07() {
+    void test03() {
         MessageDefinition definition = new MessageDefinition();
-        TLV2SubdomainMessageBuilder messageBuilder = new TLV2SubdomainMessageBuilder(definition);
-        Assertions.assertEquals(3, messageBuilder.tagLength());
+        TLV4SubdomainMessageBuilder messageBuilder = new TLV4SubdomainMessageBuilder(definition);
+        Assertions.assertEquals(2, messageBuilder.tagLength());
     }
 
     @Test
     @DisplayName("lenLength()")
-    void test08() {
+    void test04() {
         MessageDefinition definition = new MessageDefinition();
-        TLV2SubdomainMessageBuilder messageBuilder = new TLV2SubdomainMessageBuilder(definition);
-        Assertions.assertEquals(3, messageBuilder.lenLength());
+        TLV4SubdomainMessageBuilder messageBuilder = new TLV4SubdomainMessageBuilder(definition);
+        Assertions.assertEquals(2, messageBuilder.lenLength());
     }
 
     @Test
     @DisplayName("buildTag()")
-    void test09() {
+    void test05() {
         MessageDefinition definition = new MessageDefinition();
-        TLV2SubdomainMessageBuilder messageBuilder = new TLV2SubdomainMessageBuilder(definition);
-        String hex = "303038";
-        Assertions.assertEquals("008", messageBuilder.buildTag(BytesUtil.hexToBytes(hex)));
+        TLV4SubdomainMessageBuilder messageBuilder = new TLV4SubdomainMessageBuilder(definition);
+        Assertions.assertEquals("01", messageBuilder.buildTag(BytesUtil.hexToBytes("F0F1")));
     }
 
     @Test
     @DisplayName("buildLen()")
-    void test10() {
+    void test06() {
         MessageDefinition definition = new MessageDefinition();
-        TLV2SubdomainMessageBuilder messageBuilder = new TLV2SubdomainMessageBuilder(definition);
-        String hex = "3530";
-        Assertions.assertEquals(50, messageBuilder.buildLen(BytesUtil.hexToBytes(hex)));
+        TLV4SubdomainMessageBuilder messageBuilder = new TLV4SubdomainMessageBuilder(definition);
+        Assertions.assertEquals(2, messageBuilder.buildLen(BytesUtil.hexToBytes("F0F2")));
     }
 }

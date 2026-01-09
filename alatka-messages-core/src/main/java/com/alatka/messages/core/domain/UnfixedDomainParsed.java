@@ -36,7 +36,7 @@ public class UnfixedDomainParsed extends AbstractDomainParsed {
     @Override
     public byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter) {
         int length = bytes.length - counter.get();
-        if (length <= 0) {
+        if (length < 0) {
             throw new IllegalArgumentException("域长度配置错误");
         }
         return Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(length));
