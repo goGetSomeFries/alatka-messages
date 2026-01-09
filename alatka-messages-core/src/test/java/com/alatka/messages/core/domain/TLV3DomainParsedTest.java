@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TLV2DomainParsedTest {
+public class TLV3DomainParsedTest {
 
-    private TLV2DomainParsed domainParsed = new TLV2DomainParsed();
+    private TLV3DomainParsed domainParsed = new TLV3DomainParsed();
 
     @Test
     @DisplayName("getOrder() == 70")
@@ -25,7 +25,7 @@ public class TLV2DomainParsedTest {
     void test02() {
         MessageDefinition messageDefinition = new MessageDefinition();
         messageDefinition.setType(MessageDefinition.Type.iso);
-        messageDefinition.setDomainType(MessageDefinition.DomainType.TLV2);
+        messageDefinition.setDomainType(MessageDefinition.DomainType.TLV3);
 
         boolean matched = domainParsed.matched(messageDefinition, null);
 
@@ -45,19 +45,19 @@ public class TLV2DomainParsedTest {
     void test04() {
         String value = "WLZF";
         IsoFieldDefinition fieldDefinition = new IsoFieldDefinition();
-        fieldDefinition.setAliasName("T00");
-        byte[] pack = domainParsed.pack(value.getBytes(), fieldDefinition);
-        Assertions.assertEquals(new String(pack), "T00004WLZF");
+        fieldDefinition.setAliasName("002");
+        byte[] pack = domainParsed.pack(BytesUtil.toEBCDIC(value), fieldDefinition);
+        Assertions.assertEquals(BytesUtil.fromEBCDIC(pack), "002004WLZF");
     }
 
     @Test
     @DisplayName("unpack()")
     void test06() {
-        String str = "T00004WLZF";
+        String str = "002004WLZF";
         AtomicInteger counter = new AtomicInteger(0);
 
-        byte[] pack = domainParsed.unpack(str.getBytes(), null, counter);
-        Assertions.assertEquals(BytesUtil.bytesToHex(pack), "574C5A46");
+        byte[] pack = domainParsed.unpack(BytesUtil.toEBCDIC(str), null, counter);
+        Assertions.assertEquals(BytesUtil.bytesToHex(pack), "E6D3E9C6");
     }
 
     @Test
@@ -75,19 +75,19 @@ public class TLV2DomainParsedTest {
     @Test
     @DisplayName("buildTagBytes()")
     void test9() {
-        Assertions.assertArrayEquals(BytesUtil.hexToBytes("303033"), domainParsed.buildTagBytes("003"));
+        Assertions.assertArrayEquals(BytesUtil.hexToBytes("F0F0F3"), domainParsed.buildTagBytes("003"));
     }
 
     @Test
     @DisplayName("buildLenBytes()")
     void test10() {
-        Assertions.assertArrayEquals(BytesUtil.hexToBytes("303033"), domainParsed.buildLenBytes("003"));
+        Assertions.assertArrayEquals(BytesUtil.hexToBytes("F0F0F3"), domainParsed.buildLenBytes("003"));
     }
 
     @Test
     @DisplayName("buildLen()")
     void test11() {
-        String hex = "3530";
+        String hex = "F5F0";
         Assertions.assertEquals(50, domainParsed.buildLen(BytesUtil.hexToBytes(hex)));
     }
 }
