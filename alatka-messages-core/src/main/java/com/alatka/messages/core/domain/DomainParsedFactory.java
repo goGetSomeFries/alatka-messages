@@ -23,6 +23,7 @@ public class DomainParsedFactory {
         init(new TVDomainParsed());
         init(new TLVDomainParsed());
         init(new TLV2DomainParsed());
+        init(new TLV3DomainParsed());
         init(new UnfixedDomainParsed());
         init(new BinaryLVDomainParsed());
         init(new AsciiLVDomainParsed());

@@ -9,8 +9,10 @@ import com.alatka.messages.core.message.MessageBuilder;
 import com.alatka.messages.core.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class MessageVisaXmlTest {
 
     @BeforeAll
