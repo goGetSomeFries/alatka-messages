@@ -6,7 +6,7 @@
     <parent>
         <artifactId>alatka</artifactId>
         <groupId>com.alatka</groupId>
-        <version>1.65.0-jdk17</version>
+        <version>1.67.0-jdk17</version>
     </parent>
 
     <groupId>com.alatka.messages</groupId>
@@ -21,7 +21,7 @@
     </modules>
 
     <properties>
-        <revision>3.10.0-jdk17</revision>
+        <revision>3.11.0-jdk17</revision>
     </properties>
 
 </project>
