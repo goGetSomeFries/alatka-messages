@@ -24,4 +24,27 @@
         <revision>3.11.0-jdk17</revision>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.alatka</groupId>
+                <artifactId>alatka-dependencies</artifactId>
+                <version>${alatka-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <configuration>
+                    <flattenMode>defaults</flattenMode>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
