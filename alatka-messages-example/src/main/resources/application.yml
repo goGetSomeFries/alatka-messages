@@ -4,7 +4,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.sqlite.JDBC
-    url: jdbc:sqlite:${user.dir}/alatka-messages/alatka-messages-example/db/example.db
+    url: jdbc:sqlite:${user.dir}/alatka-messages-example/db/example.db
   jpa:
     properties:
       hibernate:
