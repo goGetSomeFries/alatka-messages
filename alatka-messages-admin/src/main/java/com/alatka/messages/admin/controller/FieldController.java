@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,7 +55,7 @@ public class FieldController {
 
     @Operation(summary = "分页查询报文域")
     @GetMapping("/page")
-    public PageResMessage<FieldRes> queryPage(@Valid FieldPageReq req) {
+    public PageResMessage<FieldRes> queryPage(@Valid @ParameterObject FieldPageReq req) {
         FieldDefinition condition = new FieldDefinition();
         BeanUtils.copyProperties(req, condition);
         Page<FieldRes> page = fieldService.queryPage(condition, req.build())
