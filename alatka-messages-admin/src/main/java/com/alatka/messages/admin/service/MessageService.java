@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,7 @@ public class MessageService {
     private MessageRepository messageRepository;
 
     public Map<String, String> build(List<String> uris, String path) {
-        Map<String, String> resultMap = new HashMap<>(uris.size());
+        Map<String, String> resultMap = new ConcurrentHashMap<>(uris.size());
 
         CompletableFuture<Void> completableFuture = uris.stream()
                 .map(uri -> uri.startsWith("http://") || uri.startsWith("https://") ? uri : "http://" + uri)
