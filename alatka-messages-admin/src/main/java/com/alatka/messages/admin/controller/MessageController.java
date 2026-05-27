@@ -11,6 +11,7 @@ import com.alatka.messages.admin.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,7 +84,7 @@ public class MessageController {
 
     @Operation(summary = "分页查询报文")
     @GetMapping("/page")
-    public PageResMessage<MessageRes> queryPage(@Valid MessagePageReq req) {
+    public PageResMessage<MessageRes> queryPage(@Valid @ParameterObject MessagePageReq req) {
         MessageDefinition condition = new MessageDefinition();
         BeanUtils.copyProperties(req, condition);
         Page<MessageRes> page = messageService.queryPage(condition, req.build())
