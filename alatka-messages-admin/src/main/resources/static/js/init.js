@@ -149,7 +149,7 @@ function submitFunction(url, methodType, data, actionName) {
 }
 
 function redirectToFieldPage(messageId) {
-    window.location.href = `field?messageId=${messageId}`;
+    window.location.href = `/field?messageId=${messageId}`;
 }
 
 function httpClient(url, methodType, data, success, error = function (msg) {
