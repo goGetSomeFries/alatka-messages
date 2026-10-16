@@ -1,3 +1,4 @@
+.attach_pid*
 **/.flattened-pom.xml
 logs/
 HELP.md
