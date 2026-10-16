@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>alatka-rule-admin</title>
+    <title>alatka-messages-admin</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/tom-select/dist/css/tom-select.bootstrap5.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-table/dist/bootstrap-table.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/alatka-messages-infra.css}">
 </head>
 <body>
 <div class="container mt-4">
-    <div class="card mb-3">
+    <div class="card">
         <div class="card-header bg-light d-flex justify-content-between align-items-center">
             <h5 class="mb-0">报文查询</h5>
             <button class="btn btn-sm btn-outline-secondary"
@@ -26,10 +28,7 @@
             <form id="searchForm" class="row g-3">
                 <div class="col-md-3">
                     <label for="type" class="form-label">类型</label>
-                    <select class="form-select" id="type" name="type">
-                        <option value="">全部</option>
-                        <option value="iso">8583</option>
-                        <option value="fixed">固定格式</option>
+                    <select class="form-select alk-select-type" id="type" name="type">
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -42,12 +41,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="kind" class="form-label">种类</label>
-                    <select class="form-select" id="kind" name="kind">
-                        <option value="">全部</option>
-                        <option value="header">header</option>
-                        <option value="payload">payload</option>
-                        <option value="request">request</option>
-                        <option value="response">response</option>
+                    <select class="form-select alk-select-kind" id="kind" name="kind">
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -55,11 +49,8 @@
                     <input type="text" class="form-control" id="remark" name="remark" placeholder="输入描述">
                 </div>
                 <div class="col-md-3">
-                    <label for="enabled" class="form-label">是否可用</label>
-                    <select class="form-select" id="enabled" name="enabled">
-                        <option value="">全部</option>
-                        <option value="true" selected>正常</option>
-                        <option value="false">禁用</option>
+                    <label for="enabled" class="form-label">状态</label>
+                    <select class="form-select alk-select-enabled" id="enabled" name="enabled">
                     </select>
                 </div>
                 <div class="col-12 text-center">
@@ -73,28 +64,6 @@
             </form>
         </div>
     </div>
-    <div class="col-12 text-end mb-3">
-        <button type="button" class="btn btn-sm btn-outline-secondary" id="fallbackButton"
-                onclick="showBuildModal('/message/build', 'fallback')">
-            <i class="bi bi-arrow-left"></i> 回退
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-primary me-5" id="deployButton"
-                onclick="showBuildModal('/message/build', 'deploy')">
-            <i class="bi bi-rocket"></i> 部署
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-info" id="addButton"
-                onclick="showEditModal('/message/create', true)">
-            <i class="bi bi-plus-lg"></i> 新增
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-warning" id="editButton"
-                onclick="showEditModal('/message/update', false)">
-            <i class="bi bi-pencil-square"></i> 更新
-        </button>
-        <button type="button" class="btn btn-sm btn-danger" id="deleteButton"
-                onclick="showDeleteModal('/message/delete')">
-            <i class="bi bi-trash"></i> 删除
-        </button>
-    </div>
 
     <table id="dataTable"
            data-toggle="table"
@@ -107,19 +76,22 @@
            data-pagination-loop="false"
            data-side-pagination="server"
            data-click-to-select="true"
+           data-show-columns="true"
+           data-show-button-text="true"
+           data-thead-classes="text-center"
            data-maintain-selected="true">
         <thead>
         <tr>
             <th data-radio="true"></th>
-            <th data-field="id" data-sortable="true">ID</th>
-            <th data-field="type" data-formatter="typeFormatter">类型</th>
-            <th data-field="group">分组</th>
-            <th data-field="code" data-sortable="true">交易码</th>
-            <th data-field="kind" data-sortable="true">种类</th>
+            <th data-field="id" data-align="right" data-sortable="true" data-visible="false">ID</th>
+            <th data-field="type" data-align="center" data-formatter="typeFormatter">类型</th>
+            <th data-field="group" data-align="center">分组</th>
+            <th data-field="code" data-align="center" data-sortable="true">交易码</th>
+            <th data-field="kind" data-align="center" data-sortable="true" data-formatter="kindFormatter">种类</th>
             <th data-field="holder">实体类</th>
-            <th data-field="charset">编码</th>
+            <th data-field="charset" data-align="center" data-formatter="charsetFormatter">编码</th>
             <th data-field="remark">描述</th>
-            <th data-field="enabled" data-formatter="enabledFormatter">是否可用</th>
+            <th data-field="enabled" data-align="center" data-formatter="enabledFormatter">状态</th>
         </tr>
         </thead>
     </table>
@@ -138,9 +110,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="editType" class="form-label">类型</label>
-                            <select class="form-select" id="editType" name="type" required>
-                                <option value="iso">8583</option>
-                                <option value="fixed">固定格式</option>
+                            <select class="form-select alk-select-type" id="editType" name="type" required>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -157,11 +127,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="editKind" class="form-label">种类</label>
-                            <select class="form-select" id="editKind" name="kind" required>
-                                <option value="header">header</option>
-                                <option value="payload">payload</option>
-                                <option value="request">request</option>
-                                <option value="response">response</option>
+                            <select class="form-select alk-select-kind" id="editKind" name="kind" required>
                             </select>
                         </div>
                     </div>
@@ -182,18 +148,12 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="editCharset" class="form-label">编码</label>
-                            <select class="form-select" id="editCharset" name="charset">
-                                <option value="UTF-8">UTF-8</option>
-                                <option value="GB18030">GB18030</option>
-                                <option value="GBK">GBK</option>
+                            <select class="form-select alk-select-charset" id="editCharset" name="charset">
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="editEnabled" class="form-label">是否可用</label>
-                            <select class="form-select" id="editEnabled" name="enabled" required>
-                                <option value="">全部</option>
-                                <option value="true" selected>正常</option>
-                                <option value="false">禁用</option>
+                            <label for="editEnabled" class="form-label">状态</label>
+                            <select class="form-select alk-select-enabled" id="editEnabled" name="enabled" required>
                             </select>
                         </div>
                     </div>
@@ -267,8 +227,14 @@
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/webjars/bootstrap-table/dist/bootstrap-table.min.js}"></script>
 <script th:src="@{/webjars/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js}"></script>
-<script th:src="@{/js/init.js}"></script>
+<script th:src="@{/webjars/tom-select/dist/js/tom-select.complete.min.js}"></script>
+<script th:src="@{/js/alatka-messages-infra.js}"></script>
+<script th:src="@{/js/alatka-messages-table.js}"></script>
 <script>
+    initEnabledSelect();
+    initTypeSelect();
+    initKindSelect();
+    initCharsetSelect();
     initTable();
     initTableRowEvent();
 
@@ -276,14 +242,6 @@
         $('#dataTable').on('dbl-click-row.bs.table', function (event, row, $element) {
             redirectToFieldPage(row.id);
         });
-    }
-
-    function typeFormatter(arg) {
-        const keyValuePairs = {};
-        $('select#type option').each(function () {
-            keyValuePairs[$(this).val()] = $(this).text();
-        });
-        return keyValuePairs[arg];
     }
 
     function showBuildModal(url, type) {
@@ -311,6 +269,106 @@
             }
         });
     }
+
+    function charsetFormatter(key) {
+        switch (key) {
+            case 'UTF-8':
+                return `<span class="badge bg-primary">${key}</span>`;
+            case 'GB18030':
+                return `<span class="badge bg-success">${key}</span>`
+            case 'GBK':
+                return `<span class="badge bg-info">${key}</span>`
+            default:
+                return `<span class="badge bg-secondary">/</span>`;
+        }
+    }
+
+    function initCharsetSelect() {
+        $(".alk-select-charset").each(function () {
+            let tomSelect = new TomSelect(this, {
+                plugins: ['remove_button'],
+                placeholder: '选择编码',
+                options: [{value: 'UTF-8'}, {value: 'GB18030'}, {value: 'GBK'}],
+                render: {
+                    option: function (data, escape) {
+                        return `<div>${charsetFormatter(data.value)}</div>`;
+                    },
+                    item: function (data, escape) {
+                        return `<div>${charsetFormatter(data.value)}</div>`;
+                    }
+                }
+            });
+            if (this.id !== 'charset') {
+                tomSelect.setValue([Object.keys(tomSelect.options)[0]]);
+                $(this).data('alk-init-value', Object.keys(tomSelect.options)[0]);
+            }
+        });
+    }
+
+    function buttonsFunction() {
+        return {
+            fallbackBtn: {
+                text: '回退',
+                icon: 'bi-arrow-left',
+                attributes: {
+                    title: '回退',
+                    class: 'btn btn-outline-secondary'
+                },
+                event: function () {
+                    showBuildModal('/message/build', 'fallback');
+                }
+            },
+            deployBtn: {
+                text: '部署',
+                icon: 'bi-rocket',
+                attributes: {
+                    title: '部署',
+                    class: 'btn btn-outline-primary me-3'
+                },
+                event: function () {
+                    showBuildModal('/message/build', 'deploy');
+                }
+            },
+            addBtn: {
+                text: '新增',
+                icon: 'bi-plus-lg',
+                attributes: {
+                    title: '新增',
+                    class: 'btn btn-outline-info'
+                },
+                event: function () {
+                    showEditModal('/message/create', true);
+                }
+            },
+            editBtn: {
+                text: '更新',
+                icon: 'bi-pencil-square',
+                attributes: {
+                    title: '更新',
+                    class: 'btn btn-outline-warning'
+                },
+                event: function () {
+                    showEditModal('/message/update', false);
+                }
+            },
+            deleteBtn: {
+                text: '删除',
+                icon: 'bi-trash',
+                attributes: {
+                    title: '删除',
+                    class: 'btn btn-danger me-3'
+                },
+                event: function () {
+                    showDeleteModal('/message/delete');
+                }
+            }
+        }
+    }
+
+    function buttonsOrderFunction() {
+        return ['fallbackBtn', 'deployBtn', 'addBtn', 'editBtn', 'deleteBtn', 'columns'];
+    }
+
 </script>
 </body>
 </html>

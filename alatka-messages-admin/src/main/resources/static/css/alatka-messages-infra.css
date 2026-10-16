@@ -1,0 +1,14 @@
+.bootstrap-table .fixed-table-toolbar .btn.dropdown-toggle {
+    background-color: #fff !important;
+    border: 1px solid #6c757d !important;
+    color: #6c757d !important;
+    box-shadow: none !important;
+}
+
+.bootstrap-table .fixed-table-toolbar .btn.dropdown-toggle:hover,
+.bootstrap-table .fixed-table-toolbar .btn.dropdown-toggle:focus,
+.bootstrap-table .fixed-table-toolbar .btn.dropdown-toggle.show {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: #fff !important;
+}

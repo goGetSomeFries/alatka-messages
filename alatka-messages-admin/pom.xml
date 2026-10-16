@@ -55,5 +55,9 @@
             <groupId>org.webjars.npm</groupId>
             <artifactId>bootstrap-table</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>tom-select</artifactId>
+        </dependency>
     </dependencies>
 </project>

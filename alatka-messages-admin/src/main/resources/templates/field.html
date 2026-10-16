@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>alatka-rule-admin</title>
+    <title>alatka-messages-admin</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/tom-select/dist/css/tom-select.bootstrap5.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-table/dist/bootstrap-table.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/alatka-messages-infra.css}">
 </head>
 <body>
 <div class="container mt-4">
-    <div class="card mb-3">
+    <div class="card">
         <div class="card-header bg-light d-flex justify-content-between align-items-center">
             <h5 class="mb-0">报文域查询</h5>
             <button class="btn btn-sm btn-outline-secondary"
@@ -76,19 +78,12 @@
                 </div>
                 <div class="col-md-2">
                     <label for="existSubdomain" class="form-label">存在子域</label>
-                    <select class="form-select" id="existSubdomain" name="existSubdomain">
-                        <option value="">全部</option>
-                        <option value="true">是</option>
-                        <option value="false">否</option>
+                    <select class="form-select alk-select-existSubdomain" id="existSubdomain" name="existSubdomain">
                     </select>
                 </div>
                 <div class="col-md-2">
                     <label for="status" class="form-label">状态</label>
-                    <select class="form-select" id="status" name="status">
-                        <option value="">全部</option>
-                        <option value="OPEN">OPEN</option>
-                        <option value="CLOSE">CLOSE</option>
-                        <option value="RAW">RAW</option>
+                    <select class="form-select alk-select-status" id="status" name="status">
                     </select>
                 </div>
                 <div class="col-12 text-center">
@@ -100,27 +95,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 mb-3">
-            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.history.back()">
-                <i class="bi bi-arrow-left"></i> 返回上级
-            </button>
-        </div>
-        <div class="col-6 text-end mb-3">
-            <button type="button" class="btn btn-sm btn-outline-info" id="addButton"
-                    onclick="showEditModal('/field/create', true)">
-                <i class="bi bi-plus-lg"></i> 新增
-            </button>
-            <button type="button" class="btn btn-sm btn-outline-warning" id="editButton"
-                    onclick="showEditModal('/field/update', false)">
-                <i class="bi bi-pencil-square"></i> 更新
-            </button>
-            <button type="button" class="btn btn-sm btn-danger" id="deleteButton"
-                    onclick="showDeleteModal('/field/delete')">
-                <i class="bi bi-trash"></i> 删除
-            </button>
         </div>
     </div>
 
@@ -139,22 +113,29 @@
            data-detail-filter="detailFilter"
            data-detail-formatter="detailFormatter"
            data-click-to-select="true"
+           data-show-columns="true"
+           data-show-button-text="true"
+           data-thead-classes="text-center"
            data-maintain-selected="true">
         <thead>
         <tr>
             <th data-radio="true"></th>
-            <th data-field="id" data-visible="false">ID</th>
-            <th data-field="domainNo">序号</th>
+            <th data-field="id" data-align="right" data-sortable="true" data-visible="false">ID</th>
+            <th data-field="domainNo" data-align="right">序号</th>
             <th data-field="name" data-formatter="nameFormatter">名称</th>
             <th data-field="remark">描述</th>
-            <th data-field="className">java类型</th>
+            <th data-field="className" data-align="center" data-formatter="classNameFormatter">java类型</th>
             <th data-field="pattern">域值格式</th>
-            <th data-field="fixed" data-formatter="fixedFormatter">是否定长</th>
-            <th data-field="length">字节长度</th>
-            <th data-field="maxLength">最大长度</th>
-            <th data-field="parseType">域解析类型</th>
-            <th data-field="lenParseType">变长域长度域解析类型</th>
-            <th data-field="status">状态</th>
+            <th data-field="fixed" data-align="center" data-formatter="fixedFormatter">是否定长</th>
+            <th data-field="length" data-align="right">字节长度</th>
+            <th data-field="maxLength" data-align="right">最大长度</th>
+            <th data-field="parseType" data-align="center" data-formatter="parseTypeFormatter">域解析类型</th>
+            <th data-field="lenParseType" data-align="center" data-formatter="parseTypeFormatter">变长域长度域解析类型
+            </th>
+            <th data-field="existSubdomain" data-visible="false" data-align="center"
+                data-formatter="existSubdomainFormatter">存在子域
+            </th>
+            <th data-field="status" data-align="center" data-formatter="statusFormatter">状态</th>
         </tr>
         </thead>
     </table>
@@ -209,19 +190,14 @@
                         </div>
                         <div class="col-md-4">
                             <label for="editStatus" class="form-label">状态</label>
-                            <select class="form-select" id="editStatus" name="status" required>
-                                <option value="OPEN">OPEN</option>
-                                <option value="CLOSE">CLOSE</option>
-                                <option value="RAW">RAW</option>
+                            <select class="form-select alk-select-status" id="editStatus" name="status" required>
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-2">
                             <label for="editFixed" class="form-label">是否定长</label>
-                            <select class="form-select" id="editFixed" name="fixed" required>
-                                <option value="true">定长</option>
-                                <option value="false">变长</option>
+                            <select class="form-select alk-select-fixed" id="editFixed" name="fixed" required>
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -236,56 +212,35 @@
                         </div>
                         <div class="col-md-3">
                             <label for="editParseType" class="form-label">域解析类型</label>
-                            <select class="form-select" id="editParseType" name="parseType" required>
-                                <option value="ASCII" selected>ASCII</option>
-                                <option value="BINARY">BINARY</option>
-                                <option value="BCD">BCD</option>
-                                <option value="EBCDIC">EBCDIC</option>
-                                <option value="NONE">NONE</option>
+                            <select class="form-select alk-select-parseType" id="editParseType" name="parseType"
+                                    required>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label for="editLenParseType" class="form-label">变长域长度域解析类型</label>
-                            <select class="form-select" id="editLenParseType" name="lenParseType" required>
-                                <option value="ASCII">ASCII</option>
-                                <option value="BINARY">BINARY</option>
-                                <option value="BCD">BCD</option>
-                                <option value="EBCDIC">EBCDIC</option>
-                                <option value="NONE" selected>NONE</option>
+                            <select class="form-select alk-select-lenParseType" id="editLenParseType"
+                                    name="lenParseType"
+                                    required>
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <label for="editExistSubdomain" class="form-label">是否存在子域</label>
-                            <select class="form-select" id="editExistSubdomain" name="existSubdomain" required>
-                                <option value="true">存在</option>
-                                <option value="false" selected>不存在</option>
+                            <select class="form-select alk-select-existSubdomain" id="editExistSubdomain"
+                                    name="existSubdomain" required>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label for="editSubdomainType" class="form-label">子域类型</label>
-                            <select class="form-select" id="editSubdomainType" name="subdomainType" required>
-                                <option value="FIXED">FIXED</option>
-                                <option value="TLV">TLV</option>
-                                <option value="TLV2">TLV2</option>
-                                <option value="TV">TV</option>
-                                <option value="ULV">ULV</option>
-                                <option value="ULV2">ULV2</option>
-                                <option value="ULV3">ULV3</option>
-                                <option value="UV">UV</option>
-                                <option value="UVAS">UVAS</option>
-                                <option value="PAGE">PAGE</option>
-                                <option value="BITMAP">BITMAP</option>
-                                <option value="NONE" selected>NONE</option>
+                            <select class="form-select alk-select-subdomainType" id="editSubdomainType"
+                                    name="subdomainType" required>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label for="editNonSubdomainException" class="form-label">未配置子域异常</label>
-                            <select class="form-select" id="editNonSubdomainException" name="nonSubdomainException"
-                                    required>
-                                <option value="true">抛出异常</option>
-                                <option value="false" selected>不抛出异常</option>
+                            <select class="form-select alk-select-nonSubdomainException" id="editNonSubdomainException"
+                                    name="nonSubdomainException" required>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -360,9 +315,8 @@
                         </div>
                         <div class="col-md-6">
                             <label for="editSubMessageEnabled" class="form-label">是否可用</label>
-                            <select class="form-select" id="editSubMessageEnabled" name="enabled" required>
-                                <option value="true" selected>正常</option>
-                                <option value="false">禁用</option>
+                            <select class="form-select alk-select-enabled" id="editSubMessageEnabled" name="enabled"
+                                    required>
                             </select>
                         </div>
                     </div>
@@ -412,8 +366,18 @@
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/webjars/bootstrap-table/dist/bootstrap-table.min.js}"></script>
 <script th:src="@{/webjars/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js}"></script>
-<script th:src="@{/js/init.js}"></script>
+<script th:src="@{/webjars/tom-select/dist/js/tom-select.complete.min.js}"></script>
+<script th:src="@{/js/alatka-messages-infra.js}"></script>
+<script th:src="@{/js/alatka-messages-table.js}"></script>
 <script>
+    initEnabledSelect();
+    initStatusSelect();
+    initFixedSelect();
+    initExistSubdomainSelect();
+    initNonSubdomainExceptionSelect();
+    initSubdomainTypeSelect();
+    initParseTypeSelect();
+    initLenParseTypeSelect();
     initTable();
     initDisplay();
 
@@ -518,7 +482,7 @@
                             <input type="text" class="form-control" name="domainType" value="${res.domainType ?? ''}" disabled>
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">是否可用：</label>
+                            <label class="form-label">状态：</label>
                             <input type="text" class="form-control" name="enabled" value="${res.enabled ? '正常' : '禁用'}" disabled>
                         </div>
                     </div>
@@ -548,7 +512,7 @@
                 <div class="tab-content border border-top-0 rounded-bottom p-3" id="tabContent">${tabs.join('')}</div>
             `);
             } else {
-                html.push('暂无子域配置');
+                html.push('<span class="badge text-bg-warning">暂无子域配置</span>');
             }
 
             $('#' + containerId).html(html.join(''));
@@ -628,21 +592,297 @@
         });
     }
 
-    function fixedFormatter(arg) {
-        if (arg === true) {
-            return "定长";
-        }
-        if (arg === false) {
-            return "变长";
-        }
-        return "/";
-    }
-
     function nameFormatter(value, row, index) {
         if (row.aliasName) {
             return `(${row.aliasName}) ${row.name}`;
         }
         return row.name;
+    }
+
+    function nonSubdomainExceptionFormatter(arg) {
+        if (arg === true || arg === 'true') {
+            return `<span class="badge bg-primary">抛出异常</span>`;
+        }
+        return `<span class="badge bg-secondary">不抛出异常</span>`;
+    }
+
+    function initNonSubdomainExceptionSelect() {
+        $(".alk-select-nonSubdomainException").each(function () {
+            let tomSelect = new TomSelect(this, {
+                plugins: ['remove_button'],
+                placeholder: '选择',
+                options: [{value: 'true'}, {value: 'false'}],
+                render: {
+                    option: function (data, escape) {
+                        return `<div>${nonSubdomainExceptionFormatter(data.value)}</div>`;
+                    },
+                    item: function (data, escape) {
+                        return `<div>${nonSubdomainExceptionFormatter(data.value)}</div>`;
+                    }
+                }
+            });
+            if (this.id !== 'nonSubdomainException') {
+                tomSelect.setValue([Object.keys(tomSelect.options)[1]]);
+                $(this).data('alk-init-value', Object.keys(tomSelect.options)[1]);
+            }
+        });
+    }
+
+    function existSubdomainFormatter(arg) {
+        if (arg === true || arg === 'true') {
+            return `<span class="badge bg-primary">是</span>`;
+        }
+        return `<span class="badge bg-secondary">否</span>`;
+    }
+
+    function initExistSubdomainSelect() {
+        $(".alk-select-existSubdomain").each(function () {
+            let tomSelect = new TomSelect(this, {
+                plugins: ['remove_button'],
+                placeholder: '选择',
+                options: [{value: 'true'}, {value: 'false'}],
+                render: {
+                    option: function (data, escape) {
+                        return `<div>${existSubdomainFormatter(data.value)}</div>`;
+                    },
+                    item: function (data, escape) {
+                        return `<div>${existSubdomainFormatter(data.value)}</div>`;
+                    }
+                }
+            });
+            if (this.id !== 'existSubdomain') {
+                tomSelect.setValue([Object.keys(tomSelect.options)[1]]);
+                $(this).data('alk-init-value', Object.keys(tomSelect.options)[1]);
+            }
+        });
+    }
+
+    function subdomainTypeFormatter(key) {
+        switch (key) {
+            case 'NONE':
+                return `<span class="badge bg-secondary">${key}</span>`
+            case 'FIXED':
+                return `<span class="badge bg-success">${key}</span>`
+            case 'PAGE':
+            case 'BITMAP':
+                return `<span class="badge bg-primary">${key}</span>`
+            case 'TLV':
+            case 'TLV2':
+            case 'TV':
+                return `<span class="badge bg-warning">${key}</span>`
+            case 'ULV':
+            case 'ULV2':
+            case 'ULV3':
+            case 'UV':
+            case 'UVAS':
+                return `<span class="badge bg-info">${key}</span>`
+            default:
+                return `<span class="badge bg-secondary">/</span>`;
+        }
+    }
+
+    function initSubdomainTypeSelect() {
+        $(".alk-select-subdomainType").each(function () {
+            let tomSelect = new TomSelect(this, {
+                plugins: ['remove_button'],
+                placeholder: '选择',
+                options: [{value: 'NONE'}, {value: 'FIXED'}, {value: 'TLV'}, {value: 'TLV2'}, {value: 'TV'}, {value: 'ULV'}, {value: 'ULV2'}, {value: 'ULV3'}, {value: 'UV'}, {value: 'UVAS'}, {value: 'PAGE'}, {value: 'BITMAP'}],
+                render: {
+                    option: function (data, escape) {
+                        return `<div>${subdomainTypeFormatter(data.value)}</div>`;
+                    },
+                    item: function (data, escape) {
+                        return `<div>${subdomainTypeFormatter(data.value)}</div>`;
+                    }
+                }
+            });
+            if (this.id !== 'subdomainType') {
+                tomSelect.setValue([Object.keys(tomSelect.options)[0]]);
+                $(this).data('alk-init-value', Object.keys(tomSelect.options)[0]);
+            }
+        });
+    }
+
+    function classNameFormatter(key) {
+        return `<span class="badge bg-white text-dark border">${key}</span>`;
+    }
+
+    function fixedFormatter(arg) {
+        if (arg === true || arg === 'true') {
+            return `<span class="badge bg-secondary">定长</span>`;
+        }
+        return `<span class="badge bg-white text-dark border">变长</span>`;
+    }
+
+    function initFixedSelect() {
+        $(".alk-select-fixed").each(function () {
+            let tomSelect = new TomSelect(this, {
+                plugins: ['remove_button'],
+                placeholder: '选择',
+                options: [{value: 'true'}, {value: 'false'}],
+                render: {
+                    option: function (data, escape) {
+                        return `<div>${fixedFormatter(data.value)}</div>`;
+                    },
+                    item: function (data, escape) {
+                        return `<div>${fixedFormatter(data.value)}</div>`;
+                    }
+                }
+            });
+            if (this.id !== 'fixed') {
+                tomSelect.setValue([Object.keys(tomSelect.options)[0]]);
+                $(this).data('alk-init-value', Object.keys(tomSelect.options)[0]);
+            }
+        });
+    }
+
+    function parseTypeFormatter(key) {
+        switch (key) {
+            case 'ASCII':
+                return `<span class="badge bg-success">${key}</span>`
+            case 'BINARY':
+                return `<span class="badge bg-primary">${key}</span>`
+            case 'BCD':
+                return `<span class="badge bg-warning">${key}</span>`
+            case 'EBCDIC':
+                return `<span class="badge bg-info">${key}</span>`
+            case 'NONE':
+                return `<span class="badge bg-secondary">${key}</span>`
+            default:
+                return `<span class="badge bg-secondary">/</span>`;
+        }
+    }
+
+    function initParseTypeSelect() {
+        $(".alk-select-parseType").each(function () {
+            let tomSelect = new TomSelect(this, {
+                plugins: ['remove_button'],
+                placeholder: '选择',
+                options: [{value: 'ASCII'}, {value: 'BINARY'}, {value: 'BCD'}, {value: 'EBCDIC'}, {value: 'NONE'}],
+                render: {
+                    option: function (data, escape) {
+                        return `<div>${parseTypeFormatter(data.value)}</div>`;
+                    },
+                    item: function (data, escape) {
+                        return `<div>${parseTypeFormatter(data.value)}</div>`;
+                    }
+                }
+            });
+            if (this.id !== 'parseType') {
+                tomSelect.setValue([Object.keys(tomSelect.options)[0]]);
+                $(this).data('alk-init-value', Object.keys(tomSelect.options)[0]);
+            }
+        });
+    }
+
+    function initLenParseTypeSelect() {
+        $(".alk-select-lenParseType").each(function () {
+            let tomSelect = new TomSelect(this, {
+                plugins: ['remove_button'],
+                placeholder: '选择',
+                options: [{value: 'ASCII'}, {value: 'BINARY'}, {value: 'BCD'}, {value: 'EBCDIC'}, {value: 'NONE'}],
+                render: {
+                    option: function (data, escape) {
+                        return `<div>${parseTypeFormatter(data.value)}</div>`;
+                    },
+                    item: function (data, escape) {
+                        return `<div>${parseTypeFormatter(data.value)}</div>`;
+                    }
+                }
+            });
+            if (this.id !== 'parseType') {
+                tomSelect.setValue([Object.keys(tomSelect.options)[4]]);
+                $(this).data('alk-init-value', Object.keys(tomSelect.options)[4]);
+            }
+        });
+    }
+
+    function statusFormatter(key) {
+        switch (key) {
+            case 'OPEN':
+                return `<span class="badge bg-success">${key}</span>`
+            case 'CLOSE':
+                return `<span class="badge bg-danger">${key}</span>`
+            case 'RAW':
+                return `<span class="badge bg-secondary">${key}</span>`
+            default:
+                return `<span class="badge bg-secondary">/</span>`;
+        }
+    }
+
+    function initStatusSelect() {
+        $(".alk-select-status").each(function () {
+            let tomSelect = new TomSelect(this, {
+                plugins: ['remove_button'],
+                placeholder: '选择状态',
+                options: [{value: 'OPEN'}, {value: 'CLOSE'}, {value: 'RAW'}],
+                render: {
+                    option: function (data, escape) {
+                        return `<div>${statusFormatter(data.value)}</div>`;
+                    },
+                    item: function (data, escape) {
+                        return `<div>${statusFormatter(data.value)}</div>`;
+                    }
+                }
+            });
+            if (this.id !== 'status') {
+                tomSelect.setValue([Object.keys(tomSelect.options)[0]]);
+                $(this).data('alk-init-value', Object.keys(tomSelect.options)[0]);
+            }
+        });
+    }
+
+    function buttonsFunction() {
+        return {
+            returnBtn: {
+                text: '返回上级',
+                icon: 'bi-arrow-left',
+                attributes: {
+                    title: '返回上级',
+                    class: 'btn btn-outline-secondary me-3'
+                },
+                event: function () {
+                    window.history.back();
+                }
+            },
+            addBtn: {
+                text: '新增',
+                icon: 'bi-plus-lg',
+                attributes: {
+                    title: '新增',
+                    class: 'btn btn-outline-info'
+                },
+                event: function () {
+                    showEditModal('/field/create', true);
+                }
+            },
+            editBtn: {
+                text: '更新',
+                icon: 'bi-pencil-square',
+                attributes: {
+                    title: '更新',
+                    class: 'btn btn-outline-warning'
+                },
+                event: function () {
+                    showEditModal('/field/update', false);
+                }
+            },
+            deleteBtn: {
+                text: '删除',
+                icon: 'bi-trash',
+                attributes: {
+                    title: '删除',
+                    class: 'btn btn-danger me-3'
+                },
+                event: function () {
+                    showDeleteModal('/field/delete');
+                }
+            }
+        }
+    }
+
+    function buttonsOrderFunction() {
+        return ['returnBtn', 'addBtn', 'editBtn', 'deleteBtn', 'columns'];
     }
 
 </script>
