@@ -8,6 +8,7 @@ import com.alatka.messages.core.domain.DomainParsedFactory;
 import com.alatka.messages.core.field.FieldBuilder;
 import com.alatka.messages.core.field.FieldBuilderFactory;
 import com.alatka.messages.core.holder.MessageHolder;
+import com.alatka.messages.core.support.ExecutionContext;
 import com.alatka.messages.core.util.BytesUtil;
 import com.alatka.messages.core.util.ClassUtil;
 
@@ -78,9 +79,14 @@ public abstract class MessageBuilder {
                 .filter(this::filter)
                 .map(fieldDefinition -> {
                     try {
+                        ExecutionContext.instance().setMessageHolder(instance);
+                        ExecutionContext.instance().setMessageDefinition(definition);
+
                         return this.doPack(instance, definition, fieldDefinition);
                     } catch (Exception e) {
                         throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+                    } finally {
+                        ExecutionContext.instance().clear();
                     }
                 })
                 .peek(wrapper -> this.postProcess(wrapper.fieldDefinition, wrapper.value, true))
@@ -119,9 +125,14 @@ public abstract class MessageBuilder {
                 .filter(this::filter)
                 .map(fieldDefinition -> {
                     try {
+                        ExecutionContext.instance().setMessageHolder(instance);
+                        ExecutionContext.instance().setMessageDefinition(definition);
+
                         return this.doUnpack(instance, definition, fieldDefinition, bytes, counter);
                     } catch (Exception e) {
                         throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+                    } finally {
+                        ExecutionContext.instance().clear();
                     }
                 }).forEach(wrapper -> this.postProcess(wrapper.fieldDefinition, wrapper.value, false));
         this.postProcess();

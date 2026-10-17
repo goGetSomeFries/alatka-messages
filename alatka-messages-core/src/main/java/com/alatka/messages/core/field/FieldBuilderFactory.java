@@ -2,7 +2,6 @@ package com.alatka.messages.core.field;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
-import com.alatka.messages.core.holder.MessageHolderAware;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -64,16 +63,9 @@ public class FieldBuilderFactory {
     public static FieldBuilder getInstance(Object instance,
                                            MessageDefinition messageDefinition,
                                            FieldDefinition fieldDefinition) {
-        FieldBuilder builder = LIST.stream()
+        return LIST.stream()
                 .filter(fieldBuilder -> fieldBuilder.matched(messageDefinition, fieldDefinition))
                 .max(Comparator.comparing(FieldBuilder::getOrder))
                 .orElseThrow(() -> new RuntimeException("FieldDefinition: " + fieldDefinition + " do not found matched 'FieldBuilder' instance"));
-
-//        FieldBuilder result = (FieldBuilder) ClassUtil.newInstance(builder.getClass());
-        builder.setMessageDefinition(messageDefinition);
-        if (builder instanceof MessageHolderAware) {
-            ((MessageHolderAware) builder).setMessageHolder(instance);
-        }
-        return builder;
     }
 }

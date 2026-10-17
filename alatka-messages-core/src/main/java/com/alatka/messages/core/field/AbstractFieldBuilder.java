@@ -1,7 +1,6 @@
 package com.alatka.messages.core.field;
 
 import com.alatka.messages.core.context.FieldDefinition;
-import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.holder.MessageHolder;
 import com.alatka.messages.core.util.ClassUtil;
 
@@ -15,8 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @see FieldBuilder
  */
 public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
-
-    protected MessageDefinition messageDefinition;
 
     @Override
     public byte[] serialize(Object instance, FieldDefinition fieldDefinition) {
@@ -195,11 +192,6 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
     @Override
     public int getOrder() {
         return 0;
-    }
-
-    @Override
-    public void setMessageDefinition(MessageDefinition messageDefinition) {
-        this.messageDefinition = messageDefinition;
     }
 
     protected boolean returnIfNull() {
