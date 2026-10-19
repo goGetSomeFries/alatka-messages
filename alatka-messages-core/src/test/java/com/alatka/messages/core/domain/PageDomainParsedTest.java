@@ -2,6 +2,7 @@ package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
+import com.alatka.messages.core.support.ExecutionContext;
 import com.alatka.messages.core.util.BytesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +53,7 @@ public class PageDomainParsedTest {
 
         Inner inner = new Inner();
         inner.setCount(2);
-        domainParsed.setMessageHolder(inner);
+        ExecutionContext.instance().setMessageHolder(inner);
         byte[] unpack = domainParsed.unpack(bytes, fieldDefinition, counter);
         Assertions.assertEquals("0102030405060708", BytesUtil.bytesToHex(unpack));
     }

@@ -96,8 +96,10 @@ public class AlatkaMessagesAutoConfiguration implements ApplicationContextAware 
         switch (properties.getMessageType()) {
             case iso:
                 builder.addBuilder(new IsoDatabaseMessageDefinitionBuilder(dataSource));
+                break;
             case fixed:
                 builder.addBuilder(new FixedDatabaseMessageDefinitionBuilder(dataSource));
+                break;
             case all:
             default:
                 builder.addBuilder(new IsoDatabaseMessageDefinitionBuilder(dataSource));

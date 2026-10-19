@@ -1,7 +1,6 @@
 package com.alatka.messages.core.field;
 
 import com.alatka.messages.core.context.FieldDefinition;
-import com.alatka.messages.core.context.MessageDefinition;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,14 +25,6 @@ public class AbstractFieldBuilderTest {
     @DisplayName("returnIfNull()")
     void test02() {
         Assertions.assertTrue(fieldBuilder.returnIfNull());
-    }
-
-    @Test
-    @DisplayName("setMessageDefinition()")
-    void test04() {
-        MessageDefinition definition = new MessageDefinition();
-        fieldBuilder.setMessageDefinition(definition);
-        Assertions.assertSame(definition, fieldBuilder.messageDefinition);
     }
 
     @Test
