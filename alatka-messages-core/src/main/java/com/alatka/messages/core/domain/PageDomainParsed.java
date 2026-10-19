@@ -2,8 +2,8 @@ package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
-import com.alatka.messages.core.holder.MessageHolderAware;
 import com.alatka.messages.core.holder.MessageHolderUtil;
+import com.alatka.messages.core.support.ExecutionContext;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,9 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @see AbstractDomainParsed
  * @see DomainParsed
  */
-public class PageDomainParsed extends AbstractDomainParsed implements MessageHolderAware {
-
-    private final ThreadLocal<Object> messageHolder = new ThreadLocal<>();
+public class PageDomainParsed extends AbstractDomainParsed {
 
     @Override
     public int getOrder() {
@@ -36,17 +34,9 @@ public class PageDomainParsed extends AbstractDomainParsed implements MessageHol
 
     @Override
     public byte[] unpack(byte[] bytes, FieldDefinition fieldDefinition, AtomicInteger counter) {
-        try {
-            int elementLength = fieldDefinition.getLength();
-            int pageSize = MessageHolderUtil.getByName(messageHolder.get(), fieldDefinition.getPageSizeName());
-            return Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(elementLength * pageSize));
-        } finally {
-            messageHolder.remove();
-        }
+        int elementLength = fieldDefinition.getLength();
+        int pageSize = MessageHolderUtil.getByName(ExecutionContext.instance().getMessageHolder(), fieldDefinition.getPageSizeName());
+        return Arrays.copyOfRange(bytes, counter.get(), counter.addAndGet(elementLength * pageSize));
     }
 
-    @Override
-    public void setMessageHolder(Object instance) {
-        this.messageHolder.set(instance);
-    }
 }

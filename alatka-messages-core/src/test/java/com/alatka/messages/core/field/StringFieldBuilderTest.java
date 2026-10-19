@@ -2,6 +2,7 @@ package com.alatka.messages.core.field;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
+import com.alatka.messages.core.support.ExecutionContext;
 import com.alatka.messages.core.util.BytesUtil;
 import com.alatka.messages.core.util.ClassUtil;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +18,7 @@ public class StringFieldBuilderTest {
     void init() {
         MessageDefinition definition = new MessageDefinition();
         definition.setCharset("GBK");
-        fieldBuilder.setMessageDefinition(definition);
+        ExecutionContext.instance().setMessageDefinition(definition);
     }
 
     @Test

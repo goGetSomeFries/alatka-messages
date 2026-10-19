@@ -53,6 +53,8 @@ public interface FieldBuilder {
      *
      * @param messageDefinition {@link MessageDefinition}
      */
-    void setMessageDefinition(MessageDefinition messageDefinition);
+    @Deprecated
+    default void setMessageDefinition(MessageDefinition messageDefinition) {
+    }
 
 }

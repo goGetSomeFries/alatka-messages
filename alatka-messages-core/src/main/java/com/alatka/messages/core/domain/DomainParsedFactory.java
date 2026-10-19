@@ -2,11 +2,10 @@ package com.alatka.messages.core.domain;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
-import com.alatka.messages.core.holder.MessageHolderAware;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * {@link DomainParsed}工厂，维护{@link DomainParsed}所有实例
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public class DomainParsedFactory {
 
-    private static final List<DomainParsed> LIST = new ArrayList<>();
+    private static final List<DomainParsed> LIST = new CopyOnWriteArrayList<>();
 
     static {
         init(new RawDomainParsed());
@@ -36,17 +35,10 @@ public class DomainParsedFactory {
         LIST.add(domainParsed);
     }
 
-    public static DomainParsed getInstance(Object instance,
-                                           MessageDefinition messageDefinition,
-                                           FieldDefinition fieldDefinition) {
-        DomainParsed domainParsed = LIST.stream()
+    public static DomainParsed getInstance(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
+        return LIST.stream()
                 .filter(parsed -> parsed.matched(messageDefinition, fieldDefinition))
                 .max(Comparator.comparingInt(DomainParsed::getOrder))
                 .orElseThrow(() -> new RuntimeException("do not found matched 'DomainParsed' instance"));
-
-        if (domainParsed instanceof MessageHolderAware) {
-            ((MessageHolderAware) domainParsed).setMessageHolder(instance);
-        }
-        return domainParsed;
     }
 }
