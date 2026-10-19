@@ -3,6 +3,7 @@ package com.alatka.messages.core.holder;
 /**
  * @author ybliu
  */
+@Deprecated
 public interface MessageHolderAware {
 
     /**
