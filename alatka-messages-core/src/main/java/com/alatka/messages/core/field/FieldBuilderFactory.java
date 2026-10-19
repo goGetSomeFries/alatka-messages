@@ -2,11 +2,10 @@ package com.alatka.messages.core.field;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
-import com.alatka.messages.core.holder.MessageHolderAware;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * {@link FieldBuilder}工厂，维护{@link FieldBuilder}所有实例
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public class FieldBuilderFactory {
 
-    private static final List<FieldBuilder> LIST = new ArrayList<>();
+    private static final List<FieldBuilder> LIST = new CopyOnWriteArrayList<>();
 
     static {
         // subdomain
@@ -61,19 +60,10 @@ public class FieldBuilderFactory {
         LIST.add(fieldBuilder);
     }
 
-    public static FieldBuilder getInstance(Object instance,
-                                           MessageDefinition messageDefinition,
-                                           FieldDefinition fieldDefinition) {
-        FieldBuilder builder = LIST.stream()
+    public static FieldBuilder getInstance(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {
+        return LIST.stream()
                 .filter(fieldBuilder -> fieldBuilder.matched(messageDefinition, fieldDefinition))
                 .max(Comparator.comparing(FieldBuilder::getOrder))
                 .orElseThrow(() -> new RuntimeException("FieldDefinition: " + fieldDefinition + " do not found matched 'FieldBuilder' instance"));
-
-//        FieldBuilder result = (FieldBuilder) ClassUtil.newInstance(builder.getClass());
-        builder.setMessageDefinition(messageDefinition);
-        if (builder instanceof MessageHolderAware) {
-            ((MessageHolderAware) builder).setMessageHolder(instance);
-        }
-        return builder;
     }
 }

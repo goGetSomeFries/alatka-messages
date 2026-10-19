@@ -8,6 +8,7 @@ import com.alatka.messages.core.domain.DomainParsedFactory;
 import com.alatka.messages.core.field.FieldBuilder;
 import com.alatka.messages.core.field.FieldBuilderFactory;
 import com.alatka.messages.core.holder.MessageHolder;
+import com.alatka.messages.core.support.ExecutionContext;
 import com.alatka.messages.core.util.BytesUtil;
 import com.alatka.messages.core.util.ClassUtil;
 
@@ -78,9 +79,13 @@ public abstract class MessageBuilder {
                 .filter(this::filter)
                 .map(fieldDefinition -> {
                     try {
+                        ExecutionContext.instance().set(instance, definition);
+
                         return this.doPack(instance, definition, fieldDefinition);
                     } catch (Exception e) {
                         throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+                    } finally {
+                        ExecutionContext.instance().clear();
                     }
                 })
                 .peek(wrapper -> this.postProcess(wrapper.fieldDefinition, wrapper.value, true))
@@ -92,11 +97,11 @@ public abstract class MessageBuilder {
 
     protected <T> Wrapper doPack(T instance, MessageDefinition definition, FieldDefinition fieldDefinition) {
         // 对象解析为字节数组
-        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
+        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(definition, fieldDefinition);
         byte[] bytes = fieldBuilder.serialize(instance, fieldDefinition);
 
         // 字节数组包装成定义格式报文域
-        DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
+        DomainParsed domainParsed = DomainParsedFactory.getInstance(definition, fieldDefinition);
         byte[] packed = domainParsed.pack(bytes, fieldDefinition);
 
         return new Wrapper(packed, fieldDefinition);
@@ -119,9 +124,13 @@ public abstract class MessageBuilder {
                 .filter(this::filter)
                 .map(fieldDefinition -> {
                     try {
+                        ExecutionContext.instance().set(instance, definition);
+
                         return this.doUnpack(instance, definition, fieldDefinition, bytes, counter);
                     } catch (Exception e) {
                         throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+                    } finally {
+                        ExecutionContext.instance().clear();
                     }
                 }).forEach(wrapper -> this.postProcess(wrapper.fieldDefinition, wrapper.value, false));
         this.postProcess();
@@ -131,11 +140,11 @@ public abstract class MessageBuilder {
     protected <T> Wrapper doUnpack(T instance, MessageDefinition definition,
                                    FieldDefinition fieldDefinition, byte[] bytes, AtomicInteger counter) {
         // 解析报文域字节数组
-        DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
+        DomainParsed domainParsed = DomainParsedFactory.getInstance(definition, fieldDefinition);
         byte[] valueBytes = domainParsed.unpack(bytes, fieldDefinition, counter);
 
         // 字节数组解析为对象
-        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
+        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(definition, fieldDefinition);
         Object value = fieldBuilder.deserialize(valueBytes, fieldDefinition, instance, counter);
         return new Wrapper(value, fieldDefinition);
     }
