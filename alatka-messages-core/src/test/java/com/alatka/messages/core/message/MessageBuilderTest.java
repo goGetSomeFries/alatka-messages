@@ -120,13 +120,13 @@ public class MessageBuilderTest {
         doReturn(new byte[0]).when(mockDomainParsed).unpack(any(), any(), any());
 
         MockedStatic<DomainParsedFactory> mockedDomainParsedFactory = mockStatic(DomainParsedFactory.class);
-        mockedDomainParsedFactory.when(() -> DomainParsedFactory.getInstance(any(), any(), any())).thenReturn(mockDomainParsed);
+        mockedDomainParsedFactory.when(() -> DomainParsedFactory.getInstance(any(), any())).thenReturn(mockDomainParsed);
 
         FieldBuilder mockFieldBuilder = Mockito.mock(FieldBuilder.class);
         doReturn("TEST").when(mockFieldBuilder).deserialize(any(), any(), any(), any());
 
         MockedStatic<FieldBuilderFactory> mockedFieldBuilderFactory = mockStatic(FieldBuilderFactory.class);
-        mockedFieldBuilderFactory.when(() -> FieldBuilderFactory.getInstance(any(), any(), any())).thenReturn(mockFieldBuilder);
+        mockedFieldBuilderFactory.when(() -> FieldBuilderFactory.getInstance(any(), any())).thenReturn(mockFieldBuilder);
 
         FieldDefinition fieldDefinition = new FieldDefinition();
         MessageBuilder.Wrapper wrapper = messageBuilder.doUnpack(null, null, fieldDefinition, null, null);
@@ -243,13 +243,13 @@ public class MessageBuilderTest {
         doReturn(new byte[0]).when(mockFieldBuilder).serialize(any(), any());
 
         MockedStatic<FieldBuilderFactory> mockedFieldBuilderFactory = mockStatic(FieldBuilderFactory.class);
-        mockedFieldBuilderFactory.when(() -> FieldBuilderFactory.getInstance(any(), any(), any())).thenReturn(mockFieldBuilder);
+        mockedFieldBuilderFactory.when(() -> FieldBuilderFactory.getInstance(any(), any())).thenReturn(mockFieldBuilder);
 
         DomainParsed mockDomainParsed = Mockito.mock(DomainParsed.class);
         doReturn("TEST".getBytes()).when(mockDomainParsed).pack(any(), any());
 
         MockedStatic<DomainParsedFactory> mockedDomainParsedFactory = mockStatic(DomainParsedFactory.class);
-        mockedDomainParsedFactory.when(() -> DomainParsedFactory.getInstance(any(), any(), any())).thenReturn(mockDomainParsed);
+        mockedDomainParsedFactory.when(() -> DomainParsedFactory.getInstance(any(), any())).thenReturn(mockDomainParsed);
 
         FieldDefinition fieldDefinition = new FieldDefinition();
         MessageBuilder.Wrapper wrapper = messageBuilder.doPack(null, null, fieldDefinition);

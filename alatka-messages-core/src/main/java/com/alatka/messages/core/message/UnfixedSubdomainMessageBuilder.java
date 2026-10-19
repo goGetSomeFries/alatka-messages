@@ -29,7 +29,7 @@ public class UnfixedSubdomainMessageBuilder extends MessageBuilder {
     @Override
     protected <T> Wrapper doPack(T instance, MessageDefinition definition, FieldDefinition fieldDefinition) {
         // 对象解析为字节数组
-        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(instance, definition, fieldDefinition);
+        FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(definition, fieldDefinition);
         byte[] bytes = fieldBuilder.serialize(instance, fieldDefinition);
         if (bytes.length == 0 && (isNull == null || isNull)) {
             isNull = Boolean.TRUE;
@@ -37,7 +37,7 @@ public class UnfixedSubdomainMessageBuilder extends MessageBuilder {
         }
 
         isNull = Boolean.FALSE;
-        DomainParsed domainParsed = DomainParsedFactory.getInstance(instance, definition, fieldDefinition);
+        DomainParsed domainParsed = DomainParsedFactory.getInstance(definition, fieldDefinition);
         byte[] packed = domainParsed.pack(bytes, fieldDefinition);
         return new Wrapper(packed, fieldDefinition);
     }
