@@ -2,6 +2,7 @@ package com.alatka.messages.core.field;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
+import com.alatka.messages.core.support.ExecutionContext;
 import com.alatka.messages.core.util.BytesUtil;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected byte[] fromObjectToAscii(String value, FieldDefinition fieldDefinition) {
+        MessageDefinition messageDefinition = ExecutionContext.instance().getMessageDefinition();
         return value.getBytes(messageDefinition.getCharset());
     }
 
@@ -42,6 +44,7 @@ public class StringFieldBuilder extends AbstractFieldBuilder<String> {
 
     @Override
     protected String toObjectWithAscii(byte[] bytes, FieldDefinition fieldDefinition) {
+        MessageDefinition messageDefinition = ExecutionContext.instance().getMessageDefinition();
         String result = new String(bytes, messageDefinition.getCharset());
         return this.postProcess(result);
     }
