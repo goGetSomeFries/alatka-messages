@@ -9,6 +9,16 @@
     <link rel="stylesheet" th:href="@{/webjars/tom-select/dist/css/tom-select.bootstrap5.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-table/dist/bootstrap-table.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/alatka-messages-infra.css}">
+    <style>
+        .no-scrollbar {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-4">
@@ -221,6 +231,53 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="testModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">本地测试</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="testForm">
+                    <input type="hidden" id="testId" name="id">
+                    <div class="row mb-3">
+                        <div class="col-md-10">
+                            <div class="form-text" id="testDesc"></div>
+                        </div>
+                        <div class="col-md-2 d-flex justify-content-end">
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="packed" id="testPacked0" value="false"
+                                       autocomplete="off" checked>
+                                <label class="btn btn-sm btn-outline-primary" for="testPacked0">解包</label>
+
+                                <input type="radio" class="btn-check" name="packed" id="testPacked1" value="true"
+                                       autocomplete="off">
+                                <label class="btn btn-sm btn-outline-primary" for="testPacked1">打包</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="testContent" class="form-label">报文</label>
+                            <textarea class="form-control font-monospace" style="font-size: 0.75rem;" rows="30"
+                                      id="testContent" name="content" aria-describedby="testContentDesc"
+                                      required></textarea>
+                        </div>
+                        <div class="col-md-7">
+                            <label for="testResult" class="form-label">执行结果</label>
+                            <pre class="border rounded overflow-auto no-scrollbar"
+                                 style="height: 60vh; font-size: 0.75rem;"><code id="testResult"></code></pre>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="executeTestBtn">执行测试</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/interactjs/dist/interact.min.js}"></script>
@@ -305,6 +362,44 @@
         });
     }
 
+    function showTestModal() {
+        const selection = $('#dataTable').bootstrapTable('getSelections');
+        if (selection.length !== 1) {
+            showWarningToast("请选择一条记录");
+            return;
+        }
+
+        const $form = $('#testForm');
+        const formEl = $form[0];
+        const $modal = $('#testModal');
+        $form.removeClass('was-validated');
+
+        const row = selection[0];
+        $("#testId").val(row.id);
+        const key = [row.type, row.group, row.code, row.kind, row.domain, row.usage].filter(e => e !== null).join(":");
+        $("#testDesc").html(`${row.remark} <span class="fw-bold">(${key})</span>`);
+
+        $modal.modal('show');
+
+        $('#executeTestBtn').off('click').on('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (!formEl.checkValidity()) {
+                $form.addClass('was-validated');
+                return;
+            }
+            const formData = {};
+            $form.serializeArray().forEach(item => {
+                formData[item.name] = item.value;
+            });
+            httpClient(`/message/test`, 'PUT', formData, function (data) {
+                $("#testResult").text(data);
+            }, function (msg) {
+                $("#testResult").text(msg);
+            });
+        });
+    }
+
     function buttonsFunction() {
         return {
             fallbackBtn: {
@@ -323,10 +418,21 @@
                 icon: 'bi-rocket',
                 attributes: {
                     title: '部署',
-                    class: 'btn btn-outline-primary me-3'
+                    class: 'btn btn-outline-primary'
                 },
                 event: function () {
                     showBuildModal('/message/build', 'deploy');
+                }
+            },
+            testBtn: {
+                text: '测试',
+                icon: 'bi-bug',
+                attributes: {
+                    title: '测试',
+                    class: 'btn btn-outline-secondary me-3'
+                },
+                event: function () {
+                    showTestModal();
                 }
             },
             addBtn: {
@@ -366,7 +472,7 @@
     }
 
     function buttonsOrderFunction() {
-        return ['fallbackBtn', 'deployBtn', 'addBtn', 'editBtn', 'deleteBtn', 'columns'];
+        return ['fallbackBtn', 'deployBtn', 'testBtn', 'addBtn', 'editBtn', 'deleteBtn', 'columns'];
     }
 
 </script>

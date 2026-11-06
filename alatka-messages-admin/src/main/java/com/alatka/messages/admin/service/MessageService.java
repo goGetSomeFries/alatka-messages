@@ -2,8 +2,19 @@ package com.alatka.messages.admin.service;
 
 import com.alatka.messages.admin.AutoConfiguration;
 import com.alatka.messages.admin.entity.MessageDefinition;
+import com.alatka.messages.admin.model.message.MessageTestReq;
 import com.alatka.messages.admin.repository.MessageRepository;
+import com.alatka.messages.admin.support.DebugException;
+import com.alatka.messages.core.definition.FixedDatabaseMessageDefinitionBuilder;
+import com.alatka.messages.core.definition.IsoDatabaseMessageDefinitionBuilder;
+import com.alatka.messages.core.definition.MessageDefinitionBuilder;
+import com.alatka.messages.core.holder.MessageHolder;
+import com.alatka.messages.core.message.MessageBuilder;
+import com.alatka.messages.core.util.BytesUtil;
+import com.alatka.messages.core.util.ClassUtil;
+import com.alatka.messages.core.util.JsonUtil;
 import jakarta.persistence.criteria.Predicate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -15,8 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -35,6 +46,8 @@ public class MessageService {
 
     private MessageRepository messageRepository;
 
+    private DataSource dataSource;
+
     public Map<String, String> build(List<String> uris, String path) {
         Map<String, String> resultMap = new ConcurrentHashMap<>(uris.size());
 
@@ -52,6 +65,51 @@ public class MessageService {
         return CompletableFuture.supplyAsync(() -> restTemplate.postForObject(url, null, String.class), taskExecutor)
                 .handleAsync((result, ex) -> "ok".equalsIgnoreCase(result) ? "success" : "fail")
                 .thenAccept(result -> resultMap.put(url, result));
+    }
+
+    public String localTest(MessageTestReq req) {
+        MessageDefinition entity = this.queryById(req.getId());
+        com.alatka.messages.core.context.MessageDefinition messageDefinition = new com.alatka.messages.core.context.MessageDefinition();
+        BeanUtils.copyProperties(entity, messageDefinition);
+        messageDefinition.setType(com.alatka.messages.core.context.MessageDefinition.Type.valueOf(entity.getType()));
+        messageDefinition.setKind(com.alatka.messages.core.context.MessageDefinition.Kind.valueOf(entity.getKind()));
+        if (entity.getDomainType() != null) {
+            messageDefinition.setDomainType(com.alatka.messages.core.context.MessageDefinition.DomainType.valueOf(entity.getDomainType()));
+        }
+        if (entity.getHolder() != null) {
+            messageDefinition.setHolder(ClassUtil.forName(entity.getHolder()));
+        } else {
+            messageDefinition.setHolder(MessageHolder.class);
+        }
+        if (messageDefinition.getDomain() == null) {
+            messageDefinition.setDomain("");
+        }
+        if (messageDefinition.getUsage() == null) {
+            messageDefinition.setUsage("");
+        }
+        messageDefinition.setEnabled(true);
+
+        try {
+            MessageDefinitionBuilder messageDefinitionBuilder =
+                    messageDefinition.getType() == com.alatka.messages.core.context.MessageDefinition.Type.iso ?
+                            new IsoDatabaseMessageDefinitionBuilder(this.dataSource) :
+                            new FixedDatabaseMessageDefinitionBuilder(this.dataSource);
+            messageDefinitionBuilder.build();
+
+            MessageBuilder messageBuilder = MessageBuilder.init(messageDefinition);
+            if (req.getPacked()) {
+                Class<?> holder = messageDefinition.getHolder();
+                Object object = holder == MessageHolder.class ?
+                        MessageHolder.fromMap(messageDefinition.identity(), JsonUtil.jsonToMap(req.getContent()), true) :
+                        JsonUtil.jsonToObject(req.getContent(), holder);
+                byte[] bytes = messageBuilder.pack(object);
+                return BytesUtil.bytesToHex(bytes);
+            }
+            Object object = messageBuilder.unpack(req.getContent());
+            return JsonUtil.objectToJson(object);
+        } catch (RuntimeException e) {
+            throw new DebugException(e);
+        }
     }
 
     public Long create(MessageDefinition messageDefinition) {
@@ -153,5 +211,10 @@ public class MessageService {
     @Qualifier(AutoConfiguration.TASK_EXECUTOR_NAME)
     public void setTaskExecutor(TaskExecutor taskExecutor) {
         this.taskExecutor = taskExecutor;
+    }
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 }

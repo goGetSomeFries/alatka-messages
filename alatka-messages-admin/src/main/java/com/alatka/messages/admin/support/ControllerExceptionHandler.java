@@ -1,6 +1,7 @@
 package com.alatka.messages.admin.support;
 
 import com.alatka.messages.admin.model.ResMessage;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,12 @@ public class ControllerExceptionHandler {
         }
         String detail = bindingResult.getAllErrors().get(0).getDefaultMessage();
         return ResMessage.error(detail);
+    }
+
+    @ExceptionHandler(DebugException.class)
+    public ResMessage<Void> handleDebugException(DebugException e) {
+        logger.error(e.getMessage(), e);
+        return ResMessage.error(ExceptionUtils.getStackTrace(e));
     }
 
     /**

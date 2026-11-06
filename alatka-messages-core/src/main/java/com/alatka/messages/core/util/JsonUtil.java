@@ -2,6 +2,7 @@ package com.alatka.messages.core.util;
 
 import com.alatka.messages.core.support.CustomByteArraySerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +42,23 @@ public class JsonUtil {
     public static <T> String objectToJson(T object) {
         try {
             return OBJECT_MAPPER.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Map<String, Object> jsonToMap(String content) {
+        try {
+            return OBJECT_MAPPER.readValue(content, new TypeReference<Map<String, Object>>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> T jsonToObject(String content, Class<T> clazz) {
+        try {
+            return OBJECT_MAPPER.readValue(content, clazz);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
