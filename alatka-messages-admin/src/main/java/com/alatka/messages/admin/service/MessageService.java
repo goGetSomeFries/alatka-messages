@@ -90,26 +90,32 @@ public class MessageService {
         messageDefinition.setEnabled(true);
 
         try {
-            MessageDefinitionBuilder messageDefinitionBuilder =
-                    messageDefinition.getType() == com.alatka.messages.core.context.MessageDefinition.Type.iso ?
-                            new IsoDatabaseMessageDefinitionBuilder(this.dataSource) :
-                            new FixedDatabaseMessageDefinitionBuilder(this.dataSource);
-            messageDefinitionBuilder.build();
-
-            MessageBuilder messageBuilder = MessageBuilder.init(messageDefinition);
-            if (req.getPacked()) {
-                Class<?> holder = messageDefinition.getHolder();
-                Object object = holder == MessageHolder.class ?
-                        MessageHolder.fromMap(messageDefinition.identity(), JsonUtil.jsonToMap(req.getContent()), true) :
-                        JsonUtil.jsonToObject(req.getContent(), holder);
-                byte[] bytes = messageBuilder.pack(object);
-                return BytesUtil.bytesToHex(bytes);
-            }
-            Object object = messageBuilder.unpack(req.getContent());
-            return JsonUtil.objectToJson(object);
+            return this.doLocalTest(messageDefinition, req);
         } catch (RuntimeException e) {
             throw new DebugException(e);
         }
+    }
+
+    private String doLocalTest(com.alatka.messages.core.context.MessageDefinition messageDefinition, MessageTestReq req) {
+        MessageDefinitionBuilder messageDefinitionBuilder =
+                messageDefinition.getType() == com.alatka.messages.core.context.MessageDefinition.Type.iso ?
+                        new IsoDatabaseMessageDefinitionBuilder(this.dataSource) :
+                        new FixedDatabaseMessageDefinitionBuilder(this.dataSource);
+        messageDefinitionBuilder.build();
+
+        MessageBuilder messageBuilder = MessageBuilder.init(messageDefinition);
+        Class<?> holder = messageDefinition.getHolder();
+        boolean isMessageHolder = holder == MessageHolder.class;
+        if (req.getPacked()) {
+            Object object = isMessageHolder ?
+                    MessageHolder.fromMap(messageDefinition.identity(), JsonUtil.jsonToMap(req.getContent()), true) :
+                    JsonUtil.jsonToObject(req.getContent(), holder);
+            byte[] bytes = messageBuilder.pack(object);
+            return BytesUtil.bytesToHex(bytes);
+        }
+
+        Object object = messageBuilder.unpack(req.getContent());
+        return isMessageHolder ? JsonUtil.format(((MessageHolder) object).toMapByName()) : JsonUtil.objectToJson(object);
     }
 
     public Long create(MessageDefinition messageDefinition) {

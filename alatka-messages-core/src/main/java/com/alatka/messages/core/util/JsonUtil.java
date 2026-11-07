@@ -49,7 +49,7 @@ public class JsonUtil {
 
     public static Map<String, Object> jsonToMap(String content) {
         try {
-            return OBJECT_MAPPER.readValue(content, new TypeReference<Map<String, Object>>() {
+            return OBJECT_MAPPER.readValue(content, new TypeReference<>() {
             });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

@@ -260,14 +260,25 @@
                     <div class="row mb-3">
                         <div class="col-md-5">
                             <label for="testContent" class="form-label">报文</label>
-                            <textarea class="form-control font-monospace" style="font-size: 0.75rem;" rows="30"
-                                      id="testContent" name="content" aria-describedby="testContentDesc"
+                            <textarea class="form-control font-monospace" style="height: 50vh; font-size: 0.75rem;"
+                                      rows="30" id="testContent" name="content" aria-describedby="testContentDesc"
                                       required></textarea>
                         </div>
                         <div class="col-md-7">
                             <label for="testResult" class="form-label">执行结果</label>
                             <pre class="border rounded overflow-auto no-scrollbar"
-                                 style="height: 60vh; font-size: 0.75rem;"><code id="testResult"></code></pre>
+                                 style="height: 50vh; font-size: 0.75rem;"><code id="testResult"></code></pre>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="testResultWrap" name="resultWrap"
+                                       role="switch">
+                                <label class="form-check-label" for="testResultWrap">换行</label>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -396,6 +407,14 @@
                 $("#testResult").text(data);
             }, function (msg) {
                 $("#testResult").text(msg);
+            });
+        });
+        $("#testResultWrap").on('change', function () {
+            const checked = $(this).is(':checked');
+            $('#testResult').parent("pre").css({
+                'white-space': checked ? 'pre-wrap' : 'pre',
+                'overflow-wrap': checked ? 'anywhere' : 'normal',
+                'word-break': checked ? 'break-all' : 'normal'
             });
         });
     }

@@ -10,7 +10,7 @@ import com.alatka.messages.core.util.JsonUtil;
 import com.alatka.messages.core.util.ObjectUtil;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @JsonSerialize(using = CustomJsonSerializer.class)
 public class MessageHolder {
 
-    private final Map<FieldDefinition, Object> valueMap = new HashMap<>();
+    private final Map<FieldDefinition, Object> valueMap = new LinkedHashMap<>();
 
     private MessageDefinition messageDefinition;
 
@@ -111,7 +111,7 @@ public class MessageHolder {
         MessageHolder copy = newInstance(key);
         // TODO validate
         Map<FieldDefinition, Object> copyMap = this.valueMap.entrySet().stream()
-                .collect(HashMap::new, (map, item) -> map.put(item.getKey(), item.getValue()), HashMap::putAll);
+                .collect(LinkedHashMap::new, (map, item) -> map.put(item.getKey(), item.getValue()), LinkedHashMap::putAll);
         copy.valueMap.putAll(copyMap);
         return copy;
     }
@@ -150,24 +150,24 @@ public class MessageHolder {
 
     public Map<String, Object> toMapByName() {
         return this.valueMap.entrySet().stream()
-                .collect(HashMap::new,
+                .collect(LinkedHashMap::new,
                         (map, item) -> map.put(item.getKey().getName(), this.ofValue(item.getValue(), true)),
-                        HashMap::putAll);
+                        LinkedHashMap::putAll);
     }
 
     public Map<String, Object> toMapByDomainNo() {
         return this.valueMap.entrySet().stream()
-                .collect(HashMap::new,
+                .collect(LinkedHashMap::new,
                         (map, item) -> map.put(item.getKey().getDomainNo().toString(), this.ofValue(item.getValue(), false)),
-                        HashMap::putAll);
+                        LinkedHashMap::putAll);
     }
 
     private Object ofValue(Object value, boolean byName) {
         if (value instanceof MessageHolder) {
             return ((MessageHolder) value).valueMap.entrySet().stream()
-                    .collect(HashMap::new,
+                    .collect(LinkedHashMap::new,
                             (map, item) -> map.put(byName ? item.getKey().getName() : item.getKey().getDomainNo().toString(), this.ofValue(item.getValue(), byName)),
-                            HashMap::putAll);
+                            LinkedHashMap::putAll);
         }
         if (value instanceof UsageSubdomain) {
             return ((UsageSubdomain<Object>) value).getHolder().entrySet()
