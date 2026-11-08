@@ -11,6 +11,7 @@ import com.alatka.messages.core.util.ObjectUtil;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -52,6 +53,8 @@ public class MessageHolder {
                         result = usageSubdomain;
                     } else if (value.getClass().isAnnotationPresent(MessageMeta.class)) {
                         result = fromPojo(value);
+                    } else if (value instanceof List) {
+                        result = ((List) value).stream().map(MessageHolder::fromPojo).collect(Collectors.toList());
                     } else {
                         result = value;
                     }
@@ -86,6 +89,10 @@ public class MessageHolder {
                             usageSubdomain.putAll(map);
                             result = usageSubdomain;
                         }
+                    } else if (value instanceof List) {
+                        result = ((List) value).stream()
+                                .map(item -> fromMap(key, (Map<String, Object>) item, byName))
+                                .collect(Collectors.toList());
                     } else {
                         result = value;
                     }
