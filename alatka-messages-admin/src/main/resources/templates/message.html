@@ -98,6 +98,9 @@
             <th data-field="group" data-align="center">分组</th>
             <th data-field="code" data-align="center" data-sortable="true">交易码</th>
             <th data-field="kind" data-align="center" data-sortable="true" data-formatter="kindFormatter">种类</th>
+            <th data-field="domain" data-visible="false">子域名称</th>
+            <th data-field="usage" data-align="center" data-visible="false">子域用法</th>
+            <th data-field="domainType" data-visible="false">子域类型</th>
             <th data-field="holder">实体类</th>
             <th data-field="charset" data-align="center" data-formatter="charsetFormatter">编码</th>
             <th data-field="remark">描述</th>
@@ -241,12 +244,13 @@
             <div class="modal-body">
                 <form id="testForm">
                     <input type="hidden" id="testId" name="id">
+                    <input type="hidden" name="detailed" id="testDetailed" value="false">
                     <div class="row mb-3">
-                        <div class="col-md-10">
+                        <div class="col-md-6">
                             <div class="form-text" id="testDesc"></div>
                         </div>
-                        <div class="col-md-2 d-flex justify-content-end">
-                            <div class="btn-group" role="group">
+                        <div class="col-md-6 d-flex justify-content-end">
+                            <div class="btn-group me-3" role="group">
                                 <input type="radio" class="btn-check" name="packed" id="testPacked0" value="false"
                                        autocomplete="off" checked>
                                 <label class="btn btn-sm btn-outline-primary" for="testPacked0">解包</label>
@@ -255,9 +259,18 @@
                                        autocomplete="off">
                                 <label class="btn btn-sm btn-outline-primary" for="testPacked1">打包</label>
                             </div>
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="byName" id="testByName0" value="false"
+                                       autocomplete="off">
+                                <label class="btn btn-sm btn-outline-primary" for="testByName0">ByNo</label>
+
+                                <input type="radio" class="btn-check" name="byName" id="testByName1" value="true"
+                                       autocomplete="off" checked>
+                                <label class="btn btn-sm btn-outline-primary" for="testByName1">ByName</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row">
                         <div class="col-md-5">
                             <label for="testContent" class="form-label">报文</label>
                             <textarea class="form-control font-monospace" style="height: 50vh; font-size: 0.75rem;"
@@ -273,11 +286,14 @@
                     <div class="row">
                         <div class="col-md-5">
                         </div>
-                        <div class="col-md-7">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="testResultWrap" name="resultWrap"
-                                       role="switch">
-                                <label class="form-check-label" for="testResultWrap">换行</label>
+                        <div class="col-md-7 d-flex">
+                            <div class="form-check form-switch me-3">
+                                <input class="form-check-input" type="checkbox" id="testResultWrap" role="switch">
+                                <label class="form-check-label" for="testResultWrap">结果换行</label>
+                            </div>
+                            <div class="form-check form-switch me-3">
+                                <input class="form-check-input" type="checkbox" id="testResultDetailed" role="switch">
+                                <label class="form-check-label" for="testResultDetailed">结果详情（解包）</label>
                             </div>
                         </div>
                     </div>
@@ -386,7 +402,6 @@
         $form.removeClass('was-validated');
 
         const row = selection[0];
-        $("#testId").val(row.id);
         const key = [row.type, row.group, row.code, row.kind, row.domain, row.usage].filter(e => e !== null).join(":");
         $("#testDesc").html(`${row.remark} <span class="fw-bold">(${key})</span>`);
 
@@ -399,6 +414,9 @@
                 $form.addClass('was-validated');
                 return;
             }
+            $("#testId").val(row.id);
+            $("#testDetailed").val($("#testResultDetailed").is(':checked'));
+
             const formData = {};
             $form.serializeArray().forEach(item => {
                 formData[item.name] = item.value;
@@ -416,6 +434,9 @@
                 'overflow-wrap': checked ? 'anywhere' : 'normal',
                 'word-break': checked ? 'break-all' : 'normal'
             });
+        });
+        $('#testResultCopy').off('click').on('click', function (event) {
+
         });
     }
 

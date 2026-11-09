@@ -15,6 +15,14 @@ public class MessageTestReq {
     @NotNull(message = "packed 不能为空")
     private Boolean packed;
 
+    @Schema(description = "域名/名称解析标识", required = true)
+    @NotNull(message = "byName 不能为空")
+    private Boolean byName;
+
+    @Schema(description = "结果详情标识", required = true)
+    @NotNull(message = "detailed 不能为空")
+    private Boolean detailed;
+
     @Schema(description = "报文", required = true)
     @NotEmpty(message = "content 不能为空")
     private String content;
@@ -33,6 +41,22 @@ public class MessageTestReq {
 
     public void setPacked(Boolean packed) {
         this.packed = packed;
+    }
+
+    public Boolean getByName() {
+        return byName;
+    }
+
+    public void setByName(Boolean byName) {
+        this.byName = byName;
+    }
+
+    public Boolean getDetailed() {
+        return detailed;
+    }
+
+    public void setDetailed(Boolean detailed) {
+        this.detailed = detailed;
     }
 
     public String getContent() {

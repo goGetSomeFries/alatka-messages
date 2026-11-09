@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -118,7 +119,7 @@ public class MessageHolder {
         MessageHolder copy = newInstance(key);
         // TODO validate
         Map<FieldDefinition, Object> copyMap = this.valueMap.entrySet().stream()
-                .collect(LinkedHashMap::new, (map, item) -> map.put(item.getKey(), item.getValue()), LinkedHashMap::putAll);
+                .collect(LinkedHashMap::new, (map, entry) -> map.put(entry.getKey(), entry.getValue()), LinkedHashMap::putAll);
         copy.valueMap.putAll(copyMap);
         return copy;
     }
@@ -158,29 +159,48 @@ public class MessageHolder {
     public Map<String, Object> toMapByName() {
         return this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new,
-                        (map, item) -> map.put(item.getKey().getName(), this.ofValue(item.getValue(), true)),
+                        (map, entry) -> map.put(entry.getKey().getName(), this.ofValue(entry.getValue(), KeyType.byName)),
                         LinkedHashMap::putAll);
     }
 
     public Map<String, Object> toMapByDomainNo() {
         return this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new,
-                        (map, item) -> map.put(item.getKey().getDomainNo().toString(), this.ofValue(item.getValue(), false)),
+                        (map, entry) -> map.put(entry.getKey().getDomainNo().toString(), this.ofValue(entry.getValue(), KeyType.byDomainNo)),
                         LinkedHashMap::putAll);
     }
 
-    private Object ofValue(Object value, boolean byName) {
+    private Object ofValue(Object value, KeyType keyType) {
         if (value instanceof MessageHolder) {
             return ((MessageHolder) value).valueMap.entrySet().stream()
                     .collect(LinkedHashMap::new,
-                            (map, item) -> map.put(byName ? item.getKey().getName() : item.getKey().getDomainNo().toString(), this.ofValue(item.getValue(), byName)),
+                            (map, entry) -> map.put(keyType.generateKey(entry.getKey()), this.ofValue(entry.getValue(), keyType)),
                             LinkedHashMap::putAll);
+        }
+        if (value instanceof List) {
+            return ((List) value).stream().map(item -> this.ofValue(item, keyType)).collect(Collectors.toList());
         }
         if (value instanceof UsageSubdomain) {
             return ((UsageSubdomain<Object>) value).getHolder().entrySet()
-                    .stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> this.ofValue(entry.getValue(), byName)));
+                    .stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> this.ofValue(entry.getValue(), keyType)));
         }
         return value;
+    }
+
+    private enum KeyType {
+        byName(FieldDefinition::getName),
+        byDomainNo(fieldDefinition -> fieldDefinition.getDomainNo().toString()),
+        raw(fieldDefinition -> fieldDefinition.toString());
+
+        private Function<FieldDefinition, String> function;
+
+        KeyType(Function<FieldDefinition, String> function) {
+            this.function = function;
+        }
+
+        public String generateKey(FieldDefinition definition) {
+            return this.function.apply(definition);
+        }
     }
 
     public MessageDefinition getMessageDefinition() {
@@ -189,7 +209,11 @@ public class MessageHolder {
 
     @Override
     public String toString() {
-        return JsonUtil.format(valueMap);
+        Map<Object, Object> result = this.valueMap.entrySet().stream()
+                .collect(LinkedHashMap::new,
+                        (map, entry) -> map.put(entry.getKey().toString(), this.ofValue(entry.getValue(), KeyType.raw)),
+                        LinkedHashMap::putAll);
+        return JsonUtil.format(result);
     }
 
     @Override

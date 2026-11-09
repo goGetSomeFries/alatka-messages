@@ -66,9 +66,8 @@ public class JsonUtil {
 
     public static String format(Map<?, ?> map) {
         try {
-            String str = OBJECT_MAPPER.writeValueAsString(map);
-            Map<?, ?> result = OBJECT_MAPPER.readValue(str, Map.class);
-            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(result);
+            return OBJECT_MAPPER.copy().disable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
+                    .writerWithDefaultPrettyPrinter().writeValueAsString(map);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

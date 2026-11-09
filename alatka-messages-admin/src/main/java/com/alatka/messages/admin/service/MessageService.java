@@ -106,16 +106,23 @@ public class MessageService {
         MessageBuilder messageBuilder = MessageBuilder.init(messageDefinition);
         Class<?> holder = messageDefinition.getHolder();
         boolean isMessageHolder = holder == MessageHolder.class;
+        boolean byName = req.getByName();
+        String result = null;
+
         if (req.getPacked()) {
             Object object = isMessageHolder ?
-                    MessageHolder.fromMap(messageDefinition.identity(), JsonUtil.jsonToMap(req.getContent()), true) :
+                    MessageHolder.fromMap(messageDefinition.identity(), JsonUtil.jsonToMap(req.getContent()), byName) :
                     JsonUtil.jsonToObject(req.getContent(), holder);
             byte[] bytes = messageBuilder.pack(object);
-            return BytesUtil.bytesToHex(bytes);
+            result = BytesUtil.bytesToHex(bytes);
+        } else {
+            Object object = messageBuilder.unpack(req.getContent());
+            MessageHolder messageHolder = isMessageHolder ? (MessageHolder) object : MessageHolder.fromPojo(object);
+            result = req.getDetailed() ?
+                    messageHolder.toString() :
+                    JsonUtil.format(byName ? messageHolder.toMapByName() : messageHolder.toMapByDomainNo());
         }
-
-        Object object = messageBuilder.unpack(req.getContent());
-        return isMessageHolder ? JsonUtil.format(((MessageHolder) object).toMapByName()) : JsonUtil.objectToJson(object);
+        return result;
     }
 
     public Long create(MessageDefinition messageDefinition) {
@@ -158,9 +165,11 @@ public class MessageService {
     }
 
     public Page<MessageDefinition> queryPage(MessageDefinition condition, Pageable pageable) {
-        Specification<MessageDefinition> specification =
-                this.condition(condition).and((root, query, criteriaBuilder) ->
-                        criteriaBuilder.notEqual(root.get("kind").as(String.class), "subPayload"));
+        Specification<MessageDefinition> specification = this.condition(condition);
+        if (condition.getKind() == null) {
+            specification = specification.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.notEqual(root.get("kind").as(String.class), "subPayload"));
+        }
         return messageRepository.findAll(specification, pageable);
     }
 
