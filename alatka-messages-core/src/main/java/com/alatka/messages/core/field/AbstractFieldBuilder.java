@@ -35,6 +35,16 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
         return value;
     }
 
+    @Override
+    public T convert(Object value, FieldDefinition fieldDefinition) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Object test(Object value, FieldDefinition fieldDefinition) {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * java类型数据转换字节数组
      *

@@ -71,6 +71,15 @@ public abstract class TimeFieldBuilder<T> extends AbstractFieldBuilder<T> {
         return BytesUtil.toEBCDIC(datetime);
     }
 
+    @Override
+    public T convert(Object value, FieldDefinition fieldDefinition) {
+        String datetime = value.toString();
+        if (validate(datetime)) {
+            return null;
+        }
+        return this.parse(datetime, this.formatter(fieldDefinition.getPattern(), false));
+    }
+
     private DateTimeFormatter formatter(String pattern, boolean serialized) {
         pattern = this.doFormat(pattern, serialized);
         return "yyyyMMddHHmmssSSS".equals(pattern) ?

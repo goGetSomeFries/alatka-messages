@@ -120,7 +120,7 @@ public class MessageService {
             MessageHolder messageHolder = isMessageHolder ? (MessageHolder) object : MessageHolder.fromPojo(object);
             result = req.getDetailed() ?
                     messageHolder.toString() :
-                    JsonUtil.format(byName ? messageHolder.toMapByName() : messageHolder.toMapByDomainNo());
+                    JsonUtil.format(byName ? messageHolder.toMapByName(true) : messageHolder.toMapByDomainNo(true));
         }
         return result;
     }

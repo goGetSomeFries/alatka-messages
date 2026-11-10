@@ -48,6 +48,10 @@ public interface FieldBuilder {
      */
     boolean matched(MessageDefinition messageDefinition, FieldDefinition definition);
 
+    Object convert(Object value, FieldDefinition fieldDefinition);
+
+    Object test(Object value, FieldDefinition fieldDefinition);
+
     /**
      * 设置 {@link MessageDefinition}
      *

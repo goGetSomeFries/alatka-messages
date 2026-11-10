@@ -101,6 +101,12 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
     }
 
     @Override
+    public BigDecimal convert(Object value, FieldDefinition fieldDefinition) {
+        BigDecimal number = new BigDecimal(value.toString());
+        return this.toConvert(number, fieldDefinition.getPattern());
+    }
+
+    @Override
     public int getOrder() {
         return super.getOrder() + 3;
     }

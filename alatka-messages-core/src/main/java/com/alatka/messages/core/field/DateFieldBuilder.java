@@ -46,6 +46,12 @@ public class DateFieldBuilder extends AbstractFieldBuilder<Date> {
         return getDate(fieldDefinition, datetime);
     }
 
+    @Override
+    public Date convert(Object value, FieldDefinition fieldDefinition) {
+        String datetime = value.toString();
+        return getDate(fieldDefinition, datetime);
+    }
+
     private Date getDate(FieldDefinition fieldDefinition, String datetime) {
         try {
             return this.formatter(fieldDefinition).parse(datetime);

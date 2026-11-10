@@ -4,6 +4,7 @@ import com.alatka.messages.core.annotation.MessageMeta;
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
 import com.alatka.messages.core.context.MessageDefinitionContext;
+import com.alatka.messages.core.field.FieldBuilderFactory;
 import com.alatka.messages.core.support.CustomJsonSerializer;
 import com.alatka.messages.core.util.ClassUtil;
 import com.alatka.messages.core.util.JsonUtil;
@@ -94,6 +95,9 @@ public class MessageHolder {
                         result = ((List) value).stream()
                                 .map(item -> fromMap(key, (Map<String, Object>) item, byName))
                                 .collect(Collectors.toList());
+                    } else if (value != null && fieldDefinition.getClassType() != value.getClass()) {
+                        result = FieldBuilderFactory.getInstance(messageDefinition, fieldDefinition)
+                                .convert(value, fieldDefinition);
                     } else {
                         result = value;
                     }
@@ -157,34 +161,56 @@ public class MessageHolder {
     }
 
     public Map<String, Object> toMapByName() {
+        return this.toMapByName(false);
+    }
+
+    /**
+     * DomainName 做 Key 转换为 Map<String, Object>
+     *
+     * @param formatted true 格式化 Map.Entry#getValue(); false 保持原样
+     * @return 转换后的 Map<String, Object>
+     */
+    public Map<String, Object> toMapByName(boolean formatted) {
         return this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new,
-                        (map, entry) -> map.put(entry.getKey().getName(), this.ofValue(entry.getValue(), KeyType.byName)),
+                        (map, entry) -> map.put(entry.getKey().getName(), this.ofValue(entry.getValue(), entry.getKey(), KeyType.byName, formatted)),
                         LinkedHashMap::putAll);
     }
 
     public Map<String, Object> toMapByDomainNo() {
+        return this.toMapByDomainNo(false);
+    }
+
+    /**
+     * DomainNo 做 Key 转换为 Map<String, Object>
+     *
+     * @param formatted true 格式化 Map.Entry#getValue(); false 保持原样
+     * @return 转换后的 Map<String, Object>
+     */
+    public Map<String, Object> toMapByDomainNo(boolean formatted) {
         return this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new,
-                        (map, entry) -> map.put(entry.getKey().getDomainNo().toString(), this.ofValue(entry.getValue(), KeyType.byDomainNo)),
+                        (map, entry) -> map.put(entry.getKey().getDomainNo().toString(), this.ofValue(entry.getValue(), entry.getKey(), KeyType.byDomainNo, formatted)),
                         LinkedHashMap::putAll);
     }
 
-    private Object ofValue(Object value, KeyType keyType) {
+    private Object ofValue(Object value, FieldDefinition fieldDefinition, KeyType keyType, boolean formatted) {
         if (value instanceof MessageHolder) {
             return ((MessageHolder) value).valueMap.entrySet().stream()
                     .collect(LinkedHashMap::new,
-                            (map, entry) -> map.put(keyType.generateKey(entry.getKey()), this.ofValue(entry.getValue(), keyType)),
+                            (map, entry) -> map.put(keyType.generateKey(entry.getKey()), this.ofValue(entry.getValue(), entry.getKey(), keyType, formatted)),
                             LinkedHashMap::putAll);
         }
         if (value instanceof List) {
-            return ((List) value).stream().map(item -> this.ofValue(item, keyType)).collect(Collectors.toList());
+            return ((List) value).stream().map(item -> this.ofValue(item, fieldDefinition, keyType, formatted)).collect(Collectors.toList());
         }
         if (value instanceof UsageSubdomain) {
             return ((UsageSubdomain<Object>) value).getHolder().entrySet()
-                    .stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> this.ofValue(entry.getValue(), keyType)));
+                    .stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, entry -> this.ofValue(entry.getValue(), fieldDefinition, keyType, formatted)));
         }
-        return value;
+        // TODO
+        return formatted ? FieldBuilderFactory.getInstance(messageDefinition, fieldDefinition).test(value, fieldDefinition) : value;
     }
 
     private enum KeyType {
@@ -211,7 +237,7 @@ public class MessageHolder {
     public String toString() {
         Map<Object, Object> result = this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new,
-                        (map, entry) -> map.put(entry.getKey().toString(), this.ofValue(entry.getValue(), KeyType.raw)),
+                        (map, entry) -> map.put(entry.getKey().toString(), this.ofValue(entry.getValue(), entry.getKey(), KeyType.raw, true)),
                         LinkedHashMap::putAll);
         return JsonUtil.format(result);
     }

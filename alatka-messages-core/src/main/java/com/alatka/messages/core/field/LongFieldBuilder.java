@@ -58,6 +58,11 @@ public class LongFieldBuilder extends NumberFieldBuilder<Long> {
     }
 
     @Override
+    public Long convert(Object value, FieldDefinition fieldDefinition) {
+        return Long.parseLong(String.valueOf(value));
+    }
+
+    @Override
     public int getOrder() {
         return super.getOrder() + 1;
     }
