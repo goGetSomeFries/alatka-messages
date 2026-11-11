@@ -37,12 +37,12 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
 
     @Override
     public T normalizeType(Object value, FieldDefinition fieldDefinition) {
-        throw new UnsupportedOperationException("未实现");
+        throw new UnsupportedOperationException(fieldDefinition + "未实现");
     }
 
     @Override
     public final Object denormalizeType(Object value, FieldDefinition fieldDefinition) {
-        return value == null ? null : this.doDenormalizeType((T) value, fieldDefinition);
+        return this.doDenormalizeType((T) value, fieldDefinition);
     }
 
     protected Object doDenormalizeType(T value, FieldDefinition fieldDefinition) {

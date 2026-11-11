@@ -92,8 +92,9 @@ public class MessageHolder {
                             result = usageSubdomain;
                         }
                     } else if (value instanceof List) {
+                        Map<String, MessageDefinition> mapping = fieldDefinition.getMessageDefinitionMap();
                         result = ((List) value).stream()
-                                .map(item -> fromMap(key, (Map<String, Object>) item, byName))
+                                .map(item -> fromMap(mapping.get(FieldDefinition.SUBFIELD_KEY_DEFAULT).identity(), (Map<String, Object>) item, byName))
                                 .collect(Collectors.toList());
                     } else if (value != null && fieldDefinition.getClassType() != value.getClass()) {
                         result = FieldBuilderFactory.getInstance(messageDefinition, fieldDefinition)
@@ -175,7 +176,7 @@ public class MessageHolder {
                 .collect(LinkedHashMap::new,
                         (map, entry) -> {
                             String key = entry.getKey().getName();
-                            Object val = this.ofValue(entry.getValue(), entry.getKey(), KeyType.byName, formatted);
+                            Object val = this.ofValue(entry.getValue(), this.messageDefinition, entry.getKey(), KeyType.byName, formatted);
                             map.put(key, val);
                         },
                         LinkedHashMap::putAll);
@@ -196,32 +197,44 @@ public class MessageHolder {
                 .collect(LinkedHashMap::new,
                         (map, entry) -> {
                             String key = entry.getKey().getDomainNo().toString();
-                            Object val = this.ofValue(entry.getValue(), entry.getKey(), KeyType.byDomainNo, formatted);
+                            Object val = this.ofValue(entry.getValue(), this.messageDefinition, entry.getKey(), KeyType.byDomainNo, formatted);
                             map.put(key, val);
                         },
                         LinkedHashMap::putAll);
     }
 
-    private Object ofValue(Object value, FieldDefinition fieldDefinition, KeyType keyType, boolean formatted) {
+    private Object ofValue(Object value, MessageDefinition messageDefinition, FieldDefinition fieldDefinition, KeyType keyType, boolean formatted) {
+        if (value == null) {
+            return null;
+        }
         if (value instanceof MessageHolder) {
-            return ((MessageHolder) value).valueMap.entrySet().stream()
+            MessageHolder messageHolder = (MessageHolder) value;
+            return messageHolder.valueMap.entrySet().stream()
                     .collect(LinkedHashMap::new,
                             (map, entry) -> {
                                 String key = keyType.generateKey(entry.getKey());
-                                Object val = this.ofValue(entry.getValue(), entry.getKey(), keyType, formatted);
+                                Object val = this.ofValue(entry.getValue(), messageHolder.messageDefinition, entry.getKey(), keyType, formatted);
                                 map.put(key, val);
                             },
                             LinkedHashMap::putAll);
         }
         if (value instanceof List) {
+            Map<String, MessageDefinition> mapping = fieldDefinition.getMessageDefinitionMap();
             return ((List) value).stream()
-                    .map(item -> this.ofValue(item, fieldDefinition, keyType, formatted))
+                    .map(item -> this.ofValue(item, mapping.get(FieldDefinition.SUBFIELD_KEY_DEFAULT), fieldDefinition, keyType, formatted))
                     .collect(Collectors.toList());
         }
         if (value instanceof UsageSubdomain) {
+            Map<String, MessageDefinition> mapping = fieldDefinition.getMessageDefinitionMap();
             return ((UsageSubdomain<Object>) value).getHolder().entrySet()
                     .stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, entry -> this.ofValue(entry.getValue(), fieldDefinition, keyType, formatted)));
+                    .collect(LinkedHashMap::new,
+                            (map, entry) -> {
+                                String key = entry.getKey();
+                                Object val = this.ofValue(entry.getValue(), mapping.get(key), fieldDefinition, keyType, formatted);
+                                map.put(key, val);
+                            },
+                            LinkedHashMap::putAll);
         }
         return formatted ? FieldBuilderFactory.getInstance(messageDefinition, fieldDefinition).denormalizeType(value, fieldDefinition) : value;
     }
@@ -250,7 +263,11 @@ public class MessageHolder {
     public String toString() {
         Map<Object, Object> result = this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new,
-                        (map, entry) -> map.put(entry.getKey().toString(), this.ofValue(entry.getValue(), entry.getKey(), KeyType.raw, true)),
+                        (map, entry) -> {
+                            String key = entry.getKey().toString();
+                            Object val = this.ofValue(entry.getValue(), this.messageDefinition, entry.getKey(), KeyType.raw, true);
+                            map.put(key, val);
+                        },
                         LinkedHashMap::putAll);
         return JsonUtil.format(result);
     }

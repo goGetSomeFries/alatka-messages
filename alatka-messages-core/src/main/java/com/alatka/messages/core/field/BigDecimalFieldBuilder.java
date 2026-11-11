@@ -80,8 +80,7 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
 
     @Override
     protected Object doDenormalizeType(BigDecimal value, FieldDefinition fieldDefinition) {
-        BigDecimal result = this.fromConvert(value, fieldDefinition.getPattern());
-        return result.toString();
+        return this.fromConvert(value, fieldDefinition.getPattern());
     }
 
     private BigDecimal toConvert(BigDecimal value, String pattern) {

@@ -116,7 +116,7 @@ public class MessageService {
             byte[] bytes = messageBuilder.pack(object);
             result = BytesUtil.bytesToHex(bytes);
         } else {
-            Object object = messageBuilder.unpack(req.getContent());
+            Object object = messageBuilder.unpack(req.getContent().replaceAll("\\s", ""));
             MessageHolder messageHolder = isMessageHolder ? (MessageHolder) object : MessageHolder.fromPojo(object);
             result = req.getDetailed() ?
                     messageHolder.toString() :

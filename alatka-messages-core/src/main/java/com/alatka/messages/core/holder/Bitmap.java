@@ -1,16 +1,9 @@
 package com.alatka.messages.core.holder;
 
-import com.alatka.messages.core.support.CustomJsonSerializer;
-import com.alatka.messages.core.util.BytesUtil;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-@JsonSerialize(using = CustomJsonSerializer.class)
+//@JsonSerialize(using = CustomJsonSerializer.class)
 public class Bitmap {
 
     private final byte[] bytes;
@@ -38,8 +31,12 @@ public class Bitmap {
         return (this.bytes[result / 8] & 0x80 >>> (result % 8)) == (0x80 >>> (result % 8));
     }
 
+    @Deprecated
     @Override
     public String toString() {
+        // TODO
+        return super.toString();
+/*
         Map<String, String> map = new LinkedHashMap<>(this.bytes.length);
         for (int i = 0; i < this.bytes.length; i++) {
             String key = "F" + (i * 8 + offset + 1) + "~F" + (i * 8 + 8 + offset);
@@ -49,6 +46,7 @@ public class Bitmap {
         return map.entrySet().stream()
                 .map(entry -> entry.getKey() + ":" + entry.getValue())
                 .collect(Collectors.joining(", ", "\"", "\""));
+*/
     }
 
     @Override

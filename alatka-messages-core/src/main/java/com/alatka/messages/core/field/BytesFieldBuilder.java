@@ -68,7 +68,7 @@ public class BytesFieldBuilder extends AbstractFieldBuilder<byte[]> {
         try {
             return BytesUtil.hexToBytes(value.toString());
         } catch (Exception e) {
-            throw new IllegalArgumentException("值必须是 HEX 格式字符串", e);
+            throw new IllegalArgumentException(fieldDefinition + "值必须是 HEX 格式字符串", e);
         }
     }
 
