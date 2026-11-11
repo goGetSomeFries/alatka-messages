@@ -97,7 +97,7 @@ public class MessageHolder {
                                 .collect(Collectors.toList());
                     } else if (value != null && fieldDefinition.getClassType() != value.getClass()) {
                         result = FieldBuilderFactory.getInstance(messageDefinition, fieldDefinition)
-                                .convert(value, fieldDefinition);
+                                .normalizeType(value, fieldDefinition);
                     } else {
                         result = value;
                     }
@@ -173,7 +173,11 @@ public class MessageHolder {
     public Map<String, Object> toMapByName(boolean formatted) {
         return this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new,
-                        (map, entry) -> map.put(entry.getKey().getName(), this.ofValue(entry.getValue(), entry.getKey(), KeyType.byName, formatted)),
+                        (map, entry) -> {
+                            String key = entry.getKey().getName();
+                            Object val = this.ofValue(entry.getValue(), entry.getKey(), KeyType.byName, formatted);
+                            map.put(key, val);
+                        },
                         LinkedHashMap::putAll);
     }
 
@@ -190,7 +194,11 @@ public class MessageHolder {
     public Map<String, Object> toMapByDomainNo(boolean formatted) {
         return this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new,
-                        (map, entry) -> map.put(entry.getKey().getDomainNo().toString(), this.ofValue(entry.getValue(), entry.getKey(), KeyType.byDomainNo, formatted)),
+                        (map, entry) -> {
+                            String key = entry.getKey().getDomainNo().toString();
+                            Object val = this.ofValue(entry.getValue(), entry.getKey(), KeyType.byDomainNo, formatted);
+                            map.put(key, val);
+                        },
                         LinkedHashMap::putAll);
     }
 
@@ -198,19 +206,24 @@ public class MessageHolder {
         if (value instanceof MessageHolder) {
             return ((MessageHolder) value).valueMap.entrySet().stream()
                     .collect(LinkedHashMap::new,
-                            (map, entry) -> map.put(keyType.generateKey(entry.getKey()), this.ofValue(entry.getValue(), entry.getKey(), keyType, formatted)),
+                            (map, entry) -> {
+                                String key = keyType.generateKey(entry.getKey());
+                                Object val = this.ofValue(entry.getValue(), entry.getKey(), keyType, formatted);
+                                map.put(key, val);
+                            },
                             LinkedHashMap::putAll);
         }
         if (value instanceof List) {
-            return ((List) value).stream().map(item -> this.ofValue(item, fieldDefinition, keyType, formatted)).collect(Collectors.toList());
+            return ((List) value).stream()
+                    .map(item -> this.ofValue(item, fieldDefinition, keyType, formatted))
+                    .collect(Collectors.toList());
         }
         if (value instanceof UsageSubdomain) {
             return ((UsageSubdomain<Object>) value).getHolder().entrySet()
                     .stream()
                     .collect(Collectors.toMap(Map.Entry::getKey, entry -> this.ofValue(entry.getValue(), fieldDefinition, keyType, formatted)));
         }
-        // TODO
-        return formatted ? FieldBuilderFactory.getInstance(messageDefinition, fieldDefinition).test(value, fieldDefinition) : value;
+        return formatted ? FieldBuilderFactory.getInstance(messageDefinition, fieldDefinition).denormalizeType(value, fieldDefinition) : value;
     }
 
     private enum KeyType {

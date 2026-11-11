@@ -58,7 +58,7 @@ public class LongFieldBuilder extends NumberFieldBuilder<Long> {
     }
 
     @Override
-    public Long convert(Object value, FieldDefinition fieldDefinition) {
+    public Long normalizeType(Object value, FieldDefinition fieldDefinition) {
         return Long.parseLong(String.valueOf(value));
     }
 

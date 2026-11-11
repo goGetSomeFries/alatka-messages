@@ -1,5 +1,6 @@
 package com.alatka.messages.core.support;
 
+import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.util.BytesUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonToken;
@@ -12,9 +13,12 @@ import java.io.IOException;
 
 /**
  * 自定义byte[]序列化器，以16进制字符串展示
+ * <p>
+ * 不再使用，功能迁移至{@link com.alatka.messages.core.field.BytesFieldBuilder#doDenormalizeType(byte[], FieldDefinition)}
  *
  * @author ybliu
  */
+@Deprecated
 public class CustomByteArraySerializer extends ByteArraySerializer {
 
     @Override

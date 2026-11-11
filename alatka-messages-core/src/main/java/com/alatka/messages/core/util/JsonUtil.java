@@ -1,13 +1,11 @@
 package com.alatka.messages.core.util;
 
-import com.alatka.messages.core.support.CustomByteArraySerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
@@ -19,10 +17,6 @@ public class JsonUtil {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     static {
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(new CustomByteArraySerializer());
-        OBJECT_MAPPER.registerModule(simpleModule);
-
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         OBJECT_MAPPER.registerModule(javaTimeModule);
 

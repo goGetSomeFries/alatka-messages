@@ -64,12 +64,17 @@ public class BytesFieldBuilder extends AbstractFieldBuilder<byte[]> {
     }
 
     @Override
-    public byte[] convert(Object value, FieldDefinition fieldDefinition) {
+    public byte[] normalizeType(Object value, FieldDefinition fieldDefinition) {
         try {
             return BytesUtil.hexToBytes(value.toString());
         } catch (Exception e) {
             throw new IllegalArgumentException("值必须是 HEX 格式字符串", e);
         }
+    }
+
+    @Override
+    public Object doDenormalizeType(byte[] value, FieldDefinition fieldDefinition) {
+        return BytesUtil.bytesToHex(value);
     }
 
     @Override

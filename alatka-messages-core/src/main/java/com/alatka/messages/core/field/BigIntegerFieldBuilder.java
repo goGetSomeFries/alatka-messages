@@ -59,7 +59,7 @@ public class BigIntegerFieldBuilder extends NumberFieldBuilder<BigInteger> {
     }
 
     @Override
-    public BigInteger convert(Object value, FieldDefinition fieldDefinition) {
+    public BigInteger normalizeType(Object value, FieldDefinition fieldDefinition) {
         return new BigInteger(value.toString());
     }
 

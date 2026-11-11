@@ -72,6 +72,18 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
         return this.toConvert(value, fieldDefinition.getPattern());
     }
 
+    @Override
+    public BigDecimal normalizeType(Object value, FieldDefinition fieldDefinition) {
+        BigDecimal number = new BigDecimal(value.toString());
+        return this.toConvert(number, fieldDefinition.getPattern());
+    }
+
+    @Override
+    protected Object doDenormalizeType(BigDecimal value, FieldDefinition fieldDefinition) {
+        BigDecimal result = this.fromConvert(value, fieldDefinition.getPattern());
+        return result.toString();
+    }
+
     private BigDecimal toConvert(BigDecimal value, String pattern) {
         if (pattern == null || pattern.isEmpty()) {
             return value;
@@ -98,12 +110,6 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
         int scale = matcher.group(2) == null ? unit : Integer.parseInt(matcher.group(2).substring(1));
         RoundingMode mode = matcher.group(3) == null ? RoundingMode.HALF_UP : Mode.valueOf(matcher.group(3)).getRoundingMode();
         return new Wrapper(unit, scale, mode);
-    }
-
-    @Override
-    public BigDecimal convert(Object value, FieldDefinition fieldDefinition) {
-        BigDecimal number = new BigDecimal(value.toString());
-        return this.toConvert(number, fieldDefinition.getPattern());
     }
 
     @Override
