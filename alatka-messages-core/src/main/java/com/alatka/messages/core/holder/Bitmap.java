@@ -3,7 +3,6 @@ package com.alatka.messages.core.holder;
 import java.util.Arrays;
 import java.util.Objects;
 
-//@JsonSerialize(using = CustomJsonSerializer.class)
 public class Bitmap {
 
     private final byte[] bytes;
@@ -29,24 +28,6 @@ public class Bitmap {
             return false;
         }
         return (this.bytes[result / 8] & 0x80 >>> (result % 8)) == (0x80 >>> (result % 8));
-    }
-
-    @Deprecated
-    @Override
-    public String toString() {
-        // TODO
-        return super.toString();
-/*
-        Map<String, String> map = new LinkedHashMap<>(this.bytes.length);
-        for (int i = 0; i < this.bytes.length; i++) {
-            String key = "F" + (i * 8 + offset + 1) + "~F" + (i * 8 + 8 + offset);
-            String value = BytesUtil.bytesToBinary(Arrays.copyOfRange(bytes, i, i + 1));
-            map.put(key, value);
-        }
-        return map.entrySet().stream()
-                .map(entry -> entry.getKey() + ":" + entry.getValue())
-                .collect(Collectors.joining(", ", "\"", "\""));
-*/
     }
 
     @Override
