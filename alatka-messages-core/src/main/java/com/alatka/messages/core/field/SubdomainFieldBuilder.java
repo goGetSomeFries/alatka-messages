@@ -18,7 +18,7 @@ public abstract class SubdomainFieldBuilder<T> extends AbstractFieldBuilder<T> {
     /**
      * 子域打包
      *
-     * @param value 被打包对象
+     * @param value           被打包对象
      * @param fieldDefinition {@link FieldDefinition}
      * @param usageMap        子域 usage Map
      * @return 字节数组
@@ -28,7 +28,7 @@ public abstract class SubdomainFieldBuilder<T> extends AbstractFieldBuilder<T> {
     /**
      * 子域解包
      *
-     * @param bytes 数据字节数组
+     * @param bytes           数据字节数组
      * @param fieldDefinition {@link FieldDefinition}
      * @param usageMap        子域 usage Map
      * @return 解包对象
@@ -65,7 +65,7 @@ public abstract class SubdomainFieldBuilder<T> extends AbstractFieldBuilder<T> {
             return true;
         }
         if (((IsoFieldDefinition) fieldDefinition).getNonSubdomainException()) {
-            throw new RuntimeException(fieldDefinition + "未配置子域usage: " + usageId);
+            throw new IllegalArgumentException(fieldDefinition + "未配置子域usage: " + usageId);
         }
         return false;
     }

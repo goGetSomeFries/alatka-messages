@@ -35,6 +35,20 @@ public abstract class AbstractFieldBuilder<T> implements FieldBuilder {
         return value;
     }
 
+    @Override
+    public T normalizeType(Object value, FieldDefinition fieldDefinition) {
+        throw new UnsupportedOperationException(fieldDefinition + "未实现");
+    }
+
+    @Override
+    public final Object denormalizeType(Object value, FieldDefinition fieldDefinition) {
+        return this.doDenormalizeType((T) value, fieldDefinition);
+    }
+
+    protected Object doDenormalizeType(T value, FieldDefinition fieldDefinition) {
+        return value;
+    }
+
     /**
      * java类型数据转换字节数组
      *

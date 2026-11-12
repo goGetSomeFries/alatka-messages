@@ -131,4 +131,22 @@ public class BigDecimalFieldBuilderTest {
         byte[] bytes = fieldBuilder.fromObjectToAscii(number, fieldDefinition);
         Assertions.assertEquals("31363234", BytesUtil.bytesToHex(bytes));
     }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test15() {
+        String str = "16241";
+        FieldDefinition fieldDefinition = new FieldDefinition();
+        fieldDefinition.setPattern("P3S2");
+        BigDecimal number = fieldBuilder.normalizeType(str, fieldDefinition);
+        Assertions.assertEquals(new BigDecimal("16.24"), number);
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test16() {
+        BigDecimal number = new BigDecimal(16);
+        Object object = fieldBuilder.doDenormalizeType(number, new FieldDefinition());
+        Assertions.assertEquals("16", object.toString());
+    }
 }
