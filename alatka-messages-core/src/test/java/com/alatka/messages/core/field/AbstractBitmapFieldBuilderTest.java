@@ -24,9 +24,34 @@ public class AbstractBitmapFieldBuilderTest {
     }
 
     @Test
+    @DisplayName("doDenormalizeType()")
+    void test02() {
+        byte[] bytes = BytesUtil.hexToBytes("2A561087AB346422");
+        Bitmap bitmap = new Bitmap(bytes);
+        FieldDefinition definition = new FieldDefinition();
+
+        String expected = "F1~F8:00101010, F9~F16:01010110, F17~F24:00010000, F25~F32:10000111, F33~F40:10101011, F41~F48:00110100, F49~F56:01100100, F57~F64:00100010";
+        Assertions.assertEquals(expected, fieldBuilder.doDenormalizeType(bitmap, definition));
+    }
+
+    @Test
     @DisplayName("returnIfNull()")
     void test03() {
         Assertions.assertFalse(fieldBuilder.returnIfNull());
+    }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test04() {
+        FieldDefinition definition = new FieldDefinition();
+        definition.setDomainNo(2);
+        definition.setName("retCode");
+        definition.setFixed(true);
+        definition.setLength(6);
+        definition.setRemark("响应码");
+        definition.setClassType(String.class);
+
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> fieldBuilder.normalizeType(new Object(), definition), definition + "无需指定，程序自动赋值");
     }
 
     @Test
@@ -61,4 +86,5 @@ public class AbstractBitmapFieldBuilderTest {
         byte[] bytes = fieldBuilder.fromObjectToBinary(null, fieldDefinition);
         Assertions.assertEquals(BytesUtil.bytesToHex(bytes), "0");
     }
+
 }

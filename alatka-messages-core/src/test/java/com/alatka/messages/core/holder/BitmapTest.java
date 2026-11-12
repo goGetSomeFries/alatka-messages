@@ -17,14 +17,6 @@ public class BitmapTest {
     }
 
     @Test
-    @DisplayName("toString()")
-    void test02() {
-        byte[] bytes = BytesUtil.hexToBytes("2A561087AB346422");
-        Bitmap bitmap = new Bitmap(bytes);
-        Assertions.assertEquals("\"F1~F8:00101010, F9~F16:01010110, F17~F24:00010000, F25~F32:10000111, F33~F40:10101011, F41~F48:00110100, F49~F56:01100100, F57~F64:00100010\"", bitmap.toString());
-    }
-
-    @Test
     @DisplayName("exist()")
     void test03() {
         byte[] bytes = BytesUtil.hexToBytes("2A");

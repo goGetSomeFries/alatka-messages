@@ -72,6 +72,17 @@ public class BigDecimalFieldBuilder extends NumberFieldBuilder<BigDecimal> {
         return this.toConvert(value, fieldDefinition.getPattern());
     }
 
+    @Override
+    public BigDecimal normalizeType(Object value, FieldDefinition fieldDefinition) {
+        BigDecimal number = new BigDecimal(value.toString());
+        return this.toConvert(number, fieldDefinition.getPattern());
+    }
+
+    @Override
+    protected Object doDenormalizeType(BigDecimal value, FieldDefinition fieldDefinition) {
+        return this.fromConvert(value, fieldDefinition.getPattern());
+    }
+
     private BigDecimal toConvert(BigDecimal value, String pattern) {
         if (pattern == null || pattern.isEmpty()) {
             return value;

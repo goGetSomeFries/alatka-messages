@@ -128,4 +128,32 @@ public class AbstractFieldBuilderTest {
     void test16() {
         // TODO
     }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test17() {
+        FieldDefinition definition = new FieldDefinition();
+        definition.setDomainNo(2);
+        definition.setName("retCode");
+        definition.setFixed(true);
+        definition.setLength(6);
+        definition.setRemark("响应码");
+        definition.setClassType(String.class);
+
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> fieldBuilder.normalizeType(new Object(), definition), definition + "未实现");
+    }
+
+    @Test
+    @DisplayName("denormalizeType()")
+    void test18() {
+        Object value = new Object();
+        Assertions.assertSame(value, fieldBuilder.denormalizeType(value, new FieldDefinition()));
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test19() {
+        Object value = new Object();
+        Assertions.assertSame(value, fieldBuilder.doDenormalizeType(value, new FieldDefinition()));
+    }
 }

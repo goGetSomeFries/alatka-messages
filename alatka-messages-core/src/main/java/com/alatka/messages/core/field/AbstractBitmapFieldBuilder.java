@@ -5,8 +5,13 @@ import com.alatka.messages.core.context.MessageDefinitionContext;
 import com.alatka.messages.core.holder.Bitmap;
 import com.alatka.messages.core.holder.MessageHolderUtil;
 import com.alatka.messages.core.support.ExecutionContext;
+import com.alatka.messages.core.util.BytesUtil;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 抽象bitmap报文域解析器
@@ -24,8 +29,8 @@ public abstract class AbstractBitmapFieldBuilder extends AbstractFieldBuilder<Bi
 
     @Override
     protected Bitmap toObjectWithBinary(byte[] bytes, FieldDefinition fieldDefinition) {
-        String offset = fieldDefinition.getPattern();
-        return offset == null || offset.isEmpty() ? new Bitmap(bytes) : new Bitmap(bytes, Integer.parseInt(offset));
+        int offset = this.getOffset(fieldDefinition);
+        return new Bitmap(bytes, offset);
     }
 
     @Override
@@ -40,8 +45,7 @@ public abstract class AbstractBitmapFieldBuilder extends AbstractFieldBuilder<Bi
 
         int length = this.calculateLength(instance, list, fieldDefinition);
 
-        int offset = fieldDefinition.getPattern() == null || fieldDefinition.getPattern().isEmpty() ?
-                0 : Integer.parseInt(fieldDefinition.getPattern());
+        int offset = this.getOffset(fieldDefinition);
 
         byte[] bytes = new byte[length];
         list.stream()
@@ -58,6 +62,27 @@ public abstract class AbstractBitmapFieldBuilder extends AbstractFieldBuilder<Bi
     }
 
     @Override
+    public Bitmap normalizeType(Object value, FieldDefinition fieldDefinition) {
+        throw new UnsupportedOperationException(fieldDefinition + "无需指定，程序自动赋值");
+    }
+
+    @Override
+    protected Object doDenormalizeType(Bitmap value, FieldDefinition fieldDefinition) {
+        byte[] bytes = value.getBytes();
+        int offset = this.getOffset(fieldDefinition);
+
+        Map<String, String> map = new LinkedHashMap<>(bytes.length);
+        for (int i = 0; i < bytes.length; i++) {
+            String key = "F" + (i * 8 + offset + 1) + "~F" + (i * 8 + 8 + offset);
+            String val = BytesUtil.bytesToBinary(Arrays.copyOfRange(bytes, i, i + 1));
+            map.put(key, val);
+        }
+        return map.entrySet().stream()
+                .map(entry -> entry.getKey() + ":" + entry.getValue())
+                .collect(Collectors.joining(", "));
+    }
+
+    @Override
     public int getOrder() {
         return super.getOrder() + 60;
     }
@@ -65,6 +90,11 @@ public abstract class AbstractBitmapFieldBuilder extends AbstractFieldBuilder<Bi
     protected abstract int calculateLength(Object instance, List<FieldDefinition> list, FieldDefinition fieldDefinition);
 
     protected void postBitmap(byte[] bytes) {
+    }
+
+    private int getOffset(FieldDefinition fieldDefinition) {
+        return fieldDefinition.getPattern() == null || fieldDefinition.getPattern().isEmpty() ?
+                0 : Integer.parseInt(fieldDefinition.getPattern());
     }
 
 }

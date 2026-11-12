@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
+
 public class LongFieldBuilderTest {
 
     private LongFieldBuilder fieldBuilder = new LongFieldBuilder();
@@ -87,5 +89,21 @@ public class LongFieldBuilderTest {
         byte[] bytes = BytesUtil.hexToBytes("F1F6");
         Long number = fieldBuilder.toObjectWithEbcdic(bytes, null);
         Assertions.assertEquals(16L, number);
+    }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test11() {
+        String str = "16";
+        Long number = fieldBuilder.normalizeType(str, null);
+        Assertions.assertEquals(Long.valueOf(str), number);
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test12() {
+        Long expect = Long.valueOf("16");
+        Object result = fieldBuilder.doDenormalizeType(expect, null);
+        Assertions.assertSame(expect, result);
     }
 }

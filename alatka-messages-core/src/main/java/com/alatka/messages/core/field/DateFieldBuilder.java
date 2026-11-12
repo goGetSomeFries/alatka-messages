@@ -46,6 +46,17 @@ public class DateFieldBuilder extends AbstractFieldBuilder<Date> {
         return getDate(fieldDefinition, datetime);
     }
 
+    @Override
+    public Date normalizeType(Object value, FieldDefinition fieldDefinition) {
+        String datetime = value.toString();
+        return getDate(fieldDefinition, datetime);
+    }
+
+    @Override
+    protected Object doDenormalizeType(Date value, FieldDefinition fieldDefinition) {
+        return this.formatter(fieldDefinition).format(value);
+    }
+
     private Date getDate(FieldDefinition fieldDefinition, String datetime) {
         try {
             return this.formatter(fieldDefinition).parse(datetime);
