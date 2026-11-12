@@ -2,6 +2,7 @@ package com.alatka.messages.core.field;
 
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
+import com.alatka.messages.core.util.BytesUtil;
 
 /**
  * byte[]类型报文域解析器
@@ -60,6 +61,20 @@ public class BytesFieldBuilder extends AbstractFieldBuilder<byte[]> {
     @Override
     protected byte[] toObjectWithNone(byte[] bytes, FieldDefinition fieldDefinition) {
         return bytes;
+    }
+
+    @Override
+    public byte[] normalizeType(Object value, FieldDefinition fieldDefinition) {
+        try {
+            return BytesUtil.hexToBytes(value.toString());
+        } catch (Exception e) {
+            throw new IllegalArgumentException(fieldDefinition + "值必须是 HEX 格式字符串", e);
+        }
+    }
+
+    @Override
+    public Object doDenormalizeType(byte[] value, FieldDefinition fieldDefinition) {
+        return BytesUtil.bytesToHex(value);
     }
 
     @Override

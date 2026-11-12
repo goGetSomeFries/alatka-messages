@@ -235,7 +235,7 @@ function kindFormatter(key) {
         case 'response':
             return `<span class="badge bg-info">${key}</span>`
         default:
-            return `<span class="badge bg-secondary">/</span>`;
+            return `<span class="badge bg-white text-dark border">${key}</span>`;
     }
 }
 
@@ -244,7 +244,7 @@ function initKindSelect() {
         let tomSelect = new TomSelect(this, {
             plugins: ['remove_button'],
             placeholder: '选择种类',
-            options: [{value: 'header'}, {value: 'payload'}, {value: 'request'}, {value: 'response'}],
+            options: [{value: 'header'}, {value: 'payload'}, {value: 'request'}, {value: 'response'}, {value: 'subPayload'}],
             render: {
                 option: function (data, escape) {
                     return `<div>${kindFormatter(data.value)}</div>`;
@@ -255,6 +255,7 @@ function initKindSelect() {
             }
         });
         if (this.id !== 'kind') {
+            tomSelect.removeOption('subPayload');
             tomSelect.setValue([Object.keys(tomSelect.options)[0]]);
             $(this).data('alk-init-value', Object.keys(tomSelect.options)[0]);
         }

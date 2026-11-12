@@ -3,6 +3,7 @@ package com.alatka.messages.core.field;
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -47,6 +48,25 @@ public interface FieldBuilder {
      * @return 是否匹配
      */
     boolean matched(MessageDefinition messageDefinition, FieldDefinition definition);
+
+    /**
+     * 针对 JSON 字符串转换的 Map<String, Object> ，将其 Value 默认类型转换为 {@link FieldDefinition#getClassType()}；
+     *
+     * @param value           {@link Map.Entry#getValue()}
+     * @param fieldDefinition {@link FieldDefinition}
+     * @return {@link FieldDefinition#getClassType()} 类型对应的值
+     */
+    Object normalizeType(Object value, FieldDefinition fieldDefinition);
+
+    /**
+     * 与 {@link #normalizeType(Object, FieldDefinition)} 相对，
+     * 将 {@link FieldDefinition#getClassType()} 类型的值格式化 JSON 字符串正确显示
+     *
+     * @param value           {@link FieldDefinition#getClassType()} 类型值
+     * @param fieldDefinition {@link FieldDefinition}
+     * @return 格式化后的类型
+     */
+    Object denormalizeType(Object value, FieldDefinition fieldDefinition);
 
     /**
      * 设置 {@link MessageDefinition}

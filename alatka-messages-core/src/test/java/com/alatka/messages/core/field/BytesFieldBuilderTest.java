@@ -104,4 +104,18 @@ public class BytesFieldBuilderTest {
         byte[] bytes = fieldBuilder.toObjectWithNone(expected, null);
         Assertions.assertSame(expected, bytes);
     }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test13() {
+        String hex = "3136";
+        Assertions.assertArrayEquals(BytesUtil.hexToBytes(hex), fieldBuilder.normalizeType(hex, null));
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test14() {
+        byte[] value = "16".getBytes();
+        Assertions.assertEquals("3136", fieldBuilder.doDenormalizeType(value, new FieldDefinition()));
+    }
 }
