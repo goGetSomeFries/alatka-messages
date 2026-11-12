@@ -104,4 +104,29 @@ public class DateFieldBuilderTest {
                 () -> ClassUtil.invoke(fieldBuilder, "getDate",
                         new Class[]{FieldDefinition.class, String.class}, new Object[]{definition, str}));
     }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test09() {
+        String expected = "20240506";
+        String pattern = "yyyyMMdd";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        FieldDefinition fieldDefinition = new FieldDefinition();
+        fieldDefinition.setPattern(pattern);
+        Date date = fieldBuilder.normalizeType(expected, fieldDefinition);
+        Assertions.assertEquals(expected, format.format(date));
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test10() throws ParseException {
+        String str = "20240506";
+        String pattern = "yyyyMMdd";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        Date date = format.parse(str);
+        FieldDefinition fieldDefinition = new FieldDefinition();
+        fieldDefinition.setPattern(pattern);
+        Object object = fieldBuilder.doDenormalizeType(date, fieldDefinition);
+        Assertions.assertEquals(str, object.toString());
+    }
 }
