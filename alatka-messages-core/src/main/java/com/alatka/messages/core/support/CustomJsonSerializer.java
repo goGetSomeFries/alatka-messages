@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 
 /**
+ * 使用 {@link #toString()} 方法返回作为 JSON 格式化结果
+ *
  * @author ybliu
  */
 public class CustomJsonSerializer extends JsonSerializer<Object> {
