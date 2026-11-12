@@ -1,12 +1,11 @@
 package com.alatka.messages.core.util;
 
-import com.alatka.messages.core.support.CustomByteArraySerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
@@ -18,10 +17,6 @@ public class JsonUtil {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     static {
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(new CustomByteArraySerializer());
-        OBJECT_MAPPER.registerModule(simpleModule);
-
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         OBJECT_MAPPER.registerModule(javaTimeModule);
 
@@ -46,11 +41,27 @@ public class JsonUtil {
         }
     }
 
+    public static Map<String, Object> jsonToMap(String content) {
+        try {
+            return OBJECT_MAPPER.readValue(content, new TypeReference<>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> T jsonToObject(String content, Class<T> clazz) {
+        try {
+            return OBJECT_MAPPER.readValue(content, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static String format(Map<?, ?> map) {
         try {
-            String str = OBJECT_MAPPER.writeValueAsString(map);
-            Map<?, ?> result = OBJECT_MAPPER.readValue(str, Map.class);
-            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(result);
+            return OBJECT_MAPPER.copy().disable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
+                    .writerWithDefaultPrettyPrinter().writeValueAsString(map);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

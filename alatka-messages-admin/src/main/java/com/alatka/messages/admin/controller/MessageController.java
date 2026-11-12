@@ -3,10 +3,7 @@ package com.alatka.messages.admin.controller;
 import com.alatka.messages.admin.entity.MessageDefinition;
 import com.alatka.messages.admin.model.PageResMessage;
 import com.alatka.messages.admin.model.ResMessage;
-import com.alatka.messages.admin.model.message.MessageBuildReq;
-import com.alatka.messages.admin.model.message.MessagePageReq;
-import com.alatka.messages.admin.model.message.MessageReq;
-import com.alatka.messages.admin.model.message.MessageRes;
+import com.alatka.messages.admin.model.message.*;
 import com.alatka.messages.admin.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,6 +26,12 @@ import java.util.stream.Collectors;
 public class MessageController {
 
     private MessageService messageService;
+
+    @Operation(summary = "本地测试报文")
+    @PutMapping("/test")
+    public ResMessage<String> localTest(@Valid @RequestBody MessageTestReq req) {
+        return ResMessage.success(messageService.localTest(req));
+    }
 
     @Operation(summary = "部署报文")
     @PostMapping("/build")

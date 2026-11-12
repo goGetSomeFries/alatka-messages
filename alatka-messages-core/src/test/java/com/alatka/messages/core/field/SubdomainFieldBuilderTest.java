@@ -103,4 +103,24 @@ public class SubdomainFieldBuilderTest {
         Assertions.assertEquals(100, fieldBuilder.toObjectWithNone(null, fieldDefinition));
     }
 
+    @Test
+    @DisplayName("normalizeType()")
+    void test09() {
+        FieldDefinition definition = new FieldDefinition();
+        definition.setDomainNo(2);
+        definition.setName("retCode");
+        definition.setFixed(true);
+        definition.setLength(6);
+        definition.setRemark("响应码");
+        definition.setClassType(String.class);
+
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> fieldBuilder.normalizeType(new Object(), definition), definition + "未实现");
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test10() {
+        String value = new String("");
+        Assertions.assertSame(value, fieldBuilder.doDenormalizeType(value, new FieldDefinition()));
+    }
 }

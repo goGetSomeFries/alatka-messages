@@ -91,4 +91,20 @@ public class BigIntegerFieldBuilderTest {
         BigInteger number = fieldBuilder.toObjectWithEbcdic(bytes, null);
         Assertions.assertEquals(new BigInteger("16"), number);
     }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test11() {
+        String str = "16";
+        BigInteger number = fieldBuilder.normalizeType(str, null);
+        Assertions.assertEquals(new BigInteger("16"), number);
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test12() {
+        BigInteger expect = new BigInteger("16");
+        Object result = fieldBuilder.doDenormalizeType(expect, null);
+        Assertions.assertSame(expect, result);
+    }
 }

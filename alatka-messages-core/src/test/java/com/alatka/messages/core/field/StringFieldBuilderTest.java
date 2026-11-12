@@ -142,4 +142,25 @@ public class StringFieldBuilderTest {
                 new Class[]{String.class}, new Object[]{str});
         Assertions.assertNull(result);
     }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test15() {
+        FieldDefinition definition = new FieldDefinition();
+        definition.setDomainNo(2);
+        definition.setName("retCode");
+        definition.setFixed(true);
+        definition.setLength(6);
+        definition.setRemark("响应码");
+        definition.setClassType(String.class);
+
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> fieldBuilder.normalizeType(new Object(), definition), definition + "未实现");
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test16() {
+        String value = new String("");
+        Assertions.assertSame(value, fieldBuilder.doDenormalizeType(value, new FieldDefinition()));
+    }
 }

@@ -104,4 +104,25 @@ public class RawFieldBuilderTest {
         byte[] bytes = fieldBuilder.toObjectWithNone(expected, null);
         Assertions.assertSame(expected, bytes);
     }
+
+    @Test
+    @DisplayName("normalizeType()")
+    void test13() {
+        FieldDefinition definition = new FieldDefinition();
+        definition.setDomainNo(2);
+        definition.setName("retCode");
+        definition.setFixed(true);
+        definition.setLength(6);
+        definition.setRemark("响应码");
+        definition.setClassType(String.class);
+
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> fieldBuilder.normalizeType(new Object(), definition), definition + "未实现");
+    }
+
+    @Test
+    @DisplayName("doDenormalizeType()")
+    void test14() {
+        byte[] value = new byte[3];
+        Assertions.assertSame(value, fieldBuilder.doDenormalizeType(value, new FieldDefinition()));
+    }
 }
