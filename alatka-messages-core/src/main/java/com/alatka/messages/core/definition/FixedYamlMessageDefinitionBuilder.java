@@ -18,8 +18,8 @@ public class FixedYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuil
         this(DEFAULT_CLASSPATH);
     }
 
-    public FixedYamlMessageDefinitionBuilder(String classpath) {
-        super(classpath);
+    public FixedYamlMessageDefinitionBuilder(String pathExpression) {
+        super(pathExpression);
     }
 
     @Override

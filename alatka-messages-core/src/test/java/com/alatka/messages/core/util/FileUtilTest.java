@@ -12,17 +12,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class FileUtilTest {
 
     @Test
-    @DisplayName("getClasspathFiles(String, String, ClassLoader) IllegalArgumentException")
+    @DisplayName("getClasspathFilesContent(String, String, ClassLoader) IllegalArgumentException")
     void test01() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> FileUtil.getFilesContent("/asdfghjkl", "", this.getClass().getClassLoader()));
+                () -> FileUtil.getClasspathFilesContent("/asdfghjkl", "", this.getClass().getClassLoader()));
     }
 
     @Test
-    @DisplayName("getClasspathFiles(String, String, ClassLoader)")
+    @DisplayName("getClasspathFilesContent(String, String, ClassLoader)")
     void test02() {
         String[] fileNames = {"a.log", "b.log"};
-        List<FileWrapper> fileWrappers = FileUtil.getFilesContent("test", ".log", this.getClass().getClassLoader());
+        List<FileWrapper> fileWrappers = FileUtil.getClasspathFilesContent("test", ".log", this.getClass().getClassLoader());
         Assertions.assertEquals(fileNames.length, fileWrappers.size());
 
         AtomicInteger index = new AtomicInteger(0);
@@ -35,8 +35,16 @@ public class FileUtilTest {
 
     @Disabled
     @Test
-    @DisplayName("getClasspathFiles(String, String)")
+    @DisplayName("getFileSystemFilesContent(String, String)")
     void test03() {
-        // TODO
+        System.out.println(System.getProperty("user.dir"));
+        String[] fileNames = {"a.log", "b.log"};
+        List<FileWrapper> fileWrappers = FileUtil.getFileSystemFilesContent("target/test-classes/test/", ".log");
+        AtomicInteger index = new AtomicInteger(0);
+        fileWrappers.stream()
+                .map(FileWrapper::getName)
+                .sorted()
+                .forEach(name -> Assertions.assertEquals(fileNames[index.getAndIncrement()], name));
+
     }
 }

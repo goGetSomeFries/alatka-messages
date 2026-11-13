@@ -18,8 +18,8 @@ public class IsoYamlMessageDefinitionBuilder extends YamlMessageDefinitionBuilde
         this(DEFAULT_CLASSPATH);
     }
 
-    public IsoYamlMessageDefinitionBuilder(String classpath) {
-        super(classpath);
+    public IsoYamlMessageDefinitionBuilder(String pathExpression) {
+        super(pathExpression);
     }
 
     @Override

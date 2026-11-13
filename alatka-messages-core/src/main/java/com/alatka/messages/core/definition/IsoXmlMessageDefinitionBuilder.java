@@ -18,8 +18,8 @@ public class IsoXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilder<
         this(DEFAULT_CLASSPATH);
     }
 
-    public IsoXmlMessageDefinitionBuilder(String classpath) {
-        super(classpath);
+    public IsoXmlMessageDefinitionBuilder(String pathExpression) {
+        super(pathExpression);
     }
 
     @Override

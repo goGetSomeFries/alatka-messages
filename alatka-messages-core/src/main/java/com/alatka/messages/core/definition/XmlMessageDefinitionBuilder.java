@@ -21,8 +21,8 @@ import java.util.stream.Stream;
  */
 public abstract class XmlMessageDefinitionBuilder<S extends FieldDefinition> extends FileMessageDefinitionBuilder<S> {
 
-    public XmlMessageDefinitionBuilder(String classpath) {
-        super(classpath);
+    public XmlMessageDefinitionBuilder(String pathExpression) {
+        super(pathExpression);
     }
 
     @Override

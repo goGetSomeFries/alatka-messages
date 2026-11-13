@@ -20,12 +20,15 @@ import java.util.stream.Collectors;
  */
 public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> extends AbstractMessageDefinitionBuilder<FileWrapper, S> {
 
-    protected static final String DEFAULT_CLASSPATH = "META-INF/messages";
+    public static final String PREFIX_CLASSPATH = "classpath:";
+    public static final String PREFIX_FILE_PATH = "file:";
 
-    private final String classpath;
+    protected static final String DEFAULT_CLASSPATH = PREFIX_CLASSPATH + "META-INF/messages";
 
-    public FileMessageDefinitionBuilder(String classpath) {
-        this.classpath = classpath;
+    private final String pathExpression;
+
+    public FileMessageDefinitionBuilder(String pathExpression) {
+        this.pathExpression = pathExpression;
     }
 
     @Override
@@ -69,7 +72,14 @@ public abstract class FileMessageDefinitionBuilder<S extends FieldDefinition> ex
 
     @Override
     protected List<FileWrapper> getSources() {
-        return FileUtil.getFilesContent(this.classpath, "." + this.type() + this.fileSuffix());
+        String suffix = "." + this.type() + this.fileSuffix();
+        if (pathExpression.startsWith(PREFIX_FILE_PATH)) {
+            return FileUtil.getFileSystemFilesContent(pathExpression.substring(PREFIX_FILE_PATH.length()), suffix);
+        }
+
+        String classpath = pathExpression.startsWith(PREFIX_CLASSPATH) ?
+                pathExpression.substring(PREFIX_CLASSPATH.length()) : pathExpression;
+        return FileUtil.getClasspathFilesContent(classpath, suffix, this.getClass().getClassLoader());
     }
 
     /**

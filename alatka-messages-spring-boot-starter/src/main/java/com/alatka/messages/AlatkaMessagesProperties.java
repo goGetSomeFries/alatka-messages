@@ -1,5 +1,6 @@
 package com.alatka.messages;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "alatka.messages")
@@ -11,7 +12,8 @@ public class AlatkaMessagesProperties {
 
     private Type type;
 
-    private String classpath;
+    @JsonAlias({"classpath"})
+    private String pathExpression;
 
     private String packageName;
 
@@ -47,12 +49,12 @@ public class AlatkaMessagesProperties {
         this.type = type;
     }
 
-    public String getClasspath() {
-        return classpath;
+    public String getPathExpression() {
+        return pathExpression;
     }
 
-    public void setClasspath(String classpath) {
-        this.classpath = classpath;
+    public void setPathExpression(String pathExpression) {
+        this.pathExpression = pathExpression;
     }
 
     public String getPackageName() {
