@@ -34,12 +34,12 @@ public class MessageHolder {
     private MessageHolder() {
     }
 
-    public static MessageHolder newInstance(String key) {
+    public static MessageHolder newInstance(String identity) {
         MessageHolder messageHolder = new MessageHolder();
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
-        MessageDefinition messageDefinition = context.messageDefinition(key);
+        MessageDefinition messageDefinition = context.messageDefinition(identity);
         if (messageDefinition == null) {
-            throw new IllegalArgumentException("key [" + key + "] not exist");
+            throw new IllegalArgumentException("identity [" + identity + "] not exist");
         }
         messageHolder.messageDefinition = messageDefinition;
         context.fieldDefinitions(messageDefinition)
@@ -47,8 +47,8 @@ public class MessageHolder {
         return messageHolder;
     }
 
-    public MessageHolder copyOf(String key) {
-        MessageHolder copy = newInstance(key);
+    public MessageHolder copyOf(String identity) {
+        MessageHolder copy = newInstance(identity);
         // TODO validate
         Map<FieldDefinition, Object> copyMap = this.valueMap.entrySet().stream()
                 .collect(LinkedHashMap::new, (map, entry) -> map.put(entry.getKey(), entry.getValue()), LinkedHashMap::putAll);
@@ -117,10 +117,10 @@ public class MessageHolder {
         return messageHolder;
     }
 
-    public static MessageHolder fromMap(String key, Map<String, Object> params, boolean byName) {
+    public static MessageHolder fromMap(String identity, Map<String, Object> params, boolean byName) {
         MessageHolder messageHolder = new MessageHolder();
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
-        MessageDefinition messageDefinition = context.messageDefinition(key);
+        MessageDefinition messageDefinition = context.messageDefinition(identity);
         messageHolder.messageDefinition = messageDefinition;
         context.fieldDefinitions(messageDefinition)
                 .forEach(fieldDefinition -> {
