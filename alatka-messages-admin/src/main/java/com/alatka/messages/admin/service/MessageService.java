@@ -5,16 +5,13 @@ import com.alatka.messages.admin.entity.MessageDefinition;
 import com.alatka.messages.admin.model.message.MessageTestReq;
 import com.alatka.messages.admin.repository.MessageRepository;
 import com.alatka.messages.admin.support.DebugException;
-import com.alatka.messages.core.definition.FixedDatabaseMessageDefinitionBuilder;
-import com.alatka.messages.core.definition.IsoDatabaseMessageDefinitionBuilder;
-import com.alatka.messages.core.definition.MessageDefinitionBuilder;
+import com.alatka.messages.core.context.MessageDefinitionContext;
+import com.alatka.messages.core.definition.*;
 import com.alatka.messages.core.holder.MessageHolder;
 import com.alatka.messages.core.message.MessageBuilder;
 import com.alatka.messages.core.util.BytesUtil;
-import com.alatka.messages.core.util.ClassUtil;
 import com.alatka.messages.core.util.JsonUtil;
 import jakarta.persistence.criteria.Predicate;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -68,61 +65,53 @@ public class MessageService {
     }
 
     public String localTest(MessageTestReq req) {
-        MessageDefinition entity = this.queryById(req.getId());
-        com.alatka.messages.core.context.MessageDefinition messageDefinition = new com.alatka.messages.core.context.MessageDefinition();
-        BeanUtils.copyProperties(entity, messageDefinition);
-        messageDefinition.setType(com.alatka.messages.core.context.MessageDefinition.Type.valueOf(entity.getType()));
-        messageDefinition.setKind(com.alatka.messages.core.context.MessageDefinition.Kind.valueOf(entity.getKind()));
-        if (entity.getDomainType() != null) {
-            messageDefinition.setDomainType(com.alatka.messages.core.context.MessageDefinition.DomainType.valueOf(entity.getDomainType()));
-        }
-        if (entity.getHolder() != null) {
-            messageDefinition.setHolder(ClassUtil.forName(entity.getHolder()));
-        } else {
-            messageDefinition.setHolder(MessageHolder.class);
-        }
-        if (messageDefinition.getDomain() == null) {
-            messageDefinition.setDomain("");
-        }
-        if (messageDefinition.getUsage() == null) {
-            messageDefinition.setUsage("");
-        }
-        messageDefinition.setEnabled(true);
-
         try {
-            return this.doLocalTest(messageDefinition, req);
+            CompositeMessageDefinitionBuilder composite = new CompositeMessageDefinitionBuilder();
+            if ("database".equals(req.getBuildType())) {
+                composite.addBuilder(new IsoDatabaseMessageDefinitionBuilder(this.dataSource));
+                composite.addBuilder(new FixedDatabaseMessageDefinitionBuilder(this.dataSource));
+            } else if (req.getBuildParam() == null) {
+                throw new IllegalStateException("buildParameter is null");
+            } else if ("annotation".equals(req.getBuildType())) {
+                String packageName = req.getBuildParam();
+                composite.addBuilder(new IsoAnnotationMessageDefinitionBuilder(packageName));
+                composite.addBuilder(new FixedAnnotationMessageDefinitionBuilder(packageName));
+            } else if ("file".equals(req.getBuildType())) {
+                String pathExpression = !req.getBuildParam().startsWith(FileMessageDefinitionBuilder.PREFIX_CLASSPATH)
+                        && !req.getBuildParam().startsWith(FileMessageDefinitionBuilder.PREFIX_FILE_PATH) ?
+                        FileMessageDefinitionBuilder.PREFIX_FILE_PATH + req.getBuildParam() : req.getBuildParam();
+                composite.addBuilder(new IsoYamlMessageDefinitionBuilder(pathExpression));
+                composite.addBuilder(new FixedYamlMessageDefinitionBuilder(pathExpression));
+                composite.addBuilder(new IsoXmlMessageDefinitionBuilder(pathExpression));
+                composite.addBuilder(new FixedXmlMessageDefinitionBuilder(pathExpression));
+            } else {
+                throw new IllegalStateException("buildType is " + req.getBuildType());
+            }
+            composite.build();
+
+            Class<?> holder = MessageDefinitionContext.getInstance().messageDefinition(req.getIdentity()).getHolder();
+            boolean isMessageHolder = holder == MessageHolder.class;
+            boolean byName = req.getByName();
+            MessageBuilder messageBuilder = MessageBuilder.init(req.getIdentity());
+            String result = null;
+
+            if (req.getPacked()) {
+                Object object = isMessageHolder ?
+                        MessageHolder.fromMap(req.getIdentity(), JsonUtil.jsonToMap(req.getContent()), byName) :
+                        JsonUtil.jsonToObject(req.getContent(), holder);
+                byte[] bytes = messageBuilder.pack(object);
+                result = BytesUtil.bytesToHex(bytes);
+            } else {
+                Object object = messageBuilder.unpack(req.getContent().replaceAll("\\s", ""));
+                MessageHolder messageHolder = isMessageHolder ? (MessageHolder) object : MessageHolder.fromPojo(object);
+                result = req.getDetailed() ?
+                        messageHolder.toString() :
+                        JsonUtil.format(byName ? messageHolder.toMapByName(true) : messageHolder.toMapByDomainNo(true));
+            }
+            return result;
         } catch (RuntimeException e) {
             throw new DebugException(e);
         }
-    }
-
-    private String doLocalTest(com.alatka.messages.core.context.MessageDefinition messageDefinition, MessageTestReq req) {
-        MessageDefinitionBuilder messageDefinitionBuilder =
-                messageDefinition.getType() == com.alatka.messages.core.context.MessageDefinition.Type.iso ?
-                        new IsoDatabaseMessageDefinitionBuilder(this.dataSource) :
-                        new FixedDatabaseMessageDefinitionBuilder(this.dataSource);
-        messageDefinitionBuilder.build();
-
-        MessageBuilder messageBuilder = MessageBuilder.init(messageDefinition);
-        Class<?> holder = messageDefinition.getHolder();
-        boolean isMessageHolder = holder == MessageHolder.class;
-        boolean byName = req.getByName();
-        String result = null;
-
-        if (req.getPacked()) {
-            Object object = isMessageHolder ?
-                    MessageHolder.fromMap(messageDefinition.identity(), JsonUtil.jsonToMap(req.getContent()), byName) :
-                    JsonUtil.jsonToObject(req.getContent(), holder);
-            byte[] bytes = messageBuilder.pack(object);
-            result = BytesUtil.bytesToHex(bytes);
-        } else {
-            Object object = messageBuilder.unpack(req.getContent().replaceAll("\\s", ""));
-            MessageHolder messageHolder = isMessageHolder ? (MessageHolder) object : MessageHolder.fromPojo(object);
-            result = req.getDetailed() ?
-                    messageHolder.toString() :
-                    JsonUtil.format(byName ? messageHolder.toMapByName(true) : messageHolder.toMapByDomainNo(true));
-        }
-        return result;
     }
 
     public Long create(MessageDefinition messageDefinition) {

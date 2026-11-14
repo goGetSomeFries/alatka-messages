@@ -243,13 +243,23 @@
             </div>
             <div class="modal-body">
                 <form id="testForm">
-                    <input type="hidden" id="testId" name="id">
                     <input type="hidden" name="detailed" id="testDetailed" value="false">
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-text" id="testDesc"></div>
+                        <div class="col-md-2">
+                            <select class="form-select form-select-sm" id="testBuildType" name="buildType" required>
+                                <option value="database">database</option>
+                                <option value="annotation">annotation</option>
+                                <option value="file">Xml/Yaml</option>
+                            </select>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-end">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control form-control-sm" id="testBuildParam" name="buildParam">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control form-control-sm" id="testIdentity" name="identity"
+                                   placeholder="MessageDefinition Identity" required>
+                        </div>
+                        <div class="col-md-3 d-flex justify-content-end">
                             <div class="btn-group me-3" role="group">
                                 <input type="radio" class="btn-check" name="packed" id="testPacked0" value="false"
                                        autocomplete="off" checked>
@@ -390,22 +400,36 @@
     }
 
     function showTestModal() {
-        const selection = $('#dataTable').bootstrapTable('getSelections');
-        if (selection.length !== 1) {
-            showWarningToast("请选择一条记录");
-            return;
-        }
-
         const $form = $('#testForm');
         const formEl = $form[0];
         const $modal = $('#testModal');
         $form.removeClass('was-validated');
 
-        const row = selection[0];
-        const key = [row.type, row.group, row.code, row.kind, row.domain, row.usage].filter(e => e !== null).join(":");
-        $("#testDesc").html(`${row.remark} <span class="fw-bold">(${key})</span>`);
+        const selection = $('#dataTable').bootstrapTable('getSelections');
+        if (selection.length === 1) {
+            const row = selection[0];
+            const key = [row.type, row.group, row.code, row.kind, row.domain, row.usage].filter(e => e !== null).join(":");
+            $("#testIdentity").val(key);
+        } else {
+            $("#testIdentity").val("");
+        }
+        $("#testBuildType").val("database");
+        $("#testBuildParam").hide();
+        $('#testBuildParam').prop('disabled', true);
 
         $modal.modal('show');
+
+        $('#testBuildType').on('change', function () {
+            const value = $(this).val();
+            if (value === 'database') {
+                $("#testBuildParam").hide();
+                $('#testBuildParam').prop('disabled', true);
+            } else {
+                $("#testBuildParam").show();
+                $('#testBuildParam').prop('disabled', false);
+                $("#testBuildParam").prop('placeholder', value === 'annotation' ? '包路径' : '文件路径');
+            }
+        });
 
         $('#executeTestBtn').off('click').on('click', function (event) {
             event.preventDefault();
@@ -414,7 +438,6 @@
                 $form.addClass('was-validated');
                 return;
             }
-            $("#testId").val(row.id);
             $("#testDetailed").val($("#testResultDetailed").is(':checked'));
 
             const formData = {};
