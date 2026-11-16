@@ -7,9 +7,16 @@ import jakarta.validation.constraints.NotNull;
 @Schema(description = "报文本地测试请求实体")
 public class MessageTestReq {
 
-    @Schema(description = "主键", required = true)
-    @NotNull(message = "id 不能为空")
-    private Long id;
+    @Schema(description = "构建类型", required = true)
+    @NotEmpty(message = "buildType 不能为空")
+    private String buildType;
+
+    @Schema(description = "构建参数")
+    private String buildParam;
+
+    @Schema(description = "MessageDefinition Identity", required = true)
+    @NotEmpty(message = "identity 不能为空")
+    private String identity;
 
     @Schema(description = "打包解包标识", required = true)
     @NotNull(message = "packed 不能为空")
@@ -27,12 +34,28 @@ public class MessageTestReq {
     @NotEmpty(message = "content 不能为空")
     private String content;
 
-    public Long getId() {
-        return id;
+    public String getBuildType() {
+        return buildType;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBuildType(String buildType) {
+        this.buildType = buildType;
+    }
+
+    public String getBuildParam() {
+        return buildParam;
+    }
+
+    public void setBuildParam(String buildParam) {
+        this.buildParam = buildParam;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
     public Boolean getPacked() {
