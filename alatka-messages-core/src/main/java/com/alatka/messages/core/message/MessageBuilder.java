@@ -30,11 +30,11 @@ public abstract class MessageBuilder {
         return init(definition);
     }
 
-    public static MessageBuilder init(String key) {
+    public static MessageBuilder init(String identity) {
         MessageDefinitionContext context = MessageDefinitionContext.getInstance();
-        MessageDefinition definition = context.messageDefinition(key);
+        MessageDefinition definition = context.messageDefinition(identity);
         if (definition == null) {
-            throw new IllegalArgumentException("key [" + key + "] not exist");
+            throw new IllegalArgumentException("identity [" + identity + "] not exist");
         }
         return init(definition);
     }

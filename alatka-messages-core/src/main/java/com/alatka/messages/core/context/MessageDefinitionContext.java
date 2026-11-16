@@ -27,8 +27,8 @@ public class MessageDefinitionContext {
     private MessageDefinitionContext() {
     }
 
-    public void messageDefinition(String key, MessageDefinition definition) {
-        this.messageDefinitionMap.put(key, definition);
+    public void messageDefinition(String identity, MessageDefinition definition) {
+        this.messageDefinitionMap.put(identity, definition);
     }
 
     public MessageDefinition messageDefinition(Class<?> clazz) {
@@ -50,8 +50,8 @@ public class MessageDefinitionContext {
         return this.messageDefinition(condition.identity());
     }
 
-    public MessageDefinition messageDefinition(String key) {
-        return this.messageDefinitionMap.get(key);
+    public MessageDefinition messageDefinition(String identity) {
+        return this.messageDefinitionMap.get(identity);
     }
 
     public List<MessageDefinition> childrenMessageDefinitions(MessageDefinition messageDefinition, FieldDefinition fieldDefinition) {

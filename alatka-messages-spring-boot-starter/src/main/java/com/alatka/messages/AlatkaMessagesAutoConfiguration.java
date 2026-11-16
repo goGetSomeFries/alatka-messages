@@ -29,7 +29,7 @@ public class AlatkaMessagesAutoConfiguration implements ApplicationContextAware 
     @ConditionalOnProperty(value = "alatka.messages.type", havingValue = "yaml", matchIfMissing = true)
     public MessageDefinitionBuilder yamlMessageDefinitionBuilder(AlatkaMessagesProperties properties) {
         SpringMessageDefinitionBuilder builder = new SpringMessageDefinitionBuilder();
-        String classpath = Optional.ofNullable(properties.getClasspath()).orElse("");
+        String classpath = Optional.ofNullable(properties.getPathExpression()).orElse("");
         switch (properties.getMessageType()) {
             case iso:
                 builder.addBuilder(new IsoYamlMessageDefinitionBuilder(classpath));
@@ -50,18 +50,18 @@ public class AlatkaMessagesAutoConfiguration implements ApplicationContextAware 
     @ConditionalOnProperty(value = "alatka.messages.type", havingValue = "xml")
     public MessageDefinitionBuilder xmlMessageDefinitionBuilder(AlatkaMessagesProperties properties) {
         SpringMessageDefinitionBuilder builder = new SpringMessageDefinitionBuilder();
-        String classpath = Optional.ofNullable(properties.getClasspath()).orElse("");
+        String pathExpression = Optional.ofNullable(properties.getPathExpression()).orElse("");
         switch (properties.getMessageType()) {
             case iso:
-                builder.addBuilder(new IsoXmlMessageDefinitionBuilder(classpath));
+                builder.addBuilder(new IsoXmlMessageDefinitionBuilder(pathExpression));
                 break;
             case fixed:
-                builder.addBuilder(new FixedXmlMessageDefinitionBuilder(classpath));
+                builder.addBuilder(new FixedXmlMessageDefinitionBuilder(pathExpression));
                 break;
             case all:
             default:
-                builder.addBuilder(new IsoXmlMessageDefinitionBuilder(classpath));
-                builder.addBuilder(new FixedXmlMessageDefinitionBuilder(classpath));
+                builder.addBuilder(new IsoXmlMessageDefinitionBuilder(pathExpression));
+                builder.addBuilder(new FixedXmlMessageDefinitionBuilder(pathExpression));
         }
         return builder;
     }
