@@ -18,11 +18,11 @@ import java.util.stream.Stream;
  */
 public class FileUtil {
 
-    public static List<FileWrapper> getFilesContent(String classpath, String suffix) {
-        return getFilesContent(classpath, suffix, FileUtil.class.getClassLoader());
+    public static List<FileWrapper> getFileSystemFilesContent(String path, String suffix) {
+        return buildFilesContent(Path.of(path), suffix);
     }
 
-    public static List<FileWrapper> getFilesContent(String classpath, String suffix, ClassLoader classLoader) {
+    public static List<FileWrapper> getClasspathFilesContent(String classpath, String suffix, ClassLoader classLoader) {
         URL url = classLoader.getResource(classpath);
         if (url == null) {
             throw new IllegalArgumentException("can not find classpath: " + classpath);
@@ -48,7 +48,7 @@ public class FileUtil {
         }
     }
 
-    private static List<FileWrapper> buildFilesContent(Path path, String suffix) throws IOException {
+    private static List<FileWrapper> buildFilesContent(Path path, String suffix) {
         try (Stream<Path> stream = Files.list(path)) {
             return stream.filter(Files::isRegularFile)
                     .filter(p -> p.getFileName().toString().endsWith(suffix))
@@ -60,6 +60,8 @@ public class FileUtil {
                         }
                     })
                     .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
