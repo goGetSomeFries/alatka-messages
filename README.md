@@ -53,9 +53,11 @@
 
 ### [ :point_right: 访问wiki查看更多教程](https://gitee.com/asuka2001/alatka-messages/wikis)
 
+### [ :point_right: 点击我一键快速试用](https://gitee.com/asuka2001/alatka-messages/wikis/%E4%B8%80%E3%80%81%E4%B8%80%E9%94%AE%E8%AF%95%E7%94%A8)
+
 ### github地址
 
-项目同步更新在github；如有需要， :point_right: [点击我访问](https://github.com/goGetSomeFries/alatka-messages)
+项目同步更新在 github；如有需要， :point_right: [点击我访问](https://github.com/goGetSomeFries/alatka-messages)
 
 ### 感谢支持
 
