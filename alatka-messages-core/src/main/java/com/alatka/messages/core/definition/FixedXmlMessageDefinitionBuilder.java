@@ -18,8 +18,8 @@ public class FixedXmlMessageDefinitionBuilder extends XmlMessageDefinitionBuilde
         this(DEFAULT_CLASSPATH);
     }
 
-    public FixedXmlMessageDefinitionBuilder(String classpath) {
-        super(classpath);
+    public FixedXmlMessageDefinitionBuilder(String pathExpression) {
+        super(pathExpression);
     }
 
     @Override

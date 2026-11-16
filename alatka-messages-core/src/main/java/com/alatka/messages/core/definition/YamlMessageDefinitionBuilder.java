@@ -36,8 +36,8 @@ public abstract class YamlMessageDefinitionBuilder<S extends FieldDefinition> ex
      */
     private static final Pattern PATTERN = Pattern.compile("^([$\\w]+?)(\\$[0-9A-Z]{2,3})?(@\\w+)?$");
 
-    public YamlMessageDefinitionBuilder(String classpath) {
-        super(classpath);
+    public YamlMessageDefinitionBuilder(String pathExpression) {
+        super(pathExpression);
     }
 
     @Override
