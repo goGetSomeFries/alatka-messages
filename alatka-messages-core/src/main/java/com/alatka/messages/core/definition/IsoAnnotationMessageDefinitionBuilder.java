@@ -42,6 +42,7 @@ public class IsoAnnotationMessageDefinitionBuilder extends AnnotationMessageDefi
         fieldDefinition.setFixed(annotation.fixed());
         fieldDefinition.setLength(annotation.length());
         fieldDefinition.setRemark(annotation.remark());
+        fieldDefinition.setDomainPostProcessors(annotation.processors());
         fieldDefinition.setStatus(annotation.status());
         fieldDefinition.setParseType(annotation.parseType());
         fieldDefinition.setLenParseType(annotation.lenParseType());

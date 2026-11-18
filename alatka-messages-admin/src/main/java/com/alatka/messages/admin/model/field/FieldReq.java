@@ -67,6 +67,9 @@ public class FieldReq {
     @Schema(description = "子域类型")
     private String subdomainType;
 
+    @Schema(description = "域处理器")
+    private String processors;
+
     @Schema(description = "未配置子域异常")
     private Boolean nonSubdomainException;
 
@@ -204,6 +207,14 @@ public class FieldReq {
 
     public void setSubdomainType(String subdomainType) {
         this.subdomainType = subdomainType;
+    }
+
+    public String getProcessors() {
+        return processors;
+    }
+
+    public void setProcessors(String processors) {
+        this.processors = processors;
     }
 
     public Boolean getNonSubdomainException() {
