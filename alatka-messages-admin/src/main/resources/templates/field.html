@@ -120,22 +120,30 @@
         <thead>
         <tr>
             <th data-radio="true"></th>
-            <th data-field="id" data-align="right" data-sortable="true" data-visible="false">ID</th>
-            <th data-field="domainNo" data-align="right">序号</th>
-            <th data-field="name" data-formatter="nameFormatter">名称</th>
-            <th data-field="remark">描述</th>
-            <th data-field="className" data-align="center" data-formatter="classNameFormatter">java类型</th>
-            <th data-field="pattern">域值格式</th>
-            <th data-field="fixed" data-align="center" data-formatter="fixedFormatter">是否定长</th>
-            <th data-field="length" data-align="right">字节长度</th>
-            <th data-field="maxLength" data-align="right">最大长度</th>
-            <th data-field="parseType" data-align="center" data-formatter="parseTypeFormatter">域解析类型</th>
-            <th data-field="lenParseType" data-align="center" data-formatter="parseTypeFormatter">变长域长度域解析类型
+            <th data-field="id" data-align="right" data-valign="middle" data-sortable="true" data-visible="false">ID
             </th>
-            <th data-field="existSubdomain" data-visible="false" data-align="center"
+            <th data-field="domainNo" data-align="right" data-valign="middle">域号</th>
+            <th data-field="name" data-valign="middle" data-formatter="nameFormatter">名称</th>
+            <th data-field="remark" data-valign="middle">描述</th>
+            <th data-field="className" data-align="center" data-valign="middle" data-formatter="classNameFormatter">
+                java类型
+            </th>
+            <th data-field="pattern" data-valign="middle">域值格式</th>
+            <th data-field="fixed" data-align="center" data-valign="middle" data-formatter="fixedFormatter">是否定长
+            </th>
+            <th data-field="length" data-align="right" data-valign="middle">字节长度</th>
+            <th data-field="maxLength" data-align="right" data-valign="middle">最大长度</th>
+            <th data-field="parseType" data-align="center" data-valign="middle" data-formatter="parseTypeFormatter">
+                域解析类型
+            </th>
+            <th data-field="lenParseType" data-align="center" data-valign="middle" data-formatter="parseTypeFormatter">
+                变长域长度域<br>解析类型
+            </th>
+            <th data-field="processors" data-valign="middle" data-formatter="processorsFormatter">域处理器</th>
+            <th data-field="existSubdomain" data-visible="false" data-align="center" data-valign="middle"
                 data-formatter="existSubdomainFormatter">存在子域
             </th>
-            <th data-field="status" data-align="center" data-formatter="statusFormatter">状态</th>
+            <th data-field="status" data-align="center" data-valign="middle" data-formatter="statusFormatter">状态</th>
         </tr>
         </thead>
     </table>
@@ -178,17 +186,25 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <label for="editClassName" class="form-label">java类型</label>
                             <input type="text" class="form-control" id="editClassName" name="className"
                                    placeholder="输入类型">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="editPattern" class="form-label">域值格式</label>
                             <input type="text" class="form-control" id="editPattern" name="pattern"
                                    placeholder="输入域值格式">
                         </div>
                         <div class="col-md-4">
+                            <label for="editProcessors" class="form-label">域处理器</label>
+                            <input type="text" class="form-control" id="editProcessors" name="processors"
+                                   aria-describedby="processorsDesc" placeholder="输入域处理器">
+                            <div id="processorsDesc" class="form-text">
+                                多个用逗号分割
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <label for="editStatus" class="form-label">状态</label>
                             <select class="form-select alk-select-status" id="editStatus" name="status" required>
                             </select>
@@ -655,6 +671,17 @@
                 $(this).data('alk-init-value', Object.keys(tomSelect.options)[1]);
             }
         });
+    }
+
+    function processorsFormatter(value) {
+        if (value === null || value === '') {
+            return "";
+        }
+        let html = "";
+        for (let item of value.split(',')) {
+            html += `<span class="badge bg-white text-dark border me-1">${item}</span>`;
+        }
+        return html;
     }
 
     function subdomainTypeFormatter(key) {

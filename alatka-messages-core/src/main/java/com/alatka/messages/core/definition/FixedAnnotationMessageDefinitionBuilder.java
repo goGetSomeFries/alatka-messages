@@ -42,6 +42,7 @@ public class FixedAnnotationMessageDefinitionBuilder extends AnnotationMessageDe
         fieldDefinition.setFixed(annotation.fixed());
         fieldDefinition.setLength(annotation.length());
         fieldDefinition.setRemark(annotation.remark());
+        fieldDefinition.setDomainPostProcessors(annotation.processors());
         fieldDefinition.setStatus(annotation.status());
         fieldDefinition.setParseType(annotation.parseType());
         fieldDefinition.setExistSubdomain(annotation.existSubdomain());

@@ -103,8 +103,9 @@ public abstract class MessageBuilder {
         // 字节数组包装成定义格式报文域
         DomainParsed domainParsed = DomainParsedFactory.getInstance(definition, fieldDefinition);
         byte[] packed = domainParsed.pack(bytes, fieldDefinition);
+        byte[] resultBytes = fieldDefinition.getDomainPostProcessor().postProcessAfterPacked(packed, fieldDefinition);
 
-        return new Wrapper(packed, fieldDefinition);
+        return new Wrapper(resultBytes, fieldDefinition);
     }
 
     public <T> T unpack(String hexStr) {
@@ -142,10 +143,11 @@ public abstract class MessageBuilder {
         // 解析报文域字节数组
         DomainParsed domainParsed = DomainParsedFactory.getInstance(definition, fieldDefinition);
         byte[] valueBytes = domainParsed.unpack(bytes, fieldDefinition, counter);
+        byte[] resultBytes = fieldDefinition.getDomainPostProcessor().postProcessAfterUnpacked(valueBytes, fieldDefinition);
 
         // 字节数组解析为对象
         FieldBuilder fieldBuilder = FieldBuilderFactory.getInstance(definition, fieldDefinition);
-        Object value = fieldBuilder.deserialize(valueBytes, fieldDefinition, instance, counter);
+        Object value = fieldBuilder.deserialize(resultBytes, fieldDefinition, instance, counter);
         return new Wrapper(value, fieldDefinition);
     }
 

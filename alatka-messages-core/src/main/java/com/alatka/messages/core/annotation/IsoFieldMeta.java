@@ -85,6 +85,11 @@ public @interface IsoFieldMeta {
     String remark() default "";
 
     /**
+     * {@link FieldDefinition#setDomainPostProcessors(String...)}
+     */
+    String[] processors() default {};
+
+    /**
      * {@link IsoFieldDefinition#setStatus(FieldDefinition.Status)}
      */
     FieldDefinition.Status status() default FieldDefinition.Status.OPEN;
