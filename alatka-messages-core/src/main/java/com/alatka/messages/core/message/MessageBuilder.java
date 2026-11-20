@@ -73,26 +73,25 @@ public abstract class MessageBuilder {
     }
 
     public <T> byte[] pack(T instance) {
-        List<FieldDefinition> fieldDefinitions = this.buildFieldDefinitions();
-
-        byte[] result = fieldDefinitions.stream()
-                .filter(this::filter)
-                .map(fieldDefinition -> {
-                    try {
-                        ExecutionContext.instance().set(instance, definition);
-
-                        return this.doPack(instance, definition, fieldDefinition);
-                    } catch (Exception e) {
-                        throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
-                    } finally {
-                        ExecutionContext.instance().clear();
-                    }
-                })
-                .peek(wrapper -> this.postProcess(wrapper.fieldDefinition, wrapper.value, true))
-                .map(wrapper -> (byte[]) wrapper.value)
-                .reduce(new byte[0], this::concatBytes);
-        this.postProcess();
-        return result;
+        try {
+            ExecutionContext.instance().set(instance, definition);
+            List<FieldDefinition> fieldDefinitions = this.buildFieldDefinitions();
+            byte[] result = fieldDefinitions.stream()
+                    .filter(this::filter)
+                    .map(fieldDefinition -> {
+                        try {
+                            return this.doPack(instance, definition, fieldDefinition);
+                        } catch (Exception e) {
+                            throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+                        }
+                    })
+                    .peek(wrapper -> this.postProcess(wrapper.fieldDefinition, wrapper.value, true))
+                    .map(wrapper -> (byte[]) wrapper.value)
+                    .reduce(new byte[0], this::concatBytes);
+            return result;
+        } finally {
+            this.postProcess();
+        }
     }
 
     protected <T> Wrapper doPack(T instance, MessageDefinition definition, FieldDefinition fieldDefinition) {
@@ -115,27 +114,27 @@ public abstract class MessageBuilder {
 
     @SuppressWarnings("unchecked")
     public <T> T unpack(byte[] bytes) {
-        // MessageHolder or POJO
-        Object instance = definition.getHolder() == MessageHolder.class ?
-                MessageHolder.newInstance(definition.identity()) : ClassUtil.newInstance(definition.getHolder());
-        AtomicInteger counter = new AtomicInteger(0);
+        try {
+            // MessageHolder or POJO
+            Object instance = definition.getHolder() == MessageHolder.class ?
+                    MessageHolder.newInstance(definition.identity()) : ClassUtil.newInstance(definition.getHolder());
+            AtomicInteger counter = new AtomicInteger(0);
 
-        List<FieldDefinition> fieldDefinitions = this.buildFieldDefinitions(bytes);
-        fieldDefinitions.stream()
-                .filter(this::filter)
-                .map(fieldDefinition -> {
-                    try {
-                        ExecutionContext.instance().set(instance, definition);
-
-                        return this.doUnpack(instance, definition, fieldDefinition, bytes, counter);
-                    } catch (Exception e) {
-                        throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
-                    } finally {
-                        ExecutionContext.instance().clear();
-                    }
-                }).forEach(wrapper -> this.postProcess(wrapper.fieldDefinition, wrapper.value, false));
-        this.postProcess();
-        return (T) instance;
+            ExecutionContext.instance().set(instance, definition);
+            List<FieldDefinition> fieldDefinitions = this.buildFieldDefinitions(bytes);
+            fieldDefinitions.stream()
+                    .filter(this::filter)
+                    .map(fieldDefinition -> {
+                        try {
+                            return this.doUnpack(instance, definition, fieldDefinition, bytes, counter);
+                        } catch (Exception e) {
+                            throw new RuntimeException(definition + " -> " + fieldDefinition + "解析报错", e);
+                        }
+                    }).forEach(wrapper -> this.postProcess(wrapper.fieldDefinition, wrapper.value, false));
+            return (T) instance;
+        } finally {
+            this.postProcess();
+        }
     }
 
     protected <T> Wrapper doUnpack(T instance, MessageDefinition definition,
@@ -186,6 +185,7 @@ public abstract class MessageBuilder {
     }
 
     protected void postProcess() {
+        ExecutionContext.instance().clear();
     }
 
     protected class Wrapper {
