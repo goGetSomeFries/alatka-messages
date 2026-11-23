@@ -1,10 +1,15 @@
 package com.alatka.messages.core.context;
 
+import com.alatka.messages.core.domain.processor.DomainPostProcessor;
+import com.alatka.messages.core.domain.processor.DomainPostProcessorFactory;
+import com.alatka.messages.core.util.ClassUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class FieldDefinitionTest {
@@ -66,6 +71,14 @@ public class FieldDefinitionTest {
         definition.setSubdomainType(MessageDefinition.DomainType.PAGE);
         definition.setMessageDefinitionMap(Collections.EMPTY_MAP);
 
+        DomainPostProcessor processor1 = Mockito.mock(DomainPostProcessor.class);
+        Mockito.doReturn("testProcessor1").when(processor1).name();
+        DomainPostProcessor processor2 = Mockito.mock(DomainPostProcessor.class);
+        Mockito.doReturn("testProcessor2").when(processor2).name();
+        DomainPostProcessorFactory.init(processor1);
+        DomainPostProcessorFactory.init(processor2);
+
+        definition.setProcessors("testProcessor1,testProcessor2");
         Assertions.assertEquals(1, definition.getDomainNo());
         Assertions.assertEquals("Name", definition.getName());
         Assertions.assertEquals("java.lang.String", definition.getClassName());
@@ -80,6 +93,11 @@ public class FieldDefinitionTest {
         Assertions.assertEquals(Boolean.FALSE, definition.getExistSubdomain());
         Assertions.assertEquals(MessageDefinition.DomainType.PAGE, definition.getSubdomainType());
         Assertions.assertEquals(Collections.EMPTY_MAP, definition.getMessageDefinitionMap());
+
+        List<DomainPostProcessor> processors = (List<DomainPostProcessor>) ClassUtil.getFieldValue(definition.getDomainPostProcessor(), "processors");
+        Assertions.assertEquals(2, processors.size());
+        Assertions.assertSame(processor1, processors.get(0));
+        Assertions.assertSame(processor2, processors.get(1));
     }
 
     @Test

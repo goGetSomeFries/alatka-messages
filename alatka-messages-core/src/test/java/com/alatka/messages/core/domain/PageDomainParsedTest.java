@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PageDomainParsedTest {
@@ -53,7 +52,7 @@ public class PageDomainParsedTest {
 
         Inner inner = new Inner();
         inner.setCount(2);
-        ExecutionContext.instance().setMessageHolder(inner);
+        ExecutionContext.instance().set(inner, null);
         byte[] unpack = domainParsed.unpack(bytes, fieldDefinition, counter);
         Assertions.assertEquals("0102030405060708", BytesUtil.bytesToHex(unpack));
     }
