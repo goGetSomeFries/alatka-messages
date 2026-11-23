@@ -3,6 +3,8 @@ package com.alatka.messages;
 import com.alatka.messages.core.definition.*;
 import com.alatka.messages.core.domain.DomainParsed;
 import com.alatka.messages.core.domain.DomainParsedFactory;
+import com.alatka.messages.core.domain.processor.DomainPostProcessor;
+import com.alatka.messages.core.domain.processor.DomainPostProcessorFactory;
 import com.alatka.messages.core.field.FieldBuilder;
 import com.alatka.messages.core.field.FieldBuilderFactory;
 import com.alatka.messages.definition.SpringMessageDefinitionBuilder;
@@ -112,5 +114,6 @@ public class AlatkaMessagesAutoConfiguration implements ApplicationContextAware 
     public void setApplicationContext(ApplicationContext applicationContext) {
         applicationContext.getBeansOfType(DomainParsed.class).values().forEach(DomainParsedFactory::init);
         applicationContext.getBeansOfType(FieldBuilder.class).values().forEach(FieldBuilderFactory::init);
+        applicationContext.getBeansOfType(DomainPostProcessor.class).values().forEach(DomainPostProcessorFactory::init);
     }
 }

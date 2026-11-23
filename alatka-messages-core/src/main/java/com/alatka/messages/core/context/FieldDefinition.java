@@ -1,9 +1,13 @@
 package com.alatka.messages.core.context;
 
+import com.alatka.messages.core.domain.processor.CompositeDomainPostProcessor;
+import com.alatka.messages.core.domain.processor.DomainPostProcessor;
+import com.alatka.messages.core.domain.processor.DomainPostProcessorFactory;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * 报文域定义类
@@ -77,6 +81,11 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
      * 使用标识映射{@link MessageDefinition}
      */
     private Map<String, MessageDefinition> messageDefinitionMap;
+    /**
+     * 域后处理器，可用于域加解密场景
+     * {@link DomainPostProcessor}
+     */
+    private CompositeDomainPostProcessor domainPostProcessor = new CompositeDomainPostProcessor();
 
     public enum Status {
         /**
@@ -207,6 +216,24 @@ public class FieldDefinition implements Comparable<FieldDefinition> {
 
     public void setMessageDefinitionMap(Map<String, MessageDefinition> messageDefinitionMap) {
         this.messageDefinitionMap = messageDefinitionMap;
+    }
+
+    public CompositeDomainPostProcessor getDomainPostProcessor() {
+        return domainPostProcessor;
+    }
+
+    public void setDomainPostProcessors(String... processors) {
+        DomainPostProcessor[] domainPostProcessors = Stream.of(processors)
+                .map(DomainPostProcessorFactory::getDomainPostProcessor).toArray(DomainPostProcessor[]::new);
+        this.domainPostProcessor.add(domainPostProcessors);
+    }
+
+    public void setProcessors(String processors) {
+        if (processors == null || processors.isEmpty()) {
+            this.setDomainPostProcessors();
+        } else {
+            this.setDomainPostProcessors(processors.split(","));
+        }
     }
 
     @Override

@@ -4,12 +4,16 @@ import com.alatka.messages.core.annotation.IsoFieldMeta;
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.IsoFieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
+import com.alatka.messages.core.domain.processor.DomainPostProcessor;
+import com.alatka.messages.core.domain.processor.DomainPostProcessorFactory;
+import com.alatka.messages.core.util.ClassUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class IsoAnnotationMessageDefinitionBuilderTest {
 
@@ -44,8 +48,13 @@ public class IsoAnnotationMessageDefinitionBuilderTest {
         Mockito.doReturn("counts").when(annotation).pageSizeName();
         Mockito.doReturn(false).when(annotation).nonSubdomainException();
         Mockito.doReturn("alias").when(annotation).aliasName();
+        Mockito.doReturn(new String[0]).when(annotation).processors();
         Mockito.doReturn(-1).when(annotation).maxLength();
 
+        DomainPostProcessor processor = Mockito.mock(DomainPostProcessor.class);
+        Mockito.doReturn("testProcessor").when(processor).name();
+        DomainPostProcessorFactory.init(processor);
+        Mockito.doReturn(new String[]{"testProcessor"}).when(annotation).processors();
 
         Field field = Mockito.mock(Field.class);
         Mockito.doReturn("test").when(field).getName();
@@ -70,5 +79,9 @@ public class IsoAnnotationMessageDefinitionBuilderTest {
         Assertions.assertFalse(definition.getNonSubdomainException());
         Assertions.assertEquals("alias", definition.getAliasName());
         Assertions.assertEquals(20, definition.getMaxLength());
+
+        List<DomainPostProcessor> processors = (List<DomainPostProcessor>) ClassUtil.getFieldValue(definition.getDomainPostProcessor(), "processors");
+        Assertions.assertEquals(1, processors.size());
+        Assertions.assertSame(processor, processors.get(0));
     }
 }

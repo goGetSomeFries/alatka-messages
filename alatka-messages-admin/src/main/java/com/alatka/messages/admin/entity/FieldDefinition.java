@@ -59,6 +59,9 @@ public class FieldDefinition {
     @Column(name = "F_SUBDOMAIN_TYPE")
     private String subdomainType;
 
+    @Column(name = "F_PROCESSORS")
+    private String processors;
+
     @Column(name = "F_NON_SUBDOMAIN_EXCEPTION")
     private Boolean nonSubdomainException;
 
@@ -196,6 +199,14 @@ public class FieldDefinition {
 
     public void setSubdomainType(String subdomainType) {
         this.subdomainType = subdomainType;
+    }
+
+    public String getProcessors() {
+        return processors;
+    }
+
+    public void setProcessors(String processors) {
+        this.processors = processors;
     }
 
     public Boolean getNonSubdomainException() {

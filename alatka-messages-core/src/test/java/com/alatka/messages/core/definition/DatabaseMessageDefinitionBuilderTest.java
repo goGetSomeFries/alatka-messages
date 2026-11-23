@@ -3,14 +3,14 @@ package com.alatka.messages.core.definition;
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.IsoFieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
-import com.alatka.messages.core.context.MessageDefinitionContext;
+import com.alatka.messages.core.domain.processor.DomainPostProcessor;
+import com.alatka.messages.core.domain.processor.DomainPostProcessorFactory;
 import com.alatka.messages.core.holder.MessageHolder;
 import com.alatka.messages.core.util.ClassUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import javax.sql.DataSource;
@@ -25,9 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mockStatic;
 
 public class DatabaseMessageDefinitionBuilderTest {
 
@@ -149,6 +147,13 @@ public class DatabaseMessageDefinitionBuilderTest {
     @Test
     @DisplayName("buildFieldDefinitions()")
     void test04() throws SQLException {
+        DomainPostProcessor processor1 = Mockito.mock(DomainPostProcessor.class);
+        Mockito.doReturn("testProcessor1").when(processor1).name();
+        DomainPostProcessor processor2 = Mockito.mock(DomainPostProcessor.class);
+        Mockito.doReturn("testProcessor2").when(processor2).name();
+        DomainPostProcessorFactory.init(processor1);
+        DomainPostProcessorFactory.init(processor2);
+
         ResultSet resultSet = Mockito.mock(ResultSet.class);
         doReturn(true, true, false).when(resultSet).next();
         doReturn(1L, 2L).when(resultSet).getLong("F_ID");
@@ -168,6 +173,7 @@ public class DatabaseMessageDefinitionBuilderTest {
         doReturn(null, "alias").when(resultSet).getString("F_ALIAS_NAME");
         doReturn(20, 10).when(resultSet).getInt("F_MAX_LENGTH");
         doReturn(false, true).when(resultSet).getBoolean("F_NON_SUBDOMAIN_EXCEPTION");
+        doReturn(null, "testProcessor1,testProcessor2").when(resultSet).getString("F_PROCESSORS");
 
         PreparedStatement statement = Mockito.mock(PreparedStatement.class);
         doReturn(resultSet).when(statement).executeQuery();
@@ -203,6 +209,8 @@ public class DatabaseMessageDefinitionBuilderTest {
         Assertions.assertEquals(FieldDefinition.ParseType.ASCII, list.get(0).getParseType());
         Assertions.assertFalse(list.get(0).getExistSubdomain());
         Assertions.assertEquals(MessageDefinition.DomainType.FIXED, list.get(0).getSubdomainType());
+        List<DomainPostProcessor> processors0 = (List<DomainPostProcessor>) ClassUtil.getFieldValue(list.get(0).getDomainPostProcessor(), "processors");
+        Assertions.assertEquals(0, processors0.size());
 
         Assertions.assertEquals(2, list.get(1).getDomainNo());
         Assertions.assertEquals("test2", list.get(1).getName());
@@ -223,6 +231,10 @@ public class DatabaseMessageDefinitionBuilderTest {
         Map<String, MessageDefinition> messageDefinitionMap = list.get(1).getMessageDefinitionMap();
         Assertions.assertEquals(1, messageDefinitionMap.size());
         Assertions.assertEquals(subdomain, messageDefinitionMap.get(FieldDefinition.SUBFIELD_KEY_DEFAULT));
+        List<DomainPostProcessor> processors1 = (List<DomainPostProcessor>) ClassUtil.getFieldValue(list.get(1).getDomainPostProcessor(), "processors");
+        Assertions.assertEquals(2, processors1.size());
+        Assertions.assertSame(processor1, processors1.get(0));
+        Assertions.assertSame(processor2, processors1.get(1));
 
     }
 

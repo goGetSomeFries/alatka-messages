@@ -18,7 +18,7 @@ public class StringFieldBuilderTest {
     void init() {
         MessageDefinition definition = new MessageDefinition();
         definition.setCharset("GBK");
-        ExecutionContext.instance().setMessageDefinition(definition);
+        ExecutionContext.instance().set(null, definition);
     }
 
     @Test
