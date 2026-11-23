@@ -11,6 +11,7 @@ import com.alatka.messages.core.holder.Bitmap;
  */
 public class BitmapSubdomainMessageBuilder extends MessageBuilder {
 
+    // 递归调用场景下 ThreadLocal 会被覆盖，可优化为 ThreadLocal<Deque<Bitmap>>
     private final ThreadLocal<Bitmap> bitmap = new ThreadLocal<>();
 
     public BitmapSubdomainMessageBuilder(MessageDefinition definition) {
@@ -37,6 +38,7 @@ public class BitmapSubdomainMessageBuilder extends MessageBuilder {
 
     @Override
     protected void postProcess() {
+        super.postProcess();
         this.bitmap.remove();
     }
 }

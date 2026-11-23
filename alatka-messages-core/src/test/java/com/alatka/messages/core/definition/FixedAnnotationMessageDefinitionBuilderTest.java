@@ -4,12 +4,16 @@ import com.alatka.messages.core.annotation.FixedFieldMeta;
 import com.alatka.messages.core.context.FieldDefinition;
 import com.alatka.messages.core.context.FixedFieldDefinition;
 import com.alatka.messages.core.context.MessageDefinition;
+import com.alatka.messages.core.domain.processor.DomainPostProcessor;
+import com.alatka.messages.core.domain.processor.DomainPostProcessorFactory;
+import com.alatka.messages.core.util.ClassUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 public class FixedAnnotationMessageDefinitionBuilderTest {
 
@@ -42,6 +46,10 @@ public class FixedAnnotationMessageDefinitionBuilderTest {
         Mockito.doReturn(MessageDefinition.DomainType.FIXED).when(annotation).subdomainType();
         Mockito.doReturn("counts").when(annotation).pageSizeName();
 
+        DomainPostProcessor processor = Mockito.mock(DomainPostProcessor.class);
+        Mockito.doReturn("testProcessor").when(processor).name();
+        DomainPostProcessorFactory.init(processor);
+        Mockito.doReturn(new String[]{"testProcessor"}).when(annotation).processors();
 
         Field field = Mockito.mock(Field.class);
         Mockito.doReturn("test").when(field).getName();
@@ -63,6 +71,9 @@ public class FixedAnnotationMessageDefinitionBuilderTest {
         Assertions.assertEquals(MessageDefinition.DomainType.FIXED, definition.getSubdomainType());
         Assertions.assertEquals("counts", definition.getPageSizeName());
 
+        List<DomainPostProcessor> processors = (List<DomainPostProcessor>) ClassUtil.getFieldValue(definition.getDomainPostProcessor(), "processors");
+        Assertions.assertEquals(1, processors.size());
+        Assertions.assertSame(processor, processors.get(0));
     }
 
     @Test
