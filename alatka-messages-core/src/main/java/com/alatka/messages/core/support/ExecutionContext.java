@@ -2,43 +2,60 @@ package com.alatka.messages.core.support;
 
 import com.alatka.messages.core.context.MessageDefinition;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * 报文解析执行上下文
  */
 public class ExecutionContext {
 
-    private ThreadLocal<Object> messageHolderContext = new ThreadLocal<>();
-
-    private ThreadLocal<MessageDefinition> messageDefinitionContext = new ThreadLocal<>();
+    // 递归调用场景下使用 Deque
+    private final ThreadLocal<Deque<Wrapper>> stackContext = ThreadLocal.withInitial(ArrayDeque::new);
 
     private ExecutionContext() {
     }
 
-    public void setMessageHolder(Object messageHolder) {
-        this.messageHolderContext.set(messageHolder);
-    }
-
-    public Object getMessageHolder() {
-        return messageHolderContext.get();
-    }
-
-    public void setMessageDefinition(MessageDefinition messageDefinition) {
-        this.messageDefinitionContext.set(messageDefinition);
-    }
-
-    public MessageDefinition getMessageDefinition() {
-        return messageDefinitionContext.get();
-    }
-
     public void set(Object messageHolder, MessageDefinition messageDefinition) {
-        messageHolderContext.set(messageHolder);
-        messageDefinitionContext.set(messageDefinition);
+        stackContext.get().push(new Wrapper(messageHolder, messageDefinition));
     }
 
     public void clear() {
-        messageHolderContext.remove();
-        messageDefinitionContext.remove();
+        Deque<Wrapper> stack = stackContext.get();
+        if (!stack.isEmpty()) {
+            stack.pop();
+        }
+        if (stack.isEmpty()) {
+            stackContext.remove();
+        }
     }
+
+    public Object getMessageHolder() {
+        Wrapper top = this.peek();
+        return top == null ? null : top.messageHolder;
+    }
+
+    public MessageDefinition getMessageDefinition() {
+        Wrapper top = this.peek();
+        return top == null ? null : top.messageDefinition;
+    }
+
+    private Wrapper peek() {
+        Deque<Wrapper> stack = stackContext.get();
+        return stack.isEmpty() ? null : stack.peek();
+    }
+
+    private static class Wrapper {
+
+        private final Object messageHolder;
+        private final MessageDefinition messageDefinition;
+
+        private Wrapper(Object messageHolder, MessageDefinition messageDefinition) {
+            this.messageHolder = messageHolder;
+            this.messageDefinition = messageDefinition;
+        }
+    }
+
 
     public static ExecutionContext instance() {
         return Inner.INSTANCE;

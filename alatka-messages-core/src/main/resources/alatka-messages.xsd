@@ -59,6 +59,7 @@
                 <xs:attribute type="xs:string" name="aliasName" use="optional"/>
                 <xs:attribute type="xs:int" name="maxLength" use="optional"/>
                 <xs:attribute type="xs:boolean" name="nonSubdomainException" use="optional"/>
+                <xs:attribute type="xs:string" name="processors" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>

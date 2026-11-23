@@ -69,6 +69,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
                     boolean nonSubdomainException = resultSet.getString("F_NON_SUBDOMAIN_EXCEPTION") == null
                             || resultSet.getBoolean("F_NON_SUBDOMAIN_EXCEPTION");
                     result.put("nonSubdomainException", nonSubdomainException);
+                    result.put("processors", resultSet.getString("F_PROCESSORS"));
                     list.add(result);
                 }
             }
@@ -99,6 +100,7 @@ public abstract class DatabaseMessageDefinitionBuilder extends AbstractMessageDe
         fieldDefinition.setExistSubdomain((boolean) result.get("existSubdomain"));
         fieldDefinition.setSubdomainType(result.get("subdomainType") == null ?
                 null : MessageDefinition.DomainType.valueOf(result.get("subdomainType").toString()));
+        fieldDefinition.setProcessors(result.get("processors") == null ? null : result.get("processors").toString());
         if (fieldDefinition instanceof IsoFieldDefinition) {
             ((IsoFieldDefinition) fieldDefinition).setLenParseType(result.get("lenParseType") == null ?
                     null : FieldDefinition.ParseType.valueOf(result.get("lenParseType").toString()));
