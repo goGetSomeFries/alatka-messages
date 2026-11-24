@@ -56,6 +56,8 @@
 
 ### [ :point_right: 点击我一键快速试用](https://gitee.com/asuka2001/alatka-messages/wikis/%E4%B8%80%E3%80%81%E4%B8%80%E9%94%AE%E8%AF%95%E7%94%A8)
 
+### [ :point_right: 性能测试情况](https://gitee.com/asuka2001/alatka-messages/wikis/%E5%85%AB%E3%80%81%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95)
+
 ### github地址
 
 项目同步更新在 github；如有需要， :point_right: [点击我访问](https://github.com/goGetSomeFries/alatka-messages)
