@@ -65,6 +65,16 @@ public class RawFieldBuilder extends AbstractFieldBuilder<byte[]> {
     }
 
     @Override
+    public byte[] normalizeType(Object value, FieldDefinition fieldDefinition) {
+        return fieldBuilder.normalizeType(value, fieldDefinition);
+    }
+
+    @Override
+    public Object doDenormalizeType(byte[] value, FieldDefinition fieldDefinition) {
+        return fieldBuilder.doDenormalizeType(value, fieldDefinition);
+    }
+
+    @Override
     public int getOrder() {
         return super.getOrder() + 1000;
     }
