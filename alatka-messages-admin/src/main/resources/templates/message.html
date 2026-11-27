@@ -292,6 +292,7 @@
                             <textarea class="form-control font-monospace" style="height: 50vh; font-size: 0.75rem;"
                                       rows="30" id="testContent" name="content" aria-describedby="testContentDesc"
                                       required></textarea>
+                            <div id="testContentDesc" class="form-text">16进制字符串</div>
                         </div>
                         <div class="col-md-7">
                             <label for="testResult" class="form-label">执行结果</label>
@@ -465,6 +466,10 @@
                 'overflow-wrap': checked ? 'anywhere' : 'normal',
                 'word-break': checked ? 'break-all' : 'normal'
             });
+        });
+        $form.find("input[name='packed']").on('change', function () {
+            const value = $(this).val() === 'true' ? "Json 格式对象" : "16进制字符串";
+            $("#testContentDesc").text(value);
         });
     }
 
