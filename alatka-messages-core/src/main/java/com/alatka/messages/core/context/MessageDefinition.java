@@ -63,6 +63,44 @@ public class MessageDefinition implements Comparable<MessageDefinition> {
 
     private boolean enabled;
 
+    public MessageDefinition() {
+    }
+
+    public MessageDefinition(Type type, String group, String code, Kind kind) {
+        if (type == null) {
+            throw new IllegalArgumentException("Type cannot be null");
+        }
+        if (group == null || group.isEmpty()) {
+            throw new IllegalArgumentException("Group cannot be null");
+        }
+        if (code == null || code.isEmpty()) {
+            throw new IllegalArgumentException("Code cannot be null");
+        }
+        if (kind == null) {
+            throw new IllegalArgumentException("Kind cannot be null");
+        }
+        this.type = type;
+        this.group = group;
+        this.code = code;
+        this.kind = kind;
+    }
+
+    public MessageDefinition(Type type, String group, String code, Kind kind, String domain) {
+        this(type, group, code, kind);
+        if (domain == null || domain.isEmpty()) {
+            throw new IllegalArgumentException("Domain cannot be null");
+        }
+        this.domain = domain;
+    }
+
+    public MessageDefinition(Type type, String group, String code, Kind kind, String domain, String usage) {
+        this(type, group, code, kind, domain);
+        if (usage == null || usage.isEmpty()) {
+            throw new IllegalArgumentException("Usage cannot be null");
+        }
+        this.usage = usage;
+    }
+
     public enum Type {
         /**
          * 8583
